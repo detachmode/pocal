@@ -84,12 +84,12 @@ namespace ListCalendar.ViewModels
 
 				CurrentTop = new Day { ID = "3", DT = dt.AddHours(844.5)};
 
-				for (int i = singleDayViewFirstHour; i < singleDayViewLastHour; i++)
-				{
-					string str = i.ToString("00") + ":00";
-					lines.Add(new HourListItem { time = str });
-				}
+			}
 
+			for (int i = singleDayViewFirstHour; i < singleDayViewLastHour; i++)
+			{
+				string str = i.ToString("00") + ":00";
+				lines.Add(new HourListItem { time = str });
 			}
 
         }

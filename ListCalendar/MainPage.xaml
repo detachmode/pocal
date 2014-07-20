@@ -235,7 +235,7 @@
 
 			<!--SingleDayView-->
 			<Grid Name="SingleDayView" 
-					 Background="#7F000000" Visibility="Collapsed" >
+					 Background="#7F000000" >
 				<Grid.RowDefinitions>
 					<RowDefinition Height="20*"/>
 					<RowDefinition Height="60*"/>
@@ -274,7 +274,7 @@
 
 					<!--Window Body-->
 					<ScrollViewer VerticalScrollBarVisibility="Hidden">
-						<Grid Margin="0" Background="#FF212121" Height="437">
+						<Grid Background="#FF212121">
 
 							<ItemsControl   ItemsSource="{Binding lines}">
 
