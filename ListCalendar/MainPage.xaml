@@ -143,6 +143,7 @@
 								<StackPanel  Margin="0,4" 
 										HorizontalAlignment="Stretch"
 										RenderTransformOrigin="0.5,0.5" 
+										Tap="onDayTap" 
 										Background="{Binding IsHighlighted, Converter={StaticResource highlightedDayConverter}}">
 
 									<!--DayCard Body END-->
@@ -266,9 +267,9 @@
 					<Border Background="#FF171717"
 							Canvas.ZIndex="3"  
 							Margin="0,-41,0,437">
-						<TextBlock  Text="MONTAG 2. JANUAR" 
-									Name="SingleDayWindowHeader" 
+						<TextBlock  Name="SingleDayWindowHeader" 
 									Style="{StaticResource PhoneTextTitle3Style}"
+									Text="{Binding TappedDay.DT, Converter={StaticResource DateConverter}}" 
 									Margin="12,6,0,6"/>
 					</Border>
 

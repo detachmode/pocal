@@ -28,21 +28,6 @@ namespace ListCalendar
 		private List<Appointment> appointemnts = new List<Appointment>();
 
 
-		public void onDayTap(object sender, System.Windows.Input.GestureEventArgs e)
-		{
-			SingleDayView.Visibility = Visibility.Visible;
-			VisualStateManager.GoToState(this, "OpenDelay", true);
-			var element = (FrameworkElement)sender;
-
-			string str;
-			int dayi = Convert.ToInt32(element.Name);
-			DateTime dtclick = new DateTime(2014, 2, 1);
-
-			//str = appointemnts[dayi].Date;
-			//SingleDayWindowHeader.Text = str;
-
-
-		}
 		//ADDED FROM LISTCALENDAR END !!!!!!!!!!!!
 		//ADDED FROM LISTCALENDAR END!!!!!!!!!!!!
 
@@ -138,6 +123,25 @@ namespace ListCalendar
 		}
 
 
+		public void onDayTap(object sender, System.Windows.Input.GestureEventArgs e)
+		{
+			//Open SingleDayView
+			SingleDayView.Visibility = Visibility.Visible;
+			VisualStateManager.GoToState(this, "OpenDelay", true);
+
+			// Get selected Item as Day
+			var element = (FrameworkElement)sender;
+			Day selectedItem = element.DataContext as Day;
+
+			//Set SingleDayWindowHeader Binding
+			App.ViewModel.TappedDay = selectedItem;
+
+			//Set Header Text to Date Format
+			//string str = selectedItem.DT.DayOfWeek.ToString();
+			//SingleDayWindowHeader.Text = str;
+		}
+
+
 		private void gridExit_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			closeDayView();
@@ -149,15 +153,12 @@ namespace ListCalendar
 		}
 
 
+
 		private void closeDayView()
 		{
 			//SingleDayView.Visibility = Visibility.Collapsed;
 			VisualStateManager.GoToState(this, "Close", true);
 		}
-
-
-
-
 
 
 
