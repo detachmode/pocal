@@ -236,7 +236,7 @@
 
 			<!--SingleDayView-->
 			<Grid Name="SingleDayView" 
-					 Background="#7F000000" >
+					 Background="#AD000000" >
 				<Grid.RowDefinitions>
 					<RowDefinition Height="20*"/>
 					<RowDefinition Height="60*"/>
@@ -264,16 +264,21 @@
 								Canvas.ZIndex="1"/>
 
 					<!--Window Header-->
-					<Border Background="#FF303030"
+					<Border Background="#FF970000"
 							Canvas.ZIndex="3"  
-							Margin="0,-41,0,437" BorderBrush="gray" BorderThickness="0,0,0,4">
-						<TextBlock  Name="SingleDayWindowHeader" 
+							Margin="0,-41,0,437">
+						
+
+							<TextBlock  Name="SingleDayWindowHeader" 
 									Style="{StaticResource PhoneTextTitle3Style}"
 									Text="{Binding TappedDay.DT, Converter={StaticResource DateConverter}}" 
-									Margin="18,-4,18,0" 
-									FontSize="24" VerticalAlignment="Center" 
+									Margin="148,-4,24,0" 
+									FontSize="26" VerticalAlignment="Center" 
 									HorizontalAlignment="Right" 
-									CharacterSpacing="24"/>
+									Foreground="#FFC1C1C1" 
+									/>
+									<!--FontFamily="Cambria"-->
+
 					</Border>
 
 					<!--Window Body-->
