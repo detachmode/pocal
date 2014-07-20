@@ -264,13 +264,16 @@
 								Canvas.ZIndex="1"/>
 
 					<!--Window Header-->
-					<Border Background="#FF171717"
+					<Border Background="#FF303030"
 							Canvas.ZIndex="3"  
-							Margin="0,-41,0,437">
+							Margin="0,-41,0,437" BorderBrush="gray" BorderThickness="0,0,0,4">
 						<TextBlock  Name="SingleDayWindowHeader" 
 									Style="{StaticResource PhoneTextTitle3Style}"
 									Text="{Binding TappedDay.DT, Converter={StaticResource DateConverter}}" 
-									Margin="12,6,0,6"/>
+									Margin="18,-4,18,0" 
+									FontSize="24" VerticalAlignment="Center" 
+									HorizontalAlignment="Right" 
+									CharacterSpacing="24"/>
 					</Border>
 
 					<!--Window Body-->
@@ -288,7 +291,7 @@
 
 												<TextBlock  Text="{Binding time}"
 															Margin="6"
-															FontSize="24"/>
+															FontSize="22"/>
 											</Border>
 										</Grid>
 									</DataTemplate>
@@ -302,7 +305,9 @@
 									<ColumnDefinition Width="18*"/>
 									<ColumnDefinition Width="82*"/>
 								</Grid.ColumnDefinitions>
-								<Border Grid.Column="0" BorderBrush="{StaticResource PhoneForegroundBrush}" BorderThickness="0,0,0.7,0"/>
+								<Border Grid.Column="0" 
+										BorderBrush="{StaticResource PhoneForegroundBrush}" 
+										BorderThickness="0,0,0.7,0"/>
 							</Grid>
 
 
