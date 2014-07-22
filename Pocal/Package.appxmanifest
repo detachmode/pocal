@@ -3,7 +3,7 @@
   <Identity Name="28095d4d-7d97-4fdc-b602-9f9ed1fed614" Publisher="CN=Dennis" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="89f0defb-5da9-490c-a2f2-da273d2b5dd1" PhonePublisherId="a825cd07-5d1f-418d-9919-24950c729e55" />
   <Properties>
-    <DisplayName>ListCalendar</DisplayName>
+    <DisplayName>Pocal</DisplayName>
     <PublisherDisplayName>Dennis</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -16,7 +16,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="AGHost.exe" EntryPoint="MainPage.xaml">
-      <m3:VisualElements DisplayName="ListCalendar" Square150x150Logo="Assets\SquareTile150x150.png" Square44x44Logo="Assets\Logo.png" Description="ListCalendar" ForegroundText="light" BackgroundColor="#464646">
+      <m3:VisualElements DisplayName="Pocal" Square150x150Logo="Assets\SquareTile150x150.png" Square44x44Logo="Assets\Logo.png" Description="Pocal" ForegroundText="light" BackgroundColor="#464646">
         <m3:DefaultTile Square71x71Logo="Assets\SquareTile71x71.png">
         </m3:DefaultTile>
         <m3:SplashScreen Image="Assets\SplashScreen.png" />
