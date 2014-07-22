@@ -1,6 +1,6 @@
-﻿using ListCalendar.Resources;
+﻿using Pocal.Resources;
 
-namespace ListCalendar
+namespace Pocal
 {
 	/// <summary>
 	/// Provides access to string resources.

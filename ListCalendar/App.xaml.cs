@@ -6,10 +6,10 @@ using System.Windows.Markup;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using ListCalendar.Resources;
-using ListCalendar.ViewModels;
+using Pocal.Resources;
+using Pocal.ViewModels;
 
-namespace ListCalendar
+namespace Pocal
 {
 	public partial class App : Application
 	{

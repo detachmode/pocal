@@ -1,5 +1,5 @@
 ﻿
-using ListCalendar.ViewModels;
+using Pocal.ViewModels;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.UserData;
 using System;
@@ -13,7 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace ListCalendar.Converter
+namespace Pocal.Converter
 {
     public static class cultureSettings
     {

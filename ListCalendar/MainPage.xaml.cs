@@ -7,16 +7,16 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using ListCalendar.Resources;
+using Pocal.Resources;
 using Microsoft.Phone.UserData;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using ListCalendar.ViewModels;
+using Pocal.ViewModels;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace ListCalendar
+namespace Pocal
 {
 	public partial class MainPage : PhoneApplicationPage
 	{

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ListCalendar.ViewModels
+namespace Pocal.ViewModels
 {
     public class HourListItem
     {

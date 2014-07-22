@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace ListCalendar.ViewModels 
+namespace Pocal.ViewModels 
 {
     public class Day : INotifyPropertyChanged
     {

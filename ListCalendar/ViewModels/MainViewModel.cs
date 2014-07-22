@@ -19,7 +19,7 @@ using Microsoft.Phone.Controls;
 using System.Windows.Threading;
 
 
-namespace ListCalendar.ViewModels
+namespace Pocal.ViewModels
 {
 	public class MainViewModel : INotifyPropertyChanged
 	{
