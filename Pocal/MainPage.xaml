@@ -140,89 +140,80 @@
 
 							<!--DayCard Styling-->
 							<DataTemplate >
-								<StackPanel  Margin="0,4" 
+								<Grid	Margin="0,1"
+										
+									  	Tap="onDayTap" 
+										Background="{Binding Converter={StaticResource highlightedDayConverter}}">
+									<StackPanel 
+										Margin="12,4"
 										HorizontalAlignment="Stretch"
-										RenderTransformOrigin="0.5,0.5" 
-										Tap="onDayTap" 
-										Background="{Binding IsHighlighted, Converter={StaticResource highlightedDayConverter}}">
+										RenderTransformOrigin="0.5,0.5">
 
-									<!--DayCard Body END-->
+										<!--DayCard Body END-->
 
-									<!--DayCard Footer END-->
+										<!--DayCard Footer END-->
 
-									<!--DayCard Header-->
-									<TextBlock  Text="{Binding DT, Converter={StaticResource DateConverter}}" 
+										<!--DayCard Header-->
+										<TextBlock  Text="{Binding DT, Converter={StaticResource DateConverter}}" 
 											FontSize="36" 
 											FontFamily="{StaticResource PhoneFontFamilyLight}"
 											Foreground ="{Binding sundayForeground}"
 												/>
 
-									<!--DayCard Body-->
-									<ItemsControl   ItemsSource="{Binding DayAppts}"
+										<!--DayCard Body-->
+										<ItemsControl   ItemsSource="{Binding DayAppts}"
 											Margin="12 0 0 0">
-										<ItemsControl.ItemTemplate>
+											<ItemsControl.ItemTemplate>
 
-											<!--End of Single Appointment-->
+												<!--End of Single Appointment-->
 
-											<!--Singel Appointment in DayCard-->
-											<DataTemplate>
-												<StackPanel Orientation="Horizontal"  >
+												<!--Singel Appointment in DayCard-->
+												<DataTemplate>
+													<StackPanel Orientation="Horizontal"  >
 
-													<!--Time of Appointment-->
-													<StackPanel Orientation="Horizontal"  
+														<!--Time of Appointment-->
+														<StackPanel Orientation="Horizontal"  
 															FlowDirection="RightToLeft"
 															Width="70">
 
-														<Ellipse Height="15" 
+															<Ellipse Height="15" 
 																Width="{Binding AllDay, Converter={StaticResource allDayStrokeWidthConverter}}" 
 																Stroke="White" 
 																StrokeThickness="3"/>
-														<TextBlock Text="{Binding Converter={StaticResource minuteConverter}}" 
+															<TextBlock Text="{Binding Converter={StaticResource minuteConverter}}" 
 																FontSize="18" 
 																Margin="0,8,0,0" 
 																Foreground="White" />
-														<TextBlock  Text="{Binding Converter={StaticResource hourConverter}}"
+															<TextBlock  Text="{Binding Converter={StaticResource hourConverter}}"
 																FontSize="36" 
 																Padding="0"/>
-													</StackPanel>
+														</StackPanel>
 
-													<!--Subject of Appointment-->
-													<StackPanel   Margin="12,0,0,0">
+														<!--Subject of Appointment-->
+														<StackPanel   Margin="12,0,0,0">
 
-														<TextBlock  Text="{Binding Subject, Converter={StaticResource subjectConverter}}"
+															<TextBlock  Text="{Binding Subject, Converter={StaticResource subjectConverter}}"
 																FontSize="20"/>
 
-														<TextBlock Text="{Binding Converter={StaticResource secondLineConverter}}" 
+															<TextBlock Text="{Binding Converter={StaticResource secondLineConverter}}" 
 																Foreground="{StaticResource PhoneBorderBrush}" 
 																FontFamily="{StaticResource PhoneFontFamilyLight}" 
 																CharacterSpacing="1" 
 																Padding="0" 
 																Margin="0,-6,0,0"/>
 
+														</StackPanel>
+
 													</StackPanel>
+												</DataTemplate>
 
-												</StackPanel>
-											</DataTemplate>
+											</ItemsControl.ItemTemplate>
+										</ItemsControl>
 
-										</ItemsControl.ItemTemplate>
-									</ItemsControl>
-									<!--DayCard Footer:  Week Number-->
-									<Border Background="{Binding customBackground}" 
-											HorizontalAlignment="Right" 
-											Margin="0,-21,0,0" 
-											RenderTransformOrigin="0.5,0.5" 
-											CornerRadius="12,12,0,0">
+										<!--<Grid Height="1" Background="{Binding customBackground}" />-->
 
-										<TextBlock Text="{Binding DT, Converter={StaticResource weekConverter}}" 
-												Foreground="Black"
-												Padding="7,2,8,2" 
-												RenderTransformOrigin="0.5,0.5"/>
-
-									</Border>
-									<Grid Height="1" Background="{Binding customBackground}" />
-
-								</StackPanel>
-
+									</StackPanel>
+								</Grid>
 							</DataTemplate>
 
 						</phone:LongListSelector.ItemTemplate>
@@ -267,9 +258,9 @@
 					<Border Background="#FF970000"
 							Canvas.ZIndex="3"  
 							Margin="0,-41,0,437">
-						
 
-							<TextBlock  Name="SingleDayWindowHeader" 
+
+						<TextBlock  Name="SingleDayWindowHeader" 
 									Style="{StaticResource PhoneTextTitle3Style}"
 									Text="{Binding TappedDay.DT, Converter={StaticResource DateConverter}}" 
 									Margin="148,-4,24,0" 
@@ -277,7 +268,7 @@
 									HorizontalAlignment="Right" 
 									Foreground="#FFC1C1C1" 
 									/>
-									<!--FontFamily="Cambria"-->
+						<!--FontFamily="Cambria"-->
 
 					</Border>
 

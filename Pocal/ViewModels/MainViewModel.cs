@@ -76,7 +76,7 @@ namespace Pocal.ViewModels
 			this.lines = new ObservableCollection<HourListItem>();
 
 			DateTime dt = DateTime.Now - DateTime.Now.TimeOfDay;
-			TimeSpan ts = new TimeSpan(2,0,0);
+			TimeSpan ts = new TimeSpan(2, 0, 0);
 
 			//todo
 			TappedDay = new Day { ID = "1", DT = dt.AddHours(300), DayAppts = appts };
@@ -97,9 +97,9 @@ namespace Pocal.ViewModels
 				appts.Add(new Appointment { Subject = "Einkaufen", StartTime = dt.AddHours(11.3), Duration = ts });
 				appts.Add(new Appointment { Subject = "Mom Anrufen", StartTime = dt.AddHours(14.5), Duration = ts });
 
-				Days.Add(new Day { ID = "1", DT = dt, DayAppts = appts });
+				Days.Add(new Day { ID = "1", DT = dt, DayAppts = appts, Sunday = true });
 				dt = DateTime.Now.AddDays(1);
-				Days.Add(new Day { ID = "2", DT = dt, DayAppts = appts, Sunday = true });
+				Days.Add(new Day { ID = "2", DT = dt, DayAppts = appts });
 				dt = dt.AddDays(1);
 				Days.Add(new Day { ID = "2", DT = dt, DayAppts = appts });
 				dt = dt.AddDays(1);
@@ -120,7 +120,7 @@ namespace Pocal.ViewModels
 
 		//public async void ShowCalendars(bool onlyShowVisible)
 		//{
-			
+
 		//	IReadOnlyList<AppointmentCalendar> calendars;
 		//	if (onlyShowVisible)
 		//	{
@@ -155,7 +155,6 @@ namespace Pocal.ViewModels
 
 			fillDayview();
 		}
-
 
 
 		private void fillDayview()
@@ -221,7 +220,6 @@ namespace Pocal.ViewModels
 
 			return sorted;
 		}
-
 
 
 

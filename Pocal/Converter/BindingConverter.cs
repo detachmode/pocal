@@ -312,7 +312,8 @@ namespace Pocal.Converter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if ((bool)value)
+			var day = value as Day;
+			if ((day.DT.DayOfWeek == DayOfWeek.Saturday) || (day.DT.DayOfWeek == DayOfWeek.Sunday))
 			{
 				return new SolidColorBrush(Color.FromArgb(255, 40, 40, 40));
 			}
