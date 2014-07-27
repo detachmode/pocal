@@ -242,9 +242,9 @@ namespace Pocal.Converter
 			if (appt != null)
 			{
 				string str = "";
-
+				//System.Diagnostics.Debug.WriteLine(" " + appt.Subject + " " + appt.Duration.Days.ToString()+ "\n AllDay: "+appt.AllDay.ToString());
 				//Zeit
-				if (appt.AllDay)
+				if (appt.AllDay || appt.Duration == TimeSpan.FromDays(1))
 				{
 					int d = ((appt.StartTime + appt.Duration).Date - appt.StartTime.Date).Days;
 					if (d == 1)
@@ -259,13 +259,17 @@ namespace Pocal.Converter
 				}
 				else
 				{
-					TimeSpan ts = appt.Duration;
-					if (ts.Hours == 1)
-					{
-						str = ts.Hours + " Stunde";
-					}
-					else
-						str = ts.Hours + " Stunden";
+					str += appt.StartTime.Hour.ToString();
+					str += ":";
+					str += appt.StartTime.Minute.ToString("00");
+
+					str += " - ";
+
+					str += (appt.StartTime + appt.Duration).DateTime.Hour.ToString();
+					str += ":";
+					str += (appt.StartTime + appt.Duration).DateTime.Minute.ToString("00");
+						//str = ts.Hours + " Stunde";
+
 				}
 
 				// Location

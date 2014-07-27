@@ -171,23 +171,6 @@
 												<DataTemplate>
 													<StackPanel Orientation="Horizontal"  >
 
-														<!--Time of Appointment-->
-														<StackPanel Orientation="Horizontal"  
-															FlowDirection="RightToLeft"
-															Width="70">
-
-															<Ellipse Height="15" 
-																Width="{Binding AllDay, Converter={StaticResource allDayStrokeWidthConverter}}" 
-																Stroke="White" 
-																StrokeThickness="3"/>
-															<TextBlock Text="{Binding Converter={StaticResource minuteConverter}}" 
-																FontSize="18" 
-																Margin="0,8,0,0" 
-																Foreground="White" />
-															<TextBlock  Text="{Binding Converter={StaticResource hourConverter}}"
-																FontSize="36" 
-																Padding="0"/>
-														</StackPanel>
 
 														<!--Subject of Appointment-->
 														<StackPanel   Margin="12,0,0,0">
