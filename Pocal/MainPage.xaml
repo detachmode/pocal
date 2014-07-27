@@ -174,7 +174,7 @@
 															Width="70">
 
 														<Ellipse Height="15" 
-																Width="{Binding IsAllDayEvent, Converter={StaticResource allDayStrokeWidthConverter}}" 
+																Width="{Binding AllDay, Converter={StaticResource allDayStrokeWidthConverter}}" 
 																Stroke="White" 
 																StrokeThickness="3"/>
 														<TextBlock Text="{Binding Converter={StaticResource minuteConverter}}" 
@@ -236,7 +236,7 @@
 
 			<!--SingleDayView-->
 			<Grid Name="SingleDayView" 
-					 Background="#AD000000" >
+					 Background="#AD000000" Visibility="Collapsed" >
 				<Grid.RowDefinitions>
 					<RowDefinition Height="20*"/>
 					<RowDefinition Height="60*"/>

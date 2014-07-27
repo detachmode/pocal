@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Microsoft.Phone.UserData;
+//using Microsoft.Phone.UserData;
 using System.Globalization;
 using System.Diagnostics;
 
@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows;
 using Microsoft.Phone.Controls;
 using System.Windows.Threading;
+using Windows.ApplicationModel.Appointments;
 
 
 namespace Pocal.ViewModels
@@ -75,6 +76,7 @@ namespace Pocal.ViewModels
 			this.lines = new ObservableCollection<HourListItem>();
 
 			DateTime dt = DateTime.Now - DateTime.Now.TimeOfDay;
+			TimeSpan ts = new TimeSpan(2,0,0);
 
 			//todo
 			TappedDay = new Day { ID = "1", DT = dt.AddHours(300), DayAppts = appts };
@@ -87,21 +89,21 @@ namespace Pocal.ViewModels
 
 
 
-				//var appointment = new Windows.ApplicationModel.Appointments.Appointment();
+				var appointment = new Windows.ApplicationModel.Appointments.Appointment();
 
-				//appts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), EndTime = dt.AddHours(24), IsAllDayEvent = true });
-				//appts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), EndTime = dt.AddHours(24), IsAllDayEvent = true });
-				//appts.Add(new Appointment { Subject = "Essen", StartTime = dt.AddHours(9), EndTime = dt.AddHours(11), Location = "Stuttgart" });
-				//appts.Add(new Appointment { Subject = "Einkaufen", StartTime = dt.AddHours(11.3), EndTime = dt.AddHours(13) });
-				//appts.Add(new Appointment { Subject = "Mom Anrufen", StartTime = dt.AddHours(14.5), EndTime = dt.AddHours(16.5) });
+				appts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), AllDay = true });
+				appts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), AllDay = true });
+				appts.Add(new Appointment { Subject = "Essen", StartTime = dt.AddHours(9), Duration = ts, Location = "Stuttgart" });
+				appts.Add(new Appointment { Subject = "Einkaufen", StartTime = dt.AddHours(11.3), Duration = ts });
+				appts.Add(new Appointment { Subject = "Mom Anrufen", StartTime = dt.AddHours(14.5), Duration = ts });
 
-				//Days.Add(new Day { ID = "1", DT = dt, DayAppts = appts });
-				//dt = DateTime.Now.AddDays(1);
-				//Days.Add(new Day { ID = "2", DT = dt, DayAppts = appts, Sunday = true });
-				//dt = dt.AddDays(1);
-				//Days.Add(new Day { ID = "2", DT = dt, DayAppts = appts });
-				//dt = dt.AddDays(1);
-				//Days.Add(new Day { ID = "2", DT = dt, DayAppts = appts });
+				Days.Add(new Day { ID = "1", DT = dt, DayAppts = appts });
+				dt = DateTime.Now.AddDays(1);
+				Days.Add(new Day { ID = "2", DT = dt, DayAppts = appts, Sunday = true });
+				dt = dt.AddDays(1);
+				Days.Add(new Day { ID = "2", DT = dt, DayAppts = appts });
+				dt = dt.AddDays(1);
+				Days.Add(new Day { ID = "2", DT = dt, DayAppts = appts });
 
 
 				CurrentTop = new Day { ID = "3", DT = dt.AddHours(844.5) };
@@ -116,54 +118,42 @@ namespace Pocal.ViewModels
 
 		}
 
+		//public async void ShowCalendars(bool onlyShowVisible)
+		//{
+			
+		//	IReadOnlyList<AppointmentCalendar> calendars;
+		//	if (onlyShowVisible)
+		//	{
+		//		calendars = await appointmentStore.FindAppointmentCalendarsAsync();
+		//	}
+		//	else
+		//	{
+		//		calendars = await appointmentStore.FindAppointmentCalendarsAsync(FindAppointmentCalendarsOptions.IncludeHidden);
+		//	}
+		//	appts = calendars;
+		//}
 
-		public void getUserAppointments()
+		public async void ShowUpcomingAppointments(int days)
 		{
-			Appointments appts = new Appointments();
+			var appointmentStore = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
+			FindAppointmentsOptions findOptions = new FindAppointmentsOptions();
+			findOptions.MaxCount = 30;
+			findOptions.FetchProperties.Add(AppointmentProperties.Subject);
+			findOptions.FetchProperties.Add(AppointmentProperties.Location);
+			findOptions.FetchProperties.Add(AppointmentProperties.StartTime);
+			findOptions.FetchProperties.Add(AppointmentProperties.Duration);
 
-			//stopwatch.Reset();
-			//stopwatch.Start();
+			IReadOnlyList<Appointment> appointments =
+				await appointmentStore.FindAppointmentsAsync(DateTime.Now, TimeSpan.FromDays(days), findOptions);
 
-			//Identify the method that runs after the asynchronous search completes.
-			appts.SearchCompleted += new EventHandler<AppointmentsSearchEventArgs>(Appointments_SearchCompleted);
-
-			DateTime start = DateTime.Now;
-			DateTime end = start.AddDays(howManyDays);
-			int max = 200;
-
-
-			//Start the asynchronous search.
-			appts.SearchAsync(start, end, max, "Appointments Test #1");
-
-		}
-
-		public void Appointments_SearchCompleted(object sender, AppointmentsSearchEventArgs e)
-		{
-
-			//stopwatch.Stop();
-			//System.Diagnostics.Debug.WriteLine("Elasped Time: " + stopwatch.Elapsed.TotalSeconds);
-
-			try
+			appts = new List<Appointment>();
+			foreach (Appointment a in appointments)
 			{
-				appts = new List<Appointment>();
-				foreach (Appointment appt in e.Results)
-				{
-					appts.Add(appt);
-
-				}
-
-
-
-				fillDayview();
-
-
-
+				appts.Add(a);
 
 			}
-			catch (System.Exception)
-			{
-				//No results
-			}
+
+			fillDayview();
 		}
 
 

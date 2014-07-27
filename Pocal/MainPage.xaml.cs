@@ -45,7 +45,7 @@ namespace Pocal
 
 
 
-			App.ViewModel.getUserAppointments();
+			App.ViewModel.ShowUpcomingAppointments(30);
 			AgendaViewListbox.ItemRealized += LLS_ItemRealized;
 			AgendaViewListbox.ItemUnrealized += LLS_ItemUnrealized;
 
