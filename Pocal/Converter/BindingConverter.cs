@@ -259,7 +259,7 @@ namespace Pocal.Converter
 				}
 				else
 				{
-					TimeSpan ts = ((appt.StartTime + appt.Duration).Date - appt.StartTime.Date);
+					TimeSpan ts = appt.Duration;
 					if (ts.Hours == 1)
 					{
 						str = ts.Hours + " Stunde";
@@ -269,7 +269,7 @@ namespace Pocal.Converter
 				}
 
 				// Location
-				if (appt.Location == null)
+				if (appt.Location == "")
 				{
 					return str;
 				}
