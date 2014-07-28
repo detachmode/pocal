@@ -76,10 +76,10 @@ namespace Pocal.ViewModels
 			this.lines = new ObservableCollection<HourListItem>();
 
 			DateTime dt = DateTime.Now - DateTime.Now.TimeOfDay;
-			TimeSpan ts = new TimeSpan(2, 0, 0);
+			TimeSpan ts = new TimeSpan(1,30, 0);
 
 			//todo
-			TappedDay = new Day { ID = "1", DT = dt.AddHours(300), DayAppts = appts };
+			TappedDay = new Day { ID = "1", DT = dt.AddHours(30), DayAppts = appts };
 
 			if (DesignerProperties.IsInDesignTool)
 			{
@@ -106,7 +106,7 @@ namespace Pocal.ViewModels
 				Days.Add(new Day { ID = "2", DT = dt, DayAppts = appts });
 
 
-				CurrentTop = new Day { ID = "3", DT = dt.AddHours(844.5) };
+				CurrentTop = new Day { ID = "3", DT = dt.AddHours(24) };
 
 			}
 

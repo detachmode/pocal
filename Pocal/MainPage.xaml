@@ -30,6 +30,8 @@
 		<local:CurrentTopWeekConverter x:Key="CurrentTopWeekConverter"/>
 		<local:CurrentTopDayConverter x:Key="CurrentTopDayConverter"/>
 		<local:highlightedDayConverter x:Key="highlightedDayConverter"/>
+		<local:singelDayApptTranslateY x:Key="singelDayApptTranslateY"/>
+		<local:singelDayApptHeight x:Key="singelDayApptHeight"/>
 
 
 
@@ -57,7 +59,7 @@
 
 	<!--LayoutRoot is the root grid where all page content is placed-->
 	<Grid x:Name="LayoutRoot" Background="Transparent">
-		
+
 
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="VisualStateGroup">
@@ -261,7 +263,7 @@
 
 			<!--SingleDayView-->
 			<Grid Name="SingleDayView" 
-					 Background="#AD000000" Visibility="Collapsed" >
+					 Background="#AD000000" >
 				<Grid.RowDefinitions>
 					<RowDefinition Height="20*"/>
 					<RowDefinition Height="60*"/>
@@ -311,7 +313,6 @@
 						<Grid Background="#FF212121">
 
 							<ItemsControl   ItemsSource="{Binding lines}">
-
 								<ItemsControl.ItemTemplate>
 									<DataTemplate>
 										<Grid >
@@ -325,8 +326,46 @@
 											</Border>
 										</Grid>
 									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
 
+							<ItemsControl   ItemsSource="{Binding TappedDay.DayAppts}" >
+								<ItemsControl.ItemsPanel>
+									<ItemsPanelTemplate>
+										<Grid VerticalAlignment="Top">
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="*"/>
 
+											</Grid.ColumnDefinitions>
+										</Grid>
+									</ItemsPanelTemplate>
+								</ItemsControl.ItemsPanel>
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<Grid Margin="86,0,0,0" 
+											  
+											  Height="{Binding Converter={StaticResource singelDayApptHeight}}"
+											  Background="#FF212121" 
+											  RenderTransformOrigin="0.5,0" VerticalAlignment="Top">
+
+											<Grid.RenderTransform>
+												<CompositeTransform TranslateY="{Binding Converter={StaticResource singelDayApptTranslateY}}" />
+											</Grid.RenderTransform>
+
+											<Border BorderThickness="12,0,0,0">
+												<Border.BorderBrush>
+													<SolidColorBrush Color="#FFB82B1E"/>
+												</Border.BorderBrush>
+
+												<TextBlock  Text="{Binding Subject }"
+															Margin="6,3"
+															FontSize="22" >
+												</TextBlock>
+											</Border>
+											<Border BorderThickness="0,1.4" 
+													BorderBrush="{StaticResource PhoneBorderBrush}" />
+										</Grid>
+									</DataTemplate>
 								</ItemsControl.ItemTemplate>
 							</ItemsControl>
 
