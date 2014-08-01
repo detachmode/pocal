@@ -8,13 +8,14 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Pocal.Resources;
-using Microsoft.Phone.UserData;
+//using Microsoft.Phone.UserData;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using Pocal.ViewModels;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Windows.ApplicationModel.Appointments;
 
 namespace Pocal
 {
@@ -46,8 +47,12 @@ namespace Pocal
 
 
 			App.ViewModel.ShowUpcomingAppointments(30);
+			
+
 			AgendaViewListbox.ItemRealized += LLS_ItemRealized;
 			AgendaViewListbox.ItemUnrealized += LLS_ItemUnrealized;
+
+			
 
 
 			DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
@@ -159,6 +164,39 @@ namespace Pocal
 			//SingleDayView.Visibility = Visibility.Collapsed;
 			VisualStateManager.GoToState(this, "Close", true);
 		}
+
+		public async void ApptListItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+		{
+
+			var element = (FrameworkElement)sender;
+			Appointment appt = element.DataContext as Appointment;
+
+			var store = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
+			if (appt.OriginalStartTime == null)
+			{
+				await store.ShowAppointmentDetailsAsync(appt.LocalId);
+			}
+			else
+			{
+				await store.ShowAppointmentDetailsAsync(appt.LocalId, appt.OriginalStartTime.Value);
+			}
+
+			// TODO
+			//App.ViewModel.TappedDay.DayAppts = App.ViewModel.Days[3].DayAppts;		
+			//App.ViewModel.appts.Clear();
+			//App.ViewModel.TappedDay = App.ViewModel.Days[1];
+
+			App.ViewModel.ShowUpcomingAppointments(30);
+			
+			//foreach (Day d in App.ViewModel.Days)
+			//{
+			//	if 
+			//}
+
+
+
+		}
+
 
 
 

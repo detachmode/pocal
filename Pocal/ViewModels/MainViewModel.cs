@@ -79,7 +79,7 @@ namespace Pocal.ViewModels
 			TimeSpan ts = new TimeSpan(1,30, 0);
 
 			//todo
-			TappedDay = new Day { ID = "1", DT = dt.AddHours(30), DayAppts = appts };
+			//TappedDay = new Day { ID = "1", DT = dt.AddHours(30), DayAppts = appts };
 
 			if (DesignerProperties.IsInDesignTool)
 			{
@@ -154,6 +154,18 @@ namespace Pocal.ViewModels
 			}
 
 			fillDayview();
+			if (App.ViewModel.TappedDay == null)
+			{
+				//MessageBox.Show("tappedDay = 0");
+				App.ViewModel.TappedDay = App.ViewModel.Days[0];
+			}
+			else
+			{
+				
+				Day tempDay = App.ViewModel.Days.First(d => d.ID == App.ViewModel.TappedDay.ID);
+				App.ViewModel.TappedDay = tempDay;
+			}
+			
 		}
 
 
@@ -183,10 +195,12 @@ namespace Pocal.ViewModels
 				dt = dt.AddDays(1);
 
 			}
+			//todo
+			
 		}
 
 
-		private List<Appointment> getApptsOfDay(DateTime dt)
+		public List<Appointment> getApptsOfDay(DateTime dt)
 		{
 
 
