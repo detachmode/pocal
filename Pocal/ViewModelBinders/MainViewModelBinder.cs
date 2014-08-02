@@ -29,7 +29,8 @@ namespace Pocal.ViewModelBinders
 		private int singleDayViewLastHour = 20;
 		private AppointmentStore appointmentStore;
 
-		public ObservableCollection<Appointment> appts = new ObservableCollection<Appointment>();
+		private List<Appointment> appts = new List<Appointment>();
+
 
 		public ObservableCollection<Day> Days { get; private set; }
 
@@ -74,42 +75,43 @@ namespace Pocal.ViewModelBinders
 		public MainViewModelBinder()
 		{
 			this.Days = new ObservableCollection<Day>();
-			this.lines = new ObservableCollection<HourListItem>();
+			gridSetup();
 
-			DateTime dt = DateTime.Now - DateTime.Now.TimeOfDay;
-			TimeSpan ts = new TimeSpan(1, 30, 0);
-
-			//todo
-			//TappedDay = new Day { ID = "1", DT = dt.AddHours(30), DayAppts = appts };
 
 			if (DesignerProperties.IsInDesignTool)
 			{
 				//	//CREATE DESIGN TIME DATA HERE
-
+				DateTime dt = DateTime.Now - DateTime.Now.TimeOfDay;
+				TimeSpan ts = new TimeSpan(1, 30, 0);
 				CultureInfo ci = new CultureInfo("de-DE");
 
-
-
 				var appointment = new Windows.ApplicationModel.Appointments.Appointment();
+				ObservableCollection<Appointment> DesignDataDayappts = new ObservableCollection<Appointment>();
 
-				appts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), AllDay = true });
-				appts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), AllDay = true });
-				appts.Add(new Appointment { Subject = "Essen", StartTime = dt.AddHours(9), Duration = ts, Location = "Stuttgart" });
-				appts.Add(new Appointment { Subject = "Einkaufen", StartTime = dt.AddHours(11.3), Duration = ts });
-				appts.Add(new Appointment { Subject = "Mom Anrufen", StartTime = dt.AddHours(14.5), Duration = ts });
+				DesignDataDayappts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), AllDay = true });
+				DesignDataDayappts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), AllDay = true });
+				DesignDataDayappts.Add(new Appointment { Subject = "Essen", StartTime = dt.AddHours(9), Duration = ts, Location = "Stuttgart" });
+				DesignDataDayappts.Add(new Appointment { Subject = "Einkaufen", StartTime = dt.AddHours(11.3), Duration = ts });
+				DesignDataDayappts.Add(new Appointment { Subject = "Mom Anrufen", StartTime = dt.AddHours(14.5), Duration = ts });
 
-				Days.Add(new Day { ID = "1", DT = dt, DayAppts = appts, Sunday = true });
+				Days.Add(new Day { ID = "1", DT = dt, DayAppts = DesignDataDayappts, Sunday = true });
 				dt = DateTime.Now.AddDays(1);
-				Days.Add(new Day { ID = "2", DT = dt, DayAppts = appts });
+				Days.Add(new Day { ID = "2", DT = dt, DayAppts = DesignDataDayappts });
 				dt = dt.AddDays(1);
-				Days.Add(new Day { ID = "2", DT = dt, DayAppts = appts });
+				Days.Add(new Day { ID = "2", DT = dt, DayAppts = DesignDataDayappts });
 				dt = dt.AddDays(1);
-				Days.Add(new Day { ID = "2", DT = dt, DayAppts = appts });
+				Days.Add(new Day { ID = "2", DT = dt, DayAppts = DesignDataDayappts });
 
 
 				CurrentTop = new Day { ID = "3", DT = dt.AddHours(24) };
 
 			}
+
+		}
+
+		private void gridSetup()
+		{
+			this.lines = new ObservableCollection<HourListItem>();
 
 			for (int i = singleDayViewFirstHour; i < singleDayViewLastHour; i++)
 			{
@@ -119,22 +121,8 @@ namespace Pocal.ViewModelBinders
 
 		}
 
-		//public async void ShowCalendars(bool onlyShowVisible)
-		//{
 
-		//	IReadOnlyList<AppointmentCalendar> calendars;
-		//	if (onlyShowVisible)
-		//	{
-		//		calendars = await appointmentStore.FindAppointmentCalendarsAsync();
-		//	}
-		//	else
-		//	{
-		//		calendars = await appointmentStore.FindAppointmentCalendarsAsync(FindAppointmentCalendarsOptions.IncludeHidden);
-		//	}
-		//	appts = calendars;
-		//}
-
-		public async void updateAppointment (string _localID)
+		public async void updateAppointment(string _localID)
 		{
 			Appointment appt = await appointmentStore.GetAppointmentAsync(_localID);
 			//Days.First
@@ -205,7 +193,7 @@ namespace Pocal.ViewModelBinders
 				dt = dt.AddDays(1);
 
 			}
-			//todo
+			
 
 		}
 
@@ -243,8 +231,6 @@ namespace Pocal.ViewModelBinders
 
 			return sorted;
 		}
-
-
 
 
 		public bool IsDataLoaded
