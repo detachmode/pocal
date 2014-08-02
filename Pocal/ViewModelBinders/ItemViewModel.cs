@@ -8,7 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace Pocal.ViewModels
+namespace Pocal.ViewModelBinders
 {
 	public class ItemViewModel : INotifyPropertyChanged
 	{

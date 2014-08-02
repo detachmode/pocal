@@ -20,15 +20,16 @@ using System.Windows.Threading;
 using Windows.ApplicationModel.Appointments;
 
 
-namespace Pocal.ViewModels
+namespace Pocal.ViewModelBinders
 {
-	public class MainViewModel : INotifyPropertyChanged
+	public class MainViewModelBinder : INotifyPropertyChanged
 	{
 		private int howManyDays = 30;
 		private int singleDayViewFirstHour = 8;
 		private int singleDayViewLastHour = 20;
+		private AppointmentStore appointmentStore;
 
-		public List<Appointment> appts = new List<Appointment>();
+		public ObservableCollection<Appointment> appts = new ObservableCollection<Appointment>();
 
 		public ObservableCollection<Day> Days { get; private set; }
 
@@ -70,13 +71,13 @@ namespace Pocal.ViewModels
 			}
 		}
 
-		public MainViewModel()
+		public MainViewModelBinder()
 		{
 			this.Days = new ObservableCollection<Day>();
 			this.lines = new ObservableCollection<HourListItem>();
 
 			DateTime dt = DateTime.Now - DateTime.Now.TimeOfDay;
-			TimeSpan ts = new TimeSpan(1,30, 0);
+			TimeSpan ts = new TimeSpan(1, 30, 0);
 
 			//todo
 			//TappedDay = new Day { ID = "1", DT = dt.AddHours(30), DayAppts = appts };
@@ -133,9 +134,19 @@ namespace Pocal.ViewModels
 		//	appts = calendars;
 		//}
 
+		public async void updateAppointment (string _localID)
+		{
+			Appointment appt = await appointmentStore.GetAppointmentAsync(_localID);
+			//Days.First
+		}
+
 		public async void ShowUpcomingAppointments(int days)
 		{
-			var appointmentStore = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
+			if (appointmentStore == null)
+			{
+				appointmentStore = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
+			}
+
 			FindAppointmentsOptions findOptions = new FindAppointmentsOptions();
 			findOptions.MaxCount = 30;
 			findOptions.FetchProperties.Add(AppointmentProperties.Subject);
@@ -146,26 +157,25 @@ namespace Pocal.ViewModels
 			IReadOnlyList<Appointment> appointments =
 				await appointmentStore.FindAppointmentsAsync(DateTime.Now, TimeSpan.FromDays(days), findOptions);
 
-			appts = new List<Appointment>();
+
+			appts.Clear();
 			foreach (Appointment a in appointments)
 			{
 				appts.Add(a);
-
 			}
 
 			fillDayview();
+
 			if (App.ViewModel.TappedDay == null)
 			{
-				//MessageBox.Show("tappedDay = 0");
 				App.ViewModel.TappedDay = App.ViewModel.Days[0];
 			}
 			else
 			{
-				
 				Day tempDay = App.ViewModel.Days.First(d => d.ID == App.ViewModel.TappedDay.ID);
 				App.ViewModel.TappedDay = tempDay;
 			}
-			
+
 		}
 
 
@@ -196,15 +206,14 @@ namespace Pocal.ViewModels
 
 			}
 			//todo
-			
+
 		}
 
 
-		public List<Appointment> getApptsOfDay(DateTime dt)
+		public ObservableCollection<Appointment> getApptsOfDay(DateTime dt)
 		{
 
-
-			List<Appointment> thisDayAppts = new List<Appointment>();
+			ObservableCollection<Appointment> thisDayAppts = new ObservableCollection<Appointment>();
 			foreach (Appointment a in appts)
 			{
 				if (a.StartTime.Day == dt.Day)
@@ -222,9 +231,9 @@ namespace Pocal.ViewModels
 			return thisDayAppts;
 		}
 
-		private List<Appointment> sortAppointments(List<Appointment> appts)
+		private ObservableCollection<Appointment> sortAppointments(ObservableCollection<Appointment> appts)
 		{
-			List<Appointment> sorted = new List<Appointment>();
+			ObservableCollection<Appointment> sorted = new ObservableCollection<Appointment>();
 			IEnumerable<Appointment> query = appts.OrderBy(appt => appt.StartTime);
 
 			foreach (Appointment appt in query)

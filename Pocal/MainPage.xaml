@@ -12,9 +12,9 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="False"
-    xmlns:viewmodel="clr-namespace:Pocal.ViewModels"
+    xmlns:viewmodel="clr-namespace:Pocal.ViewModelBinders"
     xmlns:local="clr-namespace:Pocal.Converter"
-    d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel,IsDesignTimeCreatable=True}">
+    d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModelBinder,IsDesignTimeCreatable=True}">
 
 
 	<!--Converter-->
@@ -214,7 +214,7 @@
 												/>
 
 										<!--DayCard Body-->
-										<ItemsControl   ItemsSource="{Binding DayAppts}"
+										<ItemsControl x:Name="DayCardApptsItemControll"  ItemsSource="{Binding DayAppts}"
 											Margin="12 0 0 0">
 											<ItemsControl.ItemTemplate>
 

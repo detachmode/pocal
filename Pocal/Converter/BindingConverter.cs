@@ -1,5 +1,5 @@
 ﻿
-using Pocal.ViewModels;
+using Pocal.ViewModelBinders;
 using Microsoft.Phone.Controls;
 //using Microsoft.Phone.UserData;
 using System;

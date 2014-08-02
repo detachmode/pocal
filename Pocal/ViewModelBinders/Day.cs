@@ -1,6 +1,7 @@
 ﻿//using Microsoft.Phone.UserData;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using Windows.ApplicationModel.Appointments;
 
-namespace Pocal.ViewModels 
+namespace Pocal.ViewModelBinders
 {
     public class Day : INotifyPropertyChanged
     {
@@ -96,8 +97,8 @@ namespace Pocal.ViewModels
             }
         }
 
-        private List<Appointment> _dayAppts;
-        public List<Appointment> DayAppts
+		private ObservableCollection<Appointment> _dayAppts;
+		public ObservableCollection<Appointment> DayAppts
         {
             get
             {

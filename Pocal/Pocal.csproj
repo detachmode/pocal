@@ -105,10 +105,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Day.cs" />
-    <Compile Include="ViewModels\HourListItem.cs" />
-    <Compile Include="ViewModels\ItemViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Resources\ItemsChangeObservableCollection.cs" />
+    <Compile Include="ViewModelBinders\Day.cs" />
+    <Compile Include="ViewModelBinders\HourListItem.cs" />
+    <Compile Include="ViewModelBinders\ItemViewModel.cs" />
+    <Compile Include="ViewModelBinders\MainViewModelBinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

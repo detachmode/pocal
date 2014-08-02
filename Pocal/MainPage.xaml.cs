@@ -11,7 +11,7 @@ using Pocal.Resources;
 //using Microsoft.Phone.UserData;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using Pocal.ViewModels;
+using Pocal.ViewModelBinders;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -21,47 +21,31 @@ namespace Pocal
 {
 	public partial class MainPage : PhoneApplicationPage
 	{
-		//List<Day> items;
-		private Dictionary<object, ContentPresenter> items;
-
-		//ADDED FROM LISTCALENDAR!!!!!!!!!!!!
-		//ADDED FROM LISTCALENDAR!!!!!!!!!!!!
-		private List<Appointment> appointemnts = new List<Appointment>();
-
-
-		//ADDED FROM LISTCALENDAR END !!!!!!!!!!!!
-		//ADDED FROM LISTCALENDAR END!!!!!!!!!!!!
-
+		// Wird benötigt um die Position im Longlistselektor zu bestimmen um damit DeltaDays auszurechnen.
+		private Dictionary<object, ContentPresenter> items = new Dictionary<object, ContentPresenter>();
 
 
 		// Constructor
 		public MainPage()
 		{
 			InitializeComponent();
-
-
 			DataContext = App.ViewModel;
-			items = new Dictionary<object, ContentPresenter>();
 
-
-
-
+			// Meine SETUP Funktionen
+			watchPositionOfLongListSelector();
 			App.ViewModel.ShowUpcomingAppointments(30);
-			
 
+		}
+
+		private void watchPositionOfLongListSelector()
+		{
 			AgendaViewListbox.ItemRealized += LLS_ItemRealized;
 			AgendaViewListbox.ItemUnrealized += LLS_ItemUnrealized;
-
-			
-
 
 			DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 			dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
 			dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 40); // TODO performance
 			dispatcherTimer.Start();
-
-			//items = App.ViewModel.Days;
-
 		}
 
 		private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -172,28 +156,45 @@ namespace Pocal
 			Appointment appt = element.DataContext as Appointment;
 
 			var store = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
+
+			int ind = App.ViewModel.TappedDay.DayAppts.IndexOf(appt);
+
 			if (appt.OriginalStartTime == null)
 			{
 				await store.ShowAppointmentDetailsAsync(appt.LocalId);
+				App.ViewModel.TappedDay.DayAppts[ind]  = await store.GetAppointmentAsync(appt.LocalId);
 			}
 			else
 			{
 				await store.ShowAppointmentDetailsAsync(appt.LocalId, appt.OriginalStartTime.Value);
+				App.ViewModel.TappedDay.DayAppts[ind] = await store.GetAppointmentInstanceAsync(appt.LocalId, appt.OriginalStartTime.Value);
 			}
 
-			// TODO
-			//App.ViewModel.TappedDay.DayAppts = App.ViewModel.Days[3].DayAppts;		
-			//App.ViewModel.appts.Clear();
-			//App.ViewModel.TappedDay = App.ViewModel.Days[1];
 
-			App.ViewModel.ShowUpcomingAppointments(30);
+
+
 			
+
+			int i = 1;
+			
+
+			 //müll
+			//App.ViewModel.TappedDay.DayAppts = App.ViewModel.Days[3].DayAppts;		
+			//App.ViewModel.Days[0].DayAppts[0].Subject = "HAllOOO00";
+			//App.ViewModel.appts.Remove(appt);
+			//App.ViewModel.Days.RemoveAt(1);
+			//App.ViewModel.Days[0].DayAppts.Remove(App.ViewModel.appts[0]);
+
+			//App.ViewModel.TappedDay.DayAppts.Remove(appt);
+
+			//OLD Way of updating
+			//App.ViewModel.TappedDay = App.ViewModel.Days[1];
+			//App.ViewModel.ShowUpcomingAppointments(30);
+		
 			//foreach (Day d in App.ViewModel.Days)
 			//{
 			//	if 
 			//}
-
-
 
 		}
 
