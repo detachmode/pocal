@@ -7,25 +7,25 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Pocal.Resources;
-using Pocal.ViewModelBinders;
+using Pocal.ViewModel;
 
 namespace Pocal
 {
 	public partial class App : Application
 	{
-		private static MainViewModelBinder viewModel = null;
+		private static MainViewModel viewModel = null;
 
 		/// <summary>
 		/// A static ViewModel used by the views to bind against.
 		/// </summary>
 		/// <returns>The MainViewModel object.</returns>
-		public static MainViewModelBinder ViewModel
+		public static MainViewModel ViewModel
 		{
 			get
 			{
 				// Delay creation of the view model until necessary
 				if (viewModel == null)
-					viewModel = new MainViewModelBinder();
+					viewModel = new MainViewModel();
 
 				return viewModel;
 			}

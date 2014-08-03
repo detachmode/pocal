@@ -12,9 +12,9 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="False"
-    xmlns:viewmodel="clr-namespace:Pocal.ViewModelBinders"
+    xmlns:viewmodel="clr-namespace:Pocal.ViewModel"
     xmlns:local="clr-namespace:Pocal.Converter"
-    d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModelBinder,IsDesignTimeCreatable=True}">
+    d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel,IsDesignTimeCreatable=True}">
 
 
 	<!--Converter-->
@@ -26,7 +26,6 @@
 		<local:subjectConverter x:Key="subjectConverter"/>
 		<local:hourConverter x:Key="hourConverter"/>
 		<local:minuteConverter x:Key="minuteConverter"/>
-		<local:allDayStrokeWidthConverter x:Key="allDayStrokeWidthConverter"/>
 		<local:CurrentTopWeekConverter x:Key="CurrentTopWeekConverter"/>
 		<local:CurrentTopDayConverter x:Key="CurrentTopDayConverter"/>
 		<local:highlightedDayConverter x:Key="highlightedDayConverter"/>

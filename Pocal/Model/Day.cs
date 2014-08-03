@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using Windows.ApplicationModel.Appointments;
 
-namespace Pocal.ViewModelBinders
+namespace Pocal.Model
 {
     public class Day : INotifyPropertyChanged
     {

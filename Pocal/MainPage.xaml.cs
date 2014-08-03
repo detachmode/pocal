@@ -11,11 +11,12 @@ using Pocal.Resources;
 //using Microsoft.Phone.UserData;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using Pocal.ViewModelBinders;
+using Pocal.ViewModel;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Windows.ApplicationModel.Appointments;
+using Pocal.Model;
 
 namespace Pocal
 {
@@ -118,18 +119,11 @@ namespace Pocal
 			SingleDayView.Visibility = Visibility.Visible;
 			VisualStateManager.GoToState(this, "OpenDelay", true);
 
-			// Get selected Item as Day
+			//Set selectedItem 
 			var element = (FrameworkElement)sender;
-			Day selectedItem = element.DataContext as Day;
-
-			//Set SingleDayWindowHeader Binding
+			Day selectedItem = element.DataContext as Day;			
 			App.ViewModel.TappedDay = selectedItem;
-
-			//Set Header Text to Date Format
-			//string str = selectedItem.DT.DayOfWeek.ToString();
-			//SingleDayWindowHeader.Text = str;
 		}
-
 
 		private void gridExit_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
 		{
@@ -140,8 +134,6 @@ namespace Pocal
 		{
 			closeDayView();
 		}
-
-
 
 		private void closeDayView()
 		{

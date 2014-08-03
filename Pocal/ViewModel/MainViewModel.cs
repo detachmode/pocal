@@ -1,28 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-//using Microsoft.Phone.UserData;
 using System.Globalization;
-using System.Diagnostics;
 
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media;
-using System.Windows;
-using Microsoft.Phone.Controls;
-using System.Windows.Threading;
 using Windows.ApplicationModel.Appointments;
+using Pocal.Model;
 
 
-namespace Pocal.ViewModelBinders
+namespace Pocal.ViewModel
 {
-	public class MainViewModelBinder : INotifyPropertyChanged
+	public class MainViewModel : INotifyPropertyChanged
 	{
 		private int howManyDays = 30;
 		private int singleDayViewFirstHour = 8;
@@ -72,7 +61,7 @@ namespace Pocal.ViewModelBinders
 			}
 		}
 
-		public MainViewModelBinder()
+		public MainViewModel()
 		{
 			this.Days = new ObservableCollection<Day>();
 			gridSetup();

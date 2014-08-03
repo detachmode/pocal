@@ -94,7 +94,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converter\BindingConverter.cs" />
+    <Compile Include="Converter\AgendaViewConverter.cs" />
+    <Compile Include="Converter\SingleDayViewConverter.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -106,10 +107,9 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\ItemsChangeObservableCollection.cs" />
-    <Compile Include="ViewModelBinders\Day.cs" />
-    <Compile Include="ViewModelBinders\HourListItem.cs" />
-    <Compile Include="ViewModelBinders\ItemViewModel.cs" />
-    <Compile Include="ViewModelBinders\MainViewModelBinder.cs" />
+    <Compile Include="Model\Day.cs" />
+    <Compile Include="Model\HourListItem.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -120,10 +120,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <DesignData Include="SampleData\MainViewModelSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </DesignData>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
