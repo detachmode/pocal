@@ -311,7 +311,7 @@
 					<ScrollViewer VerticalScrollBarVisibility="Hidden">
 						<Grid Background="#FF212121">
 
-							<ItemsControl   ItemsSource="{Binding lines}">
+							<ItemsControl   ItemsSource="{Binding hourLines}">
 								<ItemsControl.ItemTemplate>
 									<DataTemplate>
 										<Grid >
@@ -319,7 +319,7 @@
 													BorderBrush="{StaticResource PhoneBorderBrush}" 
 													BorderThickness="0,0.7">
 
-												<TextBlock  Text="{Binding time}"
+												<TextBlock  Text="{Binding Mode=OneWay}"
 															Margin="6"
 															FontSize="22"/>
 											</Border>

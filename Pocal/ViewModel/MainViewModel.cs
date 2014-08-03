@@ -23,7 +23,7 @@ namespace Pocal.ViewModel
 
 		public ObservableCollection<Day> Days { get; private set; }
 
-		public ObservableCollection<HourListItem> lines { get; private set; }
+		public ObservableCollection<string> hourLines { get; private set; }
 
 		//Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
@@ -100,12 +100,12 @@ namespace Pocal.ViewModel
 
 		private void gridSetup()
 		{
-			this.lines = new ObservableCollection<HourListItem>();
+			this.hourLines = new ObservableCollection<string>();
 
 			for (int i = singleDayViewFirstHour; i < singleDayViewLastHour; i++)
 			{
 				string str = i.ToString("00") + ":00";
-				lines.Add(new HourListItem { time = str });
+				hourLines.Add(str);
 			}
 
 		}

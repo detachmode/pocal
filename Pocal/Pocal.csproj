@@ -108,7 +108,6 @@
     </Compile>
     <Compile Include="Resources\ItemsChangeObservableCollection.cs" />
     <Compile Include="Model\Day.cs" />
-    <Compile Include="Model\HourListItem.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
