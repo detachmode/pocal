@@ -1,11 +1,10 @@
-﻿namespace Pocal.Converter
+﻿using System;
+using System.Globalization;
+using System.Windows.Data;
+using Windows.ApplicationModel.Appointments;
+
+namespace Pocal.Converter
 {
-	using Pocal.Model;
-	using System;
-	using System.Globalization;
-	using System.Windows.Data;
-	using System.Windows.Media;
-	using Windows.ApplicationModel.Appointments;
 
 	internal static class cultureSettings
 	{

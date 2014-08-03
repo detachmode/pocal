@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Pocal.ViewModel
 {
-	public class SingleDayViewModel : INotifyPropertyChanged
+	public class SingleDayViewVM : INotifyPropertyChanged
 	{
 		internal int FirstHour = 0;
 		private int LastHour = 24;
@@ -34,7 +34,7 @@ namespace Pocal.ViewModel
 		}
 
 
-		public SingleDayViewModel()
+		public SingleDayViewVM()
 		{
 			gridSetup();
 		}

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
@@ -8,15 +7,15 @@ using System.Globalization;
 using Windows.ApplicationModel.Appointments;
 using Pocal.Model;
 
-
 namespace Pocal.ViewModel
 {
-	public class MainViewModel : INotifyPropertyChanged
+
+	public class MainVM : INotifyPropertyChanged
 	{
 		internal int howManyDays = 30;
 
 		internal List<Appointment> Appts = new List<Appointment>();
-		public SingleDayViewModel SingleDayViewModel { get; private set; }
+		public SingleDayViewVM SingleDayViewModel { get; private set; }
 
 		public ObservableCollection<Day> Days { get; private set; }
 
@@ -37,11 +36,10 @@ namespace Pocal.ViewModel
 			}
 		}
 
-		public MainViewModel()
+		public MainVM()
 		{
 			this.Days = new ObservableCollection<Day>();
-			SingleDayViewModel = new SingleDayViewModel();
-						
+			SingleDayViewModel = new SingleDayViewVM();
 
 			#region DESIGN TIME DATA
 			if (DesignerProperties.IsInDesignTool)

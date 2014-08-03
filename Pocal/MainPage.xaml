@@ -14,7 +14,7 @@
     shell:SystemTray.IsVisible="False"
     xmlns:viewmodel="clr-namespace:Pocal.ViewModel"
     xmlns:local="clr-namespace:Pocal.Converter"
-    d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel,IsDesignTimeCreatable=True}">
+    d:DataContext="{d:DesignInstance Type=viewmodel:MainVM,IsDesignTimeCreatable=True}">
 
 
 	<!--Converter-->
