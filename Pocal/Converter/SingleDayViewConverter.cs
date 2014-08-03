@@ -13,7 +13,6 @@
 	}
 
 
-
 	public class singelDayApptTranslateY : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -21,7 +20,7 @@
 			var appt = value as Appointment;
 			if (appt != null)
 			{
-				return (appt.StartTime.Hour-8)*70-1;	
+				return (appt.StartTime.Hour - App.ViewModel.SingleDayViewModel.FirstHour) * 70 - 1;	
 			}
 			return 0;
 		}
@@ -31,7 +30,6 @@
 
 			return null;
 		}
-
 
 	}
 

@@ -22,21 +22,24 @@ namespace Pocal
 {
 	public partial class MainPage : PhoneApplicationPage
 	{
-		// Wird benötigt um die Position im Longlistselektor zu bestimmen um damit DeltaDays auszurechnen.
-		private Dictionary<object, ContentPresenter> items = new Dictionary<object, ContentPresenter>();
-
-
+		
 		// Constructor
 		public MainPage()
 		{
 			InitializeComponent();
 			DataContext = App.ViewModel;
+			
 
 			// Meine SETUP Funktionen
 			watchPositionOfLongListSelector();
-			App.ViewModel.ShowUpcomingAppointments(30);
+			Pocal.ViewModel.AppointmentProvider.ShowUpcomingAppointments();
 
 		}
+
+		#region Position im Longlistselektor bestimmen
+
+		// Wird benötigt um die Position im Longlistselektor zu bestimmen um damit DeltaDays auszurechnen.
+		private Dictionary<object, ContentPresenter> items = new Dictionary<object, ContentPresenter>();
 
 		private void watchPositionOfLongListSelector()
 		{
@@ -98,7 +101,6 @@ namespace Pocal
 			}
 		}
 
-
 		private static ViewportControl FindViewport(DependencyObject parent)
 		{
 			var childCount = VisualTreeHelper.GetChildrenCount(parent);
@@ -111,7 +113,9 @@ namespace Pocal
 			}
 			return null;
 		}
+		#endregion
 
+		#region Events
 
 		public void onDayTap(object sender, System.Windows.Input.GestureEventArgs e)
 		{
@@ -122,7 +126,7 @@ namespace Pocal
 			//Set selectedItem 
 			var element = (FrameworkElement)sender;
 			Day selectedItem = element.DataContext as Day;			
-			App.ViewModel.TappedDay = selectedItem;
+			App.ViewModel.SingleDayViewModel.TappedDay = selectedItem;
 		}
 
 		private void gridExit_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
@@ -141,6 +145,9 @@ namespace Pocal
 			VisualStateManager.GoToState(this, "Close", true);
 		}
 
+
+		#endregion
+
 		public async void ApptListItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
 		{
 
@@ -149,25 +156,20 @@ namespace Pocal
 
 			var store = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
 
-			int ind = App.ViewModel.TappedDay.DayAppts.IndexOf(appt);
+			int ind = App.ViewModel.SingleDayViewModel.TappedDay.DayAppts.IndexOf(appt);
 
 			if (appt.OriginalStartTime == null)
 			{
 				await store.ShowAppointmentDetailsAsync(appt.LocalId);
-				App.ViewModel.TappedDay.DayAppts[ind]  = await store.GetAppointmentAsync(appt.LocalId);
+				App.ViewModel.SingleDayViewModel.TappedDay.DayAppts[ind] = await store.GetAppointmentAsync(appt.LocalId);
 			}
 			else
 			{
 				await store.ShowAppointmentDetailsAsync(appt.LocalId, appt.OriginalStartTime.Value);
-				App.ViewModel.TappedDay.DayAppts[ind] = await store.GetAppointmentInstanceAsync(appt.LocalId, appt.OriginalStartTime.Value);
+				App.ViewModel.SingleDayViewModel.TappedDay.DayAppts[ind] = await store.GetAppointmentInstanceAsync(appt.LocalId, appt.OriginalStartTime.Value);
 			}
 
-
-
-
-			
-
-			int i = 1;
+			//int i = 1;
 			
 
 			 //müll

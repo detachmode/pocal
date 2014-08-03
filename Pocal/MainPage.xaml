@@ -20,6 +20,7 @@
 	<!--Converter-->
 	<phone:PhoneApplicationPage.Resources>
 
+		
 		<local:weekConverter x:Key="weekConverter"/>
 		<local:DateConverter x:Key="DateConverter"/>
 		<local:secondLineConverter x:Key="secondLineConverter"/>
@@ -262,7 +263,7 @@
 
 			<!--SingleDayView-->
 			<Grid Name="SingleDayView" 
-					 Background="#AD000000" >
+					 Background="#AD000000" d:IsHidden="True" >
 				<Grid.RowDefinitions>
 					<RowDefinition Height="20*"/>
 					<RowDefinition Height="60*"/>
@@ -297,7 +298,7 @@
 
 						<TextBlock  Name="SingleDayWindowHeader" 
 									Style="{StaticResource PhoneTextTitle3Style}"
-									Text="{Binding TappedDay.DT, Converter={StaticResource DateConverter}}" 
+									Text="{Binding singleDayViewModel.TappedDay, Converter={StaticResource DateConverter}}" 
 									Margin="148,-4,24,0" 
 									FontSize="26" VerticalAlignment="Center" 
 									HorizontalAlignment="Right" 
@@ -311,7 +312,9 @@
 					<ScrollViewer VerticalScrollBarVisibility="Hidden">
 						<Grid Background="#FF212121">
 
-							<ItemsControl   ItemsSource="{Binding hourLines}">
+							<ItemsControl ItemsSource="{Binding SingleDayViewModel.hourLines}" >
+
+								
 								<ItemsControl.ItemTemplate>
 									<DataTemplate>
 										<Grid >
@@ -328,7 +331,8 @@
 								</ItemsControl.ItemTemplate>
 							</ItemsControl>
 
-							<ItemsControl x:Name="AppointmentsOnGrid"   ItemsSource="{Binding TappedDay.DayAppts}" >
+							<ItemsControl x:Name="AppointmentsOnGrid"   ItemsSource="{Binding SingleDayViewModel.TappedDay.DayAppts}" >
+								
 								<ItemsControl.ItemsPanel>
 									<ItemsPanelTemplate>
 										<Grid VerticalAlignment="Top">

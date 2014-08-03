@@ -109,6 +109,7 @@
     <Compile Include="Model\Day.cs" />
     <Compile Include="ViewModel\AppointmentProvider.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\SingleDayViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

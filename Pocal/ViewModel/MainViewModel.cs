@@ -13,36 +13,12 @@ namespace Pocal.ViewModel
 {
 	public class MainViewModel : INotifyPropertyChanged
 	{
-		private int howManyDays = 30;
-		private int singleDayViewFirstHour = 8;
-		private int singleDayViewLastHour = 20;
-		private AppointmentStore appointmentStore;
+		internal int howManyDays = 30;
 
-		private List<Appointment> appts = new List<Appointment>();
-
+		internal List<Appointment> Appts = new List<Appointment>();
+		public SingleDayViewModel SingleDayViewModel { get; private set; }
 
 		public ObservableCollection<Day> Days { get; private set; }
-
-		public ObservableCollection<string> hourLines { get; private set; }
-
-		//Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-
-		private Day _tappedDay;
-		public Day TappedDay
-		{
-			get
-			{
-				return _tappedDay;
-			}
-			set
-			{
-				if (value != _tappedDay)
-				{
-					_tappedDay = value;
-					NotifyPropertyChanged("TappedDay");
-				}
-			}
-		}
 
 		private Day _currentTop;
 		public Day CurrentTop
@@ -64,7 +40,8 @@ namespace Pocal.ViewModel
 		public MainViewModel()
 		{
 			this.Days = new ObservableCollection<Day>();
-			gridSetup();
+			SingleDayViewModel = new SingleDayViewModel();
+						
 
 			#region DESIGN TIME DATA
 			if (DesignerProperties.IsInDesignTool)
@@ -99,111 +76,6 @@ namespace Pocal.ViewModel
 
 		}
 
-		private void gridSetup()
-		{
-			this.hourLines = new ObservableCollection<string>();
-
-			for (int i = singleDayViewFirstHour; i < singleDayViewLastHour; i++)
-			{
-				string str = i.ToString("00") + ":00";
-				hourLines.Add(str);
-			}
-
-		}
-
-
-		public async void ShowUpcomingAppointments(int days)
-		{
-			if (appointmentStore == null)
-			{
-				appointmentStore = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
-			}
-
-			FindAppointmentsOptions findOptions = new FindAppointmentsOptions();
-			findOptions.MaxCount = 30;
-			findOptions.FetchProperties.Add(AppointmentProperties.Subject);
-			findOptions.FetchProperties.Add(AppointmentProperties.Location);
-			findOptions.FetchProperties.Add(AppointmentProperties.StartTime);
-			findOptions.FetchProperties.Add(AppointmentProperties.Duration);
-
-			IReadOnlyList<Appointment> appointments =
-				await appointmentStore.FindAppointmentsAsync(DateTime.Now, TimeSpan.FromDays(days), findOptions);
-
-
-			appts.Clear();
-			foreach (Appointment a in appointments)
-			{
-				appts.Add(a);
-			}
-
-			fillDayview();
-
-			if (App.ViewModel.TappedDay == null)
-			{
-				App.ViewModel.TappedDay = App.ViewModel.Days[0];
-			}
-
-
-		}
-
-
-		private void fillDayview()
-		{
-			DateTime dt = DateTime.Now;
-			CultureInfo ci = new CultureInfo("de-DE");
-
-			Days.Clear();
-			for (int i = 0; i < howManyDays; i++)
-			{
-				// Create New Day with its Appointments
-				this.Days.Add(new Day()
-				{
-					DT = dt,
-					DayAppts = getApptsOfDay(dt)
-				});
-
-				// Sunday Attribute
-				if (dt.DayOfWeek == DayOfWeek.Sunday)
-				{
-					Days[i].Sunday = true;
-				}
-
-				// Iteration ++ ein Tag
-				dt = dt.AddDays(1);
-
-			}
-		}
-
-		public ObservableCollection<Appointment> getApptsOfDay(DateTime dt)
-		{
-
-			ObservableCollection<Appointment> thisDayAppts = new ObservableCollection<Appointment>();
-			foreach (Appointment a in appts)
-			{
-				if (a.StartTime.Day == dt.Day)
-				{
-					thisDayAppts.Add(a);
-					//a.StartTime.Minute
-				}
-			}
-			// Sort 
-			thisDayAppts = sortAppointments(thisDayAppts);
-			
-			return thisDayAppts;
-		}
-
-		private ObservableCollection<Appointment> sortAppointments(ObservableCollection<Appointment> appts)
-		{
-			ObservableCollection<Appointment> sorted = new ObservableCollection<Appointment>();
-			IEnumerable<Appointment> query = appts.OrderBy(appt => appt.StartTime);
-
-			foreach (Appointment appt in query)
-			{
-				sorted.Add(appt);
-			}
-
-			return sorted;
-		}
 
 		#region PropertyChangedEventHandler / NotifyPropertyChanged
 		public event PropertyChangedEventHandler PropertyChanged;
