@@ -13,25 +13,8 @@ namespace Pocal.Model
 {
     public class Day : INotifyPropertyChanged
     {
-        
-        private string _id;
-        public string ID
-        {
-            get
-            {
-                return _id;
-            }
-            set
-            {
-                if (value != _id)
-                {
-                    _id = value;
-                    NotifyPropertyChanged("ID");
-                }
-            }
-        }
 
-        private bool _isHighlighted;
+		private bool _isHighlighted;
         public bool IsHighlighted
         {
             get
@@ -47,8 +30,6 @@ namespace Pocal.Model
                 }
             }
         }
-
-
 
         public bool Sunday = false;
 
@@ -118,8 +99,8 @@ namespace Pocal.Model
         }
 
 
-
-        public event PropertyChangedEventHandler PropertyChanged;
+		#region PropertyChangedEventHandler / NotifyPropertyChanged
+		public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged(String propertyName)
         {
@@ -128,7 +109,8 @@ namespace Pocal.Model
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
-        }
+		}
+		#endregion
 
-    }
+	}
 }

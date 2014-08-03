@@ -66,7 +66,7 @@ namespace Pocal.ViewModel
 			this.Days = new ObservableCollection<Day>();
 			gridSetup();
 
-
+			#region DESIGN TIME DATA
 			if (DesignerProperties.IsInDesignTool)
 			{
 				//	//CREATE DESIGN TIME DATA HERE
@@ -83,18 +83,19 @@ namespace Pocal.ViewModel
 				DesignDataDayappts.Add(new Appointment { Subject = "Einkaufen", StartTime = dt.AddHours(11.3), Duration = ts });
 				DesignDataDayappts.Add(new Appointment { Subject = "Mom Anrufen", StartTime = dt.AddHours(14.5), Duration = ts });
 
-				Days.Add(new Day { ID = "1", DT = dt, DayAppts = DesignDataDayappts, Sunday = true });
+				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayappts, Sunday = true });
 				dt = DateTime.Now.AddDays(1);
-				Days.Add(new Day { ID = "2", DT = dt, DayAppts = DesignDataDayappts });
+				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayappts });
 				dt = dt.AddDays(1);
-				Days.Add(new Day { ID = "2", DT = dt, DayAppts = DesignDataDayappts });
+				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayappts });
 				dt = dt.AddDays(1);
-				Days.Add(new Day { ID = "2", DT = dt, DayAppts = DesignDataDayappts });
+				Days.Add(new Day {  DT = dt, DayAppts = DesignDataDayappts });
 
 
-				CurrentTop = new Day { ID = "3", DT = dt.AddHours(24) };
+				CurrentTop = new Day {DT = dt.AddHours(24) };
 
 			}
+			#endregion
 
 		}
 
@@ -110,12 +111,6 @@ namespace Pocal.ViewModel
 
 		}
 
-
-		public async void updateAppointment(string _localID)
-		{
-			Appointment appt = await appointmentStore.GetAppointmentAsync(_localID);
-			//Days.First
-		}
 
 		public async void ShowUpcomingAppointments(int days)
 		{
@@ -147,11 +142,7 @@ namespace Pocal.ViewModel
 			{
 				App.ViewModel.TappedDay = App.ViewModel.Days[0];
 			}
-			else
-			{
-				Day tempDay = App.ViewModel.Days.First(d => d.ID == App.ViewModel.TappedDay.ID);
-				App.ViewModel.TappedDay = tempDay;
-			}
+
 
 		}
 
@@ -167,7 +158,6 @@ namespace Pocal.ViewModel
 				// Create New Day with its Appointments
 				this.Days.Add(new Day()
 				{
-					ID = i.ToString(),
 					DT = dt,
 					DayAppts = getApptsOfDay(dt)
 				});
@@ -182,10 +172,7 @@ namespace Pocal.ViewModel
 				dt = dt.AddDays(1);
 
 			}
-			
-
 		}
-
 
 		public ObservableCollection<Appointment> getApptsOfDay(DateTime dt)
 		{
@@ -198,13 +185,10 @@ namespace Pocal.ViewModel
 					thisDayAppts.Add(a);
 					//a.StartTime.Minute
 				}
-
 			}
-
 			// Sort 
 			thisDayAppts = sortAppointments(thisDayAppts);
-			this.IsDataLoaded = true;
-
+			
 			return thisDayAppts;
 		}
 
@@ -221,15 +205,9 @@ namespace Pocal.ViewModel
 			return sorted;
 		}
 
-
-		public bool IsDataLoaded
-		{
-			get;
-			private set;
-		}
-
-
+		#region PropertyChangedEventHandler / NotifyPropertyChanged
 		public event PropertyChangedEventHandler PropertyChanged;
+
 		private void NotifyPropertyChanged(String propertyName)
 		{
 			PropertyChangedEventHandler handler = PropertyChanged;
@@ -238,5 +216,6 @@ namespace Pocal.ViewModel
 				handler(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+		#endregion
 	}
 }

@@ -107,6 +107,7 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Model\Day.cs" />
+    <Compile Include="ViewModel\AppointmentProvider.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
