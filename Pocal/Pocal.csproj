@@ -106,7 +106,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\ItemsChangeObservableCollection.cs" />
     <Compile Include="Model\Day.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
   </ItemGroup>
