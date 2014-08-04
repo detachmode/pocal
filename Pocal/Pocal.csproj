@@ -109,6 +109,7 @@
     <Compile Include="Model\Day.cs" />
     <Compile Include="ViewModel\AppointmentProvider.cs" />
     <Compile Include="ViewModel\MainVM.cs" />
+    <Compile Include="ViewModel\PocalAppointment.cs" />
     <Compile Include="ViewModel\SingleDayViewVM.cs" />
   </ItemGroup>
   <ItemGroup>

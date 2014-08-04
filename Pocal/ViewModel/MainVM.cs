@@ -14,7 +14,7 @@ namespace Pocal.ViewModel
 	{
 		internal int howManyDays = 30;
 
-		internal List<Appointment> Appts = new List<Appointment>();
+		internal ObservableCollection<Appointment> Appts = new ObservableCollection<Appointment>();
 		public SingleDayViewVM SingleDayViewModel { get; private set; }
 
 		public ObservableCollection<Day> Days { get; private set; }
