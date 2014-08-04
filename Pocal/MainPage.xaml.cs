@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Windows.ApplicationModel.Appointments;
 using Pocal.Model;
+using Pocal.ViewModel;
 
 namespace Pocal
 {
@@ -144,21 +145,21 @@ namespace Pocal
 		{
 
 			var element = (FrameworkElement)sender;
-			Appointment appt = element.DataContext as Appointment;
+			PocalAppointment pocalAppt = element.DataContext as PocalAppointment;
 
 			var store = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
 
-			int ind = App.ViewModel.SingleDayViewModel.TappedDay.DayAppts.IndexOf(appt);
+			//int ind = App.ViewModel.SingleDayViewModel.TappedDay.DayAppts.IndexOf(pocalAppt);
 
-			if (appt.OriginalStartTime == null)
+			if (pocalAppt.Appt.OriginalStartTime == null)
 			{
-				await store.ShowAppointmentDetailsAsync(appt.LocalId);
-				App.ViewModel.SingleDayViewModel.TappedDay.DayAppts[ind] = await store.GetAppointmentAsync(appt.LocalId);
+				await store.ShowAppointmentDetailsAsync(pocalAppt.Appt.LocalId);
+				//App.ViewModel.SingleDayViewModel.TappedDay.DayAppts[ind] = await store.GetAppointmentAsync(pocalAppt.Appt.LocalId);
 			}
 			else
 			{
-				await store.ShowAppointmentDetailsAsync(appt.LocalId, appt.OriginalStartTime.Value);
-				App.ViewModel.SingleDayViewModel.TappedDay.DayAppts[ind] = await store.GetAppointmentInstanceAsync(appt.LocalId, appt.OriginalStartTime.Value);
+				await store.ShowAppointmentDetailsAsync(pocalAppt.Appt.LocalId, pocalAppt.Appt.OriginalStartTime.Value);
+				//App.ViewModel.SingleDayViewModel.TappedDay.DayAppts[ind] = await store.GetAppointmentInstanceAsync(pocalAppt.Appt.LocalId, pocalAppt.Appt.OriginalStartTime.Value);
 			}
 
 			//int i = 1;

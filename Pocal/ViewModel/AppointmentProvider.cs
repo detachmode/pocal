@@ -27,17 +27,26 @@ namespace Pocal.ViewModel
 			findOptions.FetchProperties.Add(AppointmentProperties.StartTime);
 			findOptions.FetchProperties.Add(AppointmentProperties.Duration);
 
-			IReadOnlyList<Appointment> appointments =
+			IReadOnlyList<Appointment> allAppts =
 				await appointmentStore.FindAppointmentsAsync(DateTime.Now, TimeSpan.FromDays(days), findOptions);
 
-
-			App.ViewModel.Appts.Clear();
-			foreach (Appointment a in appointments)
+			if (allAppts.Any())
 			{
-				App.ViewModel.Appts.Add(a);
+				var calendars = await appointmentStore.FindAppointmentCalendarsAsync();
+
+				App.ViewModel.AllPocalAppointments.Clear();
+				foreach (Appointment appt in allAppts)
+				{
+					var cal = calendars.First( c => c.LocalId == appt.CalendarId);
+					var calColor = new System.Windows.Media.Color {A=cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G};
+
+					App.ViewModel.AllPocalAppointments.Add(new PocalAppointment(appt, calColor));
+				}
+
+				fillDayview();
 			}
 
-			fillDayview();
+
 
 			if (App.ViewModel.SingleDayViewModel.TappedDay == null)
 			{
@@ -75,11 +84,11 @@ namespace Pocal.ViewModel
 			}
 		}
 
-		public static ObservableCollection<Appointment> getApptsOfDay(DateTime dt)
+		public static ObservableCollection<PocalAppointment> getApptsOfDay(DateTime dt)
 		{
 
-			ObservableCollection<Appointment> thisDayAppts = new ObservableCollection<Appointment>();
-			foreach (Appointment a in App.ViewModel.Appts)
+			ObservableCollection<PocalAppointment> thisDayAppts = new ObservableCollection<PocalAppointment>();
+			foreach (PocalAppointment a in App.ViewModel.AllPocalAppointments)
 			{
 				if (a.StartTime.Day == dt.Day)
 				{
@@ -93,12 +102,12 @@ namespace Pocal.ViewModel
 			return thisDayAppts;
 		}
 
-		private static ObservableCollection<Appointment> sortAppointments(ObservableCollection<Appointment> appts)
+		private static ObservableCollection<PocalAppointment> sortAppointments(ObservableCollection<PocalAppointment> appts)
 		{
-			ObservableCollection<Appointment> sorted = new ObservableCollection<Appointment>();
-			IEnumerable<Appointment> query = appts.OrderBy(appt => appt.StartTime);
+			ObservableCollection<PocalAppointment> sorted = new ObservableCollection<PocalAppointment>();
+			IEnumerable<PocalAppointment> query = appts.OrderBy(appt => appt.StartTime);
 
-			foreach (Appointment appt in query)
+			foreach (PocalAppointment appt in query)
 			{
 				sorted.Add(appt);
 			}

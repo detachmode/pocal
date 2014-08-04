@@ -6,6 +6,7 @@ using System.Globalization;
 
 using Windows.ApplicationModel.Appointments;
 using Pocal.Model;
+using System.Windows.Media;
 
 namespace Pocal.ViewModel
 {
@@ -14,7 +15,7 @@ namespace Pocal.ViewModel
 	{
 		internal int howManyDays = 30;
 
-		internal ObservableCollection<Appointment> Appts = new ObservableCollection<Appointment>();
+		internal ObservableCollection<PocalAppointment> AllPocalAppointments = new ObservableCollection<PocalAppointment>();
 		public SingleDayViewVM SingleDayViewModel { get; private set; }
 
 		public ObservableCollection<Day> Days { get; private set; }
@@ -50,13 +51,20 @@ namespace Pocal.ViewModel
 				CultureInfo ci = new CultureInfo("de-DE");
 
 				var appointment = new Windows.ApplicationModel.Appointments.Appointment();
-				ObservableCollection<Appointment> DesignDataDayappts = new ObservableCollection<Appointment>();
+				ObservableCollection<PocalAppointment> DesignDataDayappts = new ObservableCollection<PocalAppointment>();
+				List<Appointment> appts = new List<Appointment>();
 
-				DesignDataDayappts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), AllDay = true });
-				DesignDataDayappts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), AllDay = true });
-				DesignDataDayappts.Add(new Appointment { Subject = "Essen", StartTime = dt.AddHours(9), Duration = ts, Location = "Stuttgart" });
-				DesignDataDayappts.Add(new Appointment { Subject = "Einkaufen", StartTime = dt.AddHours(11.3), Duration = ts });
-				DesignDataDayappts.Add(new Appointment { Subject = "Mom Anrufen", StartTime = dt.AddHours(14.5), Duration = ts });
+				appts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), AllDay = true });
+				appts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), AllDay = true });
+				appts.Add(new Appointment { Subject = "Essen", StartTime = dt.AddHours(9), Duration = ts, Location = "Stuttgart" });
+				appts.Add(new Appointment { Subject = "Einkaufen", StartTime = dt.AddHours(11.3), Duration = ts });
+				appts.Add(new Appointment { Subject = "Mom Anrufen", StartTime = dt.AddHours(14.5), Duration = ts });
+
+				Color col = new Color {A=255, B = 200, R = 100, G =0};
+
+				DesignDataDayappts.Add(new PocalAppointment(appts[0], col));
+				DesignDataDayappts.Add(new PocalAppointment(appts[1], col));
+				DesignDataDayappts.Add(new PocalAppointment(appts[3], col));
 
 				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayappts, Sunday = true });
 				dt = DateTime.Now.AddDays(1);
