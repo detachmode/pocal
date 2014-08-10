@@ -1,4 +1,5 @@
 ﻿using Pocal.Model;
+using Pocal.ViewModel;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -66,8 +67,6 @@ namespace Pocal.Converter
 
 			return null;
 		}
-
-
 	}
 
 
@@ -133,7 +132,7 @@ namespace Pocal.Converter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var appt = value as Appointment;
+			var appt = (value as PocalAppointment).Appt;
 			if (appt != null)
 			{
 				if (appt.AllDay == true)
@@ -161,7 +160,7 @@ namespace Pocal.Converter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var appt = value as Appointment;
+			var appt = (value as PocalAppointment).Appt;
 			if (appt != null)
 			{
 				if (appt.AllDay == true)
@@ -197,7 +196,8 @@ namespace Pocal.Converter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var appt = value as Appointment;
+			var appt = (value as PocalAppointment).Appt;
+
 			if (appt != null)
 			{
 				string str = "";

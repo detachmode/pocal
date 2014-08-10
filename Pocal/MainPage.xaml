@@ -20,7 +20,7 @@
 	<!--Converter-->
 	<phone:PhoneApplicationPage.Resources>
 
-		
+
 		<local:weekConverter x:Key="weekConverter"/>
 		<local:DateConverter x:Key="DateConverter"/>
 		<local:secondLineConverter x:Key="secondLineConverter"/>
@@ -32,6 +32,7 @@
 		<local:highlightedDayConverter x:Key="highlightedDayConverter"/>
 		<local:singelDayApptTranslateY x:Key="singelDayApptTranslateY"/>
 		<local:singelDayApptHeight x:Key="singelDayApptHeight"/>
+		<local:windowHeaderDateConverter x:Key="windowHeaderDateConverter"/>
 
 
 
@@ -159,10 +160,13 @@
 				</Grid.RowDefinitions>
 
 				<!--Agenda View Header-->
-				<Grid x:Name="AgendaHeader"	Background="#FFB60000" 
+				<Grid x:Name="AgendaHeader" 
 						Grid.Row="0"
 						Canvas.ZIndex="4" 
 						>
+					<Grid.Background>
+						<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+					</Grid.Background>
 					<StackPanel x:Name="HeaderStackPanel" 
 							Orientation="Horizontal" 
 							HorizontalAlignment="Center" 
@@ -228,11 +232,13 @@
 														<!--Subject of Appointment-->
 														<StackPanel   Margin="12,0,0,0">
 
-															<TextBlock  Text="{Binding Subject, Converter={StaticResource subjectConverter}}"
-																FontSize="20"/>
+															<TextBlock  Text="{Binding Subject, Converter={StaticResource subjectConverter}}"							
+																Foreground="{Binding CalColor}"
+																		FontSize="20" 
+																/>
 
 															<TextBlock Text="{Binding Converter={StaticResource secondLineConverter}}" 
-																Foreground="{StaticResource PhoneBorderBrush}" 
+																
 																FontFamily="{StaticResource PhoneFontFamilyLight}" 
 																CharacterSpacing="1" 
 																Padding="0" 
@@ -263,7 +269,7 @@
 
 			<!--SingleDayView-->
 			<Grid Name="SingleDayView" 
-					 Background="#AD000000" d:IsHidden="True" >
+					 Background="#AD000000" >
 				<Grid.RowDefinitions>
 					<RowDefinition Height="20*"/>
 					<RowDefinition Height="60*"/>
@@ -291,19 +297,25 @@
 								Canvas.ZIndex="1"/>
 
 					<!--Window Header-->
-					<Border Background="#FF970000"
+					<Border
 							Canvas.ZIndex="3"  
 							Margin="0,-41,0,437">
+						<Border.Background>
+							<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+						</Border.Background>
 
 
 						<TextBlock  Name="SingleDayWindowHeader" 
 									Style="{StaticResource PhoneTextTitle3Style}"
-									Text="{Binding singleDayViewModel.TappedDay, Converter={StaticResource DateConverter}}" 
+									Text="{Binding SingleDayViewModel.TappedDay.DT, Converter={StaticResource DateConverter}}" 
 									Margin="148,-4,24,0" 
 									FontSize="26" VerticalAlignment="Center" 
 									HorizontalAlignment="Right" 
-									Foreground="#FFC1C1C1" 
-									/>
+									>
+							<TextBlock.Foreground>
+								<SolidColorBrush Color="{StaticResource PhoneButtonBasePressedForegroundColor}"/>
+							</TextBlock.Foreground>
+						</TextBlock>
 						<!--FontFamily="Cambria"-->
 
 					</Border>
@@ -314,7 +326,7 @@
 
 							<ItemsControl ItemsSource="{Binding SingleDayViewModel.hourLines}" >
 
-								
+
 								<ItemsControl.ItemTemplate>
 									<DataTemplate>
 										<Grid >
@@ -332,7 +344,7 @@
 							</ItemsControl>
 
 							<ItemsControl x:Name="AppointmentsOnGrid"   ItemsSource="{Binding SingleDayViewModel.TappedDay.DayAppts}" >
-								
+
 								<ItemsControl.ItemsPanel>
 									<ItemsPanelTemplate>
 										<Grid VerticalAlignment="Top">
@@ -355,10 +367,8 @@
 												<CompositeTransform TranslateY="{Binding Converter={StaticResource singelDayApptTranslateY}}" />
 											</Grid.RenderTransform>
 
-											<Border BorderThickness="12,0,0,0">
-												<Border.BorderBrush>
-													<SolidColorBrush Color="#FFB82B1E"/>
-												</Border.BorderBrush>
+											<Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}">
+
 
 												<TextBlock  Text="{Binding Subject }"
 															Margin="6,3"

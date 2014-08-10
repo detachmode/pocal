@@ -32,12 +32,17 @@ namespace Pocal.ViewModel
 
 		private string calendarId;
 
-		private Color calColor;
-		public Color CalColor
+		private SolidColorBrush calColor;
+		public SolidColorBrush CalColor
 		{
 			get
 			{
 				return calColor;
+			}
+			set
+			{
+				calColor = value;
+				NotifyPropertyChanged("CalColor");
 			}
 
 		}
@@ -114,18 +119,18 @@ namespace Pocal.ViewModel
 
 
 
-		public PocalAppointment(Appointment appt , Color calColor)
-		{
-			this.appt = appt;
-			this.calColor = calColor;
-			this.calendarId = appt.CalendarId;
+		//public PocalAppointment(Appointment appt , Color calColor)
+		//{
+		//	this.appt = appt;
+		//	this.calColor = calColor;
+		//	this.calendarId = appt.CalendarId;
 
-			this.subject = appt.Subject;
-			this.location = appt.Location;
+		//	this.subject = appt.Subject;
+		//	this.location = appt.Location;
 
-			this.startTime = appt.StartTime;
-			this.duration = appt.Duration;
-		}
+		//	this.startTime = appt.StartTime;
+		//	this.duration = appt.Duration;
+		//}
 	
 
 

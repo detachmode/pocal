@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Windows.Media;
 using Windows.ApplicationModel.Appointments;
 
 namespace Pocal.ViewModel
@@ -25,17 +26,29 @@ namespace Pocal.ViewModel
 			findOptions.FetchProperties.Add(AppointmentProperties.Subject);
 			findOptions.FetchProperties.Add(AppointmentProperties.Location);
 			findOptions.FetchProperties.Add(AppointmentProperties.StartTime);
+			findOptions.FetchProperties.Add(AppointmentProperties.AllDay);
 			findOptions.FetchProperties.Add(AppointmentProperties.Duration);
 
-			IReadOnlyList<Appointment> appointments =
-				await appointmentStore.FindAppointmentsAsync(DateTime.Now, TimeSpan.FromDays(days), findOptions);
-
-
-			App.ViewModel.Appts.Clear();
-			foreach (Appointment a in appointments)
+			var allAppts = await appointmentStore.FindAppointmentsAsync(DateTime.Now, TimeSpan.FromDays(days), findOptions);
+			if (allAppts.Any())
 			{
-				App.ViewModel.Appts.Add(a);
+				// get calendars 
+				var calendars = await appointmentStore.FindAppointmentCalendarsAsync();
+
+				App.ViewModel.Appts.Clear();
+
+				foreach (var appt in allAppts)
+				{
+					var cal = calendars.First(c => c.LocalId == appt.CalendarId);
+					var calColor = new System.Windows.Media.Color() { A = cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
+
+					PocalAppointment pocalAppt = new PocalAppointment { Appt = appt , CalColor = new SolidColorBrush(calColor)};
+					App.ViewModel.Appts.Add(pocalAppt);
+				}
+
 			}
+
+
 
 			fillDayview();
 
@@ -75,11 +88,11 @@ namespace Pocal.ViewModel
 			}
 		}
 
-		public static ObservableCollection<Appointment> getApptsOfDay(DateTime dt)
+		public static ObservableCollection<PocalAppointment> getApptsOfDay(DateTime dt)
 		{
 
-			ObservableCollection<Appointment> thisDayAppts = new ObservableCollection<Appointment>();
-			foreach (Appointment a in App.ViewModel.Appts)
+			ObservableCollection<PocalAppointment> thisDayAppts = new ObservableCollection<PocalAppointment>();
+			foreach (PocalAppointment a in App.ViewModel.Appts)
 			{
 				if (a.StartTime.Day == dt.Day)
 				{
@@ -93,12 +106,12 @@ namespace Pocal.ViewModel
 			return thisDayAppts;
 		}
 
-		private static ObservableCollection<Appointment> sortAppointments(ObservableCollection<Appointment> appts)
+		private static ObservableCollection<PocalAppointment> sortAppointments(ObservableCollection<PocalAppointment> appts)
 		{
-			ObservableCollection<Appointment> sorted = new ObservableCollection<Appointment>();
-			IEnumerable<Appointment> query = appts.OrderBy(appt => appt.StartTime);
+			ObservableCollection<PocalAppointment> sorted = new ObservableCollection<PocalAppointment>();
+			IEnumerable<PocalAppointment> query = appts.OrderBy(appt => appt.StartTime);
 
-			foreach (Appointment appt in query)
+			foreach (PocalAppointment appt in query)
 			{
 				sorted.Add(appt);
 			}

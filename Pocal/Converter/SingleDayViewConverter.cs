@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Pocal.Model;
+using Pocal.ViewModel;
+using System;
 using System.Globalization;
 using System.Windows.Data;
 using Windows.ApplicationModel.Appointments;
@@ -12,11 +14,40 @@ namespace Pocal.Converter
 	}
 
 
+	public class windowHeaderDateConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			var day = value as Day;
+			if (day != null)
+			{
+
+				DateTime dt = day.DT;
+				if (dt.Date == DateTime.Now.Date)
+				{
+					return "Heute";
+
+				}
+				else
+					return dt.ToString("dddd", cultureSettings.ci) + ", " + dt.ToString("M", cultureSettings.ci);
+
+			}
+			else return null;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+
+			return null;
+		}
+	}
+
+
 	public class singelDayApptTranslateY : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var appt = value as Appointment;
+			var appt = (value as PocalAppointment).Appt;
 			if (appt != null)
 			{
 				return (appt.StartTime.Hour - App.ViewModel.SingleDayViewModel.FirstHour) * 70 - 1;	
@@ -36,7 +67,7 @@ namespace Pocal.Converter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var appt = value as Appointment;
+			var appt = (value as PocalAppointment).Appt;
 			if (appt != null)
 			{
 				if (appt.AllDay)

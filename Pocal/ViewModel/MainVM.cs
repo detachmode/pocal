@@ -6,6 +6,7 @@ using System.Globalization;
 
 using Windows.ApplicationModel.Appointments;
 using Pocal.Model;
+using System.Windows.Media;
 
 namespace Pocal.ViewModel
 {
@@ -14,7 +15,7 @@ namespace Pocal.ViewModel
 	{
 		internal int howManyDays = 30;
 
-		internal ObservableCollection<Appointment> Appts = new ObservableCollection<Appointment>();
+		internal ObservableCollection<PocalAppointment> Appts = new ObservableCollection<PocalAppointment>();
 		public SingleDayViewVM SingleDayViewModel { get; private set; }
 
 		public ObservableCollection<Day> Days { get; private set; }
@@ -49,8 +50,10 @@ namespace Pocal.ViewModel
 				TimeSpan ts = new TimeSpan(1, 30, 0);
 				CultureInfo ci = new CultureInfo("de-DE");
 
-				var appointment = new Windows.ApplicationModel.Appointments.Appointment();
+				//var appointment = new Windows.ApplicationModel.Appointments.Appointment();
 				ObservableCollection<Appointment> DesignDataDayappts = new ObservableCollection<Appointment>();
+
+				SolidColorBrush tempCalColor = new SolidColorBrush(Color.FromArgb(255, 100, 255, 0));
 
 				DesignDataDayappts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), AllDay = true });
 				DesignDataDayappts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), AllDay = true });
@@ -58,13 +61,23 @@ namespace Pocal.ViewModel
 				DesignDataDayappts.Add(new Appointment { Subject = "Einkaufen", StartTime = dt.AddHours(11.3), Duration = ts });
 				DesignDataDayappts.Add(new Appointment { Subject = "Mom Anrufen", StartTime = dt.AddHours(14.5), Duration = ts });
 
-				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayappts, Sunday = true });
+				ObservableCollection<PocalAppointment> DesignDataDayPocalappts = new ObservableCollection<PocalAppointment>();
+				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[0], CalColor = tempCalColor });
+				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[1], CalColor = tempCalColor});
+				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[2], CalColor = tempCalColor });
+				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[3], CalColor = tempCalColor });
+				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[4], CalColor = tempCalColor });
+				//DesignDataDayPocalappts.Add(new PocalAppointment(DesignDataDayappts[2], Color.FromArgb(155, 55, 55, 55)));
+
+				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayPocalappts, Sunday = true });
 				dt = DateTime.Now.AddDays(1);
-				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayappts });
+				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayPocalappts });
 				dt = dt.AddDays(1);
-				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayappts });
+				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayPocalappts });
 				dt = dt.AddDays(1);
-				Days.Add(new Day {  DT = dt, DayAppts = DesignDataDayappts });
+				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayPocalappts });
+
+				SingleDayViewModel.TappedDay = Days[1];
 
 
 				CurrentTop = new Day {DT = dt.AddHours(24) };

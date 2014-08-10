@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Windows.ApplicationModel.Appointments;
 using Pocal.Model;
+using Pocal.ViewModel;
 
 namespace Pocal
 {
@@ -144,22 +145,22 @@ namespace Pocal
 		{
 
 			var element = (FrameworkElement)sender;
-			Appointment appt = element.DataContext as Appointment;
+			PocalAppointment appt = element.DataContext as PocalAppointment;
 
-			var store = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
+			//var store = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
 
-			int ind = App.ViewModel.SingleDayViewModel.TappedDay.DayAppts.IndexOf(appt);
+			//int ind = App.ViewModel.SingleDayViewModel.TappedDay.DayAppts.IndexOf(appt);
 
-			if (appt.OriginalStartTime == null)
-			{
-				await store.ShowAppointmentDetailsAsync(appt.LocalId);
-				App.ViewModel.SingleDayViewModel.TappedDay.DayAppts[ind] = await store.GetAppointmentAsync(appt.LocalId);
-			}
-			else
-			{
-				await store.ShowAppointmentDetailsAsync(appt.LocalId, appt.OriginalStartTime.Value);
-				App.ViewModel.SingleDayViewModel.TappedDay.DayAppts[ind] = await store.GetAppointmentInstanceAsync(appt.LocalId, appt.OriginalStartTime.Value);
-			}
+			//if (appt.OriginalStartTime == null)
+			//{
+			//	await store.ShowAppointmentDetailsAsync(appt.LocalId);
+			//	App.ViewModel.SingleDayViewModel.TappedDay.DayAppts[ind] = await store.GetAppointmentAsync(appt.LocalId);
+			//}
+			//else
+			//{
+			//	await store.ShowAppointmentDetailsAsync(appt.LocalId, appt.OriginalStartTime.Value);
+			//	App.ViewModel.SingleDayViewModel.TappedDay.DayAppts[ind] = await store.GetAppointmentInstanceAsync(appt.LocalId, appt.OriginalStartTime.Value);
+			//}
 
 			//int i = 1;
 			
@@ -174,7 +175,7 @@ namespace Pocal
 			//App.ViewModel.TappedDay.DayAppts.Remove(appt);
 
 			//OLD Way of updating
-			//App.ViewModel.TappedDay = App.ViewModel.Days[1];
+			App.ViewModel.SingleDayViewModel.TappedDay = App.ViewModel.Days[1];
 			//App.ViewModel.ShowUpcomingAppointments(30);
 		
 			//foreach (Day d in App.ViewModel.Days)

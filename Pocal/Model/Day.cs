@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pocal.ViewModel;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media;
@@ -28,20 +29,6 @@ namespace Pocal.Model
         }
 
         public bool Sunday = false;
-
-        public object customBackground
-        {
-            get
-            {
-                if (Sunday )//RED 
-                {
-                    return new SolidColorBrush(Color.FromArgb(255, 122, 122, 122));
-                }
-
-                // Color por defecto
-                return new SolidColorBrush(Colors.Transparent);
-            }
-        }
 
         public object sundayForeground
         {
@@ -74,8 +61,8 @@ namespace Pocal.Model
             }
         }
 
-		private ObservableCollection<Appointment> _dayAppts;
-		public ObservableCollection<Appointment> DayAppts
+		private ObservableCollection<PocalAppointment> _dayAppts;
+		public ObservableCollection<PocalAppointment> DayAppts
         {
             get
             {
