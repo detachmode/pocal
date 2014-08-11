@@ -36,7 +36,12 @@ namespace Pocal.Model
             {
                 if (Sunday)//RED 
                 {
-                    return new SolidColorBrush(Color.FromArgb(255, 255, 3, 3));
+
+
+					return (SolidColorBrush)App.Current.Resources["PhoneAccentBrush"];
+
+
+					//return new SolidColorBrush(Color.FromArgb(255, 255, 3, 3));
                 }
 
                 // Color por defecto

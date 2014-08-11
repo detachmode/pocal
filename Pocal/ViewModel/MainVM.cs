@@ -62,18 +62,20 @@ namespace Pocal.ViewModel
 				DesignDataDayappts.Add(new Appointment { Subject = "Mom Anrufen", StartTime = dt.AddHours(14.5), Duration = ts });
 
 				ObservableCollection<PocalAppointment> DesignDataDayPocalappts = new ObservableCollection<PocalAppointment>();
-				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[0], CalColor = tempCalColor });
-				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[1], CalColor = tempCalColor});
+				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[0], CalColor = new SolidColorBrush(Colors.Orange) });
+				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[1], CalColor = new SolidColorBrush(Colors.Orange) });
 				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[2], CalColor = tempCalColor });
-				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[3], CalColor = tempCalColor });
-				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[4], CalColor = tempCalColor });
 				//DesignDataDayPocalappts.Add(new PocalAppointment(DesignDataDayappts[2], Color.FromArgb(155, 55, 55, 55)));
-
 				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayPocalappts, Sunday = true });
+
+				ObservableCollection<PocalAppointment> DesignDataDayPocalappts1 = new ObservableCollection<PocalAppointment>();
+				DesignDataDayPocalappts1.Add(new PocalAppointment { Appt = DesignDataDayappts[4], CalColor =new SolidColorBrush(Colors.Yellow) });
 				dt = DateTime.Now.AddDays(1);
-				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayPocalappts });
+				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayPocalappts1 });
+
+				ObservableCollection<PocalAppointment> DesignDataDayPocalappts2 = new ObservableCollection<PocalAppointment>();
 				dt = dt.AddDays(1);
-				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayPocalappts });
+				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayPocalappts2 });
 				dt = dt.AddDays(1);
 				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayPocalappts });
 
