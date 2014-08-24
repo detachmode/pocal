@@ -21,6 +21,9 @@
 	<phone:PhoneApplicationPage.Resources>
 
 
+		<local:weekNumberConverter x:Key="weekNumberConverter"/>
+
+
 		<local:weekConverter x:Key="weekConverter"/>
 		<local:DateConverter x:Key="DateConverter"/>
 		<local:secondLineConverter x:Key="secondLineConverter"/>
@@ -33,6 +36,9 @@
 		<local:singelDayApptTranslateY x:Key="singelDayApptTranslateY"/>
 		<local:singelDayApptHeight x:Key="singelDayApptHeight"/>
 		<local:windowHeaderDateConverter x:Key="windowHeaderDateConverter"/>
+		<local:weekNumberVisibilityConverter x:Key="weekNumberVisibilityConverter"/>
+
+
 
 
 
@@ -159,13 +165,13 @@
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
 
-				<!--Agenda View Header-->
+				<!--agenda View Header-->
 				<Grid x:Name="AgendaHeader" 
 						Grid.Row="0"
 						Canvas.ZIndex="4" 
 						>
 					<Grid.Background>
-						<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+						<SolidColorBrush Color="Black"/>
 					</Grid.Background>
 					<StackPanel x:Name="HeaderStackPanel" 
 							Orientation="Horizontal" 
@@ -175,37 +181,49 @@
 						<TextBlock x:Name="WeekCounter"  Text="{Binding CurrentTop, Converter={StaticResource CurrentTopWeekConverter}}"                        
 								FontFamily="{StaticResource PhoneFontFamilyLight}" 
 								FontSize="22" 
-								HorizontalAlignment="Center" />
+								HorizontalAlignment="Center" >
+							<TextBlock.Foreground>
+								<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+							</TextBlock.Foreground>
+						</TextBlock>
 						<TextBlock x:Name="DaysCounter"  Text="{Binding CurrentTop, Converter={StaticResource CurrentTopDayConverter}}"                          
 								FontFamily="{StaticResource PhoneFontFamilyLight}" 
 								FontSize="22" 
-								HorizontalAlignment="Center" Margin="8,0,0,0" />
+								HorizontalAlignment="Center" Margin="8,0,0,0" >
+							<TextBlock.Foreground>
+								<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+							</TextBlock.Foreground>
+						</TextBlock>
 					</StackPanel>
+					<Border Height="1" Background="#FF363636" VerticalAlignment="Bottom"/>
 				</Grid>
 
 
 				<!-- Agenda View Body -->
 				<Grid x:Name="AgendaViewBody" 
-					Margin="12,0,12,0"
+					Margin="0,0,0,0"
 					Grid.Row="1"
 					>
 
-					<phone:LongListSelector  x:Name="AgendaViewListbox" ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch" >
+					<phone:LongListSelector  x:Name="AgendaViewListbox" ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch" Background="Transparent" >
 						<phone:LongListSelector.ItemTemplate >
 
 							<!--DayCard Styling END-->
 
 							<!--DayCard Styling-->
 							<DataTemplate >
-								<Grid	Margin="0,1"
-										
-									  	Tap="onDayTap" Background="#FF292929">
-									<Border BorderThickness="0,1,0,0" BorderBrush="#FF6C6C6C"/>
-									<Border BorderThickness="0,0,0,1" BorderBrush="Black"/>
+								<Grid	
+									  	Tap="onDayTap" 
+										Background="Black">
+
+
+
 									<StackPanel 
-										Margin="12,0,12,12"
+										
 										HorizontalAlignment="Stretch"
 										RenderTransformOrigin="0.5,0.5">
+										<Border BorderThickness="0,0,0,1.5" BorderBrush="#FF363636" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,0">
+										</Border>
 
 										<!--DayCard Body END-->
 
@@ -215,12 +233,12 @@
 										<TextBlock  Text="{Binding DT, Converter={StaticResource DateConverter}}" 
 											FontSize="34" 
 											FontFamily="{StaticResource PhoneFontFamilyLight}"
-											Foreground ="{Binding sundayForeground}" Padding="0,6,0,0"
+											Foreground ="{Binding sundayForeground}" Padding="0,6,0,0" Margin="12,0,0,0"
 												/>
 
 										<!--DayCard Body-->
-										<ItemsControl x:Name="DayCardApptsItemControll"  ItemsSource="{Binding DayAppts}"
-											Margin="12 0 0 0">
+										<ItemsControl x:Name="DayCardApptsItemControll"  ItemsSource="{Binding PocalApptsOfDay}"
+											Margin="24,0,0,0">
 											<ItemsControl.ItemTemplate>
 
 												<!--End of Single Appointment-->
@@ -233,12 +251,12 @@
 														<!--Subject of Appointment-->
 														<StackPanel   Margin="12,0,0,0">
 
-															<TextBlock  Text="{Binding Subject, Converter={StaticResource subjectConverter}}"							
+															<TextBlock  Text="{Binding Appt, Converter={StaticResource subjectConverter}}"							
 																Foreground="{Binding CalColor}"
 																		FontSize="20" 
 																/>
 
-															<TextBlock Text="{Binding Converter={StaticResource secondLineConverter}}" 
+															<TextBlock Text="{Binding Appt,Converter={StaticResource secondLineConverter}}" 
 																
 																FontFamily="{StaticResource PhoneFontFamilyLight}" 
 																CharacterSpacing="1" 
@@ -253,9 +271,24 @@
 											</ItemsControl.ItemTemplate>
 										</ItemsControl>
 
-										<!--<Grid Height="1" Background="{Binding customBackground}" />-->
+										<Grid Height="25" RenderTransformOrigin="0.5,0.5" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" >
+											<Grid.Background>
+												<SolidColorBrush Color="#FF363636"/>
+											</Grid.Background>
+											<Grid.RenderTransform>
+												<CompositeTransform TranslateY="9"/>
+											</Grid.RenderTransform>
+											<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}">
+												<TextBlock.Foreground>
+													<SolidColorBrush Color="{StaticResource PhoneBorderColor}"/>
+												</TextBlock.Foreground></TextBlock>
+										</Grid>
+										<Grid Height="8"/>
+
+
 
 									</StackPanel>
+
 								</Grid>
 							</DataTemplate>
 
@@ -344,7 +377,7 @@
 								</ItemsControl.ItemTemplate>
 							</ItemsControl>
 
-							<ItemsControl x:Name="AppointmentsOnGrid"   ItemsSource="{Binding SingleDayViewModel.TappedDay.DayAppts}" >
+							<ItemsControl x:Name="AppointmentsOnGrid"   ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}" >
 
 								<ItemsControl.ItemsPanel>
 									<ItemsPanelTemplate>
@@ -360,18 +393,18 @@
 									<DataTemplate>
 										<Grid Margin="86,0,0,0"
 											  Tap="ApptListItem_Tap"											  
-											  Height="{Binding Converter={StaticResource singelDayApptHeight}}"
+											  Height="{Binding Appt, Converter={StaticResource singelDayApptHeight}, Mode=OneWay}"
 											  Background="#FF212121" 
 											  RenderTransformOrigin="0.5,0" VerticalAlignment="Top">
 
 											<Grid.RenderTransform>
-												<CompositeTransform TranslateY="{Binding Converter={StaticResource singelDayApptTranslateY}}" />
+												<CompositeTransform TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY}}" />
 											</Grid.RenderTransform>
 
 											<Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}">
 
 
-												<TextBlock  Text="{Binding Subject }"
+												<TextBlock  Text="{Binding Subject}"
 															Margin="6,3"
 															FontSize="22" >
 												</TextBlock>

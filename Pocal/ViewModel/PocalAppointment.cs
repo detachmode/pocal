@@ -26,6 +26,7 @@ namespace Pocal.ViewModel
 
 				this.StartTime = appt.StartTime;
 				this.Duration = appt.Duration;
+				NotifyPropertyChanged("Appt");
 				
 			}
 		}
@@ -117,20 +118,23 @@ namespace Pocal.ViewModel
 			}
 		}
 
+		private bool allDay;
+		public bool AllDay
+		{
+			get
+			{
+				return allDay;
+			}
+			private set
+			{
+				if (value != allDay)
+				{
+					allDay = value;
+					NotifyPropertyChanged("AllDay");
+				}
+			}
+		}
 
-
-		//public PocalAppointment(Appointment appt , Color calColor)
-		//{
-		//	this.appt = appt;
-		//	this.calColor = calColor;
-		//	this.calendarId = appt.CalendarId;
-
-		//	this.subject = appt.Subject;
-		//	this.location = appt.Location;
-
-		//	this.startTime = appt.StartTime;
-		//	this.duration = appt.Duration;
-		//}
 	
 
 

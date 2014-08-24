@@ -196,7 +196,7 @@ namespace Pocal.Converter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var appt = (value as PocalAppointment).Appt;
+			var appt = (value as Appointment);
 
 			if (appt != null)
 			{
@@ -255,9 +255,11 @@ namespace Pocal.Converter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (value != null)
+			var appt = (value as Appointment);
+			var subject = appt.Subject;
+			if (subject != null)
 			{
-				return value;
+				return subject;
 			}
 			else return "privat";
 		}
@@ -281,7 +283,48 @@ namespace Pocal.Converter
 				return new SolidColorBrush(Color.FromArgb(255, 40, 40, 40));
 			}
 			else
-				return new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+				return new SolidColorBrush(Color.FromArgb(0, 255, 0, 0));
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			return null;
+		}
+	}
+
+	public class weekNumberVisibilityConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			var day = value as Day;
+			if (day.DT.DayOfWeek == DayOfWeek.Sunday)
+			{
+
+				return System.Windows.Visibility.Visible;
+			}
+			else
+				return System.Windows.Visibility.Collapsed;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			return null;
+		}
+	}
+
+	public class weekNumberConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			var day = value as Day;
+			if (day != null)
+			{
+				int weeknumber = day.DT.DayOfYear/7 + 2;
+
+				return "Woche " + weeknumber;
+			}
+			else
+				return null;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

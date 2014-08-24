@@ -47,10 +47,10 @@ namespace Pocal.Converter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var appt = (value as PocalAppointment).Appt;
-			if (appt != null)
+			DateTimeOffset starttime = (DateTimeOffset)value;
+			if (starttime != null)
 			{
-				return (appt.StartTime.Hour - App.ViewModel.SingleDayViewModel.FirstHour) * 70 - 1;	
+				return (starttime.Hour - App.ViewModel.SingleDayViewModel.FirstHour) * 70 - 1;	
 			}
 			return 0;
 		}
@@ -67,20 +67,20 @@ namespace Pocal.Converter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var appt = (value as PocalAppointment).Appt;
+			var appt = (value as Appointment);
 			if (appt != null)
 			{
 				if (appt.AllDay)
 					return 0;
 
 				int half = 0;
-				if (appt.Duration.Minutes>=30)
+				if (appt.Duration.Minutes >= 30)
 					half = 35;
-				
+
 				if ((appt.Duration.Hours) == 0)
 					return 36;
 
-				return ((appt.Duration.Hours)*70 +half+1);	
+				return ((appt.Duration.Hours) * 70 + half + 1);	
 			}
 			return 0;
 		}

@@ -29,7 +29,7 @@ namespace Pocal.ViewModel
 			findOptions.FetchProperties.Add(AppointmentProperties.AllDay);
 			findOptions.FetchProperties.Add(AppointmentProperties.Duration);
 
-			var allAppts = await appointmentStore.FindAppointmentsAsync(DateTime.Now, TimeSpan.FromDays(days), findOptions);
+			var allAppts = await appointmentStore.FindAppointmentsAsync(DateTime.Now.Date, TimeSpan.FromDays(days), findOptions);
 			if (allAppts.Any())
 			{
 				// get calendars 
@@ -73,7 +73,7 @@ namespace Pocal.ViewModel
 				App.ViewModel.Days.Add(new Day()
 				{
 					DT = dt,
-					DayAppts = getApptsOfDay(dt)
+					PocalApptsOfDay = getApptsOfDay(dt)
 				});
 
 				// Sunday Attribute

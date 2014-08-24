@@ -7,6 +7,7 @@ using System.Globalization;
 using Windows.ApplicationModel.Appointments;
 using Pocal.Model;
 using System.Windows.Media;
+using System.Diagnostics;
 
 namespace Pocal.ViewModel
 {
@@ -19,6 +20,7 @@ namespace Pocal.ViewModel
 		public SingleDayViewVM SingleDayViewModel { get; private set; }
 
 		public ObservableCollection<Day> Days { get; private set; }
+		public PocalAppointmentManager pocalAppointmentManager = new PocalAppointmentManager();
 
 		private Day _currentTop;
 		public Day CurrentTop
@@ -41,6 +43,7 @@ namespace Pocal.ViewModel
 		{
 			this.Days = new ObservableCollection<Day>();
 			SingleDayViewModel = new SingleDayViewVM();
+
 
 			#region DESIGN TIME DATA
 			if (DesignerProperties.IsInDesignTool)
@@ -66,18 +69,18 @@ namespace Pocal.ViewModel
 				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[1], CalColor = new SolidColorBrush(Colors.Orange) });
 				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[2], CalColor = tempCalColor });
 				//DesignDataDayPocalappts.Add(new PocalAppointment(DesignDataDayappts[2], Color.FromArgb(155, 55, 55, 55)));
-				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayPocalappts, Sunday = true });
+				Days.Add(new Day { DT = dt, PocalApptsOfDay = DesignDataDayPocalappts, Sunday = true });
 
 				ObservableCollection<PocalAppointment> DesignDataDayPocalappts1 = new ObservableCollection<PocalAppointment>();
 				DesignDataDayPocalappts1.Add(new PocalAppointment { Appt = DesignDataDayappts[4], CalColor =new SolidColorBrush(Colors.Yellow) });
 				dt = DateTime.Now.AddDays(1);
-				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayPocalappts1 });
+				Days.Add(new Day { DT = dt, PocalApptsOfDay = DesignDataDayPocalappts1 });
 
 				ObservableCollection<PocalAppointment> DesignDataDayPocalappts2 = new ObservableCollection<PocalAppointment>();
 				dt = dt.AddDays(1);
-				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayPocalappts2 });
+				Days.Add(new Day { DT = dt, PocalApptsOfDay = DesignDataDayPocalappts2 });
 				dt = dt.AddDays(1);
-				Days.Add(new Day { DT = dt, DayAppts = DesignDataDayPocalappts });
+				Days.Add(new Day { DT = dt, PocalApptsOfDay = DesignDataDayPocalappts });
 
 				SingleDayViewModel.TappedDay = Days[1];
 
@@ -88,6 +91,8 @@ namespace Pocal.ViewModel
 			#endregion
 
 		}
+
+
 
 
 		#region PropertyChangedEventHandler / NotifyPropertyChanged

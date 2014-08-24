@@ -15,13 +15,13 @@ namespace Pocal
 {
 	public partial class MainPage : PhoneApplicationPage
 	{
-		
+
 		// Constructor
 		public MainPage()
 		{
 			InitializeComponent();
 			DataContext = App.ViewModel;
-			
+
 
 			// Meine SETUP Funktionen
 			watchPositionOfLongListSelector();
@@ -118,7 +118,7 @@ namespace Pocal
 
 			//Set selectedItem 
 			var element = (FrameworkElement)sender;
-			Day selectedItem = element.DataContext as Day;			
+			Day selectedItem = element.DataContext as Day;
 			App.ViewModel.SingleDayViewModel.TappedDay = selectedItem;
 		}
 
@@ -144,47 +144,10 @@ namespace Pocal
 		public async void ApptListItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
 		{
 
-			var element = (FrameworkElement)sender;
-			PocalAppointment appt = element.DataContext as PocalAppointment;
-
-			//var store = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
-
-			//int ind = App.ViewModel.SingleDayViewModel.TappedDay.DayAppts.IndexOf(appt);
-
-			//if (appt.OriginalStartTime == null)
-			//{
-			//	await store.ShowAppointmentDetailsAsync(appt.LocalId);
-			//	App.ViewModel.SingleDayViewModel.TappedDay.DayAppts[ind] = await store.GetAppointmentAsync(appt.LocalId);
-			//}
-			//else
-			//{
-			//	await store.ShowAppointmentDetailsAsync(appt.LocalId, appt.OriginalStartTime.Value);
-			//	App.ViewModel.SingleDayViewModel.TappedDay.DayAppts[ind] = await store.GetAppointmentInstanceAsync(appt.LocalId, appt.OriginalStartTime.Value);
-			//}
-
-			//int i = 1;
-			
-
-			 //müll
-			//App.ViewModel.TappedDay.DayAppts = App.ViewModel.Days[3].DayAppts;		
-			//App.ViewModel.Days[0].DayAppts[0].Subject = "HAllOOO00";
-			//App.ViewModel.appts.Remove(appt);
-			//App.ViewModel.Days.RemoveAt(1);
-			//App.ViewModel.Days[0].DayAppts.Remove(App.ViewModel.appts[0]);
-
-			//App.ViewModel.TappedDay.DayAppts.Remove(appt);
-
-			//OLD Way of updating
-			App.ViewModel.SingleDayViewModel.TappedDay = App.ViewModel.Days[1];
-			//App.ViewModel.ShowUpcomingAppointments(30);
-		
-			//foreach (Day d in App.ViewModel.Days)
-			//{
-			//	if 
-			//}
+			PocalAppointment pocalappt = ((FrameworkElement)sender).DataContext as PocalAppointment;
+			App.ViewModel.pocalAppointmentManager.editAppointment(pocalappt);
 
 		}
-
 
 
 

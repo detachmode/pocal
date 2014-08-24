@@ -67,7 +67,7 @@ namespace Pocal.Model
         }
 
 		private ObservableCollection<PocalAppointment> _dayAppts;
-		public ObservableCollection<PocalAppointment> DayAppts
+		public ObservableCollection<PocalAppointment> PocalApptsOfDay
         {
             get
             {
@@ -80,7 +80,7 @@ namespace Pocal.Model
                 {
                     _dayAppts = value;
                     
-                    NotifyPropertyChanged("DayAppts");
+                    NotifyPropertyChanged("PocalApptsOfDay");
                 }
 
             }
