@@ -25,7 +25,7 @@ namespace Pocal
 
 			// Meine SETUP Funktionen
 			watchPositionOfLongListSelector();
-			Pocal.ViewModel.AppointmentProvider.ShowUpcomingAppointments();
+			Pocal.ViewModel.AppointmentProvider.reloadPocalApptsAndDays();
 
 		}
 

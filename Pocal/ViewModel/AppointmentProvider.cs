@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using Windows.ApplicationModel.Appointments;
 
@@ -12,45 +13,66 @@ namespace Pocal.ViewModel
 	public static class AppointmentProvider
 	{
 		private static AppointmentStore appointmentStore;
+		private static IReadOnlyList<AppointmentCalendar> calendars;
 
-		public static async void ShowUpcomingAppointments()
+		public static async void reloadPocalApptsAndDays()
 		{
-			int days = App.ViewModel.howManyDays;
-			if (appointmentStore == null)
-			{
-				appointmentStore = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
-			}
+			var allAppts = await getAllAppts();
 
+			if (allAppts.Any())
+			{
+				calendars = await appointmentStore.FindAppointmentCalendarsAsync();
+
+				reloadPocalAppts(allAppts);
+
+				fillDayview();
+				updateTappedDay();
+			}
+		}
+
+		private static async Task<IReadOnlyList<Appointment>> getAllAppts()
+		{
+			await setAppointmentStore();
+			FindAppointmentsOptions findOptions = getFindOptions();
+
+			var allAppts = await appointmentStore.FindAppointmentsAsync(DateTime.Now.Date, TimeSpan.FromDays(App.ViewModel.howManyDays), findOptions);
+			return allAppts;
+		}
+
+		private static void reloadPocalAppts(IReadOnlyList<Appointment> allAppts)
+		{
+			App.ViewModel.PocalAppts.Clear();
+
+			foreach (var appt in allAppts)
+			{
+				var cal = calendars.First(c => c.LocalId == appt.CalendarId);
+				var calColor = new System.Windows.Media.Color() { A = cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
+
+				PocalAppointment pocalAppt = new PocalAppointment { Appt = appt, CalColor = new SolidColorBrush(calColor) };
+				App.ViewModel.PocalAppts.Add(pocalAppt);
+			}
+		}
+
+		private static FindAppointmentsOptions getFindOptions()
+		{
 			FindAppointmentsOptions findOptions = new FindAppointmentsOptions();
-			findOptions.MaxCount = 30;
+			//findOptions.MaxCount = 100;
 			findOptions.FetchProperties.Add(AppointmentProperties.Subject);
 			findOptions.FetchProperties.Add(AppointmentProperties.Location);
 			findOptions.FetchProperties.Add(AppointmentProperties.StartTime);
 			findOptions.FetchProperties.Add(AppointmentProperties.AllDay);
 			findOptions.FetchProperties.Add(AppointmentProperties.Duration);
+			return findOptions;
+		}
 
-			var allAppts = await appointmentStore.FindAppointmentsAsync(DateTime.Now.Date, TimeSpan.FromDays(days), findOptions);
-			if (allAppts.Any())
-			{
-				// get calendars 
-				var calendars = await appointmentStore.FindAppointmentCalendarsAsync();
+		private static async System.Threading.Tasks.Task setAppointmentStore()
+		{
+			if (appointmentStore == null)
+				appointmentStore = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
+		}
 
-				App.ViewModel.Appts.Clear();
-
-				foreach (var appt in allAppts)
-				{
-					var cal = calendars.First(c => c.LocalId == appt.CalendarId);
-					var calColor = new System.Windows.Media.Color() { A = cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
-
-					PocalAppointment pocalAppt = new PocalAppointment { Appt = appt , CalColor = new SolidColorBrush(calColor)};
-					App.ViewModel.Appts.Add(pocalAppt);
-				}
-
-			}
-
-
-
-			fillDayview();
+		private static void updateTappedDay()
+		{
 
 			if (App.ViewModel.SingleDayViewModel.TappedDay == null)
 			{
@@ -62,8 +84,6 @@ namespace Pocal.ViewModel
 				Day td = App.ViewModel.Days.First(x => x.DT.Date == dt.Date);
 				App.ViewModel.SingleDayViewModel.TappedDay = td;
 			}
-
-
 		}
 
 
@@ -79,7 +99,7 @@ namespace Pocal.ViewModel
 				App.ViewModel.Days.Add(new Day()
 				{
 					DT = dt,
-					PocalApptsOfDay = getApptsOfDay(dt)
+					PocalApptsOfDay = PocalAppointmentManager.getPocalApptsOfDay(dt)
 				});
 
 				// Sunday Attribute
@@ -94,36 +114,7 @@ namespace Pocal.ViewModel
 			}
 		}
 
-		public static ObservableCollection<PocalAppointment> getApptsOfDay(DateTime dt)
-		{
 
-			ObservableCollection<PocalAppointment> thisDayAppts = new ObservableCollection<PocalAppointment>();
-			foreach (PocalAppointment a in App.ViewModel.Appts)
-			{
-				if (a.StartTime.Day == dt.Day)
-				{
-					thisDayAppts.Add(a);
-					//a.StartTime.Minute
-				}
-			}
-			// Sort 
-			thisDayAppts = sortAppointments(thisDayAppts);
-
-			return thisDayAppts;
-		}
-
-		private static ObservableCollection<PocalAppointment> sortAppointments(ObservableCollection<PocalAppointment> appts)
-		{
-			ObservableCollection<PocalAppointment> sorted = new ObservableCollection<PocalAppointment>();
-			IEnumerable<PocalAppointment> query = appts.OrderBy(appt => appt.StartTime);
-
-			foreach (PocalAppointment appt in query)
-			{
-				sorted.Add(appt);
-			}
-
-			return sorted;
-		}
 
 	}
 }

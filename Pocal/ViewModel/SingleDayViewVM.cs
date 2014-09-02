@@ -59,8 +59,9 @@ namespace Pocal.ViewModel
 			int hour = -1;
 
 			if (Int32.TryParse(str, out hour))
-				return App.ViewModel.SingleDayViewModel.TappedDay.DT.Date + new TimeSpan(hour, 0, 0);
+				return TappedDay.DT.Date + new TimeSpan(hour, 0, 0);
 
+			//todo
 			return DateTime.Now;
 
 		}
