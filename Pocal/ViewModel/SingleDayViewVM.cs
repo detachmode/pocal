@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Pocal.ViewModel
 {
@@ -49,6 +50,18 @@ namespace Pocal.ViewModel
 				string str = i.ToString("00") + ":00";
 				hourLines.Add(str);
 			}
+
+		}
+
+		public DateTime getStarTimeFromHourline(string hourLineText)
+		{
+			string str = hourLineText.Substring(0, 2);
+			int hour = -1;
+
+			if (Int32.TryParse(str, out hour))
+				return App.ViewModel.SingleDayViewModel.TappedDay.DT.Date + new TimeSpan(hour, 0, 0);
+
+			return DateTime.Now;
 
 		}
 

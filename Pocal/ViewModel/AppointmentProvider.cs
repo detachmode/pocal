@@ -56,6 +56,12 @@ namespace Pocal.ViewModel
 			{
 				App.ViewModel.SingleDayViewModel.TappedDay = App.ViewModel.Days[0];
 			}
+			else
+			{
+				DateTime dt = App.ViewModel.SingleDayViewModel.TappedDay.DT;
+				Day td = App.ViewModel.Days.First(x => x.DT.Date == dt.Date);
+				App.ViewModel.SingleDayViewModel.TappedDay = td;
+			}
 
 
 		}

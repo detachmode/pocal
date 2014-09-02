@@ -303,7 +303,7 @@
 
 			<!--SingleDayView-->
 			<Grid Name="SingleDayView" 
-					 Background="#AD000000" d:IsHidden="True" >
+					 Background="#AD000000" >
 				<Grid.RowDefinitions>
 					<RowDefinition Height="20*"/>
 					<RowDefinition Height="60*"/>
@@ -363,7 +363,7 @@
 
 								<ItemsControl.ItemTemplate>
 									<DataTemplate>
-										<Grid >
+										<Grid Tap="SingleDay_Hourline_Tap" >
 											<Border Height="70"
 													BorderBrush="{StaticResource PhoneBorderBrush}" 
 													BorderThickness="0,0.7">

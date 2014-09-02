@@ -141,13 +141,23 @@ namespace Pocal
 
 		#endregion
 
-		public async void ApptListItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+		public void ApptListItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
 		{
 
 			PocalAppointment pocalappt = ((FrameworkElement)sender).DataContext as PocalAppointment;
+
 			App.ViewModel.pocalAppointmentManager.editAppointment(pocalappt);
+			
+		}
+
+		private void SingleDay_Hourline_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+		{
+			DateTime starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline( ((FrameworkElement)sender).DataContext as string) ;
+			App.ViewModel.pocalAppointmentManager.addAppointment(starttime);
 
 		}
+
+
 
 
 
