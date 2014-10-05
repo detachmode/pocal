@@ -1,4 +1,5 @@
-﻿using Pocal.Model;
+﻿using Microsoft.Phone.Controls;
+using Pocal.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,7 @@ namespace Pocal.ViewModel
 	{
 		internal int FirstHour = 0;
 		private int LastHour = 24;
+		private int hourLineHeight = 70;
 
 		public ObservableCollection<string> hourLines { get; private set; }
 
@@ -44,7 +46,7 @@ namespace Pocal.ViewModel
 		internal void gridSetup()
 		{
 			this.hourLines = new ObservableCollection<string>();
-
+			
 			for (int i = FirstHour; i < LastHour; i++)
 			{
 				string str = i.ToString("00") + ":00";
@@ -52,6 +54,7 @@ namespace Pocal.ViewModel
 			}
 
 		}
+
 
 		public DateTime getStarTimeFromHourline(string hourLineText)
 		{

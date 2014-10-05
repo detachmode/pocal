@@ -10,11 +10,14 @@ using System.Windows.Threading;
 using Windows.ApplicationModel.Appointments;
 using Pocal.Model;
 using Pocal.ViewModel;
+using System.Diagnostics;
 
 namespace Pocal
 {
 	public partial class MainPage : PhoneApplicationPage
 	{
+		private bool apptWasTapped = false;
+		private bool firstTimeOpenSingleDayview = true;
 
 		// Constructor
 		public MainPage()
@@ -22,10 +25,13 @@ namespace Pocal
 			InitializeComponent();
 			DataContext = App.ViewModel;
 
-
+			
 			// Meine SETUP Funktionen
 			watchPositionOfLongListSelector();
 			Pocal.ViewModel.AppointmentProvider.reloadPocalApptsAndDays();
+
+			SingleDayScrollViewer.SizeChanged += scrollToDefaultOffset;
+
 
 		}
 
@@ -112,14 +118,36 @@ namespace Pocal
 
 		public void onDayTap(object sender, System.Windows.Input.GestureEventArgs e)
 		{
+			Debug.WriteLine("Day Tap");
+
 			//Open SingleDayView
 			SingleDayView.Visibility = Visibility.Visible;
 			VisualStateManager.GoToState(this, "OpenDelay", true);
+
 
 			//Set selectedItem 
 			var element = (FrameworkElement)sender;
 			Day selectedItem = element.DataContext as Day;
 			App.ViewModel.SingleDayViewModel.TappedDay = selectedItem;
+
+			if (apptWasTapped == false)
+			{
+				SingleDayScrollViewer.ScrollToVerticalOffset(70 * 12);
+				
+			}
+			if (firstTimeOpenSingleDayview == false)
+			{
+				 apptWasTapped = false;
+			}
+		}
+
+		private void scrollToDefaultOffset(object sender, EventArgs e)
+		{
+			if (apptWasTapped == false)
+				SingleDayScrollViewer.ScrollToVerticalOffset(70 * 12);
+			
+			firstTimeOpenSingleDayview = false;
+			
 		}
 
 		private void gridExit_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
@@ -139,7 +167,7 @@ namespace Pocal
 		}
 
 
-		#endregion
+		
 
 		public void ApptListItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
 		{
@@ -158,7 +186,17 @@ namespace Pocal
 		}
 
 
+		#endregion
 
+		private void StackPanel_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+		{
+			apptWasTapped = true;
+			Debug.WriteLine("Appt Tap");
+			PocalAppointment pocalappt = ((FrameworkElement)sender).DataContext as PocalAppointment;
+			SingleDayScrollViewer.ScrollToVerticalOffset(pocalappt.StartTime.Hour* 70 - 140);
+			
+
+		}
 
 
 	}
