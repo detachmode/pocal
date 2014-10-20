@@ -1,10 +1,7 @@
 ﻿using Pocal.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Media;
 using Windows.ApplicationModel.Appointments;
 
 
@@ -13,26 +10,26 @@ namespace Pocal
     public static class CalendarAPI
     {
         //MEMBER VARIABLES
-        private static IReadOnlyList<AppointmentCalendar> calendars;
-        private static async Task setCalendars()
+        public static IReadOnlyList<AppointmentCalendar> calendars;
+        public static async Task setCalendars()
         {
             calendars = await appointmentStore.FindAppointmentCalendarsAsync();
         }
 
-        private static AppointmentStore appointmentStore;
-        private static async Task setAppointmentStore()
+        public static AppointmentStore appointmentStore;
+        public static async Task setAppointmentStore()
         {
             if (appointmentStore == null)
                 appointmentStore = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
         }
 
-        private static IReadOnlyList<Appointment> appoinmentBuffer;
-        private static async Task retrieveAppointments()
+        #region Get Appointments
+        public static async Task<IReadOnlyList<Appointment>> getAppointments()
         {
             await setAppointmentStore();
             FindAppointmentsOptions findOptions = getFindOptions();
 
-            appoinmentBuffer = await appointmentStore.FindAppointmentsAsync(DateTime.Now.Date, TimeSpan.FromDays(App.ViewModel.howManyDays), findOptions);
+            return await appointmentStore.FindAppointmentsAsync(DateTime.Now.Date, TimeSpan.FromDays(App.ViewModel.howManyDays), findOptions);
 
         }
         private static FindAppointmentsOptions getFindOptions()
@@ -46,69 +43,100 @@ namespace Pocal
             findOptions.FetchProperties.Add(AppointmentProperties.Duration);
             return findOptions;
         }
+        #endregion
 
 
-        //PUBLIC FUNCTIONS
-        public static async void reloadPocalApptsAndDays()
+        #region Add Appoinment
+        public static async void addAppointment(DateTime starttime)
         {
-            await retrieveAppointments();
 
-            if (appoinmentBuffer.Any())
-            {
-                await setCalendars();
+            var appointment = new Windows.ApplicationModel.Appointments.Appointment();
 
-                createPocalApptointments();
-                createDays();
+            appointment.StartTime = starttime;
+            appointment.Duration = TimeSpan.FromHours(1);
+            appointment.Reminder = TimeSpan.FromMinutes(15);
 
-                // Aufgrund mangelnder Umsetzung von MVVM
-                App.ViewModel.SingleDayViewModel.updateTappedDay();
-            }
+            String appointmentId = await AppointmentManager.ShowEditNewAppointmentAsync(appointment);
+
+            // Aufgrund mangelnder Umsetzung von MVVM
+            App.ViewModel.reloadPocalApptsAndDays();
+
         }
+        #endregion
 
-        //PRIVATE FUNCTIONS
-        private static void createPocalApptointments()
+        // Bedarf einiges an Verbesserungen mit MVVM
+        #region Edit Appointments
+
+
+        public static async void editAppointment(PocalAppointment pocalappt)
         {
-            App.ViewModel.AllPocalAppointments.Clear();
+            await setAppointmentStore();
 
-            foreach (var appt in appoinmentBuffer)
+            if (pocalappt.Appt.OriginalStartTime == null)
             {
-                var cal = calendars.First(c => c.LocalId == appt.CalendarId);
-                var calColor = new System.Windows.Media.Color() { A = cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
+                await appointmentStore.ShowAppointmentDetailsAsync(pocalappt.Appt.LocalId);
+                var appt = await appointmentStore.GetAppointmentAsync(pocalappt.Appt.LocalId);
 
-                PocalAppointment pocalAppt = new PocalAppointment { Appt = appt, CalColor = new SolidColorBrush(calColor) };
-                App.ViewModel.AllPocalAppointments.Add(pocalAppt);
+                updatePocalAppointment(appt, pocalappt);
+
             }
-        }
-
-        private static void createDays()
-        {
-            DateTime dt = DateTime.Now;
-            CultureInfo ci = new CultureInfo("de-DE");
-
-            App.ViewModel.Days.Clear();
-            for (int i = 0; i < App.ViewModel.howManyDays; i++)
+            else
             {
-                // Create New Day with its Appointments
-                App.ViewModel.Days.Add(new Day()
-                {
-                    DT = dt,
-                    PocalApptsOfDay = PocalAppointmentManager.getPocalApptsOfDay(dt)
-                });
+                await appointmentStore.ShowAppointmentDetailsAsync(pocalappt.Appt.LocalId, pocalappt.Appt.OriginalStartTime.Value);
+                var appt = await appointmentStore.GetAppointmentInstanceAsync(pocalappt.Appt.LocalId, pocalappt.Appt.OriginalStartTime.Value);
 
-                // Sunday Attribute
-                if (dt.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    App.ViewModel.Days[i].Sunday = true;
-                }
-
-                // Iteration ++ ein Tag
-                dt = dt.AddDays(1);
-
+                updatePocalAppointment(appt, pocalappt);
             }
         }
 
 
+        private static void updatePocalAppointment(Appointment appt, PocalAppointment pocalappt)
+        {
 
+            removeIfApptIsNull(appt, pocalappt);
+
+            if (isCompleteRefreshNeeded(appt))
+            {
+                System.Diagnostics.Debug.WriteLine("CompleteRefresh");
+                App.ViewModel.reloadPocalApptsAndDays();
+            }
+            else
+            {
+                int indexInTappedDayAppts = App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay.IndexOf(pocalappt);
+                App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay[indexInTappedDayAppts].Appt = appt;
+            }
+        }
+
+        private static void removeIfApptIsNull(Appointment appt, PocalAppointment pocalappt)
+        {
+            if (appt == null)
+                App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay.Remove(pocalappt);
+        }
+
+        private static bool isCompleteRefreshNeeded(Appointment appt)
+        {
+
+            // Appointment wurde gelöscht -> auch refresh
+            if (appt == null)
+                return true;
+
+            // Bei sich wiederholenden AllPocalAppointments wird immer refresht
+            if (appt.Recurrence != null)
+                return true;
+
+            // nur refresh wenn der Termin sich innerhalb des tappedDays befindet
+            return !(isOnlyApptOfTappedDay(appt));
+
+        }
+
+        private static bool isOnlyApptOfTappedDay(Appointment appt)
+        {
+            var day = App.ViewModel.SingleDayViewModel.TappedDay;
+            var endTime = (appt.StartTime + appt.Duration);
+
+            return ((appt.StartTime.Date == day.DT.Date) && (endTime.Date == day.DT.Date));
+        }
+        #endregion
 
 
     }

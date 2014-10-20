@@ -26,7 +26,7 @@ namespace Pocal
 			
 			// Meine SETUP Funktionen
 			watchPositionOfLongListSelector();
-			CalendarAPI.reloadPocalApptsAndDays();
+            App.ViewModel.reloadPocalApptsAndDays();
 
 			SingleDayScrollViewer.SizeChanged += scrollToDefaultOffset;
 
@@ -170,16 +170,17 @@ namespace Pocal
 		public void ApptListItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
 		{
 
-			PocalAppointment pocalappt = ((FrameworkElement)sender).DataContext as PocalAppointment;
+            PocalAppointment pocalAppointment = ((FrameworkElement)sender).DataContext as PocalAppointment;
 
-			App.ViewModel.pocalAppointmentManager.editAppointment(pocalappt);
+            CalendarAPI.editAppointment(pocalAppointment);
 			
 		}
 
 		private void SingleDay_Hourline_Tap(object sender, System.Windows.Input.GestureEventArgs e)
 		{
-			DateTime starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline( ((FrameworkElement)sender).DataContext as string) ;
-			App.ViewModel.pocalAppointmentManager.addAppointment(starttime);
+            HourLine hourLine = ((FrameworkElement)sender).DataContext as HourLine;
+            DateTime starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine.Text);
+			CalendarAPI.addAppointment(starttime);
 
 		}
 

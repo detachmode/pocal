@@ -9,7 +9,7 @@ namespace Pocal.ViewModel
         internal int FirstHour = 0;
         private int LastHour = 24;
 
-        public ObservableCollection<hourLine> hourLines { get; private set; }
+        public ObservableCollection<HourLine> hourLines { get; private set; }
 
         private Day _tappedDay;
         public Day TappedDay
@@ -37,12 +37,12 @@ namespace Pocal.ViewModel
 
         internal void gridSetup()
         {
-            this.hourLines = new ObservableCollection<hourLine>();
+            this.hourLines = new ObservableCollection<HourLine>();
 
             for (int i = FirstHour; i < LastHour; i++)
             {
                 string str = i.ToString("00") + ":00";
-                hourLines.Add(new hourLine { Text = str, Height = 70 });
+                hourLines.Add(new HourLine { Text = str, Height = 70 });
             }
 
         }
@@ -79,7 +79,7 @@ namespace Pocal.ViewModel
 
     }
 
-    public class hourLine
+    public class HourLine
     {
         public string Text { get; set; }
         public int Height { get; set; }
