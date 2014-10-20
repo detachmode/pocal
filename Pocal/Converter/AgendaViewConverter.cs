@@ -1,5 +1,4 @@
-﻿using Pocal.Model;
-using Pocal.ViewModel;
+﻿using Pocal.ViewModel;
 using System;
 using System.Globalization;
 using System.Windows.Data;

@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Globalization;
 
 using Windows.ApplicationModel.Appointments;
-using Pocal.Model;
 using System.Windows.Media;
-using System.Diagnostics;
 
 namespace Pocal.ViewModel
 {
 
-	public class MainVM : INotifyPropertyChanged
+    public class MainVM : ViewModelBase
 	{
 		internal int howManyDays = 30;
 
-		internal ObservableCollection<PocalAppointment> PocalAppts = new ObservableCollection<PocalAppointment>();
+		internal ObservableCollection<PocalAppointment> AllPocalAppointments = new ObservableCollection<PocalAppointment>();
 		public SingleDayViewVM SingleDayViewModel { get; private set; }
 
 		public ObservableCollection<Day> Days { get; private set; }
@@ -56,7 +52,9 @@ namespace Pocal.ViewModel
 				//var appointment = new Windows.ApplicationModel.Appointments.Appointment();
 				ObservableCollection<Appointment> DesignDataDayappts = new ObservableCollection<Appointment>();
 
-				SolidColorBrush tempCalColor = new SolidColorBrush(Color.FromArgb(255, 100, 255, 0));
+				SolidColorBrush CalColorGreen = new SolidColorBrush(Color.FromArgb(255, 100, 255, 0));
+                SolidColorBrush CalColorYellow = new SolidColorBrush(Colors.Yellow);
+                SolidColorBrush CalColorOrange = new SolidColorBrush(Colors.Orange);
 
 				DesignDataDayappts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), AllDay = true });
 				DesignDataDayappts.Add(new Appointment { Subject = "Geburtstag", StartTime = dt.AddHours(0), AllDay = true });
@@ -65,14 +63,14 @@ namespace Pocal.ViewModel
 				DesignDataDayappts.Add(new Appointment { Subject = "Mom Anrufen", StartTime = dt.AddHours(14.5), Duration = ts });
 
 				ObservableCollection<PocalAppointment> DesignDataDayPocalappts = new ObservableCollection<PocalAppointment>();
-				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[0], CalColor = new SolidColorBrush(Colors.Orange) });
-				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[1], CalColor = new SolidColorBrush(Colors.Orange) });
-				DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[2], CalColor = tempCalColor });
+                DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[0], CalColor = CalColorOrange });
+                DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[1], CalColor = CalColorOrange });
+                DesignDataDayPocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[2], CalColor = CalColorGreen });
 				//DesignDataDayPocalappts.Add(new PocalAppointment(DesignDataDayappts[2], Color.FromArgb(155, 55, 55, 55)));
 				Days.Add(new Day { DT = dt, PocalApptsOfDay = DesignDataDayPocalappts, Sunday = true });
 
 				ObservableCollection<PocalAppointment> DesignDataDayPocalappts1 = new ObservableCollection<PocalAppointment>();
-				DesignDataDayPocalappts1.Add(new PocalAppointment { Appt = DesignDataDayappts[4], CalColor =new SolidColorBrush(Colors.Yellow) });
+				DesignDataDayPocalappts1.Add(new PocalAppointment { Appt = DesignDataDayappts[4], CalColor = CalColorYellow});
 				dt = DateTime.Now.AddDays(1);
 				Days.Add(new Day { DT = dt, PocalApptsOfDay = DesignDataDayPocalappts1 });
 
@@ -92,20 +90,5 @@ namespace Pocal.ViewModel
 
 		}
 
-
-
-
-		#region PropertyChangedEventHandler / NotifyPropertyChanged
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		private void NotifyPropertyChanged(String propertyName)
-		{
-			PropertyChangedEventHandler handler = PropertyChanged;
-			if (null != handler)
-			{
-				handler(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		#endregion
 	}
 }

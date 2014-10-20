@@ -1,17 +1,10 @@
-﻿using Microsoft.Phone.Controls;
-using Pocal.Model;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace Pocal.ViewModel
 {
-	public class SingleDayViewVM : INotifyPropertyChanged
+	public class SingleDayViewVM : ViewModelBase
 	{
 		internal int FirstHour = 0;
 		private int LastHour = 24;
@@ -69,17 +62,21 @@ namespace Pocal.ViewModel
 
 		}
 
-		#region PropertyChangedEventHandler / NotifyPropertyChanged
-		public event PropertyChangedEventHandler PropertyChanged;
+        public void updateTappedDay()
+        {
 
-		private void NotifyPropertyChanged(String propertyName)
-		{
-			PropertyChangedEventHandler handler = PropertyChanged;
-			if (null != handler)
-			{
-				handler(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		#endregion
+            if (TappedDay == null)
+            {
+                TappedDay = App.ViewModel.Days[0];
+            }
+            else
+            {
+                DateTime dt = TappedDay.DT;
+                Day td = App.ViewModel.Days.First(x => x.DT.Date == dt.Date);
+                TappedDay = td;
+            }
+        }
+
+		
 	}
 }

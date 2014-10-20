@@ -7,8 +7,6 @@ using Microsoft.Phone.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Threading;
-using Windows.ApplicationModel.Appointments;
-using Pocal.Model;
 using Pocal.ViewModel;
 using System.Diagnostics;
 
@@ -28,7 +26,7 @@ namespace Pocal
 			
 			// Meine SETUP Funktionen
 			watchPositionOfLongListSelector();
-			Pocal.ViewModel.AppointmentProvider.reloadPocalApptsAndDays();
+			CalendarAPI.reloadPocalApptsAndDays();
 
 			SingleDayScrollViewer.SizeChanged += scrollToDefaultOffset;
 

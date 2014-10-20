@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using Windows.ApplicationModel.Appointments;
 
 namespace Pocal
@@ -21,24 +19,22 @@ namespace Pocal
 		{
 
 			ObservableCollection<PocalAppointment> thisDayAppts = new ObservableCollection<PocalAppointment>();
-			foreach (PocalAppointment pocalAppt in App.ViewModel.PocalAppts)
+			foreach (PocalAppointment pocalAppt in App.ViewModel.AllPocalAppointments)
 			{
 				if (pocalAppt.StartTime.Day == dt.Day)
 				{
 					thisDayAppts.Add(pocalAppt);
-					//a.StartTime.Minute
 				}
 			}
-			// Sort 
 			thisDayAppts = sortAppointments(thisDayAppts);
 
 			return thisDayAppts;
 		}
 
-		private static ObservableCollection<PocalAppointment> sortAppointments(ObservableCollection<PocalAppointment> PocalAppts)
+		private static ObservableCollection<PocalAppointment> sortAppointments(ObservableCollection<PocalAppointment> AllPocalAppointments)
 		{
 			ObservableCollection<PocalAppointment> sorted = new ObservableCollection<PocalAppointment>();
-			IEnumerable<PocalAppointment> query = PocalAppts.OrderBy(appt => appt.StartTime);
+			IEnumerable<PocalAppointment> query = AllPocalAppointments.OrderBy(appt => appt.StartTime);
 
 			foreach (PocalAppointment appt in query)
 			{
@@ -64,11 +60,10 @@ namespace Pocal
 
 			String appointmentId = await AppointmentManager.ShowEditNewAppointmentAsync(appointment);
 
-			//todo
-			Pocal.ViewModel.AppointmentProvider.reloadPocalApptsAndDays();
+            // Aufgrund mangelnder Umsetzung von MVVM
+			CalendarAPI.reloadPocalApptsAndDays();
 
 		}
-
 
 
 		#region Edit Appointments
@@ -109,7 +104,7 @@ namespace Pocal
 			if (isCompleteRefreshNeeded(appt))
 			{
 				System.Diagnostics.Debug.WriteLine("CompleteRefresh");
-				Pocal.ViewModel.AppointmentProvider.reloadPocalApptsAndDays();
+				CalendarAPI.reloadPocalApptsAndDays();
 			}
 			else
 			{
@@ -131,7 +126,7 @@ namespace Pocal
 			if (appt == null)
 				return true;
 
-			// Bei sich wiederholenden PocalAppts wird immer refresht
+			// Bei sich wiederholenden AllPocalAppointments wird immer refresht
 			if (appt.Recurrence != null)
 				return true;
 

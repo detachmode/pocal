@@ -1,14 +1,11 @@
-﻿using Pocal.ViewModel;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows.Media;
-using Windows.ApplicationModel.Appointments;
 
-namespace Pocal.Model
+namespace Pocal.ViewModel
 {
 
-    public class Day : INotifyPropertyChanged
+    public class Day : ViewModelBase
     {
 
 		private bool _isHighlighted;
@@ -86,19 +83,6 @@ namespace Pocal.Model
             }
         }
 
-
-		#region PropertyChangedEventHandler / NotifyPropertyChanged
-		public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged(String propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (null != handler)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-		}
-		#endregion
 
 	}
 }

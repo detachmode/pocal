@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using Windows.ApplicationModel.Appointments;
 
 namespace Pocal.ViewModel
 {
-	public class PocalAppointment : INotifyPropertyChanged
+    public class PocalAppointment : ViewModelBase
 	{
 		private Appointment appt;
 		public Appointment Appt
@@ -138,17 +133,6 @@ namespace Pocal.ViewModel
 	
 
 
-		#region PropertyChangedEventHandler / NotifyPropertyChanged
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		private void NotifyPropertyChanged(String propertyName)
-		{
-			PropertyChangedEventHandler handler = PropertyChanged;
-			if (null != handler)
-			{
-				handler(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		#endregion
+	
 	}
 }
