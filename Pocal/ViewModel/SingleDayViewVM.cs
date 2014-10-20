@@ -4,63 +4,62 @@ using System.Linq;
 
 namespace Pocal.ViewModel
 {
-	public class SingleDayViewVM : ViewModelBase
-	{
-		internal int FirstHour = 0;
-		private int LastHour = 24;
-		private int hourLineHeight = 70;
+    public class SingleDayViewVM : ViewModelBase
+    {
+        internal int FirstHour = 0;
+        private int LastHour = 24;
 
-		public ObservableCollection<string> hourLines { get; private set; }
+        public ObservableCollection<hourLine> hourLines { get; private set; }
 
-		private Day _tappedDay;
-		public Day TappedDay
-		{
-			get
-			{
-				return _tappedDay;
-			}
-			set
-			{
-				if (value != _tappedDay)
-				{
-					_tappedDay = value;
-					NotifyPropertyChanged("TappedDay");
-				}
-			}
-		}
-
-
-		public SingleDayViewVM()
-		{
-			gridSetup();
-		}
+        private Day _tappedDay;
+        public Day TappedDay
+        {
+            get
+            {
+                return _tappedDay;
+            }
+            set
+            {
+                if (value != _tappedDay)
+                {
+                    _tappedDay = value;
+                    NotifyPropertyChanged("TappedDay");
+                }
+            }
+        }
 
 
-		internal void gridSetup()
-		{
-			this.hourLines = new ObservableCollection<string>();
-			
-			for (int i = FirstHour; i < LastHour; i++)
-			{
-				string str = i.ToString("00") + ":00";
-				hourLines.Add(str);
-			}
-
-		}
+        public SingleDayViewVM()
+        {
+            gridSetup();
+        }
 
 
-		public DateTime getStarTimeFromHourline(string hourLineText)
-		{
-			string str = hourLineText.Substring(0, 2);
-			int hour = -1;
+        internal void gridSetup()
+        {
+            this.hourLines = new ObservableCollection<hourLine>();
 
-			if (Int32.TryParse(str, out hour))
-				return TappedDay.DT.Date + new TimeSpan(hour, 0, 0);
+            for (int i = FirstHour; i < LastHour; i++)
+            {
+                string str = i.ToString("00") + ":00";
+                hourLines.Add(new hourLine { Text = str, Height = 70 });
+            }
 
-			//todo
-			return DateTime.Now;
+        }
 
-		}
+
+        public DateTime getStarTimeFromHourline(string hourLineText)
+        {
+            string str = hourLineText.Substring(0, 2);
+            int hour = -1;
+
+            if (Int32.TryParse(str, out hour))
+                return TappedDay.DT.Date + new TimeSpan(hour, 0, 0);
+
+            //todo
+            return DateTime.Now;
+
+        }
 
         public void updateTappedDay()
         {
@@ -77,6 +76,13 @@ namespace Pocal.ViewModel
             }
         }
 
-		
-	}
+
+    }
+
+    public class hourLine
+    {
+        public string Text { get; set; }
+        public int Height { get; set; }
+
+    }
 }

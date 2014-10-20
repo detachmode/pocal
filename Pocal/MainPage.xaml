@@ -37,8 +37,6 @@
 		<local:weekNumberVisibilityConverter x:Key="weekNumberVisibilityConverter"/>
 
 
-		<System:Double x:Key="Double1">70</System:Double>
-
 
 
 	</phone:PhoneApplicationPage.Resources>
@@ -376,10 +374,11 @@
 									<DataTemplate>
 										<Grid Tap="SingleDay_Hourline_Tap" >
 											<Border
+                                               
 												BorderBrush="{StaticResource PhoneBorderBrush}" 
-												BorderThickness="0,0.7" Height="{StaticResource Double1}">
-
-												<TextBlock  Text="{Binding Mode=OneWay}"
+												BorderThickness="0,0.7" Height="{Binding Height}">
+                  
+                                                <TextBlock  Text="{Binding Text}"
 													Margin="6"
 													FontSize="22"/>
 											</Border>
