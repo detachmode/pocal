@@ -59,7 +59,7 @@ namespace Pocal
             String appointmentId = await AppointmentManager.ShowEditNewAppointmentAsync(appointment);
 
             // Aufgrund mangelnder Umsetzung von MVVM
-            App.ViewModel.reloadPocalApptsAndDays();
+            App.ViewModel.ReloadPocalApptsAndDays();
 
         }
         #endregion
@@ -98,7 +98,7 @@ namespace Pocal
             if (isCompleteRefreshNeeded(appt))
             {
                 System.Diagnostics.Debug.WriteLine("CompleteRefresh");
-                App.ViewModel.reloadPocalApptsAndDays();
+                App.ViewModel.ReloadPocalApptsAndDays();
             }
             else
             {

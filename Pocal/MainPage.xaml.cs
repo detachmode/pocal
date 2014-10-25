@@ -23,12 +23,14 @@ namespace Pocal
 			InitializeComponent();
 			DataContext = App.ViewModel;
 
-			
+            
 			// Meine SETUP Funktionen
-			watchPositionOfLongListSelector();
-            App.ViewModel.reloadPocalApptsAndDays();
+            watchPositionOfLongListSelector();
+            App.ViewModel.ReloadPocalApptsAndDays();
 
-			SingleDayScrollViewer.SizeChanged += scrollToDefaultOffset;
+           
+
+            SingleDayScrollViewer.SizeChanged += scrollToDefaultOffset;
 
 
 		}
