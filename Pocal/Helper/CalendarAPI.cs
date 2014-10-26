@@ -57,41 +57,69 @@ namespace Pocal
 
 
         #region Add Appoinment
-        public static async void addAppointment_old(DateTime starttime)
+        public static async void addAppointment(DateTime starttime)
         {
             await setAppointmentStore();
 
             var appointment = new Windows.ApplicationModel.Appointments.Appointment();
-
             appointment.StartTime = starttime;
             appointment.Duration = TimeSpan.FromHours(1);
             appointment.Reminder = TimeSpan.FromMinutes(15);
 
-            string appointmentId = await AppointmentManager.ShowEditNewAppointmentAsync(appointment);
-            var x = 1;
+            String roamingId = await AppointmentManager.ShowEditNewAppointmentAsync(appointment);
+            if (roamingId == null)
+                return;
 
-            var appt = await appointmentStore.GetAppointmentAsync(appointmentId);
+            IReadOnlyList<string> localIDs = await appointmentStore.FindLocalIdsFromRoamingIdAsync(roamingId);
+
+            if (localIDs.Count == 0)
+                return;
+
+            string localID = localIDs[0];
+
+            Appointment appt = await appointmentStore.GetAppointmentAsync(localID);
+
+            List<Appointment> resultList = await getReccurantAppointments(appt, localID);
+
             
 
             // Aufgrund mangelnder Umsetzung von MVVM
             App.ViewModel.ReloadPocalApptsAndDays();
 
+
         }
 
-        public static async Task<string> addAppointment(DateTime starttime)
+
+
+        private static async Task<List<Appointment>> getReccurantAppointments(Appointment currentAppointment, string localID)
         {
-            await setAppointmentStore();
-            
-            //create Appointment
-            var appointment = new Windows.ApplicationModel.Appointments.Appointment();
-            appointment.StartTime = starttime;
-            appointment.Duration = TimeSpan.FromHours(1);
+            AppointmentStore appointmentStore = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
 
-           
-            // Add Appoinment API
-            string localAppointmentId = await AppointmentManager.ShowEditNewAppointmentAsync(appointment);
-            return localAppointmentId;
+            List<Appointment> resultList = new List<Appointment>();
+            if (currentAppointment.Recurrence != null)
+            {
+                AppointmentCalendar calendar =
+                    await appointmentStore.GetAppointmentCalendarAsync(currentAppointment.CalendarId);
 
+                FindAppointmentsOptions options = new FindAppointmentsOptions();
+
+
+                IReadOnlyList<Appointment> appointmentInstances = await
+                    calendar.FindAllInstancesAsync(
+                        localID,
+                        DateTime.Today,
+                        TimeSpan.FromDays(30),
+                        options);
+
+                foreach (var appt in appointmentInstances)
+                {
+                    resultList.Add(appt);
+                }
+
+            }
+            else
+                resultList.Add(currentAppointment);
+            return resultList;
         }
 
 
