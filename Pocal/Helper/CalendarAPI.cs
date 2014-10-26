@@ -1,9 +1,19 @@
 ﻿using Pocal.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Appointments;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Navigation;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using System.Threading.Tasks;
 
 namespace Pocal
 {
@@ -47,8 +57,9 @@ namespace Pocal
 
 
         #region Add Appoinment
-        public static async void addAppointment(DateTime starttime)
+        public static async void addAppointment_old(DateTime starttime)
         {
+            await setAppointmentStore();
 
             var appointment = new Windows.ApplicationModel.Appointments.Appointment();
 
@@ -56,12 +67,40 @@ namespace Pocal
             appointment.Duration = TimeSpan.FromHours(1);
             appointment.Reminder = TimeSpan.FromMinutes(15);
 
-            String appointmentId = await AppointmentManager.ShowEditNewAppointmentAsync(appointment);
+            string appointmentId = await AppointmentManager.ShowEditNewAppointmentAsync(appointment);
+            var x = 1;
+
+            var appt = await appointmentStore.GetAppointmentAsync(appointmentId);
+            
 
             // Aufgrund mangelnder Umsetzung von MVVM
             App.ViewModel.ReloadPocalApptsAndDays();
 
         }
+
+        public static async void addAppointment(DateTime starttime)
+        {
+            await setAppointmentStore();
+            
+            //create Appointment
+            var appointment = new Windows.ApplicationModel.Appointments.Appointment();
+            appointment.StartTime = starttime;
+            appointment.Duration = TimeSpan.FromHours(1);
+
+           
+            // Add Appoinment API
+            string localAppointmentId = await AppointmentManager.ShowEditNewAppointmentAsync(appointment);
+            var x = 1;
+            // get Added Appoinment
+            var currentAppointment = await appointmentStore.GetAppointmentAsync(localAppointmentId);
+            Debug.WriteLine("Debugger");
+
+            x = 1;
+
+        }
+
+
+        
         #endregion
 
         // Bedarf einiges an Verbesserungen mit MVVM

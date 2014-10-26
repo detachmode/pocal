@@ -8,6 +8,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Diagnostics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Navigation;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using System.Threading.Tasks;
 
 namespace Pocal.ViewModel
 {
@@ -15,7 +25,7 @@ namespace Pocal.ViewModel
     public class MainVM : ViewModelBase
     {
 
-        internal ObservableCollection<PocalAppointment> AllPocalAppointments = new ObservableCollection<PocalAppointment>();
+        public ObservableCollection<PocalAppointment> AllPocalAppointments = new ObservableCollection<PocalAppointment>();
         public SingleDayViewVM SingleDayViewModel { get; private set; }
 
         private IReadOnlyList<Appointment> appoinmentBuffer;
@@ -152,7 +162,7 @@ namespace Pocal.ViewModel
             SingleDayViewModel = new SingleDayViewVM();
 
             #region DESIGN TIME DATA
-            //if (DesignerProperties.IsInDesignTool)
+            if (DesignerProperties.IsInDesignTool)
             {
                 //	//CREATE DESIGN TIME DATA HERE
                 DateTime dt = DateTime.Now - DateTime.Now.TimeOfDay;

@@ -25,12 +25,12 @@ namespace Pocal
 
             
 			// Meine SETUP Funktionen
-            watchPositionOfLongListSelector();
+            //watchPositionOfLongListSelector();
             App.ViewModel.ReloadPocalApptsAndDays();
 
            
 
-            SingleDayScrollViewer.SizeChanged += scrollToDefaultOffset;
+            //SingleDayScrollViewer.SizeChanged += scrollToDefaultOffset;
 
 
 		}
