@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Pocal.ViewModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Pocal
 {
@@ -178,11 +179,19 @@ namespace Pocal
 			
 		}
 
-		private void SingleDay_Hourline_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+		private async void SingleDay_Hourline_Tap(object sender, System.Windows.Input.GestureEventArgs e)
 		{
             HourLine hourLine = ((FrameworkElement)sender).DataContext as HourLine;
             DateTime starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine.Text);
-			CalendarAPI.addAppointment(starttime);
+			string localID = await CalendarAPI.addAppointment(starttime);
+            var x = 1;
+
+            // get Added Appoinment
+            var currentAppointment = await CalendarAPI.appointmentStore.GetAppointmentAsync(localID);
+            Debug.WriteLine("Debugger");
+
+            x = 1;
+            
 
 		}
 

@@ -78,7 +78,7 @@ namespace Pocal
 
         }
 
-        public static async void addAppointment(DateTime starttime)
+        public static async Task<string> addAppointment(DateTime starttime)
         {
             await setAppointmentStore();
             
@@ -90,12 +90,7 @@ namespace Pocal
            
             // Add Appoinment API
             string localAppointmentId = await AppointmentManager.ShowEditNewAppointmentAsync(appointment);
-            var x = 1;
-            // get Added Appoinment
-            var currentAppointment = await appointmentStore.GetAppointmentAsync(localAppointmentId);
-            Debug.WriteLine("Debugger");
-
-            x = 1;
+            return localAppointmentId;
 
         }
 
