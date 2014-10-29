@@ -164,7 +164,7 @@ namespace Pocal.ViewModel
             SingleDayViewModel = new SingleDayViewVM();
 
             #region DESIGN TIME DATA
-            //if (DesignerProperties.IsInDesignTool)
+            if (DesignerProperties.IsInDesignTool)
             {
                 //	//CREATE DESIGN TIME DATA HERE
                 DateTime dt = DateTime.Now - DateTime.Now.TimeOfDay;
