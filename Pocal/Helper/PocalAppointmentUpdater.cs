@@ -49,14 +49,12 @@ namespace Pocal.Helper
         {
             foreach (var day in App.ViewModel.Days)
             {
-                // ?? is .First enough, or will there be more PAs with the same Appt.LocalID?
-                PocalAppointment pa = day.PocalApptsOfDay.FirstOrDefault(x => x.Appt.LocalId == appt.LocalId);
 
-                // Remove pa, if LocalID was found in an PocalAppointment in this Day
-                if (pa != null)
-                    day.PocalApptsOfDay.Remove(pa);
-
-
+                for (int i = day.PocalApptsOfDay.Count - 1; i >= 0; i--)
+                {
+                    if (day.PocalApptsOfDay[i].Appt.LocalId == appt.LocalId) 
+                        day.PocalApptsOfDay.RemoveAt(i);
+                }
             }
         }
         private static void removeAllWith(string localId)
