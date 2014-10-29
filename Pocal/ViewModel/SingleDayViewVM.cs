@@ -71,7 +71,7 @@ namespace Pocal.ViewModel
             else
             {
                 DateTime dt = TappedDay.DT;
-                Day td = App.ViewModel.Days.First(x => x.DT.Date == dt.Date);
+                Day td = App.ViewModel.Days.FirstOrDefault(x => x.DT.Date == dt.Date);
                 TappedDay = td;
             }
         }

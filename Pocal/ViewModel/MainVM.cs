@@ -66,7 +66,7 @@ namespace Pocal.ViewModel
                 AllPocalAppointments.Add(pocalAppt);
             }
         }
-        private PocalAppointment createPocalAppoinment(Appointment appt)
+        public PocalAppointment createPocalAppoinment(Appointment appt)
         {
             var cal = CalendarAPI.calendars.First(c => c.LocalId == appt.CalendarId);
             var calColor = new System.Windows.Media.Color() { A = cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
@@ -91,7 +91,7 @@ namespace Pocal.ViewModel
             return thisDayAppts;
         }
 
-        private ObservableCollection<PocalAppointment> sortAppointments(ObservableCollection<PocalAppointment> thisDayAppts)
+        public ObservableCollection<PocalAppointment> sortAppointments(ObservableCollection<PocalAppointment> thisDayAppts)
         {
             ObservableCollection<PocalAppointment> sorted = new ObservableCollection<PocalAppointment>();
             IEnumerable<PocalAppointment> query = thisDayAppts.OrderBy(appt => appt.StartTime);
@@ -107,7 +107,7 @@ namespace Pocal.ViewModel
         #endregion
 
         #region Days
-        internal int howManyDays = 30;
+        internal int howManyDays = 5;
         public ObservableCollection<Day> Days { get; private set; }
        
         public void createDays()
@@ -139,6 +139,8 @@ namespace Pocal.ViewModel
         #endregion
 
 
+
+
         private Day _currentTop;
         public Day CurrentTop
         {
@@ -162,7 +164,7 @@ namespace Pocal.ViewModel
             SingleDayViewModel = new SingleDayViewVM();
 
             #region DESIGN TIME DATA
-            if (DesignerProperties.IsInDesignTool)
+            //if (DesignerProperties.IsInDesignTool)
             {
                 //	//CREATE DESIGN TIME DATA HERE
                 DateTime dt = DateTime.Now - DateTime.Now.TimeOfDay;
