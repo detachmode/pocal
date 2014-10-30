@@ -17,8 +17,8 @@ namespace Pocal.Helper
 
 
         public static void Update(PocalAppointment oldPA, PocalAppointment newPA)
-        {          
-            updateIfSingle(oldPA,newPA);
+        {
+            updateIfSingle(oldPA, newPA);
             updateIfRecurrent(oldPA, newPA);
         }
 
@@ -52,7 +52,7 @@ namespace Pocal.Helper
 
                 for (int i = day.PocalApptsOfDay.Count - 1; i >= 0; i--)
                 {
-                    if (day.PocalApptsOfDay[i].Appt.LocalId == appt.LocalId) 
+                    if (day.PocalApptsOfDay[i].Appt.LocalId == appt.LocalId)
                         day.PocalApptsOfDay.RemoveAt(i);
                 }
             }
@@ -98,10 +98,22 @@ namespace Pocal.Helper
             setResponsibleDays(pA);
             foreach (var day in responsibleDaysOfPA)
             {
-                day.PocalApptsOfDay.Add(pA);
-
-                day.PocalApptsOfDay = App.ViewModel.sortAppointments(day.PocalApptsOfDay);
+                InsertInto_PocalApptsOfDay(day, pA);
             }
+        }
+
+        private static void InsertInto_PocalApptsOfDay(Day day, PocalAppointment pA)
+        {
+            PocalAppointment nextDay = day.PocalApptsOfDay.FirstOrDefault(x => x.Appt.StartTime > pA.Appt.StartTime);
+            if (nextDay != null)
+            {
+                int index = day.PocalApptsOfDay.IndexOf(nextDay);
+                day.PocalApptsOfDay.Insert(index, pA);
+            }
+            else
+                day.PocalApptsOfDay.Insert(day.PocalApptsOfDay.Count(), pA);
+
+
         }
 
         private static void setResponsibleDays(PocalAppointment pA)

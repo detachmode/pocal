@@ -16,353 +16,364 @@
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainVM}">
 
 
-	
+
     <!--******** ********* ******** -->
     <!--******** RESOURCES ******** -->
     <!--******** ********* ******** -->
     <phone:PhoneApplicationPage.Resources>
 
+
+
+
         <!--Converter-->
         <local:weekNumberConverter x:Key="weekNumberConverter"/>
-		<local:weekConverter x:Key="weekConverter"/>
-		<local:DateConverter x:Key="DateConverter"/>
-		<local:secondLineConverter x:Key="secondLineConverter"/>
-		<local:subjectConverter x:Key="subjectConverter"/>
-		<local:hourConverter x:Key="hourConverter"/>
-		<local:minuteConverter x:Key="minuteConverter"/>
-		<local:CurrentTopWeekConverter x:Key="CurrentTopWeekConverter"/>
-		<local:CurrentTopDayConverter x:Key="CurrentTopDayConverter"/>
-		<local:highlightedDayConverter x:Key="highlightedDayConverter"/>
-		<local:singelDayApptTranslateY x:Key="singelDayApptTranslateY"/>
-		<local:singelDayApptHeight x:Key="singelDayApptHeight"/>
-		<local:windowHeaderDateConverter x:Key="windowHeaderDateConverter"/>
-		<local:weekNumberVisibilityConverter x:Key="weekNumberVisibilityConverter"/>
-        
-		<Storyboard x:Name="SingleDayAppointmentBoxFadeIn">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="AppointmentsOnGrid">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
+        <local:weekConverter x:Key="weekConverter"/>
+        <local:DateConverter x:Key="DateConverter"/>
+        <local:secondLineConverter x:Key="secondLineConverter"/>
+        <local:subjectConverter x:Key="subjectConverter"/>
+        <local:hourConverter x:Key="hourConverter"/>
+        <local:minuteConverter x:Key="minuteConverter"/>
+        <local:CurrentTopWeekConverter x:Key="CurrentTopWeekConverter"/>
+        <local:CurrentTopDayConverter x:Key="CurrentTopDayConverter"/>
+        <local:highlightedDayConverter x:Key="highlightedDayConverter"/>
+        <local:singelDayApptTranslateY x:Key="singelDayApptTranslateY"/>
+        <local:singelDayApptHeight x:Key="singelDayApptHeight"/>
+        <local:windowHeaderDateConverter x:Key="windowHeaderDateConverter"/>
+        <local:weekNumberVisibilityConverter x:Key="weekNumberVisibilityConverter"/>
 
-        <DataTemplate x:Key="ListNewsItem">
-            <Button x:Name="newsItemBtn">
-                <Button.Resources>
-                    <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
-                        <BeginStoryboard>
-                            <Storyboard x:Name="FadeIn">
-                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="newsItemBtn">
-                                    <EasingDoubleKeyFrame KeyTime="0" Value="0.01"/>
-                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-                                </DoubleAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Button.Resources>
-                <TextBlock Text="{Binding ItemBindingExample}"/>
-            </Button>
-        </DataTemplate>
+
+
 
 
     </phone:PhoneApplicationPage.Resources>
 
 
 
-	<!--LayoutRoot END -->
+    <!--LayoutRoot END -->
 
-	<phone:PhoneApplicationPage.FontFamily>
-		<StaticResource ResourceKey="PhoneFontFamilyNormal"/>
-	</phone:PhoneApplicationPage.FontFamily>
-	<phone:PhoneApplicationPage.FontSize>
-		<StaticResource ResourceKey="PhoneFontSizeNormal"/>
-	</phone:PhoneApplicationPage.FontSize>
-	<phone:PhoneApplicationPage.Foreground>
-		<StaticResource ResourceKey="PhoneForegroundBrush"/>
-	</phone:PhoneApplicationPage.Foreground>
+    <phone:PhoneApplicationPage.FontFamily>
+        <StaticResource ResourceKey="PhoneFontFamilyNormal"/>
+    </phone:PhoneApplicationPage.FontFamily>
+    <phone:PhoneApplicationPage.FontSize>
+        <StaticResource ResourceKey="PhoneFontSizeNormal"/>
+    </phone:PhoneApplicationPage.FontSize>
+    <phone:PhoneApplicationPage.Foreground>
+        <StaticResource ResourceKey="PhoneForegroundBrush"/>
+    </phone:PhoneApplicationPage.Foreground>
 
     <!--******** ******* ******** -->
     <!--******** APP BAR ******** -->
     <!--******** ******* ******** -->
 
-	<phone:PhoneApplicationPage.ApplicationBar>
-		<shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="True" IsVisible="True">
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="True" IsVisible="True">
 
-			<shell:ApplicationBar.MenuItems>
+            <shell:ApplicationBar.MenuItems>
 
-				<shell:ApplicationBarMenuItem Text="Einstellungen" />
-				<shell:ApplicationBarMenuItem Text="Windows Live Daten Laden" />
-				<shell:ApplicationBarMenuItem Text="Info"/>
+                <shell:ApplicationBarMenuItem Text="Einstellungen" />
+                <shell:ApplicationBarMenuItem Text="Windows Live Daten Laden" />
+                <shell:ApplicationBarMenuItem Text="Info"/>
 
-			</shell:ApplicationBar.MenuItems>
+            </shell:ApplicationBar.MenuItems>
 
-			<shell:ApplicationBarIconButton IconUri="/Images/back.png" Text="Heute"/>
-			<shell:ApplicationBarIconButton IconUri="/Images/add.png" Text="Neu"/>
-			<shell:ApplicationBarIconButton IconUri="/Images/feature.calendar.png" Text="Gehe zu Tag"/>
-			<shell:ApplicationBarIconButton IconUri="/Images/feature.search.png" Text="Termin suchen"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/back.png" Text="Heute"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/add.png" Text="Neu"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/feature.calendar.png" Text="Gehe zu Tag"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/feature.search.png" Text="Termin suchen"/>
 
-		</shell:ApplicationBar>
-	</phone:PhoneApplicationPage.ApplicationBar>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 
-	<!--LayoutRoot is the root grid where all page content is placed-->
-	<Grid x:Name="LayoutRoot" Background="Transparent">
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
 
         <!--******** ************* ******** -->
         <!--******** VISUAL STATES ******** -->
         <!--******** ************* ******** -->
-        
-		<VisualStateManager.VisualStateGroups>
-			<VisualStateGroup x:Name="VisualStateGroup">
-				<VisualState x:Name="Close">
-					<Storyboard>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SingleDayView">
-							<DiscreteObjectKeyFrame KeyTime="0">
-								<DiscreteObjectKeyFrame.Value>
-									<Visibility>Collapsed</Visibility>
-								</DiscreteObjectKeyFrame.Value>
-							</DiscreteObjectKeyFrame>
-						</ObjectAnimationUsingKeyFrames>
-						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="grid">
-							<DiscreteObjectKeyFrame KeyTime="0">
-								<DiscreteObjectKeyFrame.Value>
-									<Visibility>Visible</Visibility>
-								</DiscreteObjectKeyFrame.Value>
-							</DiscreteObjectKeyFrame>
-						</ObjectAnimationUsingKeyFrames>
-					</Storyboard>
-				</VisualState>
-				<VisualState x:Name="OpenDelay">
-					<Storyboard>
-						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="SingleDayWindowBody">
-							<EasingDoubleKeyFrame KeyTime="0" Value="1.001">
-								<EasingDoubleKeyFrame.EasingFunction>
-									<BackEase EasingMode="EaseInOut" Amplitude="1"/>
-								</EasingDoubleKeyFrame.EasingFunction>
-							</EasingDoubleKeyFrame>
-							<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1">
-								<EasingDoubleKeyFrame.EasingFunction>
-									<BackEase EasingMode="EaseInOut" Amplitude="1"/>
-								</EasingDoubleKeyFrame.EasingFunction>
-							</EasingDoubleKeyFrame>
-						</DoubleAnimationUsingKeyFrames>
-						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="SingleDayWindowBody">
-							<EasingDoubleKeyFrame KeyTime="0" Value="-1.908">
-								<EasingDoubleKeyFrame.EasingFunction>
-									<BackEase EasingMode="EaseInOut" Amplitude="1"/>
-								</EasingDoubleKeyFrame.EasingFunction>
-							</EasingDoubleKeyFrame>
-							<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0">
-								<EasingDoubleKeyFrame.EasingFunction>
-									<BackEase EasingMode="EaseInOut" Amplitude="1"/>
-								</EasingDoubleKeyFrame.EasingFunction>
-							</EasingDoubleKeyFrame>
-						</DoubleAnimationUsingKeyFrames>
-						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="SingleDayWindowBody">
-							<EasingDoubleKeyFrame KeyTime="0" Value="0.315">
-								<EasingDoubleKeyFrame.EasingFunction>
-									<BackEase EasingMode="EaseInOut" Amplitude="1"/>
-								</EasingDoubleKeyFrame.EasingFunction>
-							</EasingDoubleKeyFrame>
-							<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1">
-								<EasingDoubleKeyFrame.EasingFunction>
-									<BackEase EasingMode="EaseInOut" Amplitude="1"/>
-								</EasingDoubleKeyFrame.EasingFunction>
-							</EasingDoubleKeyFrame>
-						</DoubleAnimationUsingKeyFrames>
-						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="SingleDayWindowBody">
-							<EasingDoubleKeyFrame KeyTime="0" Value="139.85">
-								<EasingDoubleKeyFrame.EasingFunction>
-									<BackEase EasingMode="EaseInOut" Amplitude="1"/>
-								</EasingDoubleKeyFrame.EasingFunction>
-							</EasingDoubleKeyFrame>
-							<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0">
-								<EasingDoubleKeyFrame.EasingFunction>
-									<BackEase EasingMode="EaseInOut" Amplitude="1"/>
-								</EasingDoubleKeyFrame.EasingFunction>
-							</EasingDoubleKeyFrame>
-						</DoubleAnimationUsingKeyFrames>
-						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="SingleDayWindowBody">
-							<EasingDoubleKeyFrame KeyTime="0" Value="0.005">
-								<EasingDoubleKeyFrame.EasingFunction>
-									<CubicEase EasingMode="EaseIn"/>
-								</EasingDoubleKeyFrame.EasingFunction>
-							</EasingDoubleKeyFrame>
-							<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1">
-								<EasingDoubleKeyFrame.EasingFunction>
-									<CubicEase EasingMode="EaseIn"/>
-								</EasingDoubleKeyFrame.EasingFunction>
-							</EasingDoubleKeyFrame>
-						</DoubleAnimationUsingKeyFrames>
-					</Storyboard>
-				</VisualState>
-				<VisualState x:Name="FadeInAppointmentBox">
-					<Storyboard>
-						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="AppointmentsOnGrid">
-							<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-							<EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
-						</DoubleAnimationUsingKeyFrames>
-					</Storyboard>
-				</VisualState>
-			</VisualStateGroup>
-		</VisualStateManager.VisualStateGroups>
 
-		<Grid x:Name="grid">
+        <VisualStateManager.VisualStateGroups>
+
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <!--<VisualState x:Name="FadeElementIn">-->
+
+
+                <!--</VisualState>-->
+                <VisualState x:Name="Close">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SingleDayView">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Collapsed</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="grid">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Visibility>Visible</Visibility>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="OpenDelay">
+                    <Storyboard>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="SingleDayWindowBody">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="1.001">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="SingleDayWindowBody">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="-1.908">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="SingleDayWindowBody">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="0.315">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="SingleDayWindowBody">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="139.85">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="SingleDayWindowBody">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="0.005">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <CubicEase EasingMode="EaseIn"/>
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <CubicEase EasingMode="EaseIn"/>
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="FadeInAppointmentBox">
+                    <Storyboard>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="AppointmentsOnGrid">
+                            <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid x:Name="grid">
 
             <!--******** ********** ******** -->
             <!--******** AGENDAVIEW ******** -->
             <!--******** ********** ******** -->
             <Grid x:Name="AgendaView">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="40"/>
-					<RowDefinition Height="*"/>
-				</Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-				<!--agenda View Header-->
-				<Grid x:Name="AgendaHeader" 
+                <!--agenda View Header-->
+                <Grid x:Name="AgendaHeader" 
 					Grid.Row="0"
 					Canvas.ZIndex="4" 
 					Background="Black" 
 						>
-					<StackPanel x:Name="HeaderStackPanel" 
+                    <StackPanel x:Name="HeaderStackPanel" 
 						Orientation="Horizontal" 
 						HorizontalAlignment="Center" 
 						VerticalAlignment="Center">
 
-						<TextBlock x:Name="WeekCounter"  Text="{Binding CurrentTop, Converter={StaticResource CurrentTopWeekConverter}}"                        
+                        <TextBlock x:Name="WeekCounter"  Text="{Binding CurrentTop, Converter={StaticResource CurrentTopWeekConverter}}"                        
 							FontFamily="{StaticResource PhoneFontFamilyLight}" 
 							FontSize="22" 
 							HorizontalAlignment="Center" >
-							<TextBlock.Foreground>
-								<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-							</TextBlock.Foreground>
-						</TextBlock>
-						<TextBlock x:Name="DaysCounter"  Text="{Binding CurrentTop, Converter={StaticResource CurrentTopDayConverter}}"                          
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                        <TextBlock x:Name="DaysCounter"  Text="{Binding CurrentTop, Converter={StaticResource CurrentTopDayConverter}}"                          
 							FontFamily="{StaticResource PhoneFontFamilyLight}" 
 							FontSize="22" 
 							HorizontalAlignment="Center" Margin="8,0,0,0" >
-							<TextBlock.Foreground>
-								<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-							</TextBlock.Foreground>
-						</TextBlock>
-					</StackPanel>
-					<Border Height="1" Background="#FF363636" VerticalAlignment="Bottom"/>
-				</Grid>
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </StackPanel>
+                    <Border Height="1" Background="#FF363636" VerticalAlignment="Bottom"/>
+                </Grid>
 
 
                 <!-- Agenda View Body -->
-				<Grid x:Name="AgendaViewBody" 
+                <Grid x:Name="AgendaViewBody" 
 					Margin="0,0,0,0"
 					Grid.Row="1"
 					>
 
-					<phone:LongListSelector  x:Name="AgendaViewListbox" ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch" Background="Transparent" >
-						<phone:LongListSelector.ItemTemplate >
+                    <phone:LongListSelector  x:Name="AgendaViewListbox" ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch" Background="Transparent" >
+                        <phone:LongListSelector.ItemTemplate >
 
-							<!--DayCard Styling END-->
+                            <!--DayCard Styling END-->
 
-							<!--DayCard Styling-->
-							<DataTemplate >
-								<Grid	
+                            <!--DayCard Styling-->
+                            <DataTemplate >
+                                <Grid	
 									Tap="onDayTap" 
 									Background="Black">
 
 
 
-									<StackPanel 
+                                    <StackPanel 
 										
 										HorizontalAlignment="Stretch"
 										RenderTransformOrigin="0.5,0.5">
-										<Border BorderThickness="0,0,0,1.5" BorderBrush="#FF363636" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,0"/>
+                                        <Border BorderThickness="0,0,0,1.5" BorderBrush="#FF363636" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,0"/>
 
-										<!--DayCard Body END-->
+                                        <!--DayCard Body END-->
 
-										<!--DayCard Footer END-->
+                                        <!--DayCard Footer END-->
 
-										<!--DayCard Header-->
-										<TextBlock  Text="{Binding DT, Converter={StaticResource DateConverter}}" 
+                                        <!--DayCard Header-->
+                                        <TextBlock  Text="{Binding DT, Converter={StaticResource DateConverter}}" 
 											FontSize="34" 
 											FontFamily="{StaticResource PhoneFontFamilyLight}"
 											Foreground ="{Binding sundayForeground}" Padding="0,6,0,0" Margin="12,0,0,0"
 												/>
 
-										<!--DayCard Body-->
-										<ItemsControl x:Name="DayCardApptsItemControll"  ItemsSource="{Binding PocalApptsOfDay}"
+                                        <!--DayCard Body-->
+                                        <ItemsControl x:Name="DayCardApptsItemControll"  ItemsSource="{Binding PocalApptsOfDay}"
 											Margin="24,0,0,0">
-											<ItemsControl.ItemTemplate>
 
-												<!--End of Single Appointment-->
+                                            <ItemsControl.ItemTemplate>
 
-												<!--Singel Appointment in DayCard-->
-												<DataTemplate>
-													<StackPanel Orientation="Horizontal"  >
+                                                <!--End of Single Appointment-->
+
+                                                <!--Singel Appointment in DayCard-->
+                                                <DataTemplate>
+                                                    <StackPanel x:Name="AgendaApptItem" 
+                                                                Orientation="Horizontal" Height="0"  >
+                                                        <StackPanel.Resources>
+                                                            <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
+                                                                <BeginStoryboard>
+                                                                    <Storyboard x:Name="StoryboardOnDataTemplate">
+                                                                        <!--<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="AgendaApptItem">
+                                                                            <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+                                                                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+                                                                        </DoubleAnimationUsingKeyFrames>-->
+
+                                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="AgendaApptItem">
+                                                                            <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                                            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="48"/>
+                                                                        </DoubleAnimationUsingKeyFrames>
+
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger>
+                                                        </StackPanel.Resources>
+                                                        <StackPanel.RenderTransform>
+                                                            <CompositeTransform/>
+                                                        </StackPanel.RenderTransform>
+   
 
 
-														<!--Subject of Appointment-->
-														<StackPanel   Margin="12,0,0,0"
+                                                        <!--Subject of Appointment-->
+                                                        <StackPanel   Margin="12,0,0,0"
 															Tap="StackPanel_Tap">
 
-															<TextBlock  Text="{Binding Appt, Converter={StaticResource subjectConverter}}"							
+                                                            <TextBlock  Text="{Binding Appt, Converter={StaticResource subjectConverter}}"							
 																Foreground="{Binding CalColor}"
 																FontSize="20" 
 																/>
 
-															<TextBlock Text="{Binding Appt, Converter={StaticResource secondLineConverter}}" 
+                                                            <TextBlock Text="{Binding Appt, Converter={StaticResource secondLineConverter}}" 
 																
 																FontFamily="{StaticResource PhoneFontFamilyLight}" 
 																CharacterSpacing="1" 
 																Padding="0" 
 																Margin="0,-6,0,0"/>
 
-														</StackPanel>
+                                                        </StackPanel>
 
-													</StackPanel>
-												</DataTemplate>
+                                                    </StackPanel>
+                                                </DataTemplate>
 
-											</ItemsControl.ItemTemplate>
-										</ItemsControl>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
 
-										<Grid Height="25" RenderTransformOrigin="0.5,0.5" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" Background="#FF363636" >
-											<Grid.RenderTransform>
-												<CompositeTransform TranslateY="9"/>
-											</Grid.RenderTransform>
-											<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}">
-												<TextBlock.Foreground>
-													<SolidColorBrush Color="{StaticResource PhoneBorderColor}"/>
-												</TextBlock.Foreground></TextBlock>
-										</Grid>
-										<Grid Height="8"/>
+                                        <Grid Height="25" RenderTransformOrigin="0.5,0.5" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" Background="#FF363636" >
+                                            <Grid.RenderTransform>
+                                                <CompositeTransform TranslateY="9"/>
+                                            </Grid.RenderTransform>
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}">
+                                                <TextBlock.Foreground>
+                                                    <SolidColorBrush Color="{StaticResource PhoneBorderColor}"/>
+                                                </TextBlock.Foreground></TextBlock>
+                                        </Grid>
+                                        <Grid Height="8"/>
 
 
 
-									</StackPanel>
+                                    </StackPanel>
 
-								</Grid>
-							</DataTemplate>
+                                </Grid>
+                            </DataTemplate>
 
-						</phone:LongListSelector.ItemTemplate>
-					</phone:LongListSelector>
+                        </phone:LongListSelector.ItemTemplate>
+                    </phone:LongListSelector>
 
-				</Grid>
-			</Grid>
-			<!-- Agenda View Body END-->
+                </Grid>
+            </Grid>
+            <!-- Agenda View Body END-->
 
 
             <!--******** ************* ******** -->
             <!--******** SINGLEDAYVIEW ******** -->
             <!--******** ************* ******** -->
-            
-			<Grid x:Name="SingleDayView" 
-				Background="#AD000000" >
-				<Grid.RowDefinitions>
-					<RowDefinition Height="20*"/>
-					<RowDefinition Height="60*"/>
-					<RowDefinition Height="20*"/>
-				</Grid.RowDefinitions>
 
-				<!--BottomExit-->
+            <Grid x:Name="SingleDayView" 
+				Background="#AD000000" Visibility="Collapsed" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="20*"/>
+                </Grid.RowDefinitions>
+
+                <!--BottomExit-->
 
 
-			<!--TopExit-->
-				<Grid x:Name="gridExitTop" 
+                <!--TopExit-->
+                <Grid x:Name="gridExitTop" 
 					Grid.Row="0" 
 					Opacity="0.0"
 					MouseMove="gridExit_MouseMove" 
@@ -370,101 +381,102 @@
 					Background="Black" Grid.RowSpan="3"/>
 
 
-				<!--SingleDayView Body-->
-				<Grid  x:Name="SingleDayWindowBody"  Grid.Row="1"  Background="Black">
-					<Grid.RenderTransform>
-						<CompositeTransform/>
-					</Grid.RenderTransform>
+                <!--SingleDayView Body-->
+                <Grid  x:Name="SingleDayWindowBody"  Grid.Row="1"  Background="Black">
+                    <Grid.RenderTransform>
+                        <CompositeTransform/>
+                    </Grid.RenderTransform>
 
-					<Border  BorderBrush="#FF383838" 
+                    <Border  BorderBrush="#FF383838" 
 						BorderThickness="0,1" 
 						Margin="0" 
 						Canvas.ZIndex="1"/>
 
-					<!--Window Header-->
-					<Border
+                    <!--Window Header-->
+                    <Border
 						Canvas.ZIndex="3"  
 						Margin="0,-41,0,0"
 						Height="41" 
 						VerticalAlignment="Top"
                        >
-						<Border.Background>
-							<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-						</Border.Background>
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                        </Border.Background>
 
 
-						<TextBlock  x:Name="SingleDayWindowHeader" 
+                        <TextBlock  x:Name="SingleDayWindowHeader" 
 							Style="{StaticResource PhoneTextTitle3Style}"
 							Text="{Binding SingleDayViewModel.TappedDay.DT, Converter={StaticResource DateConverter}}" 
 							Margin="148,-4,24,0" 
 							FontSize="26" VerticalAlignment="Center" 
 							HorizontalAlignment="Right" 
 									>
-							<TextBlock.Foreground>
-								<SolidColorBrush Color="{StaticResource PhoneButtonBasePressedForegroundColor}"/>
-							</TextBlock.Foreground>
-						</TextBlock>
-						<!--FontFamily="Cambria"-->
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource PhoneButtonBasePressedForegroundColor}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                        <!--FontFamily="Cambria"-->
 
-					</Border>
+                    </Border>
 
-					<!--Window Body-->
-					<ScrollViewer x:Name="SingleDayScrollViewer" VerticalScrollBarVisibility="Hidden">
-						<Grid Background="#FF212121">
+                    <!--Window Body-->
+                    <ScrollViewer x:Name="SingleDayScrollViewer" VerticalScrollBarVisibility="Hidden">
+                        <Grid Background="#FF212121">
 
                             <ItemsControl x:Name="hourlines" ItemsSource="{Binding SingleDayViewModel.hourLines}" >
 
 
-								<ItemsControl.ItemTemplate>
-									<DataTemplate>
-										<Grid Tap="SingleDay_Hourline_Tap" >
-											<Border
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Tap="SingleDay_Hourline_Tap" >
+                                            <Border
 												BorderBrush="{StaticResource PhoneBorderBrush}" 
 												BorderThickness="0,0.7" Height="{Binding Height}">
-                  
-												<TextBlock  Text="{Binding Text}"
+
+                                                <TextBlock  Text="{Binding Text}"
 													Margin="6"
 													FontSize="22"/>
-											</Border>
-										</Grid>
-									</DataTemplate>
-								</ItemsControl.ItemTemplate>
-							</ItemsControl>
+                                            </Border>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
 
                             <ItemsControl x:Name="AppointmentsOnGrid"  
                                           ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}" >
-                                
+
                                 <!--unnötig?-->
-								<ItemsControl.ItemsPanel>
-									<ItemsPanelTemplate>
-										<Grid VerticalAlignment="Top">
-											<Grid.ColumnDefinitions>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Grid VerticalAlignment="Top">
+                                            <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-										</Grid>
-									</ItemsPanelTemplate>
-								</ItemsControl.ItemsPanel>
-                                
-								<ItemsControl.ItemTemplate>
-									<DataTemplate>
+                                        </Grid>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
                                         <Grid 
                                             x:Name="newsItemBtn"
                                             Margin="86,0,0,0"
 											Tap="ApptListItem_Tap"											  
 											Height="{Binding Appt, Converter={StaticResource singelDayApptHeight}, Mode=OneWay}"
 											Background="#FF212121" 
-											RenderTransformOrigin="0.5,0" VerticalAlignment="Top">
+											RenderTransformOrigin="0.5,0" VerticalAlignment="Top" >
                                             <Grid.RenderTransform>
-                                                <CompositeTransform TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY}}" />
+                                                <CompositeTransform  TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY}, FallbackValue=-1000}" />
                                             </Grid.RenderTransform>
-
+                                            
                                             <Grid.Resources>
                                                 <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
                                                     <BeginStoryboard>
-                                                        <Storyboard x:Name="FadeIn">
+                                                        <Storyboard x:Name="StoryboardOnDataTemplate">
                                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="newsItemBtn">
-                                                                <EasingDoubleKeyFrame KeyTime="0" Value="0.01"/>
-                                                                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+                                                                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
                                                             </DoubleAnimationUsingKeyFrames>
                                                         </Storyboard>
                                                     </BeginStoryboard>
@@ -472,39 +484,39 @@
                                             </Grid.Resources>
 
                                             <Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}">
-												<TextBlock  Text="{Binding Subject}"
+                                                <TextBlock  Text="{Binding Subject}"
 													Margin="6,3"
 													FontSize="22" />
-											</Border>
-											<Border BorderThickness="0,1.4" 
+                                            </Border>
+                                            <Border BorderThickness="0,1.4" 
 												BorderBrush="{StaticResource PhoneBorderBrush}" />
-										</Grid>
-									</DataTemplate>
-								</ItemsControl.ItemTemplate>
-							</ItemsControl>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
 
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="18*"/>
-									<ColumnDefinition Width="82*"/>
-								</Grid.ColumnDefinitions>
-								<Border Grid.Column="0" 
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="18*"/>
+                                    <ColumnDefinition Width="82*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" 
 									BorderBrush="{StaticResource PhoneForegroundBrush}" 
 									BorderThickness="0,0,0.7,0"/>
-							</Grid>
+                            </Grid>
 
 
-						</Grid>
-					</ScrollViewer>
-				</Grid>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
 
 
-			</Grid>
-		</Grid>
+            </Grid>
+        </Grid>
 
 
 
-	</Grid>
+    </Grid>
 
 
 
