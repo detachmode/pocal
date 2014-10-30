@@ -172,11 +172,10 @@ namespace Pocal
 
 		public void ApptListItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
 		{
-
             PocalAppointment pocalAppointment = ((FrameworkElement)sender).DataContext as PocalAppointment;
-
             CalendarAPI.editAppointment(pocalAppointment);
-			
+
+            ((FrameworkElement)sender).ClearValue(FrameworkElement.DataContextProperty);
 		}
 
 		private void SingleDay_Hourline_Tap(object sender, System.Windows.Input.GestureEventArgs e)
@@ -185,7 +184,7 @@ namespace Pocal
             DateTime starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine.Text);
 			CalendarAPI.addAppointment(starttime);
 
-
+            ((FrameworkElement)sender).ClearValue(FrameworkElement.DataContextProperty);
   
             
 
@@ -197,12 +196,21 @@ namespace Pocal
 		private void StackPanel_Tap(object sender, System.Windows.Input.GestureEventArgs e)
 		{
 			apptWasTapped = true;
-			Debug.WriteLine("Appt Tap");
+
 			PocalAppointment pocalappt = ((FrameworkElement)sender).DataContext as PocalAppointment;
 			SingleDayScrollViewer.ScrollToVerticalOffset(pocalappt.StartTime.Hour* 70 - 140);
+
+
 			
 
 		}
+
+        //private void Grid_Unloaded(object sender, RoutedEventArgs e)
+        //{
+        //    PocalAppointment conmen = (sender as PocalAppointment);
+        //    //conmen.ClearValue(FrameworkElement.DataContextProperty);
+    
+        //}
 
 
 	}

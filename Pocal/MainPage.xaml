@@ -281,22 +281,16 @@
                                                 <!--Singel Appointment in DayCard-->
                                                 <DataTemplate>
                                                     <StackPanel x:Name="AgendaApptItem" 
-                                                                Orientation="Horizontal" Height="0"  >
+                                                                Orientation="Horizontal">
                                                         <StackPanel.Resources>
                                                             <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
                                                                 <BeginStoryboard>
                                                                     <Storyboard x:Name="StoryboardOnDataTemplate">
-                                                                        <!--<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="AgendaApptItem">
+                                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="AgendaApptItem">
                                                                             <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
-                                                                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
-                                                                        </DoubleAnimationUsingKeyFrames>-->
-
-                                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="AgendaApptItem">
-                                                                            <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                                                            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="48"/>
+                                                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
+                                                                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
                                                                         </DoubleAnimationUsingKeyFrames>
-
                                                                     </Storyboard>
                                                                 </BeginStoryboard>
                                                             </EventTrigger>
@@ -362,7 +356,7 @@
             <!--******** ************* ******** -->
 
             <Grid x:Name="SingleDayView" 
-				Background="#AD000000" Visibility="Collapsed" >
+				Background="#AD000000" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="60*"/>
@@ -423,12 +417,15 @@
                     <ScrollViewer x:Name="SingleDayScrollViewer" VerticalScrollBarVisibility="Hidden">
                         <Grid Background="#FF212121">
 
-                            <ItemsControl x:Name="hourlines" ItemsSource="{Binding SingleDayViewModel.hourLines}" >
+                            <ItemsControl x:Name="hourlines"
+                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                     ItemsSource="{Binding SingleDayViewModel.hourLines}" >
 
 
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Tap="SingleDay_Hourline_Tap" >
+                                        <Grid Tap="SingleDay_Hourline_Tap"
+                                              >
                                             <Border
 												BorderBrush="{StaticResource PhoneBorderBrush}" 
 												BorderThickness="0,0.7" Height="{Binding Height}">
@@ -443,10 +440,11 @@
                             </ItemsControl>
 
                             <ItemsControl x:Name="AppointmentsOnGrid"  
+                                           ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                           ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}" >
 
                                 <!--unnötig?-->
-                                <ItemsControl.ItemsPanel>
+                                <!--<ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <Grid VerticalAlignment="Top">
                                             <Grid.ColumnDefinitions>
@@ -454,22 +452,22 @@
                                             </Grid.ColumnDefinitions>
                                         </Grid>
                                     </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-
+                                </ListBox.ItemsPanel>-->
+                              
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid 
+                                        <Grid                                            
                                             x:Name="newsItemBtn"
                                             Margin="86,0,0,0"
 											Tap="ApptListItem_Tap"											  
 											Height="{Binding Appt, Converter={StaticResource singelDayApptHeight}, Mode=OneWay}"
 											Background="#FF212121" 
-											RenderTransformOrigin="0.5,0" VerticalAlignment="Top" >
+											RenderTransformOrigin="0.5,0">
                                             <Grid.RenderTransform>
                                                 <CompositeTransform  TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY}, FallbackValue=-1000}" />
                                             </Grid.RenderTransform>
                                             
-                                            <Grid.Resources>
+                                            <!--<Grid.Resources>
                                                 <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
                                                     <BeginStoryboard>
                                                         <Storyboard x:Name="StoryboardOnDataTemplate">
@@ -481,7 +479,7 @@
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </EventTrigger>
-                                            </Grid.Resources>
+                                            </Grid.Resources>-->
 
                                             <Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}">
                                                 <TextBlock  Text="{Binding Subject}"
@@ -495,7 +493,7 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
 
-                            <Grid>
+                            <Grid IsHitTestVisible="False">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="18*"/>
                                     <ColumnDefinition Width="82*"/>
