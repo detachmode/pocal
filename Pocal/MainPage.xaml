@@ -8,6 +8,7 @@
     xmlns:viewmodel="clr-namespace:Pocal.ViewModel"
     xmlns:local="clr-namespace:Pocal.Converter"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:ec="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
     x:Class="Pocal.MainPage"
     mc:Ignorable="d"
     SupportedOrientations="Portrait" Orientation="Portrait"
@@ -15,13 +16,14 @@
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainVM}">
 
 
-	<!--Converter-->
-	<phone:PhoneApplicationPage.Resources>
+	
+    <!--******** ********* ******** -->
+    <!--******** RESOURCES ******** -->
+    <!--******** ********* ******** -->
+    <phone:PhoneApplicationPage.Resources>
 
-
-		<local:weekNumberConverter x:Key="weekNumberConverter"/>
-
-
+        <!--Converter-->
+        <local:weekNumberConverter x:Key="weekNumberConverter"/>
 		<local:weekConverter x:Key="weekConverter"/>
 		<local:DateConverter x:Key="DateConverter"/>
 		<local:secondLineConverter x:Key="secondLineConverter"/>
@@ -35,11 +37,34 @@
 		<local:singelDayApptHeight x:Key="singelDayApptHeight"/>
 		<local:windowHeaderDateConverter x:Key="windowHeaderDateConverter"/>
 		<local:weekNumberVisibilityConverter x:Key="weekNumberVisibilityConverter"/>
+        
+		<Storyboard x:Name="SingleDayAppointmentBoxFadeIn">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="AppointmentsOnGrid">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+
+        <DataTemplate x:Key="ListNewsItem">
+            <Button x:Name="newsItemBtn">
+                <Button.Resources>
+                    <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard x:Name="FadeIn">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="newsItemBtn">
+                                    <EasingDoubleKeyFrame KeyTime="0" Value="0.01"/>
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Resources>
+                <TextBlock Text="{Binding ItemBindingExample}"/>
+            </Button>
+        </DataTemplate>
 
 
-
-
-	</phone:PhoneApplicationPage.Resources>
+    </phone:PhoneApplicationPage.Resources>
 
 
 
@@ -55,7 +80,10 @@
 		<StaticResource ResourceKey="PhoneForegroundBrush"/>
 	</phone:PhoneApplicationPage.Foreground>
 
-	<!--AppBar-->
+    <!--******** ******* ******** -->
+    <!--******** APP BAR ******** -->
+    <!--******** ******* ******** -->
+
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="True" IsVisible="True">
 
@@ -78,7 +106,10 @@
 	<!--LayoutRoot is the root grid where all page content is placed-->
 	<Grid x:Name="LayoutRoot" Background="Transparent">
 
-
+        <!--******** ************* ******** -->
+        <!--******** VISUAL STATES ******** -->
+        <!--******** ************* ******** -->
+        
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="VisualStateGroup">
 				<VisualState x:Name="Close">
@@ -163,14 +194,23 @@
 						</DoubleAnimationUsingKeyFrames>
 					</Storyboard>
 				</VisualState>
+				<VisualState x:Name="FadeInAppointmentBox">
+					<Storyboard>
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="AppointmentsOnGrid">
+							<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+							<EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+						</DoubleAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
 
-
-
-
 		<Grid x:Name="grid">
-			<Grid x:Name="AgendaView">
+
+            <!--******** ********** ******** -->
+            <!--******** AGENDAVIEW ******** -->
+            <!--******** ********** ******** -->
+            <Grid x:Name="AgendaView">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="40"/>
 					<RowDefinition Height="*"/>
@@ -180,7 +220,7 @@
 				<Grid x:Name="AgendaHeader" 
 					Grid.Row="0"
 					Canvas.ZIndex="4" 
-						Background="Black" 
+					Background="Black" 
 						>
 					<StackPanel x:Name="HeaderStackPanel" 
 						Orientation="Horizontal" 
@@ -208,7 +248,7 @@
 				</Grid>
 
 
-				<!-- Agenda View Body -->
+                <!-- Agenda View Body -->
 				<Grid x:Name="AgendaViewBody" 
 					Margin="0,0,0,0"
 					Grid.Row="1"
@@ -258,7 +298,7 @@
 
 														<!--Subject of Appointment-->
 														<StackPanel   Margin="12,0,0,0"
-																	  Tap="StackPanel_Tap">
+															Tap="StackPanel_Tap">
 
 															<TextBlock  Text="{Binding Appt, Converter={StaticResource subjectConverter}}"							
 																Foreground="{Binding CalColor}"
@@ -306,17 +346,22 @@
 			<!-- Agenda View Body END-->
 
 
-
-			<!--SingleDayView-->
+            <!--******** ************* ******** -->
+            <!--******** SINGLEDAYVIEW ******** -->
+            <!--******** ************* ******** -->
+            
 			<Grid x:Name="SingleDayView" 
-				Background="#AD000000" Visibility="Collapsed" >
+				Background="#AD000000" >
 				<Grid.RowDefinitions>
 					<RowDefinition Height="20*"/>
 					<RowDefinition Height="60*"/>
 					<RowDefinition Height="20*"/>
 				</Grid.RowDefinitions>
 
-				<!--TopExit-->
+				<!--BottomExit-->
+
+
+			<!--TopExit-->
 				<Grid x:Name="gridExitTop" 
 					Grid.Row="0" 
 					Opacity="0.0"
@@ -340,8 +385,8 @@
 					<Border
 						Canvas.ZIndex="3"  
 						Margin="0,-41,0,0"
-                        Height="41" 
-                        VerticalAlignment="Top"
+						Height="41" 
+						VerticalAlignment="Top"
                        >
 						<Border.Background>
 							<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
@@ -367,18 +412,17 @@
 					<ScrollViewer x:Name="SingleDayScrollViewer" VerticalScrollBarVisibility="Hidden">
 						<Grid Background="#FF212121">
 
-							<ItemsControl ItemsSource="{Binding SingleDayViewModel.hourLines}" >
+                            <ItemsControl x:Name="hourlines" ItemsSource="{Binding SingleDayViewModel.hourLines}" >
 
 
 								<ItemsControl.ItemTemplate>
 									<DataTemplate>
 										<Grid Tap="SingleDay_Hourline_Tap" >
 											<Border
-                                               
 												BorderBrush="{StaticResource PhoneBorderBrush}" 
 												BorderThickness="0,0.7" Height="{Binding Height}">
                   
-                                                <TextBlock  Text="{Binding Text}"
+												<TextBlock  Text="{Binding Text}"
 													Margin="6"
 													FontSize="22"/>
 											</Border>
@@ -387,33 +431,47 @@
 								</ItemsControl.ItemTemplate>
 							</ItemsControl>
 
-							<ItemsControl x:Name="AppointmentsOnGrid"   ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}" >
-
+                            <ItemsControl x:Name="AppointmentsOnGrid"  
+                                          ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}" >
+                                
+                                <!--unnötig?-->
 								<ItemsControl.ItemsPanel>
 									<ItemsPanelTemplate>
 										<Grid VerticalAlignment="Top">
 											<Grid.ColumnDefinitions>
-												<ColumnDefinition Width="*"/>
-
-											</Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
 										</Grid>
 									</ItemsPanelTemplate>
 								</ItemsControl.ItemsPanel>
+                                
 								<ItemsControl.ItemTemplate>
 									<DataTemplate>
-										<Grid Margin="86,0,0,0"
+                                        <Grid 
+                                            x:Name="newsItemBtn"
+                                            Margin="86,0,0,0"
 											Tap="ApptListItem_Tap"											  
 											Height="{Binding Appt, Converter={StaticResource singelDayApptHeight}, Mode=OneWay}"
 											Background="#FF212121" 
 											RenderTransformOrigin="0.5,0" VerticalAlignment="Top">
+                                            <Grid.RenderTransform>
+                                                <CompositeTransform TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY}}" />
+                                            </Grid.RenderTransform>
 
-											<Grid.RenderTransform>
-												<CompositeTransform TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY}}" />
-											</Grid.RenderTransform>
+                                            <Grid.Resources>
+                                                <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
+                                                    <BeginStoryboard>
+                                                        <Storyboard x:Name="FadeIn">
+                                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="newsItemBtn">
+                                                                <EasingDoubleKeyFrame KeyTime="0" Value="0.01"/>
+                                                                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                                            </DoubleAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </Grid.Resources>
 
-											<Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}">
-
-
+                                            <Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}">
 												<TextBlock  Text="{Binding Subject}"
 													Margin="6,3"
 													FontSize="22" />
@@ -439,8 +497,6 @@
 						</Grid>
 					</ScrollViewer>
 				</Grid>
-
-				<!--BottomExit-->
 
 
 			</Grid>

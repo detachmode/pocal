@@ -15,6 +15,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Threading.Tasks;
 using Pocal.Helper;
+using Windows.Foundation;
 
 namespace Pocal
 {
