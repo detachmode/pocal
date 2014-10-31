@@ -363,7 +363,6 @@
                     <RowDefinition Height="20*"/>
                 </Grid.RowDefinitions>
 
-                <!--BottomExit-->
 
 
                 <!--TopExit-->
@@ -419,7 +418,7 @@
 
                             <ItemsControl x:Name="hourlines"
                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                     ItemsSource="{Binding SingleDayViewModel.hourLines}" >
+                                     ItemsSource="{Binding SingleDayViewModel.hourLines, Mode=OneWay}" >
 
 
                                 <ItemsControl.ItemTemplate>
@@ -430,7 +429,7 @@
 												BorderBrush="{StaticResource PhoneBorderBrush}" 
 												BorderThickness="0,0.7" Height="{Binding Height}">
 
-                                                <TextBlock  Text="{Binding Text}"
+                                                <TextBlock  Text="{Binding Text, Mode=OneWay}"
 													Margin="6"
 													FontSize="22"/>
                                             </Border>
@@ -441,7 +440,7 @@
 
                             <ItemsControl x:Name="AppointmentsOnGrid"  
                                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                          ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}" >
+                                          ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}" >
 
                                 <!--unnötig? NEIN! Sonst fängt die YPos nicht für jedes Element bei Null an. ItemsPanel ist standardmässig ein Stackpanel-->
                                 <ItemsControl.ItemsPanel>
