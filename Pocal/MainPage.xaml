@@ -443,8 +443,8 @@
                                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                           ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}" >
 
-                                <!--unnötig?-->
-                                <!--<ListBox.ItemsPanel>
+                                <!--unnötig? NEIN! Sonst fängt die YPos nicht für jedes Element bei Null an. ItemsPanel ist standardmässig ein Stackpanel-->
+                                <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <Grid VerticalAlignment="Top">
                                             <Grid.ColumnDefinitions>
@@ -452,7 +452,7 @@
                                             </Grid.ColumnDefinitions>
                                         </Grid>
                                     </ItemsPanelTemplate>
-                                </ListBox.ItemsPanel>-->
+                                </ItemsControl.ItemsPanel>
                               
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -467,7 +467,7 @@
                                                 <CompositeTransform  TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY}, FallbackValue=-1000}" />
                                             </Grid.RenderTransform>
                                             
-                                            <!--<Grid.Resources>
+                                            <Grid.Resources>
                                                 <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
                                                     <BeginStoryboard>
                                                         <Storyboard x:Name="StoryboardOnDataTemplate">
@@ -479,7 +479,7 @@
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </EventTrigger>
-                                            </Grid.Resources>-->
+                                            </Grid.Resources>
 
                                             <Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}">
                                                 <TextBlock  Text="{Binding Subject}"
