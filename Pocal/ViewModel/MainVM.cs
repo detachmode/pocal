@@ -45,9 +45,6 @@ namespace Pocal.ViewModel
             {
                 await createAllPocalApptointments();
                 createDays();
-
-                // Aufgrund mangelnder Umsetzung von MVVM
-                SingleDayViewModel.updateTappedDay();
             }
            
         }
@@ -192,8 +189,8 @@ namespace Pocal.ViewModel
                 DesignDataDayappts.Add(new Appointment { Subject = "IT Security", StartTime = dt2.AddHours(11.75), Duration = ts });
 
                
-                DesignDataDayappts.Add(new Appointment { Subject = "Structered Data and Application", StartTime = dt3.AddHours(1.5), Duration = ts });
-                DesignDataDayappts.Add(new Appointment { Subject = "Artificial Intelligence for Games", StartTime = dt3.AddHours(14.25), Duration = ts3 });
+                DesignDataDayappts.Add(new Appointment { Subject = "Structered Data and Application", StartTime = dt3.AddHours(0), Duration = ts });
+                DesignDataDayappts.Add(new Appointment { Subject = "Artificial Intelligence for Games", StartTime = dt3.AddHours(14), Duration = ts3 });
 
                
                 DesignDataDayappts.Add(new Appointment { Subject = "Exercises Structered Data and Application", StartTime = dt4.AddHours(8.5), Duration = ts });

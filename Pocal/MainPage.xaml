@@ -281,7 +281,8 @@
                                                 <!--Singel Appointment in DayCard-->
                                                 <DataTemplate>
                                                     <StackPanel x:Name="AgendaApptItem" 
-                                                                Orientation="Horizontal">
+                                                                Tap="StackPanel_Tap"
+                                                                Orientation="Horizontal" Background="#00000000">
                                                         <StackPanel.Resources>
                                                             <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
                                                                 <BeginStoryboard>
@@ -302,8 +303,10 @@
 
 
                                                         <!--Subject of Appointment-->
-                                                        <StackPanel   Margin="12,0,0,0"
-															Tap="StackPanel_Tap">
+                                                        <StackPanel   
+                                                            Margin="12,0,0,0"    
+                                                            
+															>
 
                                                             <TextBlock  Text="{Binding Appt, Converter={StaticResource subjectConverter}}"							
 																Foreground="{Binding CalColor}"
@@ -413,12 +416,16 @@
                     </Border>
 
                     <!--Window Body-->
-                    <ScrollViewer x:Name="SingleDayScrollViewer" VerticalScrollBarVisibility="Hidden">
+                    <ScrollViewer x:Name="SingleDayScrollViewer" 
+                                  VerticalScrollBarVisibility="Hidden"
+                                 >
+
                         <Grid Background="#FF212121">
 
                             <ItemsControl x:Name="hourlines"
                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                      ItemsSource="{Binding SingleDayViewModel.hourLines, Mode=OneWay}" >
+                                
 
 
                                 <ItemsControl.ItemTemplate>
@@ -463,7 +470,7 @@
 											Background="#FF212121" 
 											RenderTransformOrigin="0.5,0">
                                             <Grid.RenderTransform>
-                                                <CompositeTransform  TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY}, FallbackValue=-1000}" />
+                                                <CompositeTransform  TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY },FallbackValue=-1000}" />
                                             </Grid.RenderTransform>
                                             
                                             <Grid.Resources>

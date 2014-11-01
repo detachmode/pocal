@@ -16,7 +16,10 @@ namespace Pocal.ViewModel
         {
             get
             {
+
+                triggerScrollToOffset(EventArgs.Empty);
                 return _tappedDay;
+               
             }
             set
             {
@@ -44,6 +47,7 @@ namespace Pocal.ViewModel
                 string str = i.ToString("00") + ":00";
                 hourLines.Add(new HourLine { Text = str, Height = 70 });
             }
+           
 
         }
 
@@ -61,20 +65,18 @@ namespace Pocal.ViewModel
 
         }
 
-        public void updateTappedDay()
-        {
 
-            if (TappedDay == null)
+
+        public event EventHandler TriggerScrollToOffset;
+        protected virtual void triggerScrollToOffset(EventArgs args)
+        {
+            var handler = this.TriggerScrollToOffset;
+            if (handler != null)
             {
-                TappedDay = App.ViewModel.Days[0];
-            }
-            else
-            {
-                DateTime dt = TappedDay.DT;
-                Day td = App.ViewModel.Days.FirstOrDefault(x => x.DT.Date == dt.Date);
-                TappedDay = td;
+                handler(this, args);
             }
         }
+
 
 
     }

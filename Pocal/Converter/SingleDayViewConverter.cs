@@ -50,7 +50,8 @@ namespace Pocal.Converter
 			DateTimeOffset starttime = (DateTimeOffset)value;
 			if (starttime != null)
 			{
-				return (starttime.Hour - App.ViewModel.SingleDayViewModel.FirstHour) * 70 - 1;	
+                //return (starttime.Hour - App.ViewModel.SingleDayViewModel.FirstHour) * 70 - 1;
+                return (starttime.Hour * 70);
 			}
 			return 0;
 		}

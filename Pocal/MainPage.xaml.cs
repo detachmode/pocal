@@ -31,6 +31,7 @@ namespace Pocal
 
             AgendaViewListbox.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
 
+            App.ViewModel.SingleDayViewModel.TriggerScrollToOffset += SingleDayViewModel_IsUpdated;
             //SingleDayScrollViewer.SizeChanged += scrollToDefaultOffset;
 
 
@@ -141,23 +142,23 @@ namespace Pocal
             Day selectedItem = element.DataContext as Day;
             App.ViewModel.SingleDayViewModel.TappedDay = selectedItem;
 
-            if (apptWasTapped == false)
-            {
-                SingleDayScrollViewer.ScrollToVerticalOffset(70 * 12);
+            //if (apptWasTapped == false)
+            //{
+            //    SingleDayScrollViewer.ScrollToVerticalOffset(70 * 12);
 
-            }
-            if (firstTimeOpenSingleDayview == false)
-            {
-                apptWasTapped = false;
-            }
+            //}
+            //if (firstTimeOpenSingleDayview == false)
+            //{
+            //    apptWasTapped = false;
+            //}
         }
 
         private void scrollToDefaultOffset(object sender, EventArgs e)
         {
-            if (apptWasTapped == false)
-                SingleDayScrollViewer.ScrollToVerticalOffset(70 * 12);
+            //if (apptWasTapped == false)
+            SingleDayScrollViewer.ScrollToVerticalOffset(70 * 12);
 
-            firstTimeOpenSingleDayview = false;
+            //firstTimeOpenSingleDayview = false;
 
         }
 
@@ -199,18 +200,27 @@ namespace Pocal
 
         #endregion
 
+        private PocalAppointment aPA;
         private void StackPanel_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            apptWasTapped = true;
-
-            PocalAppointment pocalappt = ((FrameworkElement)sender).DataContext as PocalAppointment;
-            SingleDayScrollViewer.ScrollToVerticalOffset(pocalappt.StartTime.Hour * 70 - 140);
-
-
-
-
+            
+            aPA = ((FrameworkElement)sender).DataContext as PocalAppointment;
+            SingleDayScrollViewer.ScrollToVerticalOffset(aPA.StartTime.Hour * 70 - 140);
 
         }
+
+        void SingleDayViewModel_IsUpdated(object sender, EventArgs e)
+        {
+
+            if (aPA != null)
+            {
+                SingleDayScrollViewer.UpdateLayout();
+                SingleDayScrollViewer.ScrollToVerticalOffset(aPA.StartTime.Hour * 70 - 140);
+                App.ViewModel.SingleDayViewModel.TriggerScrollToOffset -= SingleDayViewModel_IsUpdated;
+            } 
+            
+        }
+
 
         private void Grid_Unloaded(object sender, RoutedEventArgs e)
         {
