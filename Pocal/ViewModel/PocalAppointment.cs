@@ -22,6 +22,7 @@ namespace Pocal.ViewModel
                 this.Details = appt.Details;
 				this.StartTime = appt.StartTime;
 				this.Duration = appt.Duration;
+                this.AllDay = appt.AllDay;
 				NotifyPropertyChanged("Appt");
 				
 			}
@@ -139,7 +140,8 @@ namespace Pocal.ViewModel
 			{
 				return allDay;
 			}
-			private set
+            //todo make private again
+			set
 			{
 				if (value != allDay)
 				{

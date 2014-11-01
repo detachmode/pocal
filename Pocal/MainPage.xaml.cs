@@ -15,8 +15,6 @@ namespace Pocal
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        private bool apptWasTapped = false;
-        private bool firstTimeOpenSingleDayview = true;
 
         // Constructor
         public MainPage()
@@ -192,8 +190,12 @@ namespace Pocal
         private void SingleDay_Hourline_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             HourLine hourLine = ((FrameworkElement)sender).DataContext as HourLine;
-            DateTime starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine.Text);
-            CalendarAPI.addAppointment(starttime);
+            var starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine.Text);
+            if (starttime != null)
+            {
+                DateTime dt = (DateTime)starttime;
+                CalendarAPI.addAppointment(dt);
+            }
 
         }
 

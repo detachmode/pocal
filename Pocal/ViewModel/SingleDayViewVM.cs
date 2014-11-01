@@ -52,16 +52,17 @@ namespace Pocal.ViewModel
         }
 
 
-        public DateTime getStarTimeFromHourline(string hourLineText)
+        public DateTime? getStarTimeFromHourline(string hourLineText)
         {
             string str = hourLineText.Substring(0, 2);
             int hour = -1;
 
             if (Int32.TryParse(str, out hour))
-                return TappedDay.DT.Date + new TimeSpan(hour, 0, 0);
+                if(TappedDay != null)
+                    return TappedDay.DT.Date + new TimeSpan(hour, 0, 0);
 
             //todo
-            return DateTime.Now;
+            return null;
 
         }
 

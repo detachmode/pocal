@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using Windows.ApplicationModel.Appointments;
 
@@ -62,6 +63,8 @@ namespace Pocal.Converter
         }
     }
 
+
+
     public class DetailNotesCollapser : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -82,7 +85,24 @@ namespace Pocal.Converter
         }
     }
 
+    public class revertBoolean : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool)
+                if ((bool)value)
+                  return Visibility.Visible;
 
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+
+            return null;
+        }
+
+    }
 
 	public class singelDayApptTranslateY : IValueConverter
 	{
@@ -122,7 +142,7 @@ namespace Pocal.Converter
 				if ((appt.Duration.Hours) == 0)
 					return 36;
 
-				return ((appt.Duration.Hours) * 70 + half + 1);	
+				return ((appt.Duration.Hours) * 70 + half + 20);	
 			}
 			return 0;
 		}

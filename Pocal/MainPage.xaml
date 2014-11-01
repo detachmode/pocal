@@ -19,6 +19,7 @@
     <!--******** RESOURCES ******** -->
     <!--******** ********* ******** -->
     <phone:PhoneApplicationPage.Resources>
+        <local:revertBoolean x:Key="revertBoolean"/>
         <local:DetailNotesCollapser x:Key="DetailNotesCollapser"/>
         <local:NullOrWhiteSpaceCollapser x:Key="NullOrWhiteSpaceCollapser"/>
         <local:weekNumberConverter x:Key="weekNumberConverter"/>
@@ -37,6 +38,7 @@
         <local:weekNumberVisibilityConverter x:Key="weekNumberVisibilityConverter"/>
         <Color x:Key="Color90Black">#FF0F0F0F</Color>
         <Color x:Key="ColorBorderGrey">#FF767676</Color>
+        <System:Double x:Key="DefaultSize">22</System:Double>
     </phone:PhoneApplicationPage.Resources>
     <phone:PhoneApplicationPage.FontFamily>
         <StaticResource ResourceKey="PhoneFontFamilyNormal"/>
@@ -317,96 +319,113 @@
                     <!--******** SINGLEDAYVIEW BODY ******** -->
                     <!--******** ****************** ******** -->
                     <ScrollViewer x:Name="SingleDayScrollViewer" VerticalScrollBarVisibility="Hidden">
+
                         <Grid>
                             <Grid.Background>
                                 <SolidColorBrush Color="{StaticResource Color90Black}"/>
                             </Grid.Background>
-                            <ItemsControl x:Name="hourlines"
+                            
+                            <StackPanel>
+                                <Grid x:Name="AllDayAppointments"  Margin="24,12,0,6">
+                                    <ItemsControl  ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Tap="ApptListItem_Tap" Visibility="{Binding AllDay, Converter={StaticResource revertBoolean}, Mode=OneWay}">
+                                                    <TextBlock  Margin="8" Text="{Binding Subject}" Foreground="{Binding CalColor}"   FontSize="{StaticResource DefaultSize}"/>
+                                                </Grid>
+
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>                                 
+                                </Grid>
+                                <Border Height="1" Background="#FF807C7C"></Border>
+                                <Grid x:Name="HourLinesGridAppointments">
+                                    <ItemsControl x:Name="hourlines"
                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                      ItemsSource="{Binding SingleDayViewModel.hourLines, Mode=OneWay}" >
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Tap="SingleDay_Hourline_Tap"
-                                              >
-                                            <Border 
-												BorderThickness="0,.2" Height="{Binding Height}" 
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Tap="SingleDay_Hourline_Tap">
+                                                    <Border 
+												BorderThickness="0,0.2" Height="{Binding Height}" 
                                                 BorderBrush="#FF767676">
 
-                                                <TextBlock  Text="{Binding Text, Mode=OneWay}"
+                                                        <TextBlock  Text="{Binding Text, Mode=OneWay}"
 													Margin="7,6"
                                                             
 													FontSize="20"/>
-                                            </Border>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                            <ItemsControl x:Name="AppointmentsOnGrid"  ScrollViewer.VerticalScrollBarVisibility="Disabled"  ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}" >
-                                <!--unnötig? NEIN! Sonst fängt die YPos nicht für jedes Element bei Null an. ItemsPanel ist standardmässig ein Stackpanel-->
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <Grid VerticalAlignment="Top">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                        </Grid>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid                                            
+                                                    </Border>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <ItemsControl x:Name="AppointmentsOnGrid"  ScrollViewer.VerticalScrollBarVisibility="Disabled"  ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}" >
+                                        <!--unnötig? NEIN! Sonst fängt die YPos nicht für jedes Element bei Null an. ItemsPanel ist standardmässig ein Stackpanel-->
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <Grid VerticalAlignment="Top">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                </Grid>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid                                            
                                             x:Name="newsItemBtn"
-                                            Margin="74,0,0,0"
+                                            Margin="72,-1,0,0"
 											Tap="ApptListItem_Tap"											  
 											Height="{Binding Appt, Converter={StaticResource singelDayApptHeight}, Mode=OneWay}" 
 											RenderTransformOrigin="0.5,0"
                                             VerticalAlignment="Top">
-                                            <Grid.RenderTransform>
-                                                <CompositeTransform  TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY },FallbackValue=-1000}" />
-                                            </Grid.RenderTransform>
-                                            <Grid.Resources>
-                                                <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
-                                                    <BeginStoryboard>
-                                                        <Storyboard x:Name="StoryboardOnDataTemplate">
-                                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="newsItemBtn">
-                                                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                                                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
-                                                                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
-                                                            </DoubleAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </BeginStoryboard>
-                                                </EventTrigger>
-                                            </Grid.Resources>
-                                            <Grid.Background>
-                                                <SolidColorBrush Color="{StaticResource Color90Black}"/>
-                                            </Grid.Background>
-                                            <StackPanel Margin="24,3,0,0">
-                                                <TextBlock  Text="{Binding Subject}" Foreground="{Binding CalColor}" FontSize="22" FontWeight="Medium" />
-                                                <TextBlock  Text="{Binding Location}" FontSize="22" Visibility="{Binding Converter={StaticResource NullOrWhiteSpaceCollapser}, Mode=OneWay}" Foreground="#FFA2A2A2" Margin="0,-6,0,0" />
-                                                <TextBlock Text="{Binding Details}" FontSize="20.5" Foreground="#FF9C9C9C" FontWeight="ExtraLight" TextWrapping="Wrap" FontFamily="Calibri" Visibility="{Binding Converter={StaticResource DetailNotesCollapser}, Mode=OneWay}" />
-                                            </StackPanel>
-                                            <Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}"/>
-                                            <Border BorderThickness="0,2" >
-                                                <Border.BorderBrush>
-                                                    <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
-                                                </Border.BorderBrush>
-                                            </Border>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                            <Grid IsHitTestVisible="False">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="15*"/>
-                                    <ColumnDefinition Width="82*"/>
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" 
-									BorderThickness="0,0,2,0">
-                                    <Border.BorderBrush>
-                                        <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
-                                    </Border.BorderBrush>
-                                </Border>
-                            </Grid>
+                                                    <Grid.RenderTransform>
+                                                        <CompositeTransform  TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY },FallbackValue=-1000}" />
+                                                    </Grid.RenderTransform>
+                                                    <Grid.Resources>
+                                                        <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
+                                                            <BeginStoryboard>
+                                                                <Storyboard x:Name="StoryboardOnDataTemplate">
+                                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="newsItemBtn">
+                                                                        <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+                                                                        <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+                                                                    </DoubleAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </EventTrigger>
+                                                    </Grid.Resources>
+                                                    <Grid.Background>
+                                                        <SolidColorBrush Color="{StaticResource Color90Black}"/>
+                                                    </Grid.Background>
+                                                    <StackPanel Margin="24,3,0,0">
+                                                        <TextBlock  Text="{Binding Subject}" Foreground="{Binding CalColor}" FontSize="{StaticResource DefaultSize}" FontWeight="Medium" />
+                                                        <TextBlock  Text="{Binding Location}" FontSize="22" Visibility="{Binding Converter={StaticResource NullOrWhiteSpaceCollapser}, Mode=OneWay}" Foreground="#FFA2A2A2" Margin="0,-6,0,0" />
+                                                        <TextBlock Text="{Binding Details}" FontSize="20.5" Foreground="#FF9C9C9C" FontWeight="ExtraLight" TextWrapping="Wrap" FontFamily="Calibri" Visibility="{Binding Converter={StaticResource DetailNotesCollapser}, Mode=OneWay}" />
+                                                    </StackPanel>
+                                                    <Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}"/>
+                                                    <Border BorderThickness="2,2,0,2" >
+                                                        <Border.BorderBrush>
+                                                            <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
+                                                        </Border.BorderBrush>
+                                                    </Border>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <Grid IsHitTestVisible="False">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="15*"/>
+                                            <ColumnDefinition Width="82*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" BorderThickness="0,0,2,0">
+                                            <Border.BorderBrush>
+                                                <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
+                                            </Border.BorderBrush>
+                                        </Border>
+                                    </Grid>
+                                </Grid>
+                            </StackPanel>
                         </Grid>
                     </ScrollViewer>
                 </Grid>
