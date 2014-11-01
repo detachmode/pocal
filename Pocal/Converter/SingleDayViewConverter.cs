@@ -42,6 +42,27 @@ namespace Pocal.Converter
 		}
 	}
 
+    public class GradientVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            PocalAppointment pa = value as PocalAppointment;
+            if (pa.Details == ""  || pa.Duration < TimeSpan.FromHours(1.5))
+            {
+                return System.Windows.Visibility.Collapsed;
+            }
+            else
+                return System.Windows.Visibility.Visible;
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+
 
 	public class singelDayApptTranslateY : IValueConverter
 	{

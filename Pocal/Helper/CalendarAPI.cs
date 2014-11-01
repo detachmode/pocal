@@ -56,6 +56,7 @@ namespace Pocal
             //findOptions.MaxCount = 100;
             findOptions.FetchProperties.Add(AppointmentProperties.Subject);
             findOptions.FetchProperties.Add(AppointmentProperties.Location);
+            findOptions.FetchProperties.Add(AppointmentProperties.Details);
             findOptions.FetchProperties.Add(AppointmentProperties.StartTime);
             findOptions.FetchProperties.Add(AppointmentProperties.AllDay);
             findOptions.FetchProperties.Add(AppointmentProperties.Duration);

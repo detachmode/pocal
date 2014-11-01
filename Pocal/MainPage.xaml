@@ -25,6 +25,11 @@
 
 
 
+        <local:GradientVisibilityConverter x:Key="GradientVisibilityConverter"/>
+
+
+
+
         <!--Converter-->
         <local:weekNumberConverter x:Key="weekNumberConverter"/>
         <local:weekConverter x:Key="weekConverter"/>
@@ -40,6 +45,8 @@
         <local:singelDayApptHeight x:Key="singelDayApptHeight"/>
         <local:windowHeaderDateConverter x:Key="windowHeaderDateConverter"/>
         <local:weekNumberVisibilityConverter x:Key="weekNumberVisibilityConverter"/>
+        <Color x:Key="Color90Black">#FF0F0F0F</Color>
+        <Color x:Key="ColorBorderGrey">#FF767676</Color>
 
 
 
@@ -420,7 +427,10 @@
                                   VerticalScrollBarVisibility="Hidden"
                                  >
 
-                        <Grid Background="#FF0F0F0F">
+                        <Grid>
+                            <Grid.Background>
+                                <SolidColorBrush Color="{StaticResource Color90Black}"/>
+                            </Grid.Background>
 
                             <ItemsControl x:Name="hourlines"
                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
@@ -433,7 +443,8 @@
                                         <Grid Tap="SingleDay_Hourline_Tap"
                                               >
                                             <Border 
-												BorderThickness="0,.2" Height="{Binding Height}" BorderBrush="#FF767676">
+												BorderThickness="0,.2" Height="{Binding Height}" 
+                                                BorderBrush="#FF767676">
 
                                                 <TextBlock  Text="{Binding Text, Mode=OneWay}"
 													Margin="7,6"
@@ -466,8 +477,7 @@
                                             x:Name="newsItemBtn"
                                             Margin="74,0,0,0"
 											Tap="ApptListItem_Tap"											  
-											Height="{Binding Appt, Converter={StaticResource singelDayApptHeight}, Mode=OneWay}"
-											Background="#FF0F0F0F" 
+											Height="{Binding Appt, Converter={StaticResource singelDayApptHeight}, Mode=OneWay}" 
 											RenderTransformOrigin="0.5,0">
                                             <Grid.RenderTransform>
                                                 <CompositeTransform  TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY },FallbackValue=-1000}" />
@@ -486,21 +496,53 @@
                                                     </BeginStoryboard>
                                                 </EventTrigger>
                                             </Grid.Resources>
+                                            <Grid.Background>
+                                                <SolidColorBrush Color="{StaticResource Color90Black}"/>
+                                            </Grid.Background>
 
-                                            <Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}">
-                                                <StackPanel>
+
+                                            <StackPanel Margin="18,0,0,0">
                                                     <TextBlock  Text="{Binding Subject}"
                                                                 Foreground="{Binding CalColor}"
 													            Margin="9,3,0,0"
 													            FontSize="22" 
                                                                 FontWeight="Medium" />
                                                     <TextBlock  Text="{Binding Location}"
+                                                                
 													Margin="9,0"
 													FontSize="22" Foreground="{StaticResource PhoneSubtleBrush}" />
+
+                                                    <TextBlock  
+                                                    Text="{Binding Details}"     
+													Margin="9,6"
+													FontSize="22" Foreground="#FF9C9C9C" FontWeight="ExtraLight" TextWrapping="Wrap" />
+
+
                                                 </StackPanel>
 
+                                           
+                                            
+                                            <!--Gradient to Fade Out Note, if Details Text is to long-->
+                                            <Grid RenderTransformOrigin="0.0,0.0" Height="50" VerticalAlignment="Bottom" Visibility="{Binding Converter={StaticResource GradientVisibilityConverter}, Mode=OneWay}">
+                                                <Grid.Background>
+                                                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                                                        <GradientStop Color="#00000000" Offset="0"/>
+                                                        <GradientStop Color="{StaticResource Color90Black}" Offset="0.567"/>
+                                                        <GradientStop Color="#4C000000" Offset="0.31"/>
+                                                    </LinearGradientBrush>
+                                                </Grid.Background>
+                                            </Grid>
+                                            <Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}"/>
+                                            
+                                            <Border BorderThickness="0,2" >
+                                                <Border.BorderBrush>
+                                                    <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
+                                                </Border.BorderBrush>
                                             </Border>
-                                            <Border BorderThickness="0,2" BorderBrush="#FF767676" />
+                                            
+                                            
+                                            
+                                            
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -514,7 +556,7 @@
                                 <Border Grid.Column="0" 
 									BorderThickness="0,0,2,0">
                                     <Border.BorderBrush>
-                                        <SolidColorBrush Color="#FF767676"/>
+                                        <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
                                     </Border.BorderBrush>
                                 </Border>
                             </Grid>

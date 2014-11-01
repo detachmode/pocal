@@ -18,7 +18,7 @@ namespace Pocal.ViewModel
 				appt = value;
 				this.Subject = appt.Subject;
 				this.Location = appt.Location;
-
+                this.Details = appt.Details;
 				this.StartTime = appt.StartTime;
 				this.Duration = appt.Duration;
 				NotifyPropertyChanged("Appt");
@@ -26,7 +26,6 @@ namespace Pocal.ViewModel
 			}
 		}
 
-		private string calendarId;
 
 		private SolidColorBrush calColor;
 		public SolidColorBrush CalColor
@@ -77,6 +76,23 @@ namespace Pocal.ViewModel
 				}
 			}
 		}
+
+        private string details;
+        public string Details
+        {
+            get
+            {
+                return details;
+            }
+            private set
+            {
+                if (value != details)
+                {
+                    details = value;
+                    NotifyPropertyChanged("Details");
+                }
+            }
+        }
 
 		private DateTimeOffset startTime;
 		public DateTimeOffset StartTime
