@@ -359,7 +359,8 @@
                                             Margin="74,0,0,0"
 											Tap="ApptListItem_Tap"											  
 											Height="{Binding Appt, Converter={StaticResource singelDayApptHeight}, Mode=OneWay}" 
-											RenderTransformOrigin="0.5,0">
+											RenderTransformOrigin="0.5,0"
+                                            VerticalAlignment="Top">
                                             <Grid.RenderTransform>
                                                 <CompositeTransform  TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY },FallbackValue=-1000}" />
                                             </Grid.RenderTransform>
