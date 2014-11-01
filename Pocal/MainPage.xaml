@@ -25,7 +25,11 @@
 
 
 
-        <local:GradientVisibilityConverter x:Key="GradientVisibilityConverter"/>
+
+
+        <local:NullOrWhiteSpaceCollapser x:Key="NullOrWhiteSpaceCollapser"/>
+
+
 
 
 
@@ -510,28 +514,19 @@
                                                     <TextBlock  Text="{Binding Location}"
                                                                 
 													Margin="9,0"
-													FontSize="22" Foreground="{StaticResource PhoneSubtleBrush}" />
+													FontSize="22" Foreground="{StaticResource PhoneSubtleBrush}" Visibility="{Binding Converter={StaticResource NullOrWhiteSpaceCollapser}, Mode=OneWay}" />
 
                                                     <TextBlock  
                                                     Text="{Binding Details}"     
 													Margin="9,6"
-													FontSize="22" Foreground="#FF9C9C9C" FontWeight="ExtraLight" TextWrapping="Wrap" />
+													FontSize="20.5" Foreground="#FF9C9C9C" FontWeight="ExtraLight" TextWrapping="Wrap" />
 
 
                                                 </StackPanel>
 
                                            
                                             
-                                            <!--Gradient to Fade Out Note, if Details Text is to long-->
-                                            <Grid RenderTransformOrigin="0.0,0.0" Height="50" VerticalAlignment="Bottom" Visibility="{Binding Converter={StaticResource GradientVisibilityConverter}, Mode=OneWay}">
-                                                <Grid.Background>
-                                                    <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
-                                                        <GradientStop Color="#00000000" Offset="0"/>
-                                                        <GradientStop Color="{StaticResource Color90Black}" Offset="0.567"/>
-                                                        <GradientStop Color="#4C000000" Offset="0.31"/>
-                                                    </LinearGradientBrush>
-                                                </Grid.Background>
-                                            </Grid>
+
                                             <Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}"/>
                                             
                                             <Border BorderThickness="0,2" >

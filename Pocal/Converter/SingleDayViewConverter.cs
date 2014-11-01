@@ -42,12 +42,12 @@ namespace Pocal.Converter
 		}
 	}
 
-    public class GradientVisibilityConverter : IValueConverter
+    public class NullOrWhiteSpaceCollapser : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             PocalAppointment pa = value as PocalAppointment;
-            if (pa.Details == ""  || pa.Duration < TimeSpan.FromHours(1.5))
+            if (String.IsNullOrWhiteSpace(pa.Location))
             {
                 return System.Windows.Visibility.Collapsed;
             }
