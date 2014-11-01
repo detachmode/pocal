@@ -144,6 +144,13 @@ namespace Pocal.Helper
 
         private static bool isInTimeFrame(PocalAppointment pA, Day day)
         {
+            if (pA.AllDay)
+            {
+                if (day.DT.Date == pA.StartTime.Date)
+                    return true;
+                else
+                    return false;
+            }
             DateTimeOffset starttime = pA.StartTime;
             DateTimeOffset endtime = starttime + pA.Duration;
 
