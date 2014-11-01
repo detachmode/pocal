@@ -31,7 +31,7 @@ namespace Pocal.Helper
         {
 
             if (a.AllDay != b.AllDay) return false;
-            if (a.Subject != b.Subject) return false;
+            if (a.Subject != b.Subject) return false;  
             if (a.Location != b.Location) return false;
             if (a.StartTime != b.StartTime) return false;
             if (a.Duration != b.Duration) return false;
