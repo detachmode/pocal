@@ -15,26 +15,11 @@
     shell:SystemTray.IsVisible="False"
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainVM}">
 
-
-
     <!--******** ********* ******** -->
     <!--******** RESOURCES ******** -->
     <!--******** ********* ******** -->
     <phone:PhoneApplicationPage.Resources>
-
-
-
-
-
-
         <local:NullOrWhiteSpaceCollapser x:Key="NullOrWhiteSpaceCollapser"/>
-
-
-
-
-
-
-        <!--Converter-->
         <local:weekNumberConverter x:Key="weekNumberConverter"/>
         <local:weekConverter x:Key="weekConverter"/>
         <local:DateConverter x:Key="DateConverter"/>
@@ -51,17 +36,7 @@
         <local:weekNumberVisibilityConverter x:Key="weekNumberVisibilityConverter"/>
         <Color x:Key="Color90Black">#FF0F0F0F</Color>
         <Color x:Key="ColorBorderGrey">#FF767676</Color>
-
-
-
-
-
     </phone:PhoneApplicationPage.Resources>
-
-
-
-    <!--LayoutRoot END -->
-
     <phone:PhoneApplicationPage.FontFamily>
         <StaticResource ResourceKey="PhoneFontFamilyNormal"/>
     </phone:PhoneApplicationPage.FontFamily>
@@ -75,40 +50,27 @@
     <!--******** ******* ******** -->
     <!--******** APP BAR ******** -->
     <!--******** ******* ******** -->
-
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="True" IsVisible="True">
-
             <shell:ApplicationBar.MenuItems>
-
                 <shell:ApplicationBarMenuItem Text="Einstellungen" />
-                <shell:ApplicationBarMenuItem Text="Windows Live Daten Laden" />
+                <shell:ApplicationBarMenuItem Text="Tutorial" />
                 <shell:ApplicationBarMenuItem Text="Info"/>
-
             </shell:ApplicationBar.MenuItems>
-
             <shell:ApplicationBarIconButton IconUri="/Images/back.png" Text="Heute"/>
             <shell:ApplicationBarIconButton IconUri="/Images/add.png" Text="Neu"/>
             <shell:ApplicationBarIconButton IconUri="/Images/feature.calendar.png" Text="Gehe zu Tag"/>
             <shell:ApplicationBarIconButton IconUri="/Images/feature.search.png" Text="Termin suchen"/>
-
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
 
         <!--******** ************* ******** -->
         <!--******** VISUAL STATES ******** -->
         <!--******** ************* ******** -->
-
         <VisualStateManager.VisualStateGroups>
-
             <VisualStateGroup x:Name="VisualStateGroup">
-                <!--<VisualState x:Name="FadeElementIn">-->
-
-
-                <!--</VisualState>-->
                 <VisualState x:Name="Close">
                     <Storyboard>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SingleDayView">
@@ -200,42 +162,27 @@
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-
-        <Grid x:Name="grid">
-
-            <!--******** ********** ******** -->
-            <!--******** AGENDAVIEW ******** -->
-            <!--******** ********** ******** -->
+        </VisualStateManager.VisualStateGroups>         
+        <Grid x:Name="grid">     
             <Grid x:Name="AgendaView">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!--agenda View Header-->
-                <Grid x:Name="AgendaHeader" 
-					Grid.Row="0"
-					Canvas.ZIndex="4" 
-					Background="Black" 
+               
+                <!--******** ***************** ********-->
+                <!--******** AGENDAVIEW HEADER ********-->
+                <!--******** ***************** ********-->
+                <Grid x:Name="AgendaHeader" Grid.Row="0" Canvas.ZIndex="4" Background="Black" 
 						>
-                    <StackPanel x:Name="HeaderStackPanel" 
-						Orientation="Horizontal" 
-						HorizontalAlignment="Center" 
-						VerticalAlignment="Center">
-
-                        <TextBlock x:Name="WeekCounter"  Text="{Binding CurrentTop, Converter={StaticResource CurrentTopWeekConverter}}"                        
-							FontFamily="{StaticResource PhoneFontFamilyLight}" 
-							FontSize="22" 
-							HorizontalAlignment="Center" >
+                    <StackPanel x:Name="HeaderStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock x:Name="WeekCounter"  Text="{Binding CurrentTop, Converter={StaticResource CurrentTopWeekConverter}}" FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="22" HorizontalAlignment="Center" >
                             <TextBlock.Foreground>
                                 <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                             </TextBlock.Foreground>
                         </TextBlock>
-                        <TextBlock x:Name="DaysCounter"  Text="{Binding CurrentTop, Converter={StaticResource CurrentTopDayConverter}}"                          
-							FontFamily="{StaticResource PhoneFontFamilyLight}" 
-							FontSize="22" 
-							HorizontalAlignment="Center" Margin="8,0,0,0" >
+                        <TextBlock x:Name="DaysCounter"  Text="{Binding CurrentTop, Converter={StaticResource CurrentTopDayConverter}}"  FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="22" HorizontalAlignment="Center" Margin="8,0,0,0" >
                             <TextBlock.Foreground>
                                 <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                             </TextBlock.Foreground>
@@ -244,52 +191,28 @@
                     <Border Height="1" Background="#FF363636" VerticalAlignment="Bottom"/>
                 </Grid>
 
-
-                <!-- Agenda View Body -->
-                <Grid x:Name="AgendaViewBody" 
-					Margin="0,0,0,0"
-					Grid.Row="1"
-					>
-
+                <!--******** *************** ********-->
+                <!--******** AGENDAVIEW BODY ********-->
+                <!--******** *************** ********-->
+                <Grid x:Name="AgendaViewBody" Margin="0,0,0,0" Grid.Row="1">
                     <phone:LongListSelector  x:Name="AgendaViewListbox" ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch" Background="Transparent" >
                         <phone:LongListSelector.ItemTemplate >
-
-                            <!--DayCard Styling END-->
-
-                            <!--DayCard Styling-->
                             <DataTemplate >
-                                <Grid	
-									Tap="onDayTap" 
-									Background="Black">
-
-
-
-                                    <StackPanel 
-										
-										HorizontalAlignment="Stretch"
-										RenderTransformOrigin="0.5,0.5">
+                                <Grid Tap="onDayTap" Background="Black">
+                                    <StackPanel HorizontalAlignment="Stretch" RenderTransformOrigin="0.5,0.5">
                                         <Border BorderThickness="0,0,0,1.5" BorderBrush="#FF363636" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,0"/>
 
-                                        <!--DayCard Body END-->
+                                        <!--******** ************** ********-->
+                                        <!--******** DAYCARD HEADER ********-->
+                                        <!--******** ************** ********-->
+                                        <TextBlock  Text="{Binding DT, Converter={StaticResource DateConverter}}" FontSize="34" FontFamily="{StaticResource PhoneFontFamilyLight}" Foreground ="{Binding sundayForeground}" Padding="0,6,0,0" Margin="12,0,0,0"/>
 
-                                        <!--DayCard Footer END-->
-
-                                        <!--DayCard Header-->
-                                        <TextBlock  Text="{Binding DT, Converter={StaticResource DateConverter}}" 
-											FontSize="34" 
-											FontFamily="{StaticResource PhoneFontFamilyLight}"
-											Foreground ="{Binding sundayForeground}" Padding="0,6,0,0" Margin="12,0,0,0"
-												/>
-
-                                        <!--DayCard Body-->
+                                        <!--******** ************ ********-->
+                                        <!--******** DAYCARD BODY ********-->
+                                        <!--******** ************ ********-->
                                         <ItemsControl x:Name="DayCardApptsItemControll"  ItemsSource="{Binding PocalApptsOfDay}"
 											Margin="24,0,0,0">
-
                                             <ItemsControl.ItemTemplate>
-
-                                                <!--End of Single Appointment-->
-
-                                                <!--Singel Appointment in DayCard-->
                                                 <DataTemplate>
                                                     <StackPanel x:Name="AgendaApptItem" 
                                                                 Tap="StackPanel_Tap"
@@ -311,34 +234,21 @@
                                                             <CompositeTransform/>
                                                         </StackPanel.RenderTransform>
 
-
-
-                                                        <!--Subject of Appointment-->
-                                                        <StackPanel   
-                                                            Margin="12,0,0,0"    
-                                                            
-															>
-
-                                                            <TextBlock  Text="{Binding Appt, Converter={StaticResource subjectConverter}}"							
-																Foreground="{Binding CalColor}"
-																FontSize="20" 
-																/>
-
+                                                        <!--Subject and SecondLine-->
+                                                        <StackPanel Margin="12,0,0,0">
+                                                            <TextBlock  Text="{Binding Appt, Converter={StaticResource subjectConverter}}" Foreground="{Binding CalColor}" FontSize="20"/>
                                                             <TextBlock Text="{Binding Appt, Converter={StaticResource secondLineConverter}}" 
 																
 																FontFamily="{StaticResource PhoneFontFamilyLight}" 
 																CharacterSpacing="1" 
 																Padding="0" 
 																Margin="0,-6,0,0"/>
-
                                                         </StackPanel>
 
                                                     </StackPanel>
                                                 </DataTemplate>
-
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
-
                                         <Grid Height="25" RenderTransformOrigin="0.5,0.5" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" Background="#FF363636" >
                                             <Grid.RenderTransform>
                                                 <CompositeTransform TranslateY="9"/>
@@ -349,26 +259,17 @@
                                                 </TextBlock.Foreground></TextBlock>
                                         </Grid>
                                         <Grid Height="8"/>
-
-
-
                                     </StackPanel>
-
                                 </Grid>
                             </DataTemplate>
-
                         </phone:LongListSelector.ItemTemplate>
                     </phone:LongListSelector>
-
                 </Grid>
             </Grid>
-            <!-- Agenda View Body END-->
-
 
             <!--******** ************* ******** -->
             <!--******** SINGLEDAYVIEW ******** -->
             <!--******** ************* ******** -->
-
             <Grid x:Name="SingleDayView" 
 				Background="#AD000000" >
                 <Grid.RowDefinitions>
@@ -377,9 +278,7 @@
                     <RowDefinition Height="20*"/>
                 </Grid.RowDefinitions>
 
-
-
-                <!--TopExit-->
+                <!--GridExit-->
                 <Grid x:Name="gridExitTop" 
 					Grid.Row="0" 
 					Opacity="0.0"
@@ -387,61 +286,43 @@
 					Tap="gridExit_Tap" 
 					Background="Black" Grid.RowSpan="3"/>
 
-
-                <!--SingleDayView Body-->
+                
                 <Grid  x:Name="SingleDayWindowBody"  Grid.Row="1"  Background="Black">
                     <Grid.RenderTransform>
                         <CompositeTransform/>
                     </Grid.RenderTransform>
+                    <Border  BorderBrush="#FF383838" BorderThickness="0,1" Margin="0" Canvas.ZIndex="1"/>
 
-                    <Border  BorderBrush="#FF383838" 
-						BorderThickness="0,1" 
-						Margin="0" 
-						Canvas.ZIndex="1"/>
-
-                    <!--Window Header-->
-                    <Border
-						Canvas.ZIndex="3"  
-						Margin="0,-41,0,0"
-						Height="41" 
-						VerticalAlignment="Top"
-                       >
+                    <!--******** ******************** ******** -->
+                    <!--******** SINGLEDAYVIEW HEADER ******** -->
+                    <!--******** ******************** ******** -->
+                    <Border	Canvas.ZIndex="3"  Margin="0,-41,0,0" Height="41" VerticalAlignment="Top" >
                         <Border.Background>
                             <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                         </Border.Background>
-
-
                         <TextBlock  x:Name="SingleDayWindowHeader" 
 							Style="{StaticResource PhoneTextTitle3Style}"
 							Text="{Binding SingleDayViewModel.TappedDay.DT, Converter={StaticResource DateConverter}}" 
 							Margin="148,-4,24,0" 
 							FontSize="26" VerticalAlignment="Center" 
-							HorizontalAlignment="Right" 
-									>
+							HorizontalAlignment="Right">
                             <TextBlock.Foreground>
                                 <SolidColorBrush Color="{StaticResource PhoneButtonBasePressedForegroundColor}"/>
                             </TextBlock.Foreground>
                         </TextBlock>
-                        <!--FontFamily="Cambria"-->
-
                     </Border>
 
-                    <!--Window Body-->
-                    <ScrollViewer x:Name="SingleDayScrollViewer" 
-                                  VerticalScrollBarVisibility="Hidden"
-                                 >
-
+                    <!--******** ****************** ******** -->
+                    <!--******** SINGLEDAYVIEW BODY ******** -->
+                    <!--******** ****************** ******** -->
+                    <ScrollViewer x:Name="SingleDayScrollViewer" VerticalScrollBarVisibility="Hidden">
                         <Grid>
                             <Grid.Background>
                                 <SolidColorBrush Color="{StaticResource Color90Black}"/>
                             </Grid.Background>
-
                             <ItemsControl x:Name="hourlines"
                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                      ItemsSource="{Binding SingleDayViewModel.hourLines, Mode=OneWay}" >
-
-
-
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Tap="SingleDay_Hourline_Tap"
@@ -459,11 +340,7 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-
-                            <ItemsControl x:Name="AppointmentsOnGrid"  
-                                           ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                          ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}" >
-
+                            <ItemsControl x:Name="AppointmentsOnGrid"  ScrollViewer.VerticalScrollBarVisibility="Disabled"  ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}" >
                                 <!--unnötig? NEIN! Sonst fängt die YPos nicht für jedes Element bei Null an. ItemsPanel ist standardmässig ein Stackpanel-->
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -474,7 +351,6 @@
                                         </Grid>
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
-
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Grid                                            
@@ -486,7 +362,6 @@
                                             <Grid.RenderTransform>
                                                 <CompositeTransform  TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY },FallbackValue=-1000}" />
                                             </Grid.RenderTransform>
-
                                             <Grid.Resources>
                                                 <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
                                                     <BeginStoryboard>
@@ -503,46 +378,21 @@
                                             <Grid.Background>
                                                 <SolidColorBrush Color="{StaticResource Color90Black}"/>
                                             </Grid.Background>
-
-
-                                            <StackPanel Margin="18,0,0,0">
-                                                    <TextBlock  Text="{Binding Subject}"
-                                                                Foreground="{Binding CalColor}"
-													            Margin="9,3,0,0"
-													            FontSize="22" 
-                                                                FontWeight="Medium" />
-                                                    <TextBlock  Text="{Binding Location}"
-                                                                
-													Margin="9,0"
-													FontSize="22" Foreground="{StaticResource PhoneSubtleBrush}" Visibility="{Binding Converter={StaticResource NullOrWhiteSpaceCollapser}, Mode=OneWay}" />
-
-                                                    <TextBlock  
-                                                    Text="{Binding Details}"     
-													Margin="9,6"
-													FontSize="20.5" Foreground="#FF9C9C9C" FontWeight="ExtraLight" TextWrapping="Wrap" />
-
-
-                                                </StackPanel>
-
-                                           
-                                            
-
+                                            <StackPanel Margin="27,3,0,0">
+                                                <TextBlock  Text="{Binding Subject}" Foreground="{Binding CalColor}" FontSize="22" FontWeight="Medium" />
+                                                <TextBlock  Text="{Binding Location}" FontSize="22" Foreground="{StaticResource PhoneSubtleBrush}" Visibility="{Binding Converter={StaticResource NullOrWhiteSpaceCollapser}, Mode=OneWay}" />
+                                                <TextBlock Text="{Binding Details}" FontSize="20.5" Foreground="#FF9C9C9C" FontWeight="ExtraLight" TextWrapping="Wrap" />
+                                            </StackPanel>
                                             <Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}"/>
-                                            
                                             <Border BorderThickness="0,2" >
                                                 <Border.BorderBrush>
                                                     <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
                                                 </Border.BorderBrush>
                                             </Border>
-                                            
-                                            
-                                            
-                                            
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-
                             <Grid IsHitTestVisible="False">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="15*"/>
@@ -555,20 +405,10 @@
                                     </Border.BorderBrush>
                                 </Border>
                             </Grid>
-
-
                         </Grid>
                     </ScrollViewer>
                 </Grid>
-
-
             </Grid>
         </Grid>
-
-
-
     </Grid>
-
-
-
 </phone:PhoneApplicationPage>

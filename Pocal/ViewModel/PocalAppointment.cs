@@ -17,7 +17,8 @@ namespace Pocal.ViewModel
 			{
 				appt = value;
 				this.Subject = appt.Subject;
-				this.Location = appt.Location;
+
+                this.Location =appt.Location;
                 this.Details = appt.Details;
 				this.StartTime = appt.StartTime;
 				this.Duration = appt.Duration;
@@ -25,6 +26,8 @@ namespace Pocal.ViewModel
 				
 			}
 		}
+
+
 
 
 		private SolidColorBrush calColor;

@@ -231,12 +231,15 @@ namespace Pocal.Converter
 				}
 
 				// Location
-				if (appt.Location == "")
+                if (String.IsNullOrWhiteSpace(appt.Location))
 				{
-					return str;
+                    if (!String.IsNullOrWhiteSpace(appt.Details))
+                        str += " (" + appt.Details + ")";
 				}
 				else
-					return str + " (" + appt.Location + ")";
+					 str += " (" + appt.Location + ")";
+
+                return str;
 			}
 			return null;
 		}
@@ -246,6 +249,7 @@ namespace Pocal.Converter
 
 			return null;
 		}
+
 
 
 	}
