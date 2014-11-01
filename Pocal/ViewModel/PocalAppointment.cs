@@ -15,9 +15,9 @@ namespace Pocal.ViewModel
 			}
 			set
 			{
+
 				appt = value;
 				this.Subject = appt.Subject;
-
                 this.Location =appt.Location;
                 this.Details = appt.Details;
 				this.StartTime = appt.StartTime;

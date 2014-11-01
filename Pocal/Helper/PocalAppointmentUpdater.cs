@@ -18,8 +18,26 @@ namespace Pocal.Helper
 
         public static void Update(PocalAppointment oldPA, PocalAppointment newPA)
         {
+            // soll Aufflackern des Termins verhindern, wenn keine Änderungen gemacht wurden.
+            if (oldPA != null && newPA != null)
+                if (arePocaAppointmentsEqual(oldPA, newPA))
+                    return;
+
             updateIfSingle(oldPA, newPA);
             updateIfRecurrent(oldPA, newPA);
+        }
+
+        private static bool arePocaAppointmentsEqual(PocalAppointment a, PocalAppointment b)
+        {
+
+            if (a.AllDay != b.AllDay) return false;
+            if (a.Subject != b.Subject) return false;
+            if (a.Location != b.Location) return false;
+            if (a.StartTime != b.StartTime) return false;
+            if (a.Duration != b.Duration) return false;
+            if (a.Details != b.Details) return false;
+            if (a.Appt.Recurrence != b.Appt.Recurrence) return false;
+            return true;
         }
 
         private static void updateIfRecurrent(PocalAppointment oldPA, PocalAppointment newPA)
@@ -88,10 +106,6 @@ namespace Pocal.Helper
 
         }
 
-        private static Task<List<Appointment>> getAppointmentsWithLocalId(string p)
-        {
-            throw new NotImplementedException();
-        }
 
         private static void add(PocalAppointment pA)
         {
