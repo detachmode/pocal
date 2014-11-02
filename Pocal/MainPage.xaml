@@ -274,7 +274,7 @@
             <!--******** SINGLEDAYVIEW ******** -->
             <!--******** ************* ******** -->
             <Grid x:Name="SingleDayView" 
-				Background="#AD000000" >
+				Background="#AD000000" Visibility="Collapsed" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="60*"/>
