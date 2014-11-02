@@ -105,7 +105,7 @@ namespace Pocal
 
 
 
-        private static async Task<List<Appointment>> getReccurantAppointments(Appointment currentAppointment, string localID)
+        public static async Task<List<Appointment>> getReccurantAppointments(Appointment currentAppointment, string localID)
         {
             AppointmentStore appointmentStore = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
 
@@ -115,15 +115,15 @@ namespace Pocal
                 AppointmentCalendar calendar =
                     await appointmentStore.GetAppointmentCalendarAsync(currentAppointment.CalendarId);
 
-                FindAppointmentsOptions options = new FindAppointmentsOptions();
+              
 
 
                 IReadOnlyList<Appointment> appointmentInstances = await
                     calendar.FindAllInstancesAsync(
                         localID,
                         DateTime.Today,
-                        TimeSpan.FromDays(30),
-                        options);
+                        TimeSpan.FromDays(App.ViewModel.howManyDays),
+                        getFindOptions());
 
                 foreach (var appt in appointmentInstances)
                 {

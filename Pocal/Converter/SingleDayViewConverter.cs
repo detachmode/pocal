@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using Windows.ApplicationModel.Appointments;
+using System.Linq;
 
 namespace Pocal.Converter
 {
@@ -70,7 +71,7 @@ namespace Pocal.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             PocalAppointment pa = value as PocalAppointment;
-            if (String.IsNullOrWhiteSpace(pa.Location) || pa.Duration > TimeSpan.FromHours(1.5))
+            if (String.IsNullOrWhiteSpace(pa.Location) || pa.Duration > TimeSpan.FromHours(1))
             {            
                 return System.Windows.Visibility.Visible;
             }
@@ -152,6 +153,67 @@ namespace Pocal.Converter
 
 			return null;
 		}
+
+        public class singelDayApptTranslateX : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                DateTimeOffset starttime = (DateTimeOffset)value;
+                if (starttime != null)
+                {
+                    //return (starttime.Hour - App.ViewModel.SingleDayViewModel.FirstHour) * 70 - 1;
+                    return (starttime.Hour * 70);
+                }
+                return 0;
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+
+                return null;
+            }
+
+        }
+
+        public class singelDayApptHeightX : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                var appt = (value as Appointment);
+                if (appt != null)
+                {
+                    if (appt.AllDay)
+                        return 0;
+
+                    int half = 0;
+                    if (appt.Duration.Minutes >= 30)
+                        half = 35;
+
+                    if ((appt.Duration.Hours) == 0)
+                        return 36;
+
+                    return ((appt.Duration.Hours) * 70 + half + 20);
+                }
+                return 0;
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+
+                return null;
+            }
+
+            //public int howManyConflicts (Appointment appt)
+            //{
+            //    int result = 0;
+            //    App.ViewModel.Days.FirstOrDefault(d => d.DT == appt.Start);
+  
+
+            //    return result;
+            //}
+
+
+        }
 
 
 	}

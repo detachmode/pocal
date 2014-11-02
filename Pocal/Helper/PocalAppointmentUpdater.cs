@@ -94,8 +94,7 @@ namespace Pocal.Helper
 
         private static async void addRecurrent(Appointment appt)
         {
-            List<Appointment> appts = await getReccurantAppointments(appt);
-            //List<Appointment> appts = await getAppointmentsWithLocalId(appt.LocalId);
+            List<Appointment> appts = await CalendarAPI.getReccurantAppointments(appt, appt.LocalId);
 
             foreach (var a in appts)
             {
@@ -161,31 +160,6 @@ namespace Pocal.Helper
 
             return !isNotInTimeFrame;
 
-        }
-
-
-
-        private static async Task<List<Appointment>> getReccurantAppointments(Appointment appt)
-        {
-            //await CalendarAPI.setAppointmentStore();
-            List<Appointment> resultList = new List<Appointment>();
-
-            AppointmentCalendar calendar = await CalendarAPI.appointmentStore.GetAppointmentCalendarAsync(appt.CalendarId);
-
-            FindAppointmentsOptions options = new FindAppointmentsOptions();
-
-
-            IReadOnlyList<Appointment> appointmentInstances = await
-                calendar.FindAllInstancesAsync(
-                    appt.LocalId,
-                    DateTime.Today,
-                    TimeSpan.FromDays(App.ViewModel.howManyDays),
-                    options);
-
-            foreach (var a in appointmentInstances)
-                resultList.Add(a);
-
-            return resultList;
         }
 
     }
