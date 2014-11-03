@@ -244,7 +244,12 @@ namespace Pocal
 
         }
 
-  
+        private void LongList_Loaded(object sender, RoutedEventArgs e) { 
+            var sb = ((FrameworkElement)VisualTreeHelper.GetChild(AgendaViewListbox, 0)).FindName("VerticalScrollBar") as ScrollBar;
+            sb.Margin = new Thickness(-10, 0, 0, 0);
+            sb.Width = 0;
+            
+        }
 
 
     }
