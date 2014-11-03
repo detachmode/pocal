@@ -210,6 +210,7 @@ namespace Pocal.ViewModel
                 ObservableCollection<PocalAppointment> DesignDataDayPocalappts = new ObservableCollection<PocalAppointment>();
 
                 ObservableCollection<PocalAppointment> DesignDataDay2_Pocalappts = new ObservableCollection<PocalAppointment>();
+                DesignDataDay2_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[6], CalColor = CalColorOrange });
                 DesignDataDay2_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[7], CalColor = CalColorOrange });
                 DesignDataDay2_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[8], CalColor = CalColorOrange });
 
@@ -251,7 +252,7 @@ namespace Pocal.ViewModel
 
 
 
-                SingleDayViewModel.TappedDay = Days[1]; 
+                SingleDayViewModel.TappedDay = Days[0]; 
                 CurrentTop = new Day { DT = dt.AddHours(24) };
 
             }

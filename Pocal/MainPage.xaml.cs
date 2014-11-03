@@ -23,8 +23,6 @@ namespace Pocal
             InitializeComponent();
             DataContext = App.ViewModel;
 
-            getTest();
-
             // Meine SETUP Funktionen
             //watchPositionOfLongListSelector();
             //SingleDayScrollViewer.SizeChanged += scrollToDefaultOffset; ???
@@ -41,11 +39,6 @@ namespace Pocal
 
         }
 
-        private async void getTest()
-        {
-            Appointment test = await CalendarAPI.getAppointmentfromSubject("Lernen");
-
-        }
 
         private void AgendaScrolling_WhileSingleDayViewIsOpen_Fix(object sender, EventArgs e)
         {
@@ -53,8 +46,6 @@ namespace Pocal
                 VisualStateManager.GoToState(this, "Close", true);
 
         }
-
-
 
 
         #region Position im Longlistselektor bestimmen
@@ -138,39 +129,7 @@ namespace Pocal
 
         #region Events
 
-        public void onDayTap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
 
-
-            //Open SingleDayView
-            SingleDayView.Visibility = Visibility.Visible;
-            VisualStateManager.GoToState(this, "OpenDelay", true);
-
-
-            //Set selectedItem 
-            var element = (FrameworkElement)sender;
-            Day selectedItem = element.DataContext as Day;
-            App.ViewModel.SingleDayViewModel.TappedDay = selectedItem;
-
-            //if (apptWasTapped == false)
-            //{
-            //    SingleDayScrollViewer.ScrollToVerticalOffset(70 * 12);
-
-            //}
-            //if (firstTimeOpenSingleDayview == false)
-            //{
-            //    apptWasTapped = false;
-            //}
-        }
-
-        private void scrollToDefaultOffset(object sender, EventArgs e)
-        {
-            //if (apptWasTapped == false)
-            SingleDayScrollViewer.ScrollToVerticalOffset(70 * 12);
-
-            //firstTimeOpenSingleDayview = false;
-
-        }
 
         private void gridExit_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
@@ -184,14 +143,23 @@ namespace Pocal
 
         private void closeDayView()
         {
-            //SingleDayView.Visibility = Visibility.Collapsed;
             VisualStateManager.GoToState(this, "Close", true);
         }
 
+        private void LongList_Loaded(object sender, RoutedEventArgs e)
+        {
+            var sb = ((FrameworkElement)VisualTreeHelper.GetChild(AgendaViewListbox, 0)).FindName("VerticalScrollBar") as ScrollBar;
+            sb.Margin = new Thickness(-10, 0, 0, 0);
+            sb.Width = 0;
+
+        }
 
 
+        #endregion
 
-        public void ApptListItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        #region SDV Events
+
+        public void SDV_AppointmentTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             PocalAppointment pocalAppointment = ((FrameworkElement)sender).DataContext as PocalAppointment;
             CalendarAPI.editAppointment(pocalAppointment);
@@ -199,7 +167,7 @@ namespace Pocal
 
         }
 
-        private void SingleDay_Hourline_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        private void SDV_Hourline_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             HourLine hourLine = ((FrameworkElement)sender).DataContext as HourLine;
             var starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine.Text);
@@ -211,45 +179,69 @@ namespace Pocal
 
         }
 
-
         #endregion
 
+        #region from AV to SDV Events
+
         private PocalAppointment aPA;
-        private void StackPanel_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+
+
+
+        private void DayCard_ApptTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
 
             aPA = ((FrameworkElement)sender).DataContext as PocalAppointment;
-            SingleDayScrollViewer.ScrollToVerticalOffset(aPA.StartTime.Hour * 70 - 140);
+            scrollTo_aPa();
+            Debug.WriteLine("(AgendaViewApptTap)");
 
+        }
+
+        private void DayCard_HeaderTap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            OpenSdvAndSetTappedDay(sender, e);
+            SingleDayScrollViewer.ScrollToVerticalOffset(12 * 70 - 140);
         }
 
         void SingleDayViewModel_IsUpdated(object sender, EventArgs e)
         {
-
             if (aPA != null)
             {
-                SingleDayScrollViewer.UpdateLayout();
-                SingleDayScrollViewer.ScrollToVerticalOffset(aPA.StartTime.Hour * 70 - 140);
+                scrollTo_aPa();
                 App.ViewModel.SingleDayViewModel.TriggerScrollToOffset -= SingleDayViewModel_IsUpdated;
             }
 
         }
 
-
-        private void Grid_Unloaded(object sender, RoutedEventArgs e)
+        private void OpenSdvAndSetTappedDay(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            PocalAppointment conmen = (sender as PocalAppointment);
-            //conmen.ClearValue(FrameworkElement.DataContextProperty);
-            ((FrameworkElement)sender).ClearValue(FrameworkElement.DataContextProperty);
 
+            //Open SingleDayView
+            if (SingleDayView.Visibility == Visibility.Visible)
+                return;
+
+            SingleDayView.Visibility = Visibility.Visible;
+            VisualStateManager.GoToState(this, "OpenDelay", true);
+
+
+            //Set selectedItem 
+            var element = (FrameworkElement)sender;
+            Day selectedItem = element.DataContext as Day;
+            App.ViewModel.SingleDayViewModel.TappedDay = selectedItem;
+            Debug.WriteLine("(OpenSdvAndSetTappedDay)");
         }
 
-        private void LongList_Loaded(object sender, RoutedEventArgs e) { 
-            var sb = ((FrameworkElement)VisualTreeHelper.GetChild(AgendaViewListbox, 0)).FindName("VerticalScrollBar") as ScrollBar;
-            sb.Margin = new Thickness(-10, 0, 0, 0);
-            sb.Width = 0;
-            
+        private void scrollTo_aPa()
+        {
+            SingleDayScrollViewer.UpdateLayout();
+            SingleDayScrollViewer.ScrollToVerticalOffset(aPA.StartTime.Hour * HourLine.Height - 140);
         }
+
+
+
+
+
+
+        #endregion
 
 
     }

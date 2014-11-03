@@ -45,7 +45,7 @@ namespace Pocal.ViewModel
             for (int i = FirstHour; i < LastHour; i++)
             {
                 string str = i.ToString("00") + ":00";
-                hourLines.Add(new HourLine { Text = str, Height = 70 });
+                hourLines.Add(new HourLine { Text = str });
             }
            
 
@@ -79,13 +79,6 @@ namespace Pocal.ViewModel
         }
 
 
-
-    }
-
-    public class HourLine
-    {
-        public string Text { get; set; }
-        public int Height { get; set; }
 
     }
 }

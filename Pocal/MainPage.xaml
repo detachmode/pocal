@@ -204,7 +204,7 @@
                     <phone:LongListSelector  x:Name="AgendaViewListbox" Loaded="LongList_Loaded" ItemsSource="{Binding Days}"  HorizontalContentAlignment="Stretch" Background="Transparent" Margin="0,10,0,-10" >
                         <phone:LongListSelector.ItemTemplate >
                             <DataTemplate >
-                                <Grid Tap="onDayTap" Background="Black" Margin="0,0,-14,0">
+                                <Grid Tap="OpenSdvAndSetTappedDay" Canvas.ZIndex="10" Background="Black" Margin="0,0,-14,0">
                                     <StackPanel RenderTransformOrigin="0.5,0.5">
                                         <!--<Border BorderThickness="0,0,0,0.5" BorderBrush="White"/>-->
                                         <!--<Border BorderThickness="0,0,0,0.4" Height="1" BorderBrush="#FF767676"/>-->
@@ -220,7 +220,7 @@
                                         </Grid>
 
 
-                                        <TextBlock x:Name="DayCardHeader"  Foreground ="{Binding DT, Converter={StaticResource weekendForeground}}" Text="{Binding DT, Converter={StaticResource DateConverter}}" FontSize="34" FontFamily="{StaticResource PhoneFontFamilyLight}"  Margin="12,6,0,0"/>
+                                        <TextBlock x:Name="DayCardHeader" Tap="DayCard_HeaderTap" Foreground ="{Binding DT, Converter={StaticResource weekendForeground}}" Text="{Binding DT, Converter={StaticResource DateConverter}}" FontSize="34" FontFamily="{StaticResource PhoneFontFamilyLight}"  Margin="12,6,0,0"/>
 
                                         <!--******** ************ ********-->
                                         <!--******** DAYCARD BODY ********-->
@@ -229,14 +229,16 @@
 											Margin="24,0,0,0">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <StackPanel x:Name="AgendaApptItem" 
-                                                                Tap="StackPanel_Tap"
-                                                                Orientation="Horizontal" Background="#00000000">
+                                                    <StackPanel x:Name="DayCard_ApptItem" 
+                                                                Tap="DayCard_ApptTap"                                                         
+                                                                Orientation="Horizontal"
+                                                               
+                                                                Background="Black">
                                                         <StackPanel.Resources>
                                                             <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
                                                                 <BeginStoryboard>
                                                                     <Storyboard x:Name="StoryboardOnDataTemplate">
-                                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="AgendaApptItem">
+                                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="DayCard_ApptItem">
                                                                             <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
                                                                             <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
                                                                             <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
@@ -250,7 +252,7 @@
                                                         </StackPanel.RenderTransform>
 
                                                         <!--Subject and SecondLine-->
-                                                        <StackPanel Margin="12,0,0,0">
+                                                        <StackPanel  Margin="12,0,0,0">
                                                             <TextBlock  Text="{Binding Appt, Converter={StaticResource subjectConverter}}" Foreground="{Binding CalColor}" FontSize="20"/>
                                                             <TextBlock Text="{Binding Appt, Converter={StaticResource secondLineConverter}}" 
 																
@@ -335,12 +337,12 @@
                             </Grid.Background>
 
                             <StackPanel>
-                                <Grid x:Name="AllDayAppointments"  Margin="24,12,0,6">
+                                <Grid x:Name="AllDayAppointments"  Margin="24,0,0,0">
                                     <ItemsControl  ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Grid Tap="ApptListItem_Tap" Visibility="{Binding AllDay, Converter={StaticResource revertBoolean}, Mode=OneWay}">
-                                                    <TextBlock  Margin="8" Text="{Binding Subject}" Foreground="{Binding CalColor}"   FontSize="{StaticResource DefaultSize}"/>
+                                                <Grid Tap="SDV_AppointmentTap" Visibility="{Binding AllDay, Converter={StaticResource revertBoolean}, Mode=OneWay}">
+                                                    <TextBlock  Margin="4,6,0,6" Text="{Binding Subject}" Foreground="{Binding CalColor}"   FontSize="{StaticResource DefaultSize}" FontWeight="SemiBold"/>
                                                 </Grid>
 
                                             </DataTemplate>
@@ -354,7 +356,7 @@
                                      ItemsSource="{Binding SingleDayViewModel.hourLines, Mode=OneWay}" >
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Grid Tap="SingleDay_Hourline_Tap">
+                                                <Grid Tap="SDV_Hourline_Tap">
                                                     <Border 
 												BorderThickness="0,0.2" Height="{Binding Height}" 
                                                 BorderBrush="#FF767676">
@@ -384,7 +386,7 @@
                                                 <Grid                                            
                                             x:Name="newsItemBtn"
                                             Margin="72,-1,0,0"
-											Tap="ApptListItem_Tap"											  
+											Tap="SDV_AppointmentTap"											  
 											Height="{Binding Appt, Converter={StaticResource singelDayApptHeight}, Mode=OneWay}" 
 											RenderTransformOrigin="0.5,0"
                                             VerticalAlignment="Top">

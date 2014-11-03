@@ -96,6 +96,7 @@
     </Compile>
     <Compile Include="Converter\AgendaViewConverter.cs" />
     <Compile Include="Converter\SingleDayViewConverter.cs" />
+    <Compile Include="Helper\Hourline.cs" />
     <Compile Include="Helper\PocalAppointmentUpdater.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
