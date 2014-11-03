@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using Pocal.ViewModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Appointments;
 
 namespace Pocal
 {
@@ -22,16 +23,27 @@ namespace Pocal
             InitializeComponent();
             DataContext = App.ViewModel;
 
+            getTest();
 
             // Meine SETUP Funktionen
             //watchPositionOfLongListSelector();
+            //SingleDayScrollViewer.SizeChanged += scrollToDefaultOffset; ???
+
             App.ViewModel.ReloadPocalApptsAndDays();
 
             AgendaViewListbox.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
 
             App.ViewModel.SingleDayViewModel.TriggerScrollToOffset += SingleDayViewModel_IsUpdated;
-            //SingleDayScrollViewer.SizeChanged += scrollToDefaultOffset;
 
+
+
+
+
+        }
+
+        private async void getTest()
+        {
+            Appointment test = await CalendarAPI.getAppointmentfromSubject("Lernen");
 
         }
 
@@ -231,6 +243,8 @@ namespace Pocal
             ((FrameworkElement)sender).ClearValue(FrameworkElement.DataContextProperty);
 
         }
+
+  
 
 
     }

@@ -50,6 +50,31 @@ namespace Pocal
             return await appointmentStore.FindAppointmentsAsync(DateTime.Now.Date, TimeSpan.FromDays(App.ViewModel.howManyDays), findOptions);
 
         }
+
+        public static async Task<Appointment> getAppointmentfromSubject (string subject)
+        {
+            await setAppointmentStore();
+            FindAppointmentsOptions findOptions = new FindAppointmentsOptions();
+            //findOptions.MaxCount = 100;
+            findOptions.FetchProperties.Add(AppointmentProperties.Subject);
+            findOptions.FetchProperties.Add(AppointmentProperties.Location);
+            findOptions.FetchProperties.Add(AppointmentProperties.Details);
+            findOptions.FetchProperties.Add(AppointmentProperties.StartTime);
+            findOptions.FetchProperties.Add(AppointmentProperties.AllDay);
+            findOptions.FetchProperties.Add(AppointmentProperties.Duration);
+
+            IReadOnlyList<Appointment> appts = await appointmentStore.FindAppointmentsAsync(DateTime.Now.Date, TimeSpan.FromDays(App.ViewModel.howManyDays), findOptions);
+            foreach (var appt in appts)
+            {
+                if (appt.Subject.Contains(subject))
+                {
+                    return appt;
+                }
+            }
+            return appts[0];
+
+        }
+
         private static FindAppointmentsOptions getFindOptions()
         {
             FindAppointmentsOptions findOptions = new FindAppointmentsOptions();

@@ -299,6 +299,26 @@ namespace Pocal.Converter
         }
     }
 
+    public class weekendForeground : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DateTime dt = (DateTime)value;
+           
+            if ((dt.DayOfWeek == DayOfWeek.Saturday) || (dt.DayOfWeek == DayOfWeek.Sunday))
+            {
+                return new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
+            }
+            else
+                return new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
     public class weekNumberVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -328,7 +348,7 @@ namespace Pocal.Converter
             {
                 int weeknumber = day.DT.DayOfYear / 7 + 2;
 
-                return "||||||||||||||||| WOCHE " + weeknumber +" ||||||";
+                return "  KW " + weeknumber+ "  ";
             }
             else
                 return null;
