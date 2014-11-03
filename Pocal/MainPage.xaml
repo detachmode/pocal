@@ -167,6 +167,7 @@
                 <VisualState x:Name="OverViewOpen"/>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+        
         <Grid x:Name="grid" Margin="0">
             <Grid x:Name="AgendaView">
                 <Grid.RowDefinitions>
@@ -199,7 +200,7 @@
                 <!--******** AGENDAVIEW BODY ********-->
                 <!--******** *************** ********-->
                 <Grid x:Name="AgendaViewBody" Margin="0,0,0,0" Grid.Row="1">
-                    <phone:LongListSelector  x:Name="AgendaViewListbox" ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch" Background="Transparent" Margin="0,10,0,-10" >
+                    <phone:LongListSelector  x:Name="AgendaViewListbox" ItemsSource="{Binding Days}"  HorizontalContentAlignment="Stretch" Background="Transparent" Margin="0,10,0,-10" >
                         <phone:LongListSelector.ItemTemplate >
                             <DataTemplate >
                                 <Grid Tap="onDayTap" Background="Black" Margin="0,0,-14,0">
@@ -210,12 +211,20 @@
                                         <!--******** ************** ********-->
                                         <!--******** DAYCARD HEADER ********-->
                                         <!--******** ************** ********-->
-                                        <TextBlock x:Name="DayCardHeader"  Text="{Binding DT, Converter={StaticResource DateConverter}}" FontSize="34" FontFamily="{StaticResource PhoneFontFamilyLight}" Foreground ="{Binding sundayForeground}" Padding="0,6,0,0" Margin="12,0,0,0"/>
+                                        <Grid   Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" Height="60" Margin="0,-4,0,-16" >
+                                                <!--<Border BorderThickness="0,0,0,0.4"  Height="1" BorderBrush="#FF767676" Margin="0"/>-->
+                                                <TextBlock  FontFamily="fonts/Impact.ttf#Impact"  Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}" Margin="6,0,61,0" HorizontalAlignment="Right" FontSize="40" Foreground="#FF535353" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"  >
+                                                    <TextBlock.RenderTransform>
+                                                        <CompositeTransform SkewX="-25" ScaleX="1.3"/>
+                                                    </TextBlock.RenderTransform>
+                                                </TextBlock>
+                                        </Grid>
+                                        <TextBlock x:Name="DayCardHeader"  Text="{Binding DT, Converter={StaticResource DateConverter}}" FontSize="34" FontFamily="{StaticResource PhoneFontFamilyLight}" Foreground ="{Binding sundayForeground}" Margin="12,6,0,0"/>
 
                                         <!--******** ************ ********-->
                                         <!--******** DAYCARD BODY ********-->
                                         <!--******** ************ ********-->
-                                        <ItemsControl x:Name="DayCardApptsItemControll"  ItemsSource="{Binding PocalApptsOfDay}"
+                                        <ItemsControl x:Name="DayCardApptsItemControll"   ItemsSource="{Binding PocalApptsOfDay}"
 											Margin="24,0,0,0">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
@@ -235,7 +244,7 @@
                                                                 </BeginStoryboard>
                                                             </EventTrigger>
                                                         </StackPanel.Resources>
-                                                    <StackPanel.RenderTransform>
+                                                        <StackPanel.RenderTransform>
                                                             <CompositeTransform/>
                                                         </StackPanel.RenderTransform>
 
@@ -247,25 +256,19 @@
 																FontFamily="{StaticResource PhoneFontFamilyLight}" 
 																CharacterSpacing="1" 
 																Padding="0" 
-																Margin="0,-6,0,0"/>
- 
+																Margin="0,-6,0,0">
+                                                                <!--<TextBlock.Foreground>
+                                                                    <SolidColorBrush Color="{StaticResource PhoneTextBoxColor}"/>
+                                                                </TextBlock.Foreground>-->
+                                                            </TextBlock>
+
                                                         </StackPanel>
 
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
-                                        <StackPanel   Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" >
 
-                                            <!--<Border BorderThickness="0,0,0,0.4"  Height="1" BorderBrush="#FF767676" Margin="0"/>-->
-
-                                            <TextBlock Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}" Margin="6,0,30,0" HorizontalAlignment="Right" FontSize="40" Foreground="#FF535353" RenderTransformOrigin="0.5,0.5" FontFamily="Impact" FontStyle="Italic" TextDecorations="Underline" >
-                                                <TextBlock.RenderTransform>
-                                                    <CompositeTransform SkewX="-10"/>
-                                                </TextBlock.RenderTransform>
-                                            </TextBlock>
-
-                                        </StackPanel>
 
                                     </StackPanel>
                                 </Grid>
