@@ -205,7 +205,7 @@ namespace Pocal
         private PocalAppointment aPA;
         private void StackPanel_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            
+
             aPA = ((FrameworkElement)sender).DataContext as PocalAppointment;
             SingleDayScrollViewer.ScrollToVerticalOffset(aPA.StartTime.Hour * 70 - 140);
 
@@ -219,8 +219,8 @@ namespace Pocal
                 SingleDayScrollViewer.UpdateLayout();
                 SingleDayScrollViewer.ScrollToVerticalOffset(aPA.StartTime.Hour * 70 - 140);
                 App.ViewModel.SingleDayViewModel.TriggerScrollToOffset -= SingleDayViewModel_IsUpdated;
-            } 
-            
+            }
+
         }
 
 

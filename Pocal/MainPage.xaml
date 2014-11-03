@@ -23,7 +23,7 @@
         <local:DetailNotesCollapser x:Key="DetailNotesCollapser"/>
         <local:NullOrWhiteSpaceCollapser x:Key="NullOrWhiteSpaceCollapser"/>
         <local:weekNumberConverter x:Key="weekNumberConverter"/>
-        <local:weekConverter x:Key="weekConverter"/>
+        <local:weekConverter x:Key="weekConverter"/> 
         <local:DateConverter x:Key="DateConverter"/>
         <local:secondLineConverter x:Key="secondLineConverter"/>
         <local:subjectConverter x:Key="subjectConverter"/>
@@ -164,12 +164,13 @@
                         </DoubleAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
+                <VisualState x:Name="OverViewOpen"/>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Grid x:Name="grid">
+        <Grid x:Name="grid" Margin="0">
             <Grid x:Name="AgendaView">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="0"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
@@ -177,7 +178,7 @@
                 <!--******** ***************** ********-->
                 <!--******** AGENDAVIEW HEADER ********-->
                 <!--******** ***************** ********-->
-                <Grid x:Name="AgendaHeader" Grid.Row="0" Canvas.ZIndex="4" Background="Black" 
+                <!--<Grid x:Name="AgendaHeader" Grid.Row="0" Canvas.ZIndex="4" Background="Black" 
 						>
                     <StackPanel x:Name="HeaderStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock x:Name="WeekCounter"  Text="{Binding CurrentTop, Converter={StaticResource CurrentTopWeekConverter}}" FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="22" HorizontalAlignment="Center" >
@@ -192,23 +193,24 @@
                         </TextBlock>
                     </StackPanel>
                     <Border Height="1" Background="#FF363636" VerticalAlignment="Bottom"/>
-                </Grid>
+                </Grid>-->
 
                 <!--******** *************** ********-->
                 <!--******** AGENDAVIEW BODY ********-->
                 <!--******** *************** ********-->
                 <Grid x:Name="AgendaViewBody" Margin="0,0,0,0" Grid.Row="1">
-                    <phone:LongListSelector  x:Name="AgendaViewListbox" ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch" Background="Transparent" >
+                    <phone:LongListSelector  x:Name="AgendaViewListbox" ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch" Background="Transparent" Margin="0,10,0,-10" >
                         <phone:LongListSelector.ItemTemplate >
                             <DataTemplate >
-                                <Grid Tap="onDayTap" Background="Black">
-                                    <StackPanel HorizontalAlignment="Stretch" RenderTransformOrigin="0.5,0.5">
-                                        <Border BorderThickness="0,0,0,1.5" BorderBrush="#FF363636" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,0"/>
+                                <Grid Tap="onDayTap" Background="Black" Margin="0,0,-14,0">
+                                    <StackPanel RenderTransformOrigin="0.5,0.5">
+                                        <!--<Border BorderThickness="0,0,0,0.5" BorderBrush="White"/>-->
+                                        <!--<Border BorderThickness="0,0,0,0.4" Height="1" BorderBrush="#FF767676"/>-->
 
                                         <!--******** ************** ********-->
                                         <!--******** DAYCARD HEADER ********-->
                                         <!--******** ************** ********-->
-                                        <TextBlock  Text="{Binding DT, Converter={StaticResource DateConverter}}" FontSize="34" FontFamily="{StaticResource PhoneFontFamilyLight}" Foreground ="{Binding sundayForeground}" Padding="0,6,0,0" Margin="12,0,0,0"/>
+                                        <TextBlock x:Name="DayCardHeader"  Text="{Binding DT, Converter={StaticResource DateConverter}}" FontSize="34" FontFamily="{StaticResource PhoneFontFamilyLight}" Foreground ="{Binding sundayForeground}" Padding="0,6,0,0" Margin="12,0,0,0"/>
 
                                         <!--******** ************ ********-->
                                         <!--******** DAYCARD BODY ********-->
@@ -233,7 +235,7 @@
                                                                 </BeginStoryboard>
                                                             </EventTrigger>
                                                         </StackPanel.Resources>
-                                                        <StackPanel.RenderTransform>
+                                                    <StackPanel.RenderTransform>
                                                             <CompositeTransform/>
                                                         </StackPanel.RenderTransform>
 
@@ -246,22 +248,25 @@
 																CharacterSpacing="1" 
 																Padding="0" 
 																Margin="0,-6,0,0"/>
+ 
                                                         </StackPanel>
 
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
-                                        <Grid Height="25" RenderTransformOrigin="0.5,0.5" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" Background="#FF363636" >
-                                            <Grid.RenderTransform>
-                                                <CompositeTransform TranslateY="9"/>
-                                            </Grid.RenderTransform>
-                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}">
-                                                <TextBlock.Foreground>
-                                                    <SolidColorBrush Color="{StaticResource PhoneBorderColor}"/>
-                                                </TextBlock.Foreground></TextBlock>
-                                        </Grid>
-                                        <Grid Height="8"/>
+                                        <StackPanel   Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" >
+
+                                            <!--<Border BorderThickness="0,0,0,0.4"  Height="1" BorderBrush="#FF767676" Margin="0"/>-->
+
+                                            <TextBlock Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}" Margin="6,0,30,0" HorizontalAlignment="Right" FontSize="40" Foreground="#FF535353" RenderTransformOrigin="0.5,0.5" FontFamily="Impact" FontStyle="Italic" TextDecorations="Underline" >
+                                                <TextBlock.RenderTransform>
+                                                    <CompositeTransform SkewX="-10"/>
+                                                </TextBlock.RenderTransform>
+                                            </TextBlock>
+
+                                        </StackPanel>
+
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>
@@ -324,7 +329,7 @@
                             <Grid.Background>
                                 <SolidColorBrush Color="{StaticResource Color90Black}"/>
                             </Grid.Background>
-                            
+
                             <StackPanel>
                                 <Grid x:Name="AllDayAppointments"  Margin="24,12,0,6">
                                     <ItemsControl  ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}">
@@ -336,7 +341,7 @@
 
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
-                                    </ItemsControl>                                 
+                                    </ItemsControl>
                                 </Grid>
                                 <Border Height="1" Background="#FF807C7C"></Border>
                                 <Grid x:Name="HourLinesGridAppointments">

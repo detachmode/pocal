@@ -165,8 +165,10 @@ namespace Pocal.ViewModel
             if (DesignerProperties.IsInDesignTool)
             {
                 //	//CREATE DESIGN TIME DATA HERE
-                DateTime dt = DateTime.Now - DateTime.Now.TimeOfDay;
-                DateTime dt0 = new DateTime(2014, 10, 20);
+                DateTime start = new DateTime(2014, 11, 07);
+                DateTime dt = start - start.TimeOfDay;
+
+                DateTime dt0 = dt;
                 DateTime dt1 = dt0.AddDays(1);
                 DateTime dt2 = dt0.AddDays(2);
                 DateTime dt3 = dt0.AddDays(3);
