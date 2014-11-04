@@ -281,11 +281,11 @@
                 </Grid>
             </Grid>
 
-            <!--******** ************* ******** -->
-            <!--******** SINGLEDAYVIEW ******** -->
-            <!--******** ************* ******** -->
+            <!--******** *** ******** -->
+            <!--******** SDV ******** -->
+            <!--******** *** ******** -->
             <Grid x:Name="SingleDayView" 
-				Background="#AD000000" Visibility="Collapsed" >
+				Background="#AD000000" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="60*"/>
@@ -307,9 +307,9 @@
                     </Grid.RenderTransform>
                     <Border  BorderBrush="#FF383838" BorderThickness="0,1" Margin="0" Canvas.ZIndex="1"/>
 
-                    <!--******** ******************** ******** -->
-                    <!--******** SINGLEDAYVIEW HEADER ******** -->
-                    <!--******** ******************** ******** -->
+                    <!--******** ********** ******** -->
+                    <!--******** SDV HEADER ******** -->
+                    <!--******** ********** ******** -->
                     <Border	Canvas.ZIndex="3"  Margin="0,-41,0,0" Height="41" VerticalAlignment="Top" >
                         <Border.Background>
                             <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
@@ -326,9 +326,9 @@
                         </TextBlock>
                     </Border>
 
-                    <!--******** ****************** ******** -->
-                    <!--******** SINGLEDAYVIEW BODY ******** -->
-                    <!--******** ****************** ******** -->
+                    <!--******** ******** ******** -->
+                    <!--******** SDV BODY ******** -->
+                    <!--******** ******** ******** -->
                     <ScrollViewer x:Name="SingleDayScrollViewer" VerticalScrollBarVisibility="Hidden">
 
                         <Grid>
@@ -338,10 +338,10 @@
 
                             <StackPanel>
                                 <Grid x:Name="AllDayAppointments"  Margin="24,0,0,0">
-                                    <ItemsControl  ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}">
+                                    <ItemsControl  ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay }">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Grid Tap="SDV_AppointmentTap" Visibility="{Binding AllDay, Converter={StaticResource revertBoolean}, Mode=OneWay}">
+                                                <Grid Tap="SDV_AppointmentTap" Visibility="{Binding AllDay, Converter={StaticResource revertBoolean}}">
                                                     <TextBlock  Margin="4,6,0,6" Text="{Binding Subject}" Foreground="{Binding CalColor}"   FontSize="{StaticResource DefaultSize}" FontWeight="SemiBold"/>
                                                 </Grid>
 
