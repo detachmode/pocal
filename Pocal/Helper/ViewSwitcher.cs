@@ -22,7 +22,7 @@ namespace Pocal
         }
         private static int offsetFromAllDays;
         private static int additionalOffset = 175;
-        
+
 
 
 
@@ -33,10 +33,9 @@ namespace Pocal
             openSDV(mainpage);
             setTappedDay(sender);
 
-            calculateOffset();
             ScrollTo();
 
-            Debug.WriteLine("(OpenSdvAndSetTappedDay)");
+            //Debug.WriteLine("(OpenSdvAndSetTappedDay)");
         }
 
         private static bool currentViewIsSDV()
@@ -102,16 +101,26 @@ namespace Pocal
 
         }
 
+        public static void ScrollToAfterUpdate()
+        {
+            if (App.ViewModel.SingleDayViewModel.TappedDay == null || ScrollToPA == null)
+                return;
+
+            if (App.ViewModel.SingleDayViewModel.TappedDay.DT.Date == ScrollToPA.StartTime.Date)
+                ScrollToApptStartTime();
+        }
+
 
         private static void ScrollToApptStartTime()
         {
+            calculateOffset();
             mainpage.SingleDayScrollViewer.UpdateLayout();
             mainpage.SingleDayScrollViewer.ScrollToVerticalOffset(ScrollToPA.StartTime.Hour * HourLine.Height - additionalOffset + offsetFromAllDays);
         }
 
         private static void ScrollTo1200()
         {
-
+            calculateOffset();
             mainpage.SingleDayScrollViewer.ScrollToVerticalOffset(12 * HourLine.Height - additionalOffset + offsetFromAllDays);
         }
 

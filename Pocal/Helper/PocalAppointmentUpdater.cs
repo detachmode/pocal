@@ -25,6 +25,9 @@ namespace Pocal.Helper
 
             updateIfSingle(oldPA, newPA);
             updateIfRecurrent(oldPA, newPA);
+
+            ViewSwitcher.setScrollToPa(newPA);
+            ViewSwitcher.ScrollToAfterUpdate();
         }
 
         private static bool arePocaAppointmentsEqual(PocalAppointment a, PocalAppointment b)

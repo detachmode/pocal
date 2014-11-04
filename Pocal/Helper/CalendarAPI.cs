@@ -51,7 +51,7 @@ namespace Pocal
 
         }
 
-        public static async Task<Appointment> getAppointmentfromSubject (string subject)
+        public static async Task<Appointment> getAppointmentfromSubject(string subject)
         {
             await setAppointmentStore();
             FindAppointmentsOptions findOptions = new FindAppointmentsOptions();
@@ -140,7 +140,7 @@ namespace Pocal
                 AppointmentCalendar calendar =
                     await appointmentStore.GetAppointmentCalendarAsync(currentAppointment.CalendarId);
 
-              
+
 
 
                 IReadOnlyList<Appointment> appointmentInstances = await
@@ -193,6 +193,7 @@ namespace Pocal
                 newPA = App.ViewModel.createPocalAppoinment(newAppt);
             }
             PocalAppointmentUpdater.Update(pA, newPA);
+
         }
 
 
