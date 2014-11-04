@@ -436,6 +436,7 @@
                                         </Border>
                                     </Grid>
                                 </Grid>
+                                <Border Height="1" Background="#FF807C7C"/>
                             </StackPanel>
                         </Grid>
                     </ScrollViewer>
