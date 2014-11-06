@@ -22,6 +22,7 @@ namespace Pocal
         public MainPage()
         {
             InitializeComponent();
+            VisualStateManager.GoToState(this, "Close", true);
             DataContext = App.ViewModel;
            
             // Meine SETUP Funktionen
@@ -196,6 +197,7 @@ namespace Pocal
  
         private void OpenSdvAndSetTappedDay(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            Debug.WriteLine("Tapped on Daycard");
             ViewSwitcher.SwitchToSDV(sender);
 
         }

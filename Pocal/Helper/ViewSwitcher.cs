@@ -40,12 +40,12 @@ namespace Pocal
 
         private static bool currentViewIsSDV()
         {
-            return mainpage.SingleDayView.Visibility == Visibility.Visible;
+            return mainpage.SingleDayView.Opacity == 100;
         }
 
         private static void openSDV(MainPage mainpage)
         {
-            mainpage.SingleDayView.Visibility = Visibility.Visible;
+            //mainpage.SingleDayView.Visibility = Visibility.Visible;
             VisualStateManager.GoToState(mainpage, "OpenDelay", true);
         }
 
