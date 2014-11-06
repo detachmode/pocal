@@ -30,25 +30,25 @@ namespace Pocal.ViewModel
             TimeSpan delta = DateTime.Now - start;
             Debug.WriteLine("Timestamp delta: " + (delta.Seconds + (1.0 / 1000) * delta.Milliseconds) + " sekunden");
 
-           
+
             if (appoinmentBuffer.Any())
             {
                 await createAllPocalApptointments();
                 createDays();
                 //SingleDayViewModel.TappedDay = Days[0]; Nur unkommentieren, wenn SDV beim start geöffnet wird. Sonst funzt tapAndScroll nicht.
             }
-           
+
         }
 
         public async void refreshData()
-        {
-            object testday = ViewSwitcher.mainpage.GetFirstVisibleItem();
-            int index = ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource.IndexOf(testday);
+        {          
+            object oldDay = ViewSwitcher.mainpage.GetFirstVisibleItem();
+            int oldindex = ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource.IndexOf(oldDay);
 
             await ReloadPocalApptsAndDays();
-            
 
-            ViewSwitcher.mainpage.AgendaViewListbox.ScrollTo(ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource[index]);
+            if (oldindex != -1)
+                ViewSwitcher.mainpage.AgendaViewListbox.ScrollTo(ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource[oldindex]);
         }
         #endregion
 
@@ -108,7 +108,7 @@ namespace Pocal.ViewModel
         #region Days
         internal int howManyDays = 30;
         public ObservableCollection<Day> Days { get; private set; }
-       
+
         public void createDays()
         {
             DateTime dt = DateTime.Now;
@@ -189,14 +189,14 @@ namespace Pocal.ViewModel
 
 
 
-               
+
                 DesignDataDayappts.Add(new Appointment { Subject = "Gameplay Programming", StartTime = dt2.AddHours(8.5), Duration = ts3 });
                 DesignDataDayappts.Add(new Appointment { Subject = "IT Security", StartTime = dt2.AddHours(11.75), Duration = ts });
 
 
-                DesignDataDayappts.Add(new Appointment { Subject = "Structered Data and Application", StartTime = dt3.AddHours(0), AllDay = false ,Location = "HdM Raum 011", Details = "EEine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte Eine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte ine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte.Eine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte", Duration = ts2 });
+                DesignDataDayappts.Add(new Appointment { Subject = "Structered Data and Application", StartTime = dt3.AddHours(0), AllDay = false, Location = "HdM Raum 011", Details = "EEine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte Eine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte ine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte.Eine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte", Duration = ts2 });
                 //DesignDataDayappts.Add(new Appointment { Subject = "Artificial Intelligence for Games", StartTime = dt3.AddHours(14), Duration = ts3 });
-                DesignDataDayappts.Add(new Appointment { Subject = "Exercises Structered Data and Application", StartTime = dt4.AddHours(1.5), AllDay = false ,Duration = ts3 });
+                DesignDataDayappts.Add(new Appointment { Subject = "Exercises Structered Data and Application", StartTime = dt4.AddHours(1.5), AllDay = false, Duration = ts3 });
                 DesignDataDayappts.Add(new Appointment { Subject = "IT Security", StartTime = dt4.AddHours(2.75), Duration = ts });
                 DesignDataDayappts.Add(new Appointment { Subject = "BWL für Informatiker", StartTime = dt4.AddHours(16.00), Duration = ts });
 
@@ -238,7 +238,7 @@ namespace Pocal.ViewModel
                 Days.Add(new Day { DT = dt3, PocalApptsOfDay = DesignDataDay3_Pocalappts, Sunday = false });
                 Days.Add(new Day { DT = dt4, PocalApptsOfDay = DesignDataDay4_Pocalappts, Sunday = false });
 
-               
+
 
                 //DesignDataDayPocalappts1.Add(new PocalAppointment { Appt = DesignDataDayappts[4], CalColor = CalColorYellow });
                 //dt = DateTime.Now.AddDays(1);
@@ -253,12 +253,12 @@ namespace Pocal.ViewModel
 
 
 
-                SingleDayViewModel.TappedDay = Days[0]; 
+                SingleDayViewModel.TappedDay = Days[0];
                 CurrentTop = new Day { DT = dt.AddHours(24) };
 
             }
             #endregion
-           
+
 
         }
 
