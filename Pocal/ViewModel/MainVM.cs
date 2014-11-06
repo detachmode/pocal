@@ -21,7 +21,7 @@ namespace Pocal.ViewModel
         private IReadOnlyList<Appointment> appoinmentBuffer;
 
         #region RELOAD
-        public async void ReloadPocalApptsAndDays()
+        public async Task ReloadPocalApptsAndDays()
         {
             DateTime start = DateTime.Now;
 
@@ -38,6 +38,17 @@ namespace Pocal.ViewModel
                 //SingleDayViewModel.TappedDay = Days[0]; Nur unkommentieren, wenn SDV beim start geöffnet wird. Sonst funzt tapAndScroll nicht.
             }
            
+        }
+
+        public async void refreshData()
+        {
+            object testday = ViewSwitcher.mainpage.GetFirstVisibleItem();
+            int index = ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource.IndexOf(testday);
+
+            await ReloadPocalApptsAndDays();
+            
+
+            ViewSwitcher.mainpage.AgendaViewListbox.ScrollTo(ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource[index]);
         }
         #endregion
 

@@ -35,7 +35,7 @@ namespace Pocal
             //DebugSettings.IsOverdrawHeatMapEnabled = true;
             AgendaViewListbox.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
 
-
+            watchPositionOfLongListSelector();
         }
 
 
@@ -44,7 +44,7 @@ namespace Pocal
 
         #region Longlistselektor Scrolling Events
 
-        private void LongList_Loaded(object sender, RoutedEventArgs e)
+        private  void LongList_Loaded(object sender, RoutedEventArgs e)
         {
             var sb = ((FrameworkElement)VisualTreeHelper.GetChild(AgendaViewListbox, 0)).FindName("VerticalScrollBar") as ScrollBar;
             sb.Margin = new Thickness(-10, 0, 0, 0);
@@ -76,7 +76,7 @@ namespace Pocal
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
 
-            Day testday = (Day)GetFirstVisibleItem(AgendaViewListbox);
+            Day testday = (Day)GetFirstVisibleItem();
             if (testday != null)
             {
                 // Switch Highlighted Day
@@ -91,11 +91,11 @@ namespace Pocal
 
         }
 
-        public object GetFirstVisibleItem(LongListSelector lls)
+        public object GetFirstVisibleItem()
         {
             if (items.Count > 1)
             {
-                var offset = FindViewport(lls).Viewport.Top;
+                var offset = FindViewport(AgendaViewListbox).Viewport.Top;
                 return (items.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight > offset)
                     .OrderBy(x => Canvas.GetTop(x.Value)).ToList())[1].Key;
             }
@@ -180,6 +180,26 @@ namespace Pocal
 
         }
 
+        private void SingleDayScrollViewer_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
+        {
+            if (e.FinalVelocities.LinearVelocity.X > 0)
+            {
+                changeTappedDay(+1);
+            }
+            if (e.FinalVelocities.LinearVelocity.X < 0)
+            {
+                changeTappedDay(-1);
+            }
+        }
+
+        private static void changeTappedDay(int add)
+        {
+            DateTime nextDate = App.ViewModel.SingleDayViewModel.TappedDay.DT.AddDays(add);
+            Day newTappedDay = App.ViewModel.Days.FirstOrDefault(x => x.DT.Date == nextDate.Date);
+            if (newTappedDay != null)
+                App.ViewModel.SingleDayViewModel.TappedDay = newTappedDay;
+        }
+
         #endregion
 
         #region ViewSwitcher Events
@@ -213,26 +233,9 @@ namespace Pocal
 
         #endregion
 
-        private void SingleDayScrollViewer_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
-        {
-            if (e.FinalVelocities.LinearVelocity.X > 0)
-            {
-                changeTappedDay(+1);
-            }
-            if (e.FinalVelocities.LinearVelocity.X < 0)
-            {
-                changeTappedDay(-1);
-            }
-        }
 
-        private static void changeTappedDay(int add)
-        {
-            DateTime nextDate = App.ViewModel.SingleDayViewModel.TappedDay.DT.AddDays(add);
-            Day newTappedDay = App.ViewModel.Days.FirstOrDefault(x => x.DT.Date == nextDate.Date);
-            if (newTappedDay != null)
-                App.ViewModel.SingleDayViewModel.TappedDay = newTappedDay;
-        }
 
+  
 
     }
 }

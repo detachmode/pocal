@@ -90,7 +90,7 @@ namespace Pocal
 		// This code will not execute when the application is first launched
 		private void Application_Activated(object sender, ActivatedEventArgs e)
 		{
-            //App.ViewModel.ReloadPocalApptsAndDays();
+            App.ViewModel.refreshData();
 		}
 
 		// Code to execute when the application is deactivated (sent to background)

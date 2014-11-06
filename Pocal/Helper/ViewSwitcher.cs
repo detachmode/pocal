@@ -8,7 +8,7 @@ namespace Pocal
         public enum Sender { HeaderTap, ApptTap }
         public static Sender from;
 
-        private static MainPage mainpage = (MainPage)App.RootFrame.Content;
+        public static MainPage mainpage = (MainPage)App.RootFrame.Content;
         private static PocalAppointment ScrollToPA;
         public static void setScrollToPa(PocalAppointment pa)
         {
