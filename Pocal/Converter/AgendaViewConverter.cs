@@ -280,37 +280,44 @@ namespace Pocal.Converter
 
     }
 
-    public class highlightedDayConverter : IValueConverter
+    public static class converterBrushes
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var day = value as Day;
-            if ((day.DT.DayOfWeek == DayOfWeek.Saturday) || (day.DT.DayOfWeek == DayOfWeek.Sunday))
-            {
-                return new SolidColorBrush(Color.FromArgb(255, 40, 40, 40));
-            }
-            else
-                return new SolidColorBrush(Color.FromArgb(0, 255, 0, 0));
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return null;
-        }
+        public static SolidColorBrush weekendHeader = new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
+        public static SolidColorBrush noWeekendHeader = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+       
     }
+
+    //public class highlightedDayConverter : IValueConverter
+    //{
+    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        var day = value as Day;
+    //        if ((day.DT.DayOfWeek == DayOfWeek.Saturday) || (day.DT.DayOfWeek == DayOfWeek.Sunday))
+    //        {
+    //            return new SolidColorBrush(Color.FromArgb(255, 40, 40, 40));
+    //        }
+    //        else
+    //            return new SolidColorBrush(Color.FromArgb(0, 255, 0, 0));
+    //    }
+
+    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        return null;
+    //    }
+    //}
 
     public class weekendForeground : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             DateTime dt = (DateTime)value;
-           
+
             if ((dt.DayOfWeek == DayOfWeek.Saturday) || (dt.DayOfWeek == DayOfWeek.Sunday))
             {
-                return new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
+                return converterBrushes.weekendHeader;
             }
             else
-                return new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+                return converterBrushes.noWeekendHeader;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

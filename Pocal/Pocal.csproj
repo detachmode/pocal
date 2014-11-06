@@ -133,8 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
-    <Content Include="Fonts\comic.ttf" />
-    <Content Include="Fonts\impact.ttf" />
+    <None Include="Pocal_2014_11_06_21_28_46.sap" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>

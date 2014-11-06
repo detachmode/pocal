@@ -32,7 +32,7 @@
         <local:minuteConverter x:Key="minuteConverter"/>
         <local:CurrentTopWeekConverter x:Key="CurrentTopWeekConverter"/>
         <local:CurrentTopDayConverter x:Key="CurrentTopDayConverter"/>
-        <local:highlightedDayConverter x:Key="highlightedDayConverter"/>
+
         <local:singelDayApptTranslateY x:Key="singelDayApptTranslateY"/>
         <local:singelDayApptHeight x:Key="singelDayApptHeight"/>
         <local:windowHeaderDateConverter x:Key="windowHeaderDateConverter"/>
@@ -153,15 +153,6 @@
                         <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="SingleDayView" d:IsOptimized="True"/>
                     </Storyboard>
                 </VisualState>
-                <VisualState x:Name="FadeInAppointmentBox">
-                    <Storyboard>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="AppointmentsOnGrid">
-                            <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
-                        </DoubleAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
-                <VisualState x:Name="OverViewOpen"/>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
@@ -328,7 +319,7 @@
                     <!--******** ******** ******** -->
                     <!--******** SDV BODY ******** -->
                     <!--******** ******** ******** -->
-                    <ScrollViewer x:Name="SingleDayScrollViewer" VerticalScrollBarVisibility="Hidden">
+                    <ScrollViewer x:Name="SingleDayScrollViewer" VerticalScrollBarVisibility="Hidden" ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
 
                         <Grid>
                             <Grid.Background>

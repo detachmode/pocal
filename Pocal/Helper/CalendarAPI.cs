@@ -1,21 +1,9 @@
 ﻿using Pocal.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Appointments;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using System.Threading.Tasks;
 using Pocal.Helper;
-using Windows.Foundation;
 
 namespace Pocal
 {

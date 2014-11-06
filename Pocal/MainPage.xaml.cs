@@ -9,8 +9,6 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Pocal.ViewModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Appointments;
 
 namespace Pocal
 {
@@ -21,22 +19,27 @@ namespace Pocal
         // Constructor
         public MainPage()
         {
-            InitializeComponent();
-            VisualStateManager.GoToState(this, "Close", true);
-            DataContext = App.ViewModel;
-           
-            // Meine SETUP Funktionen
-            //watchPositionOfLongListSelector();
-            //SingleDayScrollViewer.SizeChanged += scrollToDefaultOffset; ???
 
+            load();
+
+        }
+
+        private void load()
+        {
+            DataContext = App.ViewModel;
+            InitializeComponent();
+
+            VisualStateManager.GoToState(this, "Close", true);
             App.ViewModel.ReloadPocalApptsAndDays();
 
+            //DebugSettings.IsOverdrawHeatMapEnabled = true;
             AgendaViewListbox.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
+
 
         }
 
 
-       
+
 
 
         #region Longlistselektor Scrolling Events
@@ -133,7 +136,7 @@ namespace Pocal
         }
         #endregion
 
-        #region Exit/Closing Events 
+        #region Exit/Closing Events
 
 
         private void gridExit_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
@@ -194,7 +197,7 @@ namespace Pocal
             ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
         }
 
- 
+
         private void OpenSdvAndSetTappedDay(object sender, System.Windows.Input.GestureEventArgs e)
         {
             Debug.WriteLine("Tapped on Daycard");
@@ -209,6 +212,26 @@ namespace Pocal
 
 
         #endregion
+
+        private void SingleDayScrollViewer_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
+        {
+            if (e.FinalVelocities.LinearVelocity.X > 0)
+            {
+                changeTappedDay(+1);
+            }
+            if (e.FinalVelocities.LinearVelocity.X < 0)
+            {
+                changeTappedDay(-1);
+            }
+        }
+
+        private static void changeTappedDay(int add)
+        {
+            DateTime nextDate = App.ViewModel.SingleDayViewModel.TappedDay.DT.AddDays(add);
+            Day newTappedDay = App.ViewModel.Days.FirstOrDefault(x => x.DT.Date == nextDate.Date);
+            if (newTappedDay != null)
+                App.ViewModel.SingleDayViewModel.TappedDay = newTappedDay;
+        }
 
 
     }
