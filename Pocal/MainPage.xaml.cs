@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Pocal.ViewModel;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Pocal
 {
@@ -24,14 +25,14 @@ namespace Pocal
 
         }
 
-        private void load()
+        private async void load()
         {
             DataContext = App.ViewModel;
             InitializeComponent();
-
+            
             VisualStateManager.GoToState(this, "Close", true);
-            App.ViewModel.ReloadPocalApptsAndDays();
-
+            await App.ViewModel.ReloadPocalApptsAndDays();
+            
             //DebugSettings.IsOverdrawHeatMapEnabled = true;
             AgendaViewListbox.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
 
@@ -184,11 +185,11 @@ namespace Pocal
         {
             if (e.FinalVelocities.LinearVelocity.X > 0)
             {
-                changeTappedDay(+1);
+                changeTappedDay(-1);
             }
             if (e.FinalVelocities.LinearVelocity.X < 0)
             {
-                changeTappedDay(-1);
+                changeTappedDay(+1);
             }
         }
 

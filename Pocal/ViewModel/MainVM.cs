@@ -41,7 +41,7 @@ namespace Pocal.ViewModel
         }
 
         public async void refreshData()
-        {          
+        {
             object oldDay = ViewSwitcher.mainpage.GetFirstVisibleItem();
             int oldindex = ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource.IndexOf(oldDay);
 
@@ -68,10 +68,25 @@ namespace Pocal.ViewModel
         public PocalAppointment createPocalAppoinment(Appointment appt)
         {
             var cal = CalendarAPI.calendars.First(c => c.LocalId == appt.CalendarId);
-            var calColor = new System.Windows.Media.Color() { A = cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
 
-            PocalAppointment pocalAppt = new PocalAppointment { Appt = appt, CalColor = new SolidColorBrush(calColor) };
+            PocalAppointment pocalAppt = new PocalAppointment { Appt = appt, CalColor = getCalendarColorBrush(appt, cal) };
             return pocalAppt;
+        }
+
+        private Dictionary<AppointmentCalendar, SolidColorBrush> calColors = new Dictionary<AppointmentCalendar, SolidColorBrush>();
+        private SolidColorBrush getCalendarColorBrush(Appointment appt, AppointmentCalendar cal)
+        {
+            SolidColorBrush brush = null;
+            calColors.TryGetValue(cal, out brush);
+
+            if (brush == null)
+            {
+                var calColor = new System.Windows.Media.Color() { A = cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
+                brush = new SolidColorBrush(calColor);
+                calColors.Add(cal, brush);
+                return brush;
+            }
+            return brush;
         }
 
         private ObservableCollection<PocalAppointment> getPocalApptsOfDay(DateTime dt)
@@ -106,7 +121,7 @@ namespace Pocal.ViewModel
         #endregion
 
         #region Days
-        internal int howManyDays = 30;
+        internal int howManyDays = 7;
         public ObservableCollection<Day> Days { get; private set; }
 
         public void createDays()
