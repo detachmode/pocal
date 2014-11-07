@@ -24,7 +24,7 @@ namespace Pocal
         {
             if (currentViewIsSDV())
                 return;
-            openSDV(mainpage);
+            openSDV(mainpage);  
             setTappedDay(sender);
 
             ScrollTo();
