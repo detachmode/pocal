@@ -1,6 +1,8 @@
 ﻿<phone:PhoneApplicationPage
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cimbalinoBehaviors="clr-namespace:Cimbalino.Toolkit.Behaviors;assembly=Cimbalino.Toolkit"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,7 +10,7 @@
     xmlns:viewmodel="clr-namespace:Pocal.ViewModel"
     xmlns:local="clr-namespace:Pocal.Converter"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:ec="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
+
     x:Class="Pocal.MainPage"
     mc:Ignorable="d"
     SupportedOrientations="Portrait" Orientation="Portrait"
@@ -18,31 +20,31 @@
     <!--******** ********* ******** -->
     <!--******** RESOURCES ******** -->
     <!--******** ********* ******** -->
-	<phone:PhoneApplicationPage.Resources>
-		<local:singelDayApptTranslateX x:Key="singelDayApptTranslateX"/>
-		<local:weekendForeground x:Key="weekendForeground"/>
-		<local:revertBoolean x:Key="revertBoolean"/>
-		<local:DetailNotesCollapser x:Key="DetailNotesCollapser"/>
-		<local:NullOrWhiteSpaceCollapser x:Key="NullOrWhiteSpaceCollapser"/>
-		<local:weekNumberConverter x:Key="weekNumberConverter"/>
-		<local:weekConverter x:Key="weekConverter"/>
-		<local:DateConverter x:Key="DateConverter"/>
-		<local:secondLineConverter x:Key="secondLineConverter"/>
-		<local:subjectConverter x:Key="subjectConverter"/>
-		<local:hourConverter x:Key="hourConverter"/>
-		<local:minuteConverter x:Key="minuteConverter"/>
-		<local:CurrentTopWeekConverter x:Key="CurrentTopWeekConverter"/>
-		<local:CurrentTopDayConverter x:Key="CurrentTopDayConverter"/>
+    <phone:PhoneApplicationPage.Resources>
+        <local:singelDayApptTranslateX x:Key="singelDayApptTranslateX"/>
+        <local:weekendForeground x:Key="weekendForeground"/>
+        <local:revertBoolean x:Key="revertBoolean"/>
+        <local:DetailNotesCollapser x:Key="DetailNotesCollapser"/>
+        <local:NullOrWhiteSpaceCollapser x:Key="NullOrWhiteSpaceCollapser"/>
+        <local:weekNumberConverter x:Key="weekNumberConverter"/>
+        <local:weekConverter x:Key="weekConverter"/>
+        <local:DateConverter x:Key="DateConverter"/>
+        <local:secondLineConverter x:Key="secondLineConverter"/>
+        <local:subjectConverter x:Key="subjectConverter"/>
+        <local:hourConverter x:Key="hourConverter"/>
+        <local:minuteConverter x:Key="minuteConverter"/>
+        <local:CurrentTopWeekConverter x:Key="CurrentTopWeekConverter"/>
+        <local:CurrentTopDayConverter x:Key="CurrentTopDayConverter"/>
 
-		<local:singelDayApptTranslateY x:Key="singelDayApptTranslateY"/>
-		<local:singelDayApptHeight x:Key="singelDayApptHeight"/>
-		<local:windowHeaderDateConverter x:Key="windowHeaderDateConverter"/>
-		<local:weekNumberVisibilityConverter x:Key="weekNumberVisibilityConverter"/>
-		<Color x:Key="Color90Black">#FF0F0F0F</Color>
-		<Color x:Key="ColorBorderGrey">#FF767676</Color>
-		<System:Double x:Key="DefaultSize">22</System:Double>
-	</phone:PhoneApplicationPage.Resources>
-	<phone:PhoneApplicationPage.FontFamily>
+        <local:singelDayApptHeight x:Key="singelDayApptHeight"/>
+        <local:singelDayApptWidth x:Key="singelDayApptWidth"/>
+        <local:windowHeaderDateConverter x:Key="windowHeaderDateConverter"/>
+        <local:weekNumberVisibilityConverter x:Key="weekNumberVisibilityConverter"/>
+        <Color x:Key="Color90Black">#FF0F0F0F</Color>
+        <Color x:Key="ColorBorderGrey">#FF767676</Color>
+        <System:Double x:Key="DefaultSize">22</System:Double>
+    </phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.FontFamily>
         <StaticResource ResourceKey="PhoneFontFamilyNormal"/>
     </phone:PhoneApplicationPage.FontFamily>
     <phone:PhoneApplicationPage.FontSize>
@@ -77,13 +79,13 @@
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="Close">
-                	<Storyboard>
-                		<DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="SingleDayView" d:IsOptimized="True"/>
-                		<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="SingleDayView" d:IsOptimized="True"/>
-                		<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="SingleDayView" d:IsOptimized="True"/>
-                		<DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="SingleDayView" d:IsOptimized="True"/>
-                		<DoubleAnimation Duration="0" To="-798" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="SingleDayView" d:IsOptimized="True"/>
-                	</Storyboard>
+                    <Storyboard>
+                        <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="SingleDayView" d:IsOptimized="True"/>
+                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="SingleDayView" d:IsOptimized="True"/>
+                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="SingleDayView" d:IsOptimized="True"/>
+                        <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="SingleDayView" d:IsOptimized="True"/>
+                        <DoubleAnimation Duration="0" To="-798" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="SingleDayView" d:IsOptimized="True"/>
+                    </Storyboard>
                 </VisualState>
                 <VisualState x:Name="OpenDelay">
                     <Storyboard>
@@ -274,9 +276,9 @@
             <!--******** *** ******** -->
             <Grid x:Name="SingleDayView" 
 				Background="#AD000000" RenderTransformOrigin="0.5,0.5" >
-            	<Grid.RenderTransform>
-            		<CompositeTransform/>
-            	</Grid.RenderTransform>
+                <Grid.RenderTransform>
+                    <CompositeTransform/>
+                </Grid.RenderTransform>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="60*"/>
@@ -371,16 +373,30 @@
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid                                            
-                                            x:Name="apptSDV"
-                                            Margin="72,-1,0,0"
-											Tap="SDV_AppointmentTap"											  
-											Height="{Binding Appt, Converter={StaticResource singelDayApptHeight}, Mode=OneWay}" 
-											RenderTransformOrigin="0.5,0"
-                                            VerticalAlignment="Top">
-                                                    <Grid.RenderTransform>
-                                                        <CompositeTransform  TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY },FallbackValue=-1000}" 
-                                                                             TranslateX="{Binding  Converter={StaticResource singelDayApptTranslateX}, Mode=OneWay,FallbackValue=0 }" />
-                                                    </Grid.RenderTransform>
+                                                    x:Name="apptSDV"
+                                                    Margin="72,-1,0,0"
+											        Tap="SDV_AppointmentTap"											  
+											        Height="{Binding Appt, Converter={StaticResource singelDayApptHeight}}"                                                        
+                                                    Width="{Binding MaxConflicts, Converter={StaticResource singelDayApptWidth}}"
+											        RenderTransformOrigin="0.5,0"
+                                                    VerticalAlignment="Top" HorizontalAlignment="Left" >
+
+
+                                                    <!--<Grid.RenderTransform>
+                                                        <CompositeTransform  TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY },FallbackValue=-1000}" />
+ 
+                                                    </Grid.RenderTransform>-->
+
+                                                    <i:Interaction.Behaviors>
+                                                        <cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource singelDayApptTranslateX}"
+                                                                        PropertyName="RenderTransform">
+                                                            <cimbalinoBehaviors:MultiBindingItem Value="{Binding MaxConflicts}" />
+                                                            <cimbalinoBehaviors:MultiBindingItem Value="{Binding Column}" />
+                                                            <cimbalinoBehaviors:MultiBindingItem Value="{Binding StartTime}" />
+                                                        </cimbalinoBehaviors:MultiBindingBehavior>
+                                                    </i:Interaction.Behaviors>
+
+
                                                     <Grid.Resources>
                                                         <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
                                                             <BeginStoryboard>
@@ -394,6 +410,7 @@
                                                             </BeginStoryboard>
                                                         </EventTrigger>
                                                     </Grid.Resources>
+
                                                     <Grid.Background>
                                                         <SolidColorBrush Color="{StaticResource Color90Black}"/>
                                                     </Grid.Background>
@@ -403,7 +420,7 @@
                                                         <TextBlock Text="{Binding Details}" FontSize="20.5" Foreground="#FF9C9C9C" FontWeight="ExtraLight" TextWrapping="Wrap" FontFamily="Calibri" Visibility="{Binding Converter={StaticResource DetailNotesCollapser}, Mode=OneWay}" />
                                                     </StackPanel>
                                                     <Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}"/>
-                                                    <Border BorderThickness="2,2,0,2" >
+                                                    <Border BorderThickness="2,2,2,2" >
                                                         <Border.BorderBrush>
                                                             <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
                                                         </Border.BorderBrush>

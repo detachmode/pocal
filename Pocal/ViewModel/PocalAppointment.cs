@@ -209,8 +209,8 @@ namespace Pocal.ViewModel
             DateTimeOffset starttime = this.StartTime;
             DateTimeOffset endtime = starttime + this.Duration;
 
-            bool endsBeforeThisDay = (endtime < start);
-            bool beginsAfterThisDay = (starttime >end); ;
+            bool endsBeforeThisDay = (endtime <= start);
+            bool beginsAfterThisDay = (starttime > end); ;
 
             bool isNotInTimeFrame = (endsBeforeThisDay || beginsAfterThisDay);
 

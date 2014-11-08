@@ -111,7 +111,7 @@ namespace Pocal
 		private static void ScrollToApptStartTime()
 		{
 			calculateOffset();
-			mainpage.SingleDayScrollViewer.UpdateLayout();
+            //mainpage.SingleDayScrollViewer.UpdateLayout();
 			mainpage.SingleDayScrollViewer.ScrollToVerticalOffset(ScrollToPA.StartTime.Hour * HourLine.Height - additionalOffset + offsetFromAllDays);
 		}
 
