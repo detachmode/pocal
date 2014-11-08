@@ -22,6 +22,7 @@ namespace Pocal.Helper
 
             updateIfSingle(oldPA, newPA);
             updateIfRecurrent(oldPA, newPA);
+            App.ViewModel.ConflictManager.solveConflicts();
 
             ViewSwitcher.setScrollToPa(newPA);
             ViewSwitcher.ScrollToAfterUpdate();
@@ -134,32 +135,11 @@ namespace Pocal.Helper
             responsibleDaysOfPA = new List<Day>();
             foreach (Day day in App.ViewModel.Days)
             {
-                if (isInTimeFrame(pA, day))
+                if (pA.isInTimeFrameOfDate(day.DT))
                 {
                     responsibleDaysOfPA.Add(day);
                 }
             }
-        }
-
-        private static bool isInTimeFrame(PocalAppointment pA, Day day)
-        {
-            if (pA.AllDay)
-            {
-                if (day.DT.Date == pA.StartTime.Date)
-                    return true;
-                else
-                    return false;
-            }
-            DateTimeOffset starttime = pA.StartTime;
-            DateTimeOffset endtime = starttime + pA.Duration;
-
-            bool endsBeforeThisDay = (endtime.Date < day.DT.Date);
-            bool beginsAfterThisDay = (starttime.Date > day.DT.Date); ;
-
-            bool isNotInTimeFrame = (endsBeforeThisDay || beginsAfterThisDay);
-
-            return !isNotInTimeFrame;
-
         }
 
     }

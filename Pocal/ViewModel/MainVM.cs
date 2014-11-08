@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Diagnostics;
+using Pocal.Helper;
 
 namespace Pocal.ViewModel
 {
@@ -17,6 +18,7 @@ namespace Pocal.ViewModel
 
         public ObservableCollection<PocalAppointment> AllPocalAppointments = new ObservableCollection<PocalAppointment>();
         public SingleDayViewVM SingleDayViewModel { get; private set; }
+        public ConflictManager ConflictManager { get; private set; }
 
         private IReadOnlyList<Appointment> appoinmentBuffer;
 
@@ -176,6 +178,7 @@ namespace Pocal.ViewModel
         {
             this.Days = new ObservableCollection<Day>();
             SingleDayViewModel = new SingleDayViewVM();
+            ConflictManager = new ConflictManager();
 
             #region DESIGN TIME DATA
             if (DesignerProperties.IsInDesignTool)

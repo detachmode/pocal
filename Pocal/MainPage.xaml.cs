@@ -10,6 +10,8 @@ using System.Windows.Threading;
 using Pocal.ViewModel;
 using System.Diagnostics;
 using System.Threading;
+using Pocal.Helper;
+using System.Windows.Data;
 
 namespace Pocal
 {
@@ -27,18 +29,23 @@ namespace Pocal
 
         private async void load()
         {
+
             DataContext = App.ViewModel;
             InitializeComponent();
             
             VisualStateManager.GoToState(this, "Close", true);
             await App.ViewModel.ReloadPocalApptsAndDays();
+
+            //AppointmentsOnGrid.DataContext = new CollectionViewSource { Source = App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay};  //"{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}
+             //= new CollectionViewSource { Source = MyMusic };
             
             //DebugSettings.IsOverdrawHeatMapEnabled = true;
             AgendaViewListbox.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
 
+            
+
             watchPositionOfLongListSelector();
         }
-
 
 
 

@@ -1,4 +1,5 @@
-﻿using Pocal.ViewModel;
+﻿using Pocal.Helper;
+using Pocal.ViewModel;
 using System;
 using System.Globalization;
 using System.Windows;
@@ -42,66 +43,66 @@ namespace Pocal.Converter
 		}
 	}
 
-    public class NullOrWhiteSpaceCollapser : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            PocalAppointment pa = value as PocalAppointment;
-            if (String.IsNullOrWhiteSpace(pa.Location))
-            {
-                return System.Windows.Visibility.Collapsed;
-            }
-            else
-                return System.Windows.Visibility.Visible;
+	public class NullOrWhiteSpaceCollapser : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			PocalAppointment pa = value as PocalAppointment;
+			if (String.IsNullOrWhiteSpace(pa.Location))
+			{
+				return System.Windows.Visibility.Collapsed;
+			}
+			else
+				return System.Windows.Visibility.Visible;
 
-        }
+		}
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return null;
-        }
-    }
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			return null;
+		}
+	}
 
 
 
-    public class DetailNotesCollapser : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            PocalAppointment pa = value as PocalAppointment;
-            if (String.IsNullOrWhiteSpace(pa.Location) || pa.Duration > TimeSpan.FromHours(1.2))
-            {            
-                return System.Windows.Visibility.Visible;
-            }
-            else
-                return System.Windows.Visibility.Collapsed;
+	public class DetailNotesCollapser : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			PocalAppointment pa = value as PocalAppointment;
+			if (String.IsNullOrWhiteSpace(pa.Location) || pa.Duration > TimeSpan.FromHours(1.2))
+			{
+				return System.Windows.Visibility.Visible;
+			}
+			else
+				return System.Windows.Visibility.Collapsed;
 
-        }
+		}
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return null;
-        }
-    }
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			return null;
+		}
+	}
 
-    public class revertBoolean : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is bool)
-                if ((bool)value)
-                  return Visibility.Visible;
+	public class revertBoolean : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (value is bool)
+				if ((bool)value)
+					return Visibility.Visible;
 
-            return Visibility.Collapsed;
-        }
+			return Visibility.Collapsed;
+		}
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
 
-            return null;
-        }
+			return null;
+		}
 
-    }
+	}
 
 	public class singelDayApptTranslateY : IValueConverter
 	{
@@ -110,8 +111,8 @@ namespace Pocal.Converter
 			DateTimeOffset starttime = (DateTimeOffset)value;
 			if (starttime != null)
 			{
-                //return (starttime.Hour - App.ViewModel.SingleDayViewModel.FirstHour) * 70 - 1;
-                return (starttime.Hour * 70);
+				//return (starttime.Hour - App.ViewModel.SingleDayViewModel.FirstHour) * 70 - 1;
+				return (starttime.Hour * 70);
 			}
 			return 0;
 		}
@@ -141,7 +142,7 @@ namespace Pocal.Converter
 				if ((appt.Duration.Hours) == 0)
 					return 36;
 
-				return ((appt.Duration.Hours) * 70 + half + 1);	
+				return ((appt.Duration.Hours) * 70 + half + 1);
 			}
 			return 0;
 		}
@@ -153,7 +154,35 @@ namespace Pocal.Converter
 		}
 
 	}
-	
+
+	public class singelDayApptTranslateX : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			PocalAppointment pa = (PocalAppointment)value;
+			if (pa != null && pa.AllDay == false)
+			{
+                int column = pa.Column;
+
+                int conflicts = pa.MaxConflicts; 
+				if (conflicts > 4)
+					conflicts = 4;
+
+				double xPos = 400 / conflicts * (pa.Column-1);
+				return xPos;
+
+			}
+			return 0;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+
+			return null;
+		}
+
+	}
+
 
 }
 

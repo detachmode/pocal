@@ -151,6 +151,72 @@ namespace Pocal.ViewModel
 			}
 		}
 
+
+
+		private int _column;
+        public int Column
+		{
+			get
+			{
+                return _column;
+			}
+            //todo make private again
+			set
+			{
+                if (value != _column)
+				{
+                    _column = value;
+                    NotifyPropertyChanged("Column");
+				}
+			}
+		}
+
+
+        private int _maxConflicts;
+        public int MaxConflicts
+        {
+            get
+            {
+                return _maxConflicts;
+            }
+            //todo make private again
+            set
+            {
+                if (value != _maxConflicts)
+                {
+                    _maxConflicts = value;
+                    NotifyPropertyChanged("MaxConflicts");
+                }
+            }
+        }
+
+        public bool isInTimeFrameOfDate(DateTime date)
+        {
+            DateTime startOfDay = date.Date;
+            DateTime endOfDay = startOfDay.Add(TimeSpan.FromMinutes(24 * 60 - 1));
+            return (isInTimeFrame(startOfDay, endOfDay));
+        }
+
+        public bool isInTimeFrame(DateTime start, DateTime end)
+        {
+            if (this.AllDay)
+            {
+                if (start.Date == this.StartTime.Date)
+                    return true;
+                else
+                    return false;
+            }
+            DateTimeOffset starttime = this.StartTime;
+            DateTimeOffset endtime = starttime + this.Duration;
+
+            bool endsBeforeThisDay = (endtime < start);
+            bool beginsAfterThisDay = (starttime >end); ;
+
+            bool isNotInTimeFrame = (endsBeforeThisDay || beginsAfterThisDay);
+
+            return !isNotInTimeFrame;
+
+        }
 	
 
 
