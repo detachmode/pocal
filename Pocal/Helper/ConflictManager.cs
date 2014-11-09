@@ -34,7 +34,7 @@ namespace Pocal.Helper
             calcPropsForBinding();
 
 
-            toString();
+            //toString();
 
         }
 
@@ -77,25 +77,20 @@ namespace Pocal.Helper
             entriesInDictionary = 0;
             foreach (var currentAppt in day.PocalApptsOfDay)
             {
-                setValuesOfCurrentAppt(currentAppt);
+                if (entriesInDictionary == 0)
+                {
+                    insertColumn(currentAppt, 1);
+                    insertClusterID(currentAppt, 1);
+                }
+                else
+                {
+                    calcColumns(currentAppt);
+                    calcClusterIDs(currentAppt);
+
+                }
                 entriesInDictionary++;
             }
 
-        }
-
-        private void setValuesOfCurrentAppt( PocalAppointment currentAppt)
-        {
-            if (entriesInDictionary == 0)
-            {
-                insertColumn(currentAppt, 1);
-                insertClusterID(currentAppt, 1);
-            }
-            else
-            {
-                calcColumns(currentAppt);
-                calcClusterIDs(currentAppt);
-
-            }
         }
 
         private void insertClusterID(PocalAppointment currentAppt, int id)
@@ -190,7 +185,7 @@ namespace Pocal.Helper
             DateTime currentEnd = currentStart + currentAppt.Duration;
 
             // Wenn zwei PAs sich überschneiden, 
-            if (currentAppt != previousAppt && previousAppt.isInTimeFrame(currentStart, currentEnd))
+            if (currentAppt != previousAppt && previousAppt.isInTimeFrame_IgnoreAllDays(currentStart, currentEnd))
                 return true;
 
             return false;

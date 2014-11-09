@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Appointments;
 
 namespace Pocal.Helper
@@ -22,7 +23,7 @@ namespace Pocal.Helper
 
             updateIfSingle(oldPA, newPA);
             updateIfRecurrent(oldPA, newPA);
-            App.ViewModel.ConflictManager.solveConflicts();
+           
 
             ViewSwitcher.setScrollToPa(newPA);
             ViewSwitcher.ScrollToAfterUpdate();
@@ -41,15 +42,17 @@ namespace Pocal.Helper
             return true;
         }
 
-        private static void updateIfRecurrent(PocalAppointment oldPA, PocalAppointment newPA)
+        private static async void updateIfRecurrent(PocalAppointment oldPA, PocalAppointment newPA)
         {
             if (oldPA != null && oldPA.Appt.Recurrence != null)
             {
                 removeRecurrent(oldPA.Appt);
-                addRecurrent(oldPA.Appt);
+                await addRecurrent(oldPA.Appt);
             }
             else if (newPA != null && newPA.Appt.Recurrence != null)
-                addRecurrent(newPA.Appt);
+                await addRecurrent(newPA.Appt);
+
+            App.ViewModel.ConflictManager.solveConflicts();
         }
 
         private static void updateIfSingle(PocalAppointment oldPA, PocalAppointment newPA)
@@ -93,7 +96,7 @@ namespace Pocal.Helper
         }
 
 
-        private static async void addRecurrent(Appointment appt)
+        private static async Task addRecurrent(Appointment appt)
         {
             List<Appointment> appts = await CalendarAPI.getReccurantAppointments(appt, appt.LocalId);
 
