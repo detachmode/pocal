@@ -38,7 +38,25 @@ namespace Pocal.Helper
             if (a.StartTime != b.StartTime) return false;
             if (a.Duration != b.Duration) return false;
             if (a.Details != b.Details) return false;
-            if (a.Appt.Recurrence != b.Appt.Recurrence) return false;
+            if (!isRecurrenceEqual(a, b)) return false;
+            return true;
+        }
+
+        private static bool isRecurrenceEqual(PocalAppointment a, PocalAppointment b)
+        {
+            if (a.Appt.Recurrence == null && b.Appt.Recurrence == null)
+                return true;
+
+            // Bei Änderung von Recurrence zu nicht Recurrenz, oder anders herum.
+            if (a.Appt.Recurrence == null || b.Appt.Recurrence == null)
+                return false;
+
+            if (a.Appt.Recurrence.Day != b.Appt.Recurrence.Day) return false;
+            if (a.Appt.Recurrence.DaysOfWeek != b.Appt.Recurrence.DaysOfWeek) return false;
+            if (a.Appt.Recurrence.Interval != b.Appt.Recurrence.Interval) return false;
+            if (a.Appt.Recurrence.Month != b.Appt.Recurrence.Month) return false;
+            if (a.Appt.Recurrence.RecurrenceType != b.Appt.Recurrence.RecurrenceType) return false;
+
             return true;
         }
 
