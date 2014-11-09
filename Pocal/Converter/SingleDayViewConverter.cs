@@ -7,6 +7,7 @@ using System.Windows.Data;
 using Windows.ApplicationModel.Appointments;
 using Cimbalino.Toolkit.Converters;
 using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace Pocal.Converter
 {
@@ -117,20 +118,20 @@ namespace Pocal.Converter
                 if (appt.AllDay)
                     return 0;
 
-                double result = (appt.Duration.Hours) * HourLine.Height;  
+                double result = (appt.Duration.Hours) * HourLine.Height;
 
                 if (appt.Duration.Minutes != 0)
-                    result += HourLine.Height/2;
+                    result += HourLine.Height / 2;
 
                 if (appt.StartTime.Minute != 0)
                     result += HourLine.Height / 2;
 
                 if ((appt.Duration.Hours) == 0)
-                    result = HourLine.Height / 2 ;
+                    result = HourLine.Height / 2;
 
-                    
 
-                return result +1;
+
+                return result + 1;
             }
             return 0;
         }
@@ -156,7 +157,7 @@ namespace Pocal.Converter
 
                 return fullWidth / columnsCount + 2;
             }
-            return (fullWidth +4); // 2 = BorderSize
+            return (fullWidth + 4); // 2 = BorderSize
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -166,6 +167,39 @@ namespace Pocal.Converter
         }
 
     }
+
+
+    public class singelDayApptRectangleMargin : MultiValueConverterBase
+    {
+        private Thickness margin = new Thickness(0, 0, 0, 0);
+        public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values[0] == null || values[1] == null)
+                return margin;
+            DateTimeOffset starttime = (DateTimeOffset)values[0];
+            TimeSpan duration = (TimeSpan)values[1];
+            DateTimeOffset endtime = starttime + duration;
+
+            int x = starttime.Minute % 30;
+            if (x == 0)
+                x = 0;
+            margin.Top = 1.16 * x;
+
+            x = endtime.Minute % 30;
+            if (x == 0)
+                x = 30;
+            margin.Bottom = 1.16 * (30 - x);
+
+            return margin;
+        }
+
+        public override object[] ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
 
 
     public class singelDayApptTranslate : MultiValueConverterBase
@@ -209,16 +243,16 @@ namespace Pocal.Converter
             double value = 0;
 
             value = (starttime.Hour * HourLine.Height);
-            
+
 
             if (starttime.Minute > 30)
             {
-                value = value + HourLine.Height/2;
+                value = value + HourLine.Height / 2;
 
             }
-            
+
             myTranslate.Y = value;
-            
+
         }
 
         private static void calcX(int conflicts, int column, TranslateTransform myTranslate)

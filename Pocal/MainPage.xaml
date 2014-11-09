@@ -21,6 +21,8 @@
     <!--******** RESOURCES ******** -->
     <!--******** ********* ******** -->
     <phone:PhoneApplicationPage.Resources>
+
+        <local:singelDayApptRectangleMargin x:Key="singelDayApptRectangleMargin"/>
         <local:singelDayApptTranslate x:Key="singelDayApptTranslate"/>
         <local:weekendForeground x:Key="weekendForeground"/>
         <local:revertBoolean x:Key="revertBoolean"/>
@@ -411,7 +413,17 @@
                                                         <TextBlock  Text="{Binding Location}" FontSize="22" Visibility="{Binding Converter={StaticResource NullOrWhiteSpaceCollapser}, Mode=OneWay}" Foreground="#FFA2A2A2" Margin="0,-6,0,0" />
                                                         <TextBlock Text="{Binding Details}" FontSize="20.5" Foreground="#FF9C9C9C" FontWeight="ExtraLight" TextWrapping="Wrap" FontFamily="Calibri" Visibility="{Binding Converter={StaticResource DetailNotesCollapser}, Mode=OneWay}" />
                                                     </StackPanel>
-                                                    <Rectangle Width="12" Fill="{Binding CalColor}" HorizontalAlignment="Left"/>
+                                                    <Rectangle Width="12" Fill="{Binding CalColor}" HorizontalAlignment="Left" >
+                                                        
+                                                        <i:Interaction.Behaviors>
+                                                            <cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource singelDayApptRectangleMargin}"
+                                                                        PropertyName="Margin">
+                                                                <cimbalinoBehaviors:MultiBindingItem Value="{Binding StartTime}" />
+                                                                <cimbalinoBehaviors:MultiBindingItem Value="{Binding Duration}" />
+                                                            </cimbalinoBehaviors:MultiBindingBehavior>
+                                                        </i:Interaction.Behaviors>
+                                                    </Rectangle>
+                                                    
                                                     <Border BorderThickness="2,2,2,2" >
                                                         <Border.BorderBrush>
                                                             <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
