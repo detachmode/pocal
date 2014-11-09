@@ -184,6 +184,8 @@ namespace Pocal.Converter
             if (conflicts > 4)
                 conflicts = 4;
 
+            if (conflicts == 0)
+                conflicts = 1;
 
             TranslateTransform myTranslate = new TranslateTransform();
             calcY(starttime, myTranslate);

@@ -52,6 +52,7 @@ namespace Pocal
 			var element = (FrameworkElement)sender;
 			Day selectedDay = element.DataContext as Day;
 			App.ViewModel.SingleDayViewModel.TappedDay = selectedDay;
+            
 		}
 
 

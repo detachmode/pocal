@@ -206,6 +206,7 @@ namespace Pocal
             Day newTappedDay = App.ViewModel.Days.FirstOrDefault(x => x.DT.Date == nextDate.Date);
             if (newTappedDay != null)
                 App.ViewModel.SingleDayViewModel.TappedDay = newTappedDay;
+            App.ViewModel.ConflictManager.solveConflicts();
         }
 
         #endregion
