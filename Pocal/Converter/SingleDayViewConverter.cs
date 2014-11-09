@@ -148,15 +148,15 @@ namespace Pocal.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             int fullWidth = 406;
-            int maxConflicts = (int)value;
-            if (maxConflicts != 0)
+            int columnsCount = (int)value;
+            if (columnsCount > 1)
             {
-                if (maxConflicts > 4)
-                    maxConflicts = 4;
-                
-                return fullWidth / maxConflicts+2;
+                if (columnsCount > 4)
+                    columnsCount = 4;
+
+                return fullWidth / columnsCount + 2;
             }
-            return fullWidth +2; // 2 = BorderSize
+            return (fullWidth +4); // 2 = BorderSize
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
