@@ -381,12 +381,6 @@
 											        RenderTransformOrigin="0.5,0"
                                                     VerticalAlignment="Top" HorizontalAlignment="Left" >
 
-
-                                                    <!--<Grid.RenderTransform>
-                                                        <CompositeTransform  TranslateY="{Binding StartTime, Converter={StaticResource singelDayApptTranslateY },FallbackValue=-1000}" />
- 
-                                                    </Grid.RenderTransform>-->
-
                                                     <i:Interaction.Behaviors>
                                                         <cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource singelDayApptTranslate}"
                                                                         PropertyName="RenderTransform">
@@ -395,7 +389,6 @@
                                                             <cimbalinoBehaviors:MultiBindingItem Value="{Binding StartTime}" />
                                                         </cimbalinoBehaviors:MultiBindingBehavior>
                                                     </i:Interaction.Behaviors>
-
 
                                                     <Grid.Resources>
                                                         <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
@@ -410,16 +403,15 @@
                                                             </BeginStoryboard>
                                                         </EventTrigger>
                                                     </Grid.Resources>
-
                                                     <Grid.Background>
                                                         <SolidColorBrush Color="{StaticResource Color90Black}"/>
                                                     </Grid.Background>
-                                                    <StackPanel Margin="24,3,0,0">
+                                                    <StackPanel Margin="20,3,0,0">
                                                         <TextBlock  Text="{Binding Subject}" Foreground="{Binding CalColor}" FontSize="{StaticResource DefaultSize}" FontWeight="Medium" />
                                                         <TextBlock  Text="{Binding Location}" FontSize="22" Visibility="{Binding Converter={StaticResource NullOrWhiteSpaceCollapser}, Mode=OneWay}" Foreground="#FFA2A2A2" Margin="0,-6,0,0" />
                                                         <TextBlock Text="{Binding Details}" FontSize="20.5" Foreground="#FF9C9C9C" FontWeight="ExtraLight" TextWrapping="Wrap" FontFamily="Calibri" Visibility="{Binding Converter={StaticResource DetailNotesCollapser}, Mode=OneWay}" />
                                                     </StackPanel>
-                                                    <Border BorderThickness="12,0,0,0" BorderBrush="{Binding CalColor}"/>
+                                                    <Rectangle Width="12" Fill="{Binding CalColor}" HorizontalAlignment="Left"/>
                                                     <Border BorderThickness="2,2,2,2" >
                                                         <Border.BorderBrush>
                                                             <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>

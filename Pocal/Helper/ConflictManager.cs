@@ -24,10 +24,15 @@ namespace Pocal.Helper
         private Day day;
         public void solveConflicts()
         {
+           
+            this.day = App.ViewModel.SingleDayViewModel.TappedDay;
+            if (day.PocalApptsOfDay.Count == 0)
+                return;
+
             Column = new Dictionary<PocalAppointment, int>();
             ClusterID = new Dictionary<PocalAppointment, int>();
             MaxConflictsPerCluster = new Dictionary<int, int>();
-            this.day = App.ViewModel.SingleDayViewModel.TappedDay;
+            
 
             calcColumnsAndClusterID();
             calcMaxConflictsPerCluster();
