@@ -175,16 +175,28 @@ namespace Pocal.Helper
 
         private void calcMaxConflictsPerCluster()
         {
-            for (int clusterID = 1; clusterID <= day.PocalApptsOfDay.Count; clusterID++)
+            // ermittle für jeden Eintrag in einem Cluster, was der MaxConflictCount ist
+            int maxClusterID = ClusterID.Aggregate((l, r) => l.Value > r.Value ? l : r).Value;
+            for (int clusterID = 1; clusterID <= maxClusterID; clusterID++)
             {
-                int clusterCount = ClusterID.Count(x => x.Value == clusterID);
-                if (clusterCount != 0)
-                {
-                    MaxConflictsPerCluster.Add(clusterID, clusterCount);
-                }
+                Dictionary<PocalAppointment, int> allApptsWithClusterID = ClusterID.Where(pair => pair.Value == clusterID).ToDictionary(r => r.Key, r => r.Value);
 
+                // reduce ColumnDicitonay to entries with same ClusterID;
+                List<int> allColumnsWithSameClusterID = new List<int>();
+                foreach (var entry in allApptsWithClusterID)
+                {
+                    int columnOfAppt;
+                    Column.TryGetValue(entry.Key, out columnOfAppt);
+                    allColumnsWithSameClusterID.Add(columnOfAppt);
+
+                }
+                int maxColumnValue = allColumnsWithSameClusterID.Max();
+              
+                MaxConflictsPerCluster.Add(clusterID, maxColumnValue);
             }
         }
+
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;
