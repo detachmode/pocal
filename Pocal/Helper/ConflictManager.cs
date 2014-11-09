@@ -19,6 +19,7 @@ namespace Pocal.Helper
         private Dictionary<PocalAppointment, int> Column;
         private Dictionary<PocalAppointment, int> ClusterID;
         private Dictionary<int, int> MaxConflictsPerCluster;
+        private int entriesInDictionary;
 
         private Day day;
         public void solveConflicts()
@@ -73,16 +74,16 @@ namespace Pocal.Helper
 
         private void calcColumnsAndClusterID()
         {
-            int entriesInDictionary = 0;
+            entriesInDictionary = 0;
             foreach (var currentAppt in day.PocalApptsOfDay)
             {
-                setValuesOfCurrentAppt(entriesInDictionary, currentAppt);
+                setValuesOfCurrentAppt(currentAppt);
                 entriesInDictionary++;
             }
 
         }
 
-        private void setValuesOfCurrentAppt(int entriesInDictionary, PocalAppointment currentAppt)
+        private void setValuesOfCurrentAppt( PocalAppointment currentAppt)
         {
             if (entriesInDictionary == 0)
             {
@@ -90,27 +91,62 @@ namespace Pocal.Helper
                 insertClusterID(currentAppt, 1);
             }
             else
-                iterateOverPreviouseEntries(entriesInDictionary, currentAppt);
+            {
+                calcColumns(currentAppt);
+                calcClusterIDs(currentAppt);
+
+            }
         }
 
-        private void insertClusterID(PocalAppointment currentAppt, int value)
+        private void insertClusterID(PocalAppointment currentAppt, int id)
         {
-            ClusterID.Add(currentAppt, value);
+            ClusterID.Add(currentAppt, id);
         }
 
-        private void insertColumn(PocalAppointment currentAppt, int value)
+        private void insertColumn(PocalAppointment currentAppt, int column_n)
         {
-            Column.Add(currentAppt, value);
+            Column.Add(currentAppt, column_n);
         }
 
-        private void iterateOverPreviouseEntries(int entriesInDictionary, PocalAppointment currentAppt)
+        private void calcColumns (PocalAppointment currentAppt)
+        {
+            for (int column_n = 1; column_n < 5; column_n++)
+            {
+                if (isCurrentConflictingWithColumn(currentAppt, column_n))
+                {
+                    if (column_n == 4)
+                        insertColumn(currentAppt, 4);
+                    continue;
+                }
+                else
+                {
+                    insertColumn(currentAppt, column_n);
+                    break;
+                }
+            }
+        }
+
+        private bool isCurrentConflictingWithColumn(PocalAppointment currentAppt, int column_n)
+        {
+            Dictionary<PocalAppointment, int> allInColumn = getFromColumnDicitonaryAllWith(column_n);
+            foreach (var entry in allInColumn)
+            {
+                if (entry.Key != currentAppt)
+                {
+                    if (isconfliciting(currentAppt, entry.Key))
+                        return true;
+                }
+            }
+            return false;
+
+        }
+
+
+
+        private void calcClusterIDs(PocalAppointment currentAppt)
         {
             for (int indexInDictionary = entriesInDictionary - 1; indexInDictionary >= 0; indexInDictionary--)
             {
-
-                // Falls er mit vorherigen Eintrag nicht conflictet, wiederhole solange, bis er ein Eintrag gefunden hat, oder bei 0 angekommen ist.
-                // Wenn er bei 0 angekommen und Termin ist konfliktfrei dann kann er mit neuer ClusterID und Column 1 eingetragen werden.
-                // Wenn er bei 0 angekommen und Termin ist NICHT konfliktfrei dann kann er mit gleicher ClusterID wie Konflikt und Column+1 eingetragen werden.
 
                 PocalAppointment previousAppt = day.PocalApptsOfDay[indexInDictionary];
 
@@ -119,33 +155,23 @@ namespace Pocal.Helper
                 {
                     if (isconfliciting(currentAppt, previousAppt))
                     {
-                        addToColumnAccordingToOtherEntry(currentAppt, previousAppt, +1);
                         addToClusterAccordingToOtherEntry(currentAppt, previousAppt, 0);
                         break;
                     }
                     else
                     {
-                        PocalAppointment lastApptInDictionary = day.PocalApptsOfDay[entriesInDictionary - 1];
-                        insertColumn(currentAppt, 1);
+                        PocalAppointment lastApptInDictionary = day.PocalApptsOfDay[entriesInDictionary - 1];                     
                         addToClusterAccordingToOtherEntry(currentAppt, lastApptInDictionary, +1);
                         break;
                     }
                 }
 
                 if (isconfliciting(currentAppt, previousAppt))
-                {
-                    addToColumnAccordingToOtherEntry(currentAppt, previousAppt, +1);
+                {          
                     addToClusterAccordingToOtherEntry(currentAppt, previousAppt, 0);
                     break;
                 }
             }
-        }
-
-        private void addToColumnAccordingToOtherEntry(PocalAppointment currentAppt, PocalAppointment previousAppt, int add)
-        {
-            int columnOfPreviousAppt = 0;
-            Column.TryGetValue(previousAppt, out columnOfPreviousAppt);
-            Column.Add(currentAppt, add + columnOfPreviousAppt);
         }
 
         private void addToClusterAccordingToOtherEntry(PocalAppointment currentAppt, PocalAppointment previousAppt, int add)
@@ -156,6 +182,7 @@ namespace Pocal.Helper
 
         }
 
+       
         private bool isconfliciting(PocalAppointment currentAppt, PocalAppointment previousAppt)
         {
 
@@ -169,8 +196,6 @@ namespace Pocal.Helper
             return false;
 
         }
-
-
 
 
         private void calcMaxConflictsPerCluster()
