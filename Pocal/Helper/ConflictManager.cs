@@ -179,11 +179,10 @@ namespace Pocal.Helper
             int maxClusterID = ClusterID.Aggregate((l, r) => l.Value > r.Value ? l : r).Value;
             for (int clusterID = 1; clusterID <= maxClusterID; clusterID++)
             {
-                Dictionary<PocalAppointment, int> allApptsWithClusterID = ClusterID.Where(pair => pair.Value == clusterID).ToDictionary(r => r.Key, r => r.Value);
+                var subsetClusterID = getFromClusterDicitonaryAllWith(clusterID);
 
-                // reduce ColumnDicitonay to entries with same ClusterID;
                 List<int> allColumnsWithSameClusterID = new List<int>();
-                foreach (var entry in allApptsWithClusterID)
+                foreach (var entry in subsetClusterID)
                 {
                     int columnOfAppt;
                     Column.TryGetValue(entry.Key, out columnOfAppt);
@@ -196,6 +195,17 @@ namespace Pocal.Helper
             }
         }
 
+
+        private Dictionary<PocalAppointment, int> getFromClusterDicitonaryAllWith(int clusterID)
+        {
+            Dictionary<PocalAppointment, int> result = ClusterID.Where(pair => pair.Value == clusterID).ToDictionary(r => r.Key, r => r.Value);
+            return result;
+        }
+        private Dictionary<PocalAppointment, int> getFromColumnDicitonaryAllWith(int column_n)
+        {
+            Dictionary<PocalAppointment, int> result = Column.Where(pair => pair.Value == column_n).ToDictionary(r => r.Key, r => r.Value);
+            return result;
+        }
 
 
 
