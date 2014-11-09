@@ -21,7 +21,7 @@
     <!--******** RESOURCES ******** -->
     <!--******** ********* ******** -->
     <phone:PhoneApplicationPage.Resources>
-        <local:singelDayApptTranslateX x:Key="singelDayApptTranslateX"/>
+        <local:singelDayApptTranslate x:Key="singelDayApptTranslate"/>
         <local:weekendForeground x:Key="weekendForeground"/>
         <local:revertBoolean x:Key="revertBoolean"/>
         <local:DetailNotesCollapser x:Key="DetailNotesCollapser"/>
@@ -388,7 +388,7 @@
                                                     </Grid.RenderTransform>-->
 
                                                     <i:Interaction.Behaviors>
-                                                        <cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource singelDayApptTranslateX}"
+                                                        <cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource singelDayApptTranslate}"
                                                                         PropertyName="RenderTransform">
                                                             <cimbalinoBehaviors:MultiBindingItem Value="{Binding MaxConflicts}" />
                                                             <cimbalinoBehaviors:MultiBindingItem Value="{Binding Column}" />

@@ -117,14 +117,20 @@ namespace Pocal.Converter
                 if (appt.AllDay)
                     return 0;
 
-                int half = 0;
-                if (appt.Duration.Minutes >= 30)
-                    half = 35;
+                double result = (appt.Duration.Hours) * HourLine.Height;  
+
+                if (appt.Duration.Minutes != 0)
+                    result += HourLine.Height/2;
+
+                if (appt.StartTime.Minute != 0)
+                    result += HourLine.Height / 2;
 
                 if ((appt.Duration.Hours) == 0)
-                    return 36;
+                    result = HourLine.Height / 2 ;
 
-                return ((appt.Duration.Hours) * 70 + half + 1);
+                    
+
+                return result +1;
             }
             return 0;
         }
@@ -143,14 +149,14 @@ namespace Pocal.Converter
         {
             int fullWidth = 406;
             int maxConflicts = (int)value;
-            if (maxConflicts != null && maxConflicts != 0)
+            if (maxConflicts != 0)
             {
                 if (maxConflicts > 4)
                     maxConflicts = 4;
                 
-                return fullWidth / maxConflicts;
+                return fullWidth / maxConflicts+2;
             }
-            return fullWidth;
+            return fullWidth +2; // 2 = BorderSize
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -162,7 +168,7 @@ namespace Pocal.Converter
     }
 
 
-    public class singelDayApptTranslateX : MultiValueConverterBase
+    public class singelDayApptTranslate : MultiValueConverterBase
     {
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
@@ -180,8 +186,8 @@ namespace Pocal.Converter
 
 
             TranslateTransform myTranslate = new TranslateTransform();
-            myTranslate.Y = (starttime.Hour * 70); ;
-            myTranslate.X = 406 / conflicts * (column - 1);
+            calcY(starttime, myTranslate);
+            calcX(conflicts, column, myTranslate);
 
 
             TransformGroup myTransformGroup = new TransformGroup();
@@ -194,6 +200,28 @@ namespace Pocal.Converter
 
 
 
+        }
+
+        private static void calcY(DateTimeOffset starttime, TranslateTransform myTranslate)
+        {
+            double value = 0;
+
+            value = (starttime.Hour * HourLine.Height);
+            
+
+            if (starttime.Minute > 30)
+            {
+                value = value + HourLine.Height/2;
+
+            }
+            
+            myTranslate.Y = value;
+            
+        }
+
+        private static void calcX(int conflicts, int column, TranslateTransform myTranslate)
+        {
+            myTranslate.X = 406 / conflicts * (column - 1);
         }
 
         public override object[] ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
