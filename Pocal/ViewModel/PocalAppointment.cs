@@ -193,7 +193,7 @@ namespace Pocal.ViewModel
         public bool isInTimeFrameOfDate(DateTime date)
         {
             DateTime startOfDay = date.Date;
-            DateTime endOfDay = startOfDay.Add(TimeSpan.FromMinutes(24 * 60 - 1));
+            DateTime endOfDay = startOfDay.Add(TimeSpan.FromMinutes(24 * 60));
             return (isInTimeFrame(startOfDay, endOfDay));
         }
 
