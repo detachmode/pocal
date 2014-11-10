@@ -324,7 +324,7 @@
                     <!--******** ******** ******** -->
                     <!--******** SDV BODY ******** -->
                     <!--******** ******** ******** -->
-                    <ScrollViewer x:Name="SingleDayScrollViewer" VerticalScrollBarVisibility="Hidden" ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
+                    <ScrollViewer x:Name="SingleDayScrollViewer" VirtualizingStackPanel.VirtualizationMode="Recycling" VerticalScrollBarVisibility="Hidden" ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
 
                         <Grid>
                             <Grid.Background>
@@ -332,18 +332,16 @@
                             </Grid.Background>
 
                             <StackPanel>
-                                <Grid x:Name="AllDayAppointments"  Margin="24,0,0,0">
-                                    <ItemsControl  ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay }">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid Tap="SDV_AppointmentTap" Visibility="{Binding AllDay, Converter={StaticResource revertBoolean}}">
-                                                    <TextBlock  Margin="4,6,0,6" Text="{Binding Subject}" Foreground="{Binding CalColor}"   FontSize="{StaticResource DefaultSize}" FontWeight="SemiBold"/>
-                                                </Grid>
+                                <ItemsControl  x:Name="AllDayAppointments"  Margin="24,0,0,0" ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay }">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Tap="SDV_AppointmentTap" Visibility="{Binding AllDay, Converter={StaticResource revertBoolean}}">
+                                                <TextBlock  Margin="4,6,0,6" Text="{Binding Subject}" Foreground="{Binding CalColor}"   FontSize="{StaticResource DefaultSize}" FontWeight="SemiBold"/>
+                                            </Grid>
 
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                                 <Border Height="1" Background="#FF807C7C"></Border>
                                 <Grid x:Name="HourLinesGridAppointments">
                                     <ItemsControl x:Name="hourlines"
@@ -414,7 +412,7 @@
                                                         <TextBlock Text="{Binding Details}" FontSize="20.5" Foreground="#FF9C9C9C" FontWeight="ExtraLight" TextWrapping="Wrap" FontFamily="Calibri" Visibility="{Binding Converter={StaticResource DetailNotesCollapser}, Mode=OneWay}" />
                                                     </StackPanel>
                                                     <Rectangle Width="12" Fill="{Binding CalColor}" HorizontalAlignment="Left" >
-                                                        
+
                                                         <i:Interaction.Behaviors>
                                                             <cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource singelDayApptRectangleMargin}"
                                                                         PropertyName="Margin">
@@ -423,7 +421,7 @@
                                                             </cimbalinoBehaviors:MultiBindingBehavior>
                                                         </i:Interaction.Behaviors>
                                                     </Rectangle>
-                                                    
+
                                                     <Border BorderThickness="2,2,2,2" >
                                                         <Border.BorderBrush>
                                                             <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
