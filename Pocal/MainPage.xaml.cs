@@ -12,13 +12,15 @@ using System.Diagnostics;
 using System.Threading;
 using Pocal.Helper;
 using System.Windows.Data;
+using System.Windows.Media.Animation;
 
 namespace Pocal
 {
 
     public partial class MainPage : PhoneApplicationPage
     {
-
+        public Storyboard openStoryboard = new Storyboard();
+        public Storyboard closeStoryboard = new Storyboard();
         // Constructor
         public MainPage()
         {
@@ -33,7 +35,7 @@ namespace Pocal
             DataContext = App.ViewModel;
             InitializeComponent();
             
-            VisualStateManager.GoToState(this, "Close", true);
+            //VisualStateManager.GoToState(this, "Close", true);
             await App.ViewModel.ReloadPocalApptsAndDays();
 
             //AppointmentsOnGrid.DataContext = new CollectionViewSource { Source = App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay};  //"{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}
@@ -47,7 +49,71 @@ namespace Pocal
             watchPositionOfLongListSelector();
         }
 
+        private KeyTime kt0 = KeyTime.FromTimeSpan(TimeSpan.Zero);
+        private KeyTime kt1 = KeyTime.FromTimeSpan(new TimeSpan(0, 0, 0, 4, 0));
+        private KeyTime kt2 = KeyTime.FromTimeSpan(new TimeSpan(0, 0, 0, 0, 500));
+        private KeyTime kt3 = KeyTime.FromTimeSpan(new TimeSpan(0, 0, 0, 2, 0));
+        private KeyTime kt4 = KeyTime.FromTimeSpan(new TimeSpan(0, 0, 0, 2, 500));
+        
+       
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        {
 
+            BounceEase b = new BounceEase();
+            b.Bounces = 1;
+            b.Bounciness = 1;
+            b.EasingMode = EasingMode.EaseOut;
+
+            
+            /************** DoubleAnimation  **************/
+            DoubleAnimationUsingKeyFrames animation = new DoubleAnimationUsingKeyFrames();
+
+            EasingDoubleKeyFrame key1 = new EasingDoubleKeyFrame();
+            key1.KeyTime = kt0;
+            key1.Value = 0.2;
+            key1.EasingFunction = b;
+
+            EasingDoubleKeyFrame key2 = new EasingDoubleKeyFrame();
+            key2.KeyTime = kt1;
+            key2.Value = 1;
+            key2.EasingFunction = b;
+
+            animation.KeyFrames.Add(key1);
+            animation.KeyFrames.Add(key2);
+            //{ BeginTime = TimeSpan.FromSeconds(0), Duration = TimeSpan.FromSeconds(3) };
+
+            //doubleAanimation.From = 1.0;
+            //doubleAanimation.To = 0.0;
+            //doubleAanimation.EasingFunction = b;
+
+
+            /************** determine Property  **************/
+
+            Storyboard.SetTarget(animation, SingleDayView.RenderTransform);
+            //Storyboard.SetTargetProperty(animation, new PropertyPath("ScaleY"));
+            Storyboard.SetTargetProperty(animation, new PropertyPath("TranslateY"));
+            //Storyboard.SetTarget(animation, SingleDayView);
+            //Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
+
+            //Storyboard.SetTarget(keyFrameAnimation, box);
+            //Storyboard.SetTargetProperty(keyFrameAnimation, new PropertyPath("Height"));
+
+            //CompositeTransform transform = this.SingleDayView.RenderTransform as CompositeTransform;
+            ////transform.TranslateY = 0;
+            //this.SingleDayView.RenderTransform = transform;
+            //this.SingleDayView.Opacity = 1.0;
+
+            /************** Adding Stuff  **************/
+            openStoryboard.Children.Add(animation);
+            //storyboard.Children.Add(keyFrameAnimation);
+            Resources.Add("Storyboard", openStoryboard);
+
+
+            //storyboard.Completed += showMessage;
+
+
+
+        }
 
 
         #region Longlistselektor Scrolling Events
@@ -150,16 +216,19 @@ namespace Pocal
         private void gridExit_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             closeDayView();
+            //App.ViewModel.storyboard.Begin();
         }
 
         private void gridExit_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             closeDayView();
+            //App.ViewModel.openStoryboard.Begin();
         }
 
         private void closeDayView()
         {
             VisualStateManager.GoToState(this, "Close", true);
+
         }
 
 
@@ -230,7 +299,12 @@ namespace Pocal
         private void OpenSdvAndSetTappedDay(object sender, System.Windows.Input.GestureEventArgs e)
         {
             Debug.WriteLine("Tapped on Daycard");
-            ViewSwitcher.SwitchToSDV(sender);
+            //ViewSwitcher.SwitchToSDV(sender);
+
+            //this.SingleDayView.Visibility = Visibility.Visible;
+
+
+            openStoryboard.Begin();
 
         }
 

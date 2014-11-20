@@ -14,7 +14,9 @@
     x:Class="Pocal.MainPage"
     mc:Ignorable="d"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    shell:SystemTray.IsVisible="False"
+    
+    shell:SystemTray.IsVisible="True" Loaded="PhoneApplicationPage_Loaded"
+
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainVM}">
 
     <!--******** ********* ******** -->
@@ -325,7 +327,7 @@
                     <!--******** SDV BODY ******** -->
                     <!--******** ******** ******** -->
                     <ScrollViewer x:Name="SingleDayScrollViewer" VirtualizingStackPanel.VirtualizationMode="Recycling" VerticalScrollBarVisibility="Hidden" ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
-
+  
                         <Grid>
                             <Grid.Background>
                                 <SolidColorBrush Color="{StaticResource Color90Black}"/>

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Diagnostics;
 using Pocal.Helper;
+using System.Windows.Media.Animation;
 
 namespace Pocal.ViewModel
 {
@@ -19,6 +20,7 @@ namespace Pocal.ViewModel
         public ObservableCollection<PocalAppointment> AllPocalAppointments = new ObservableCollection<PocalAppointment>();
         public SingleDayViewVM SingleDayViewModel { get; private set; }
         public ConflictManager ConflictManager { get; private set; }
+
 
         private IReadOnlyList<Appointment> appoinmentBuffer;
 
