@@ -66,8 +66,8 @@
                 <shell:ApplicationBarMenuItem Text="Tutorial" />
                 <shell:ApplicationBarMenuItem Text="Info"/>
             </shell:ApplicationBar.MenuItems>
-            <shell:ApplicationBarIconButton IconUri="/Images/back.png" Text="Heute"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/add.png" Text="Neu"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/back.png" Text="Heute" Click="ApplicationBarIconButton_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/add.png" Text="Neu" />
             <shell:ApplicationBarIconButton IconUri="/Images/feature.calendar.png" Text="Gehe zu Tag"/>
             <shell:ApplicationBarIconButton IconUri="/Images/feature.search.png" Text="Termin suchen"/>
         </shell:ApplicationBar>
@@ -227,6 +227,22 @@
                                                                
                                                                 Background="Black">
                                                         <StackPanel.Resources>
+                                                            <Storyboard x:Name="MyTemplateAnimate">
+                                                                <ObjectAnimationUsingKeyFrames 
+                                                                    Storyboard.TargetProperty="Height" 
+                                                                    Storyboard.TargetName="SecondLine">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="27"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="0"/>
+                                                                </ObjectAnimationUsingKeyFrames>
+
+                                                                <DoubleAnimationUsingKeyFrames 
+                                                                    Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" 
+                                                                    Storyboard.TargetName="SecondLine">
+                                                                    <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
+                                                                </DoubleAnimationUsingKeyFrames>
+                                                            </Storyboard>
+
                                                             <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
                                                                 <BeginStoryboard>
                                                                     <Storyboard x:Name="StoryboardOnDataTemplate">
@@ -245,13 +261,16 @@
 
                                                         <!--Subject and SecondLine-->
                                                         <StackPanel  Margin="12,0,0,0">
-                                                            <TextBlock  Text="{Binding Appt, Converter={StaticResource subjectConverter}}" Foreground="{Binding CalColor}" FontSize="20"/>
-                                                            <TextBlock Text="{Binding Appt, Converter={StaticResource secondLineConverter}}" 
+                                                            <TextBlock Text="{Binding Appt, Converter={StaticResource subjectConverter}}" Foreground="{Binding CalColor}" FontSize="20"/>
+                                                            <TextBlock x:Name="SecondLine"  Text="{Binding Appt, Converter={StaticResource secondLineConverter}}" 
 																
 																FontFamily="{StaticResource PhoneFontFamilyLight}" 
 																CharacterSpacing="1" 
 																Padding="0" 
 																Margin="0,-6,0,0">
+                                                                <TextBlock.RenderTransform>
+                                                                    <CompositeTransform/>
+                                                                </TextBlock.RenderTransform>
                                                                 <!--<TextBlock.Foreground>
                                                                     <SolidColorBrush Color="{StaticResource PhoneTextBoxColor}"/>
                                                                 </TextBlock.Foreground>-->

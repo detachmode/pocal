@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Threading;
 using Pocal.Helper;
 using System.Windows.Data;
+using System.Windows.Media.Animation;
 
 namespace Pocal
 {
@@ -236,7 +237,82 @@ namespace Pocal
 
 
 
+        private void ApplicationBarIconButton_Click(object sender, EventArgs e)
+        {
+            LongListSelector FoundList = (AgendaViewListbox as LongListSelector);
 
+            //ListBox source = (ListBox)sender;
+
+            FindItemControll(FoundList);
+
+            for (int j = 0; j < foundDayCards.Count; j++)
+            {
+                for (int i = 0; i < foundDayCards[j].Items.Count; i++)
+                {
+                    DependencyObject d = foundDayCards[j].ItemContainerGenerator.ContainerFromIndex(i);
+                    SearchAndPlayStoryboard(d);
+                }
+            }
+            foreach (var dayCard in foundDayCards)
+            {
+                SearchAndPlayStoryboard(dayCard);
+            }
+
+        }
+
+        private List<ItemsControl> foundDayCards = new List<ItemsControl>();
+
+        private void FindItemControll(DependencyObject targeted_control)
+        {
+
+            var count = VisualTreeHelper.GetChildrenCount(targeted_control);
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    var child = VisualTreeHelper.GetChild(targeted_control, i);
+                    var test = child.GetType();
+                    if (child is ItemsControl)
+                    {
+                        foundDayCards.Add((ItemsControl)child);
+                    }
+                    else
+                    {
+                        FindItemControll(child);
+                    }
+                }
+            }
+            return;
+        }
+
+        private void SearchAndPlayStoryboard(DependencyObject targeted_control)
+        {
+            var count = VisualTreeHelper.GetChildrenCount(targeted_control);
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    var child = VisualTreeHelper.GetChild(targeted_control, i);
+                    if (child is StackPanel)
+                    {
+                        StackPanel stackpanel = (StackPanel)child;
+                        if (stackpanel.Name == "DayCard_ApptItem")
+                        {
+                            Storyboard StyBrd = stackpanel.Resources["MyTemplateAnimate"] as Storyboard;
+                            StyBrd.Begin();
+                        }
+                    }
+                    else
+                    {
+                        SearchAndPlayStoryboard(child);
+                    }
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
 
 
 
@@ -244,7 +320,7 @@ namespace Pocal
 
 
 
-  
+
 
     }
 }
