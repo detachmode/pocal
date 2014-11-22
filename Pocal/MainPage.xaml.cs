@@ -34,17 +34,17 @@ namespace Pocal
 
             DataContext = App.ViewModel;
             InitializeComponent();
-            
-            //VisualStateManager.GoToState(this, "Close", true);
+
+            VisualStateManager.GoToState(this, "Close", true);
             await App.ViewModel.ReloadPocalApptsAndDays();
 
             //AppointmentsOnGrid.DataContext = new CollectionViewSource { Source = App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay};  //"{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}
-             //= new CollectionViewSource { Source = MyMusic };
-            
+            //= new CollectionViewSource { Source = MyMusic };
+
             //DebugSettings.IsOverdrawHeatMapEnabled = true;
             AgendaViewListbox.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
 
-            
+
 
             watchPositionOfLongListSelector();
         }
@@ -54,8 +54,8 @@ namespace Pocal
         private KeyTime kt2 = KeyTime.FromTimeSpan(new TimeSpan(0, 0, 0, 0, 500));
         private KeyTime kt3 = KeyTime.FromTimeSpan(new TimeSpan(0, 0, 0, 2, 0));
         private KeyTime kt4 = KeyTime.FromTimeSpan(new TimeSpan(0, 0, 0, 2, 500));
-        
-       
+
+
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -64,7 +64,7 @@ namespace Pocal
             b.Bounciness = 1;
             b.EasingMode = EasingMode.EaseOut;
 
-            
+
             /************** DoubleAnimation  **************/
             DoubleAnimationUsingKeyFrames animation = new DoubleAnimationUsingKeyFrames();
 
@@ -118,7 +118,7 @@ namespace Pocal
 
         #region Longlistselektor Scrolling Events
 
-        private  void LongList_Loaded(object sender, RoutedEventArgs e)
+        private void LongList_Loaded(object sender, RoutedEventArgs e)
         {
             var sb = ((FrameworkElement)VisualTreeHelper.GetChild(AgendaViewListbox, 0)).FindName("VerticalScrollBar") as ScrollBar;
             sb.Margin = new Thickness(-10, 0, 0, 0);
@@ -307,18 +307,83 @@ namespace Pocal
             openStoryboard.Begin();
 
         }
-
-
-
-
-
-
-
         #endregion
 
+        private void ApplicationBarIconButton_Click(object sender, EventArgs e)
+        {
+            LongListSelector FoundList = (AgendaViewListbox as LongListSelector);
+
+            //ListBox source = (ListBox)sender;
+            
+            FindItemControll(FoundList);
+
+            for (int i = 0; i < foundDayCards[0].Items.Count; i++)
+            {
+                DependencyObject d = foundDayCards[0].ItemContainerGenerator.ContainerFromIndex(i);
+               SearchAndPlayStoryboard(d);
+            }
+           
 
 
-  
+            //foreach (var dayCard in foundDayCards)
+            //{
+            //    SearchAndPlayStoryboard(dayCard);
+            //}
 
+        }
+
+        private List<ItemsControl> foundDayCards = new List<ItemsControl>();
+
+        private void FindItemControll(DependencyObject targeted_control)
+        {
+            
+            var count = VisualTreeHelper.GetChildrenCount(targeted_control);
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    var child = VisualTreeHelper.GetChild(targeted_control, i);
+                    var test = child.GetType();
+                    if (child is ItemsControl) 
+                    {
+                        foundDayCards.Add((ItemsControl)child);                                      
+                    }
+                    else
+                    {
+                        FindItemControll(child);
+                    }
+                }              
+            }
+            return;
+        }
+
+        private void SearchAndPlayStoryboard(DependencyObject targeted_control)
+        {
+            var count = VisualTreeHelper.GetChildrenCount(targeted_control);
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    var child = VisualTreeHelper.GetChild(targeted_control, i);
+                    if (child is StackPanel)
+                    {
+                        StackPanel stackpanel = (StackPanel)child;
+                        if (stackpanel.Name == "DayCard_ApptItem")
+                        {
+                            Storyboard StyBrd = stackpanel.Resources["MyTemplateAnimate"] as Storyboard;
+                            StyBrd.Begin();
+                        }
+                    }
+                    else
+                    {
+                        SearchAndPlayStoryboard(child);
+                    }
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
     }
 }

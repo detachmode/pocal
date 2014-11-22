@@ -68,7 +68,7 @@
                 <shell:ApplicationBarMenuItem Text="Tutorial" />
                 <shell:ApplicationBarMenuItem Text="Info"/>
             </shell:ApplicationBar.MenuItems>
-            <shell:ApplicationBarIconButton IconUri="/Images/back.png" Text="Heute"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/back.png" Text="Heute" Click="ApplicationBarIconButton_Click"/>
             <shell:ApplicationBarIconButton IconUri="/Images/add.png" Text="Neu"/>
             <shell:ApplicationBarIconButton IconUri="/Images/feature.calendar.png" Text="Gehe zu Tag"/>
             <shell:ApplicationBarIconButton IconUri="/Images/feature.search.png" Text="Termin suchen"/>
@@ -225,21 +225,26 @@
                                                 <DataTemplate>
                                                     <StackPanel x:Name="DayCard_ApptItem" 
                                                                 Tap="DayCard_ApptTap"                                                         
-                                                                Orientation="Horizontal"
-                                                               
+                                                                Orientation="Horizontal"                                                            
                                                                 Background="Black">
                                                         <StackPanel.Resources>
-                                                            <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
-                                                                <BeginStoryboard>
-                                                                    <Storyboard x:Name="StoryboardOnDataTemplate">
-                                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="DayCard_ApptItem">
-                                                                            <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
-                                                                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-                                                                        </DoubleAnimationUsingKeyFrames>
-                                                                    </Storyboard>
-                                                                </BeginStoryboard>
-                                                            </EventTrigger>
+
+                                                            <Storyboard x:Name="MyTemplateAnimate">
+                                                                <ObjectAnimationUsingKeyFrames 
+                                                                    Storyboard.TargetProperty="Height" 
+                                                                    Storyboard.TargetName="SecondLine">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="50"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="0"/>
+                                                                </ObjectAnimationUsingKeyFrames>
+
+                                                                <DoubleAnimationUsingKeyFrames 
+                                                                    Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" 
+                                                                    Storyboard.TargetName="SecondLine">
+                                                                    <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
+                                                                </DoubleAnimationUsingKeyFrames>
+                                                            </Storyboard>
+
                                                         </StackPanel.Resources>
                                                         <StackPanel.RenderTransform>
                                                             <CompositeTransform/>
@@ -247,16 +252,15 @@
 
                                                         <!--Subject and SecondLine-->
                                                         <StackPanel  Margin="12,0,0,0">
-                                                            <TextBlock  Text="{Binding Appt, Converter={StaticResource subjectConverter}}" Foreground="{Binding CalColor}" FontSize="20"/>
+                                                            <TextBlock Text="{Binding Appt, Converter={StaticResource subjectConverter}}"
+                                                                       Foreground="{Binding CalColor}" FontSize="20"/>
                                                             <TextBlock Text="{Binding Appt, Converter={StaticResource secondLineConverter}}" 
-																
-																FontFamily="{StaticResource PhoneFontFamilyLight}" 
-																CharacterSpacing="1" 
-																Padding="0" 
-																Margin="0,-6,0,0">
-                                                                <!--<TextBlock.Foreground>
-                                                                    <SolidColorBrush Color="{StaticResource PhoneTextBoxColor}"/>
-                                                                </TextBlock.Foreground>-->
+		                                                               FontFamily="{StaticResource PhoneFontFamilyLight}" 
+                                                                       x:Name="SecondLine"
+																       CharacterSpacing="1" Padding="0"  Margin="0,-6,0,0">
+                                                                <TextBlock.RenderTransform>
+                                                                    <CompositeTransform/>
+                                                                </TextBlock.RenderTransform>
                                                             </TextBlock>
 
                                                         </StackPanel>
@@ -279,7 +283,7 @@
             <!--******** SDV ******** -->
             <!--******** *** ******** -->
             <Grid x:Name="SingleDayView" 
-				Background="#AD000000" RenderTransformOrigin="0.5,0.5" >
+				Background="#AD000000" RenderTransformOrigin="0.5,0.5" d:IsHidden="True" >
                 <Grid.RenderTransform>
                     <CompositeTransform/>
                 </Grid.RenderTransform>
@@ -327,7 +331,7 @@
                     <!--******** SDV BODY ******** -->
                     <!--******** ******** ******** -->
                     <ScrollViewer x:Name="SingleDayScrollViewer" VirtualizingStackPanel.VirtualizationMode="Recycling" VerticalScrollBarVisibility="Hidden" ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
-  
+
                         <Grid>
                             <Grid.Background>
                                 <SolidColorBrush Color="{StaticResource Color90Black}"/>
