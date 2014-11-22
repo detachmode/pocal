@@ -233,7 +233,7 @@
                                                                 <ObjectAnimationUsingKeyFrames 
                                                                     Storyboard.TargetProperty="Height" 
                                                                     Storyboard.TargetName="SecondLine">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="50"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="27"/>
                                                                     <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="0"/>
                                                                 </ObjectAnimationUsingKeyFrames>
 
@@ -257,7 +257,7 @@
                                                             <TextBlock Text="{Binding Appt, Converter={StaticResource secondLineConverter}}" 
 		                                                               FontFamily="{StaticResource PhoneFontFamilyLight}" 
                                                                        x:Name="SecondLine"
-																       CharacterSpacing="1" Padding="0"  Margin="0,-6,0,0">
+																       CharacterSpacing="1" Height="27" Padding="0"  Margin="0,-6,0,0">
                                                                 <TextBlock.RenderTransform>
                                                                     <CompositeTransform/>
                                                                 </TextBlock.RenderTransform>
@@ -283,7 +283,7 @@
             <!--******** SDV ******** -->
             <!--******** *** ******** -->
             <Grid x:Name="SingleDayView" 
-				Background="#AD000000" RenderTransformOrigin="0.5,0.5" d:IsHidden="True" >
+				Background="#AD000000" RenderTransformOrigin="0.5,0.5" >
                 <Grid.RenderTransform>
                     <CompositeTransform/>
                 </Grid.RenderTransform>

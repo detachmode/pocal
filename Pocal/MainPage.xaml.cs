@@ -317,18 +317,18 @@ namespace Pocal
             
             FindItemControll(FoundList);
 
-            for (int i = 0; i < foundDayCards[0].Items.Count; i++)
+            for (int j = 0; j < foundDayCards.Count; j++)
             {
-                DependencyObject d = foundDayCards[0].ItemContainerGenerator.ContainerFromIndex(i);
-               SearchAndPlayStoryboard(d);
+                for (int i = 0; i < foundDayCards[j].Items.Count; i++)
+                {
+                    DependencyObject d = foundDayCards[j].ItemContainerGenerator.ContainerFromIndex(i);
+                    SearchAndPlayStoryboard(d);
+                }
             }
-           
-
-
-            //foreach (var dayCard in foundDayCards)
-            //{
-            //    SearchAndPlayStoryboard(dayCard);
-            //}
+            foreach (var dayCard in foundDayCards)
+            {
+                SearchAndPlayStoryboard(dayCard);
+            }
 
         }
 
