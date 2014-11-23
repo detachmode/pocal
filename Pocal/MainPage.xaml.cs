@@ -256,6 +256,9 @@ namespace Pocal
 
         private void enterOverview()
         {
+            Storyboard storyboard =  AgendaViewBody.Resources["EnterOverview"] as Storyboard;
+            storyboard.Begin();
+
             foundDayCards_ItemsControll = new List<ItemsControl>();
             foundStackPanels = new List<StackPanel>();
 
@@ -276,6 +279,9 @@ namespace Pocal
 
         private void leaveOverview()
         {
+            Storyboard storyboard = AgendaViewBody.Resources["LeaveOverview"] as Storyboard;
+            storyboard.Begin();
+
             foundDayCards_ItemsControll = new List<ItemsControl>();
             foundStackPanels = new List<StackPanel>();
 
