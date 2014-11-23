@@ -256,7 +256,7 @@ namespace Pocal
 
         private void enterOverview()
         {
-            Storyboard storyboard =  AgendaViewBody.Resources["EnterOverview"] as Storyboard;
+            Storyboard storyboard = AgendaViewBody.Resources["EnterOverview"] as Storyboard;
             storyboard.Begin();
 
             foundDayCards_ItemsControll = new List<ItemsControl>();

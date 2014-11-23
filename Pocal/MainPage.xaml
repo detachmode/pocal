@@ -192,21 +192,23 @@
                 <!--******** *************** ********-->
                 <!--******** AGENDAVIEW BODY ********-->
                 <!--******** *************** ********-->
-                <Grid x:Name="AgendaViewBody" Margin="0,0,0,0" Grid.Row="1" RenderTransformOrigin="0,0">
+                <Grid  x:Name="AgendaViewBody" Margin="0,0,-200,0" Grid.Row="1" RenderTransformOrigin="0,0.0">
+
+
                     <Grid.Resources>
                         <Storyboard x:Key="EnterOverview">
-                            <DoubleAnimation Duration="0:0:0.5" To="0.8" 
+                            <DoubleAnimation Duration="0:0:0.5" To="0.65" 
                                              Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" 
                                              Storyboard.TargetName="AgendaViewBody"/>
-                            <DoubleAnimation Duration="0:0:0.5" To="0.8" 
+                            <DoubleAnimation Duration="0:0:0.5" To="0.65" 
                                              Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" 
                                              Storyboard.TargetName="AgendaViewBody"/>
                             <ObjectAnimationUsingKeyFrames 
                                 Storyboard.TargetProperty="(FrameworkElement.Margin)" 
                                 Storyboard.TargetName="AgendaViewBody">
-                                <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0.0">
                                     <DiscreteObjectKeyFrame.Value>
-                                        <Thickness>0,0,0,-182</Thickness>
+                                        <Thickness>0,0,-200,-600</Thickness>
                                     </DiscreteObjectKeyFrame.Value>
                                 </DiscreteObjectKeyFrame>
                             </ObjectAnimationUsingKeyFrames>
@@ -225,7 +227,7 @@
                                 Storyboard.TargetName="AgendaViewBody">
                                 <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
                                     <DiscreteObjectKeyFrame.Value>
-                                        <Thickness>0,0,0,-182</Thickness>
+                                        <Thickness>0,0,-200,0</Thickness>
                                     </DiscreteObjectKeyFrame.Value>
                                 </DiscreteObjectKeyFrame>
                             </ObjectAnimationUsingKeyFrames>
@@ -236,8 +238,8 @@
                     <Grid.RenderTransform>
                         <CompositeTransform/>
                     </Grid.RenderTransform>
-                    
-                    <phone:LongListSelector  x:Name="AgendaViewListbox" ManipulationCompleted="AgendaViewListbox_ManipulationCompleted" Loaded="LongList_Loaded" ItemsSource="{Binding Days}"  HorizontalContentAlignment="Stretch" Background="Transparent" Margin="0,10,0,-10" >
+
+                    <phone:LongListSelector   x:Name="AgendaViewListbox" ManipulationCompleted="AgendaViewListbox_ManipulationCompleted" Loaded="LongList_Loaded" ItemsSource="{Binding Days}"  HorizontalContentAlignment="Stretch" Background="Transparent" Margin="0,10,0,-10" >
                         <phone:LongListSelector.ItemTemplate >
                             <DataTemplate >
                                 <Grid Tap="OpenSdvAndSetTappedDay" Canvas.ZIndex="10" Background="Black" Margin="0,0,-14,0">
@@ -265,7 +267,7 @@
                                                     </DiscreteObjectKeyFrame>
                                                 </ObjectAnimationUsingKeyFrames>-->
                                             </Storyboard>
-                                            
+
                                             <Storyboard x:Name="LeaveOverview">
                                                 <!--<DoubleAnimationUsingKeyFrames 
                                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" 
@@ -282,11 +284,13 @@
                                                 <ObjectAnimationUsingKeyFrames 
                                                     Storyboard.TargetProperty="(FrameworkElement.Margin)" 
                                                     Storyboard.TargetName="DayCardHeader">
-                                                    --><!--<DiscreteObjectKeyFrame KeyTime="0">
+                                                    -->
+                                                <!--<DiscreteObjectKeyFrame KeyTime="0">
                                                         <DiscreteObjectKeyFrame.Value>
                                                             <Thickness>12,6,0,-9</Thickness>
                                                         </DiscreteObjectKeyFrame.Value>
-                                                    </DiscreteObjectKeyFrame>--><!--
+                                                    </DiscreteObjectKeyFrame>-->
+                                                <!--
                                                     <DiscreteObjectKeyFrame KeyTime="0:0:0.0">
                                                         <DiscreteObjectKeyFrame.Value>
                                                             <Thickness>12,6,0,0</Thickness>                                                           
@@ -331,6 +335,21 @@
                                                         <StackPanel.Resources>
                                                             <Storyboard x:Name="EnterOverview">
 
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Duration="0:0:0.5" To="1.6" 
+                                                                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" 
+                                                                                     Storyboard.TargetName="FirstLine" d:IsOptimized="True"/>
+                                                                    <DoubleAnimation Duration="0:0:0.5" To="1.6" 
+                                                                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)"
+                                                                                     Storyboard.TargetName="FirstLine" d:IsOptimized="True"/>
+                                                                    <DoubleAnimation Duration="0:0:0.5" To="0" 
+                                                                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
+                                                                                     Storyboard.TargetName="FirstLine" d:IsOptimized="True"/>
+                                                                    <DoubleAnimation Duration="0:0:0.5" To="0" 
+                                                                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" 
+                                                                                     Storyboard.TargetName="FirstLine" d:IsOptimized="True"/>
+                                                                </Storyboard>
+
                                                                 <!--<ObjectAnimationUsingKeyFrames 
                                                                     Storyboard.TargetProperty="(TextBlock.FontSize)" 
                                                                     Storyboard.TargetName="FirstLine">
@@ -339,12 +358,12 @@
                                                                 </ObjectAnimationUsingKeyFrames>-->
 
 
-                                                                <ObjectAnimationUsingKeyFrames 
+                                                                <!--<ObjectAnimationUsingKeyFrames 
                                                                     Storyboard.TargetProperty="Height" 
                                                                     Storyboard.TargetName="SecondLine">
                                                                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="27"/>
                                                                     <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="0"/>
-                                                                </ObjectAnimationUsingKeyFrames>
+                                                                </ObjectAnimationUsingKeyFrames>-->
 
                                                                 <DoubleAnimationUsingKeyFrames 
                                                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
@@ -352,7 +371,7 @@
                                                                     <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
                                                                     <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-100"/>
                                                                 </DoubleAnimationUsingKeyFrames>
-                                                                
+
                                                                 <DoubleAnimationUsingKeyFrames 
                                                                     Storyboard.TargetProperty="(UIElement.Opacity)" 
                                                                     Storyboard.TargetName="SecondLine">
@@ -362,19 +381,37 @@
                                                             </Storyboard>
 
                                                             <Storyboard x:Name="LeaveOverview">
+
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Duration="0:0:0.5" To="1" 
+                                                                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" 
+                                                                                     Storyboard.TargetName="FirstLine" d:IsOptimized="True"/>
+                                                                    <DoubleAnimation Duration="0:0:0.5" To="1" 
+                                                                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)"
+                                                                                     Storyboard.TargetName="FirstLine" d:IsOptimized="True"/>
+                                                                    <DoubleAnimation Duration="0:0:0.5" To="0" 
+                                                                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
+                                                                                     Storyboard.TargetName="FirstLine" d:IsOptimized="True"/>
+                                                                    <DoubleAnimation Duration="0:0:0.5" To="0" 
+                                                                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" 
+                                                                                     Storyboard.TargetName="FirstLine" d:IsOptimized="True"/>
+                                                                </Storyboard>
+
                                                                 <!--<ObjectAnimationUsingKeyFrames 
                                                                     Storyboard.TargetProperty="(TextBlock.FontSize)" 
                                                                     Storyboard.TargetName="FirstLine">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="20"/>
-                                                                    --><!--<DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="20"/>--><!--
+                                                                    -->
+                                                                <!--<DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="20"/>-->
+                                                                <!--
                                                                 </ObjectAnimationUsingKeyFrames>-->
-                                                                
-                                                                
-                                                                <ObjectAnimationUsingKeyFrames 
+
+
+                                                                <!--<ObjectAnimationUsingKeyFrames 
                                                                     Storyboard.TargetProperty="Height" 
                                                                     Storyboard.TargetName="SecondLine">
                                                                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="27"/>
-                                                                </ObjectAnimationUsingKeyFrames>
+                                                                </ObjectAnimationUsingKeyFrames>-->
 
                                                                 <DoubleAnimationUsingKeyFrames 
                                                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
@@ -382,7 +419,7 @@
                                                                     <EasingDoubleKeyFrame KeyTime="0" Value="-100"/>
                                                                     <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
                                                                 </DoubleAnimationUsingKeyFrames>
-                                                                
+
                                                                 <DoubleAnimationUsingKeyFrames 
                                                                     Storyboard.TargetProperty="(UIElement.Opacity)" 
                                                                     Storyboard.TargetName="SecondLine">
@@ -409,7 +446,15 @@
 
                                                         <!--Subject and SecondLine-->
                                                         <StackPanel  Margin="12,0,0,0">
-                                                            <TextBlock x:Name="FirstLine"  Text="{Binding Appt, Converter={StaticResource subjectConverter}}" Foreground="{Binding CalColor}" FontSize="20"/>
+                                                            <TextBlock x:Name="FirstLine"  Text="{Binding Appt, Converter={StaticResource subjectConverter}}" Foreground="{Binding CalColor}" FontSize="20" RenderTransformOrigin="0,0">
+                                                                <TextBlock.RenderTransform>
+                                                                    <CompositeTransform/>
+                                                                </TextBlock.RenderTransform>
+                                                                <TextBlock.CacheMode>
+                                                                    <BitmapCache RenderAtScale="1"/>
+                                                                </TextBlock.CacheMode>
+                                                            </TextBlock>
+
                                                             <TextBlock x:Name="SecondLine"  Text="{Binding Appt, Converter={StaticResource secondLineConverter}}" 
 																
 																FontFamily="{StaticResource PhoneFontFamilyLight}" 
@@ -419,6 +464,9 @@
                                                                 <TextBlock.RenderTransform>
                                                                     <CompositeTransform/>
                                                                 </TextBlock.RenderTransform>
+                                                                <TextBlock.CacheMode>
+                                                                    <BitmapCache RenderAtScale="1"/>
+                                                                </TextBlock.CacheMode>
                                                                 <!--<TextBlock.Foreground>
                                                                     <SolidColorBrush Color="{StaticResource PhoneTextBoxColor}"/>
                                                                 </TextBlock.Foreground>-->
@@ -436,6 +484,9 @@
                                 </Grid>
                             </DataTemplate>
                         </phone:LongListSelector.ItemTemplate>
+                        <phone:LongListSelector.RenderTransform>
+                            <CompositeTransform/>
+                        </phone:LongListSelector.RenderTransform>
                     </phone:LongListSelector>
                 </Grid>
             </Grid>
@@ -499,7 +550,7 @@
                             </Grid.Background>
 
                             <StackPanel>
-                                <ItemsControl  x:Name="AllDayAppointments"  Margin="24,0,0,0" ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay }">
+                                <ItemsControl  x:Name="AllDayAppointments" Margin="24,0,0,0" ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay }">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Grid Tap="SDV_AppointmentTap" Visibility="{Binding AllDay, Converter={StaticResource revertBoolean}}">
@@ -514,6 +565,7 @@
                                     <ItemsControl x:Name="hourlines"
                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                      ItemsSource="{Binding SingleDayViewModel.hourLines, Mode=OneWay}" >
+
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Tap="SDV_Hourline_Tap">
@@ -526,7 +578,7 @@
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-                                    <ItemsControl x:Name="AppointmentsOnGrid"  ScrollViewer.VerticalScrollBarVisibility="Disabled"  ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}" >
+                                    <ItemsControl x:Name="AppointmentsOnGrid"  ScrollViewer.VerticalScrollBarVisibility="Disabled"   ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}" >
                                         <!--unnötig? NEIN! Sonst fängt die YPos nicht für jedes Element bei Null an. ItemsPanel ist standardmässig ein Stackpanel-->
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
@@ -547,6 +599,7 @@
                                                     Width="{Binding MaxConflicts, Converter={StaticResource singelDayApptWidth}}"
 											        RenderTransformOrigin="0.5,0"
                                                     VerticalAlignment="Top" HorizontalAlignment="Left" >
+
 
                                                     <i:Interaction.Behaviors>
                                                         <cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource singelDayApptTranslate}"

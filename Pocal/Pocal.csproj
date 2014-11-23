@@ -135,6 +135,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Pocal_2014_11_23_17_49_15.sap" />
+    <None Include="Pocal_2014_11_23_17_50_28.sap" />
+    <None Include="Pocal_2014_11_23_17_51_48.sap" />
+    <None Include="Pocal_2014_11_23_17_53_57.sap" />
+    <None Include="Pocal_2014_11_23_17_54_53.sap" />
+    <None Include="Pocal_2014_11_23_18_01_25.sap" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
