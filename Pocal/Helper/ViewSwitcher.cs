@@ -25,7 +25,7 @@ namespace Pocal
         private static Day temporaryTappedDay;
 
 		public static void SwitchToSDV(object sender)
-		{
+		{                                                                                  
 			if (currentViewIsSDV())
 				return;
 
@@ -101,7 +101,7 @@ namespace Pocal
 		private static int countApptWithAllDay()
 		{
 			int allDayCounter = 0;
-			foreach (var pa in App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay)
+            foreach (var pa in temporaryTappedDay.PocalApptsOfDay)
 			{
 				if (pa.AllDay == true)
 					allDayCounter += 1;
@@ -145,14 +145,13 @@ namespace Pocal
 
 		private static void ScrollToApptStartTime()
 		{
-            //calculateOffset();
-            //mainpage.SingleDayScrollViewer.UpdateLayout();
+            calculateOffset(); 
             mainpage.SingleDayScrollViewer.ScrollToVerticalOffset(ScrollToPA.StartTime.Hour * HourLine.Height - additionalOffset + offsetFromAllDays);
 		}
 
 		private static void ScrollTo1200()
 		{
-            //calculateOffset();
+            calculateOffset();
             mainpage.SingleDayScrollViewer.ScrollToVerticalOffset(12 * HourLine.Height - additionalOffset + offsetFromAllDays);
         }
 
