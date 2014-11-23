@@ -26,6 +26,9 @@ namespace Pocal.Helper
         {
            
             this.day = App.ViewModel.SingleDayViewModel.TappedDay;
+            if (day == null)
+                return;
+            
             if (day.PocalApptsOfDay.Count == 0)
                 return;
 
@@ -33,7 +36,7 @@ namespace Pocal.Helper
             ClusterID = new Dictionary<PocalAppointment, int>();
             MaxConflictsPerCluster = new Dictionary<int, int>();
             
-
+                      
             calcColumnsAndClusterID();
             calcMaxConflictsPerCluster();
             calcPropsForBinding();

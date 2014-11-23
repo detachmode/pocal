@@ -25,6 +25,7 @@ namespace Pocal
         {
 
             load();
+            //CalendarAPI.AddTestAppointments();
 
         }
 
@@ -37,18 +38,12 @@ namespace Pocal
             VisualStateManager.GoToState(this, "Close", true);
             await App.ViewModel.ReloadPocalApptsAndDays();
 
-            //AppointmentsOnGrid.DataContext = new CollectionViewSource { Source = App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay};  //"{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}
-             //= new CollectionViewSource { Source = MyMusic };
-            
-            //DebugSettings.IsOverdrawHeatMapEnabled = true;
             AgendaViewListbox.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
 
             
 
             watchPositionOfLongListSelector();
         }
-
-
 
 
         #region Longlistselektor Scrolling Events
@@ -234,33 +229,26 @@ namespace Pocal
             ViewSwitcher.SwitchToSDV(sender);
 
         }
+        #endregion
 
+        #region Play Enter / Leave Overview Storyboard Animation
 
+        private List<ItemsControl> foundDayCards = new List<ItemsControl>();
+        private List<StackPanel> foundStackPanels = new List<StackPanel>();
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            LongListSelector FoundList = (AgendaViewListbox as LongListSelector);
-
-            //ListBox source = (ListBox)sender;
-
-            FindItemControll(FoundList);
-
-            for (int j = 0; j < foundDayCards.Count; j++)
-            {
-                for (int i = 0; i < foundDayCards[j].Items.Count; i++)
-                {
-                    DependencyObject d = foundDayCards[j].ItemContainerGenerator.ContainerFromIndex(i);
-                    SearchAndPlayStoryboard(d);
-                }
-            }
-            foreach (var dayCard in foundDayCards)
-            {
-                SearchAndPlayStoryboard(dayCard);
-            }
+            FindItemControll(AgendaViewListbox);
+             //DayCardStackPanel
+            PlayStoryboardOfSecondLine("EnterOverview");
 
         }
 
-        private List<ItemsControl> foundDayCards = new List<ItemsControl>();
+        private void ApplicationBarIconButton_Click_1(object sender, EventArgs e)
+        {
+            FindItemControll(AgendaViewListbox);
+            PlayStoryboardOfSecondLine("LeaveOverview");
+        }
 
         private void FindItemControll(DependencyObject targeted_control)
         {
@@ -284,8 +272,22 @@ namespace Pocal
             }
             return;
         }
+        
 
-        private void SearchAndPlayStoryboard(DependencyObject targeted_control)
+        private void PlayStoryboardOfSecondLine(string storyboardKey)
+        {
+            for (int j = 0; j < foundDayCards.Count; j++)
+            {
+                for (int i = 0; i < foundDayCards[j].Items.Count; i++)
+                {
+                    DependencyObject d = foundDayCards[j].ItemContainerGenerator.ContainerFromIndex(i);
+                    SearchAndPlayStoryboard(d, storyboardKey);
+                }
+            }
+        }
+
+
+        private void SearchAndPlayStoryboard(DependencyObject targeted_control, string storyboard)
         {
             var count = VisualTreeHelper.GetChildrenCount(targeted_control);
             if (count > 0)
@@ -298,13 +300,13 @@ namespace Pocal
                         StackPanel stackpanel = (StackPanel)child;
                         if (stackpanel.Name == "DayCard_ApptItem")
                         {
-                            Storyboard StyBrd = stackpanel.Resources["MyTemplateAnimate"] as Storyboard;
+                            Storyboard StyBrd = stackpanel.Resources[storyboard] as Storyboard;
                             StyBrd.Begin();
                         }
                     }
                     else
                     {
-                        SearchAndPlayStoryboard(child);
+                        SearchAndPlayStoryboard(child, storyboard);
                     }
                 }
             }
@@ -317,10 +319,6 @@ namespace Pocal
 
 
         #endregion
-
-
-
-
 
     }
 }

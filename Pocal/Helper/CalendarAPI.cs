@@ -86,10 +86,15 @@ namespace Pocal
 
         public static async void addAppointment(DateTime starttime)
         {
-            await setAppointmentStore();
 
             var appointment = newAppointmentPreset(starttime);
+            await addAppointment(appointment);
 
+        }
+
+        private static async Task addAppointment(Appointment appointment)
+        {
+            await setAppointmentStore();
             String roamingId = await AppointmentManager.ShowEditNewAppointmentAsync(appointment);
             if (roamingId == null)
                 return;
@@ -188,6 +193,73 @@ namespace Pocal
 
         #endregion
 
+        #region TestAppointments
 
+        public static async void AddTestAppointments()
+        {
+            Appointment appointment = newTestAppointment
+                (
+                    DateTime.Now.Date.AddHours(1.50),
+                    "Einkaufen",
+                    TimeSpan.FromHours(2.0)
+                );
+            if (appointment != null)
+            {
+                await addAppointment(appointment);
+            }
+            
+
+            appointment = newTestAppointment
+                (
+                    DateTime.Now.Date.AddHours(4.30),
+                    "Sport",
+                    TimeSpan.FromHours(3.0)
+                );
+            await addAppointment(appointment);
+
+            appointment = newTestAppointment
+                (
+                    DateTime.Now.Date.AddHours(81.30),
+                    "In Urlaub fahren",
+                    TimeSpan.FromHours(10.0)
+                );
+            await addAppointment(appointment);
+
+            appointment = newTestAppointment
+                (
+                    DateTime.Now.Date.AddHours(5.50),
+                    "Jeans kaufen",
+                    TimeSpan.FromHours(2.0)
+                );
+            await addAppointment(appointment);
+
+            appointment = newTestAppointment
+                (
+                    DateTime.Now.Date.AddHours(5.10),
+                    "Bus Fährt los",
+                    TimeSpan.FromHours(0.4)    
+                );
+            await addAppointment(appointment);
+
+            appointment = newTestAppointment
+                (
+                    DateTime.Now.Date.AddHours(50.30),
+                    "Familie besuchen",
+                    TimeSpan.FromHours(1.0)
+                );
+            await addAppointment(appointment);
+
+        }
+
+        private static Appointment newTestAppointment(DateTime dt, string subject, TimeSpan ts)
+        {
+            Appointment appointment;
+            appointment = newAppointmentPreset(dt);
+            appointment.Subject = subject;
+            appointment.Duration = ts;
+            return appointment;
+        }
+        #endregion
     }
+
 }
