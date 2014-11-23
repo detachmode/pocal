@@ -233,24 +233,42 @@ namespace Pocal
 
         #region Play Enter / Leave Overview Storyboard Animation
 
-        private List<ItemsControl> foundDayCards = new List<ItemsControl>();
-        private List<StackPanel> foundStackPanels = new List<StackPanel>();
+        private List<ItemsControl> foundDayCards_ItemsControll;
+        private List<StackPanel> foundStackPanels;
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            FindItemControll(AgendaViewListbox);
-             //DayCardStackPanel
-            PlayStoryboardOfSecondLine("EnterOverview");
+            foundDayCards_ItemsControll =  new List<ItemsControl>();
+            foundStackPanels = new List<StackPanel>();
+
+            findItemControll(AgendaViewListbox);
+            findItemStackPanelInItemsControll("DayCard_ApptItem");
+            playStoryboardOfFoundStackPanels("EnterOverview");
+
+            foundStackPanels = new List<StackPanel>();
+            findStackPanels(AgendaViewListbox, "DayCardStackPanel");
+            playStoryboardOfFoundStackPanels("EnterOverview");
+
 
         }
-
         private void ApplicationBarIconButton_Click_1(object sender, EventArgs e)
         {
-            FindItemControll(AgendaViewListbox);
-            PlayStoryboardOfSecondLine("LeaveOverview");
+            foundDayCards_ItemsControll = new List<ItemsControl>();
+            foundStackPanels = new List<StackPanel>();
+
+            findItemControll(AgendaViewListbox);
+            findItemStackPanelInItemsControll("DayCard_ApptItem");
+            playStoryboardOfFoundStackPanels("LeaveOverview");
+
+            foundStackPanels = new List<StackPanel>();
+            findStackPanels(AgendaViewListbox, "DayCardStackPanel");
+            playStoryboardOfFoundStackPanels("LeaveOverview");
+
+
         }
 
-        private void FindItemControll(DependencyObject targeted_control)
+
+        private void findItemControll(DependencyObject targeted_control)
         {
 
             var count = VisualTreeHelper.GetChildrenCount(targeted_control);
@@ -262,32 +280,31 @@ namespace Pocal
                     var test = child.GetType();
                     if (child is ItemsControl)
                     {
-                        foundDayCards.Add((ItemsControl)child);
+                        foundDayCards_ItemsControll.Add((ItemsControl)child);
                     }
                     else
                     {
-                        FindItemControll(child);
+                        findItemControll(child);
                     }
                 }
             }
             return;
         }
-        
 
-        private void PlayStoryboardOfSecondLine(string storyboardKey)
+        private void findItemStackPanelInItemsControll(string stackPanelName)
         {
-            for (int j = 0; j < foundDayCards.Count; j++)
+            for (int j = 0; j < foundDayCards_ItemsControll.Count; j++)
             {
-                for (int i = 0; i < foundDayCards[j].Items.Count; i++)
+                for (int i = 0; i < foundDayCards_ItemsControll[j].Items.Count; i++)
                 {
-                    DependencyObject d = foundDayCards[j].ItemContainerGenerator.ContainerFromIndex(i);
-                    SearchAndPlayStoryboard(d, storyboardKey);
+                    DependencyObject d = foundDayCards_ItemsControll[j].ItemContainerGenerator.ContainerFromIndex(i);
+                    findStackPanels(d, stackPanelName);
                 }
             }
         }
 
 
-        private void SearchAndPlayStoryboard(DependencyObject targeted_control, string storyboard)
+        private void findStackPanels(DependencyObject targeted_control, string stackPanelName)
         {
             var count = VisualTreeHelper.GetChildrenCount(targeted_control);
             if (count > 0)
@@ -298,15 +315,14 @@ namespace Pocal
                     if (child is StackPanel)
                     {
                         StackPanel stackpanel = (StackPanel)child;
-                        if (stackpanel.Name == "DayCard_ApptItem")
+                        if (stackpanel.Name == stackPanelName)
                         {
-                            Storyboard StyBrd = stackpanel.Resources[storyboard] as Storyboard;
-                            StyBrd.Begin();
+                            foundStackPanels.Add(stackpanel);
                         }
                     }
                     else
                     {
-                        SearchAndPlayStoryboard(child, storyboard);
+                        findStackPanels(child, stackPanelName);
                     }
                 }
             }
@@ -316,7 +332,15 @@ namespace Pocal
             }
         }
 
+        private void playStoryboardOfFoundStackPanels(string storyBoardKey)
+        {
+            foreach (var stackpanel in foundStackPanels)
+            {
+                Storyboard StyBrd = stackpanel.Resources[storyBoardKey] as Storyboard;
+                StyBrd.Begin();
+            }
 
+        }
 
         #endregion
 
