@@ -102,48 +102,48 @@
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="SingleDayWindowBody">
                             <EasingDoubleKeyFrame KeyTime="0" Value="1.001">
                                 <EasingDoubleKeyFrame.EasingFunction>
-                                    <BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                                    <BackEase EasingMode="EaseInOut" Amplitude="2"/>
                                 </EasingDoubleKeyFrame.EasingFunction>
                             </EasingDoubleKeyFrame>
-                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1">
                             	<EasingDoubleKeyFrame.EasingFunction>
-                            		<BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                            		<BackEase EasingMode="EaseInOut"/>
                             	</EasingDoubleKeyFrame.EasingFunction>
                             </EasingDoubleKeyFrame>
                         </DoubleAnimationUsingKeyFrames>
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="SingleDayWindowBody">
                             <EasingDoubleKeyFrame KeyTime="0" Value="-1.908">
                                 <EasingDoubleKeyFrame.EasingFunction>
-                                    <BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                                    <BackEase EasingMode="EaseInOut" Amplitude="2"/>
                                 </EasingDoubleKeyFrame.EasingFunction>
                             </EasingDoubleKeyFrame>
-                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0">
                             	<EasingDoubleKeyFrame.EasingFunction>
-                            		<BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                            		<BackEase EasingMode="EaseInOut"/>
                             	</EasingDoubleKeyFrame.EasingFunction>
                             </EasingDoubleKeyFrame>
                         </DoubleAnimationUsingKeyFrames>
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="SingleDayWindowBody">
                             <EasingDoubleKeyFrame KeyTime="0" Value="0.315">
                                 <EasingDoubleKeyFrame.EasingFunction>
-                                    <BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                                    <BackEase EasingMode="EaseInOut" Amplitude="2"/>
                                 </EasingDoubleKeyFrame.EasingFunction>
                             </EasingDoubleKeyFrame>
-                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1">
                             	<EasingDoubleKeyFrame.EasingFunction>
-                            		<BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                            		<BackEase EasingMode="EaseInOut"/>
                             	</EasingDoubleKeyFrame.EasingFunction>
                             </EasingDoubleKeyFrame>
                         </DoubleAnimationUsingKeyFrames>
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="SingleDayWindowBody">
                             <EasingDoubleKeyFrame KeyTime="0" Value="139.85">
                                 <EasingDoubleKeyFrame.EasingFunction>
-                                    <BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                                    <BackEase EasingMode="EaseInOut" Amplitude="2"/>
                                 </EasingDoubleKeyFrame.EasingFunction>
                             </EasingDoubleKeyFrame>
-                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0">
                             	<EasingDoubleKeyFrame.EasingFunction>
-                            		<BackEase EasingMode="EaseInOut" Amplitude="1"/>
+                            		<BackEase EasingMode="EaseInOut"/>
                             	</EasingDoubleKeyFrame.EasingFunction>
                             </EasingDoubleKeyFrame>
                         </DoubleAnimationUsingKeyFrames>
@@ -153,7 +153,7 @@
                                     <CubicEase EasingMode="EaseIn"/>
                                 </EasingDoubleKeyFrame.EasingFunction>
                             </EasingDoubleKeyFrame>
-                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1">
                             	<EasingDoubleKeyFrame.EasingFunction>
                             		<CubicEase EasingMode="EaseIn"/>
                             	</EasingDoubleKeyFrame.EasingFunction>
@@ -528,171 +528,178 @@
 					MouseMove="gridExit_MouseMove" 
 					Tap="gridExit_Tap" 
 					Background="Black" Grid.RowSpan="3"/>
-
-
                 <Grid  x:Name="SingleDayWindowBody"  Grid.Row="1"  Background="Black">
                     <Grid.RenderTransform>
                         <CompositeTransform/>
                     </Grid.RenderTransform>
-                    <Border  BorderBrush="#FF383838" BorderThickness="0,1" Margin="0" Canvas.ZIndex="1"/>
+                	<Border  BorderBrush="#FF383838" BorderThickness="0,1" Margin="0" Canvas.ZIndex="1"/>
 
                     <!--******** ********** ******** -->
                     <!--******** SDV HEADER ******** -->
-                    <!--******** ********** ******** -->
-                    <Border	Canvas.ZIndex="3"  Margin="0,-41,0,0" Height="41" VerticalAlignment="Top" >
-                        <Border.Background>
-                            <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-                        </Border.Background>
-                        <TextBlock  x:Name="SingleDayWindowHeader" 
-							Style="{StaticResource PhoneTextTitle3Style}"
-							Text="{Binding SingleDayViewModel.TappedDay.DT, Converter={StaticResource DateConverter}}" 
-							Margin="148,-4,24,0" 
-							FontSize="26" VerticalAlignment="Center" 
-							HorizontalAlignment="Right">
-                            <TextBlock.Foreground>
-                                <SolidColorBrush Color="{StaticResource PhoneButtonBasePressedForegroundColor}"/>
-                            </TextBlock.Foreground>
-                        </TextBlock>
-                    </Border>
 
                     <!--******** ******** ******** -->
                     <!--******** SDV BODY ******** -->
+                    <!--******** ********** ******** -->
+                	<Border	Canvas.ZIndex="3"  Margin="0,-41,0,0" Height="41" VerticalAlignment="Top" >
+                		<Border.Background>
+                			<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                		</Border.Background>
+                		<TextBlock  x:Name="SingleDayWindowHeader" 
+                			Style="{StaticResource PhoneTextTitle3Style}"
+                			Text="{Binding SingleDayViewModel.TappedDay.DT, Converter={StaticResource DateConverter}}" 
+                			Margin="148,-4,24,0" 
+                			FontSize="26" VerticalAlignment="Center" 
+                			HorizontalAlignment="Right">
+                			<TextBlock.Foreground>
+                				<SolidColorBrush Color="{StaticResource PhoneButtonBasePressedForegroundColor}"/>
+                			</TextBlock.Foreground>
+                		</TextBlock>
+                	</Border>
+
                     <!--******** ******** ******** -->
-                    <ScrollViewer x:Name="SingleDayScrollViewer" VirtualizingStackPanel.VirtualizationMode="Recycling" VerticalScrollBarVisibility="Hidden" ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
+                	<ScrollViewer x:Name="SingleDayScrollViewer"  VerticalScrollBarVisibility="Hidden" ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
 
-                        <Grid>
-                            <Grid.Background>
-                                <SolidColorBrush Color="{StaticResource Color90Black}"/>
-                            </Grid.Background>
+                		<Grid>
+                			<Grid.Background>
+                				<SolidColorBrush Color="{StaticResource Color90Black}"/>
+                			</Grid.Background>
+                            <!--<Grid.CacheMode>
+                                <BitmapCache RenderAtScale="1"/>
+                            </Grid.CacheMode>-->
 
-                            <StackPanel>
-                                <ItemsControl  x:Name="AllDayAppointments" Margin="24,0,0,0" ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay }">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid Tap="SDV_AppointmentTap" Visibility="{Binding AllDay, Converter={StaticResource revertBoolean}}">
-                                                <TextBlock   Margin="4,6,0,6" Text="{Binding Subject}" Foreground="{Binding CalColor}"   FontSize="{StaticResource DefaultSize}" FontWeight="SemiBold">
-                                                    <!--<TextBlock.CacheMode>
+                			<StackPanel>
+                				<ItemsControl  x:Name="AllDayAppointments" Margin="24,0,0,0" ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}">
+                					<ItemsControl.ItemTemplate>
+                						<DataTemplate>
+                							<Grid Tap="SDV_AppointmentTap" Visibility="{Binding AllDay, Converter={StaticResource revertBoolean}}">
+                								<TextBlock   Margin="4,6,0,6" Text="{Binding Subject}" Foreground="{Binding CalColor}"   FontSize="{StaticResource DefaultSize}" FontWeight="SemiBold">
+                									<!--<TextBlock.CacheMode>
                                                         <BitmapCache RenderAtScale="1" />
                                                     </TextBlock.CacheMode>-->
-                                                </TextBlock>
-                                            </Grid>
+                								</TextBlock>
+                							</Grid>
 
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                                <Border Height="1" Background="#FF807C7C"></Border>
-                                <Grid x:Name="HourLinesGridAppointments">
-                                    <ItemsControl x:Name="hourlines"
-                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                     ItemsSource="{Binding SingleDayViewModel.hourLines, Mode=OneWay}" >
+                						</DataTemplate>
+                					</ItemsControl.ItemTemplate>
+                				</ItemsControl>
+                				<Border Height="1" Background="#FF807C7C"/>
+                				<Grid x:Name="HourLinesGridAppointments">
+                					<ItemsControl x:Name="hourlines"
+                						ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                						ItemsSource="{Binding SingleDayViewModel.hourLines, Mode=OneWay}" >
                                         <!--<ItemsControl.CacheMode>
                                             <BitmapCache RenderAtScale="1" />
                                         </ItemsControl.CacheMode>-->
 
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid Tap="SDV_Hourline_Tap">
-                                                    <Border 
-												        BorderThickness="0,0.2" Height="{Binding Height}" 
-                                                        BorderBrush="#FF767676">
-                                                        <TextBlock  Text="{Binding Text, Mode=OneWay}" Margin="7,6" FontSize="20"/>
-                                                    </Border>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                    <ItemsControl x:Name="AppointmentsOnGrid"  ScrollViewer.VerticalScrollBarVisibility="Disabled"   ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}" >
+                						<ItemsControl.ItemTemplate>
+                							<DataTemplate>
+                								<Grid Tap="SDV_Hourline_Tap">
+                									<Border 
+                										BorderThickness="0,0.2" Height="{Binding Height}" 
+                										BorderBrush="#FF767676">
+                										<TextBlock  Text="{Binding Text, Mode=OneWay}" Margin="7,6" FontSize="20"/>
+                									</Border>
+                								</Grid>
+                							</DataTemplate>
+                						</ItemsControl.ItemTemplate>
+                					</ItemsControl>
+                					<ItemsControl x:Name="AppointmentsOnGrid"  ScrollViewer.VerticalScrollBarVisibility="Disabled"   ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay, Mode=OneWay}" >
                                         <!--unnötig? NEIN! Sonst fängt die YPos nicht für jedes Element bei Null an. ItemsPanel ist standardmässig ein Stackpanel-->
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <Grid VerticalAlignment="Top">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                </Grid>
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid                                            
-                                                    x:Name="apptSDV"
-                                                    Margin="72,-1,0,0"
-											        Tap="SDV_AppointmentTap"											  
-											        Height="{Binding Appt, Converter={StaticResource singelDayApptHeight}}"                                                        
-                                                    Width="{Binding MaxConflicts, Converter={StaticResource singelDayApptWidth}}"
-											        RenderTransformOrigin="0.5,0"
-                                                    VerticalAlignment="Top" HorizontalAlignment="Left" >
-                                                    <!--<Grid.CacheMode>
+                						<ItemsControl.ItemsPanel>
+                							<ItemsPanelTemplate>
+                								<Grid VerticalAlignment="Top">
+                									<Grid.ColumnDefinitions>
+                										<ColumnDefinition Width="*"/>
+                									</Grid.ColumnDefinitions>
+                								</Grid>
+                							</ItemsPanelTemplate>
+                						</ItemsControl.ItemsPanel>
+                						<ItemsControl.ItemTemplate>
+                							<DataTemplate>
+                								<Grid                                            
+                									x:Name="apptSDV"
+                									Margin="72,-1,0,0"
+                									Tap="SDV_AppointmentTap"
+                									RenderTransformOrigin="0.5,0"
+                									VerticalAlignment="Top" HorizontalAlignment="Left" >
+
+                									<Grid.Resources>
+                										<EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
+                											<BeginStoryboard>
+                												<Storyboard x:Name="StoryboardOnDataTemplate">
+                													<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="apptSDV">
+                														<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                														<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+                														<EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+                													</DoubleAnimationUsingKeyFrames>
+                												</Storyboard>
+                											</BeginStoryboard>
+                										</EventTrigger>
+                									</Grid.Resources>
+                									<Grid.Height>
+                										<Binding Converter="{StaticResource singelDayApptHeight}" Path="Appt"/>
+                									</Grid.Height>
+                									<Grid.Width>
+                										<Binding Converter="{StaticResource singelDayApptWidth}" Path="MaxConflicts"/>
+                									</Grid.Width>
+<!--<Grid.CacheMode>
                                                         <BitmapCache RenderAtScale="1" />
                                                     </Grid.CacheMode>-->
 
 
-                                                    <i:Interaction.Behaviors>
-                                                        <cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource singelDayApptTranslate}"
-                                                                        PropertyName="RenderTransform">
-                                                            <cimbalinoBehaviors:MultiBindingItem Value="{Binding MaxConflicts}" />
-                                                            <cimbalinoBehaviors:MultiBindingItem Value="{Binding Column}" />
-                                                            <cimbalinoBehaviors:MultiBindingItem Value="{Binding StartTime}" />
-                                                        </cimbalinoBehaviors:MultiBindingBehavior>
-                                                    </i:Interaction.Behaviors>
+                									<i:Interaction.Behaviors>
+                										<cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource singelDayApptTranslate}"
+                											PropertyName="RenderTransform">
+                											<cimbalinoBehaviors:MultiBindingItem Value="{Binding MaxConflicts}" />
+                											<cimbalinoBehaviors:MultiBindingItem Value="{Binding Column}" />
+                											<cimbalinoBehaviors:MultiBindingItem Value="{Binding StartTime}" />
+                										</cimbalinoBehaviors:MultiBindingBehavior>
+                									</i:Interaction.Behaviors>
 
-                                                    <Grid.Resources>
-                                                        <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
-                                                            <BeginStoryboard>
-                                                                <Storyboard x:Name="StoryboardOnDataTemplate">
-                                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="apptSDV">
-                                                                        <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                                                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
-                                                                        <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
-                                                                    </DoubleAnimationUsingKeyFrames>
-                                                                </Storyboard>
-                                                            </BeginStoryboard>
-                                                        </EventTrigger>
-                                                    </Grid.Resources>
-                                                    <Grid.Background>
-                                                        <SolidColorBrush Color="{StaticResource Color90Black}"/>
-                                                    </Grid.Background>
-                                                    <StackPanel Margin="20,3,0,0">
-                                                        <TextBlock  Text="{Binding Subject}" Foreground="{Binding CalColor}" FontSize="{StaticResource DefaultSize}" FontWeight="Medium" />
-                                                        <TextBlock  Text="{Binding Location}" FontSize="22" Visibility="{Binding Converter={StaticResource NullOrWhiteSpaceCollapser}, Mode=OneWay}" Foreground="#FFA2A2A2" Margin="0,-6,0,0" />
-                                                        <TextBlock Text="{Binding Details}" FontSize="20.5" Foreground="#FF9C9C9C" FontWeight="ExtraLight" TextWrapping="Wrap" FontFamily="Calibri" Visibility="{Binding Converter={StaticResource DetailNotesCollapser}, Mode=OneWay}" />
-                                                    </StackPanel>
-                                                    <Rectangle Width="12" Fill="{Binding CalColor}" HorizontalAlignment="Left" >
+                									<Grid.Background>
+                										<SolidColorBrush Color="{StaticResource Color90Black}"/>
+                									</Grid.Background>
+                									<StackPanel Margin="20,3,0,0">
+                										<TextBlock  Text="{Binding Subject}" Foreground="{Binding CalColor}" FontSize="{StaticResource DefaultSize}" FontWeight="Medium" />
+                										<TextBlock  Text="{Binding Location}" FontSize="22" Visibility="{Binding Converter={StaticResource NullOrWhiteSpaceCollapser}, Mode=OneWay}" Foreground="#FFA2A2A2" Margin="0,-6,0,0" />
+                										<TextBlock Text="{Binding Details}" FontSize="20.5" Foreground="#FF9C9C9C" FontWeight="ExtraLight" TextWrapping="Wrap" FontFamily="Calibri" Visibility="{Binding Converter={StaticResource DetailNotesCollapser}, Mode=OneWay}" />
+                									</StackPanel>
+                									<Rectangle Width="12" Fill="{Binding CalColor}" HorizontalAlignment="Left" >
 
-                                                        <i:Interaction.Behaviors>
-                                                            <cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource singelDayApptRectangleMargin}"
-                                                                        PropertyName="Margin">
-                                                                <cimbalinoBehaviors:MultiBindingItem Value="{Binding StartTime}" />
-                                                                <cimbalinoBehaviors:MultiBindingItem Value="{Binding Duration}" />
-                                                            </cimbalinoBehaviors:MultiBindingBehavior>
-                                                        </i:Interaction.Behaviors>
-                                                    </Rectangle>
+                										<i:Interaction.Behaviors>
+                											<cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource singelDayApptRectangleMargin}"
+                												PropertyName="Margin">
+                												<cimbalinoBehaviors:MultiBindingItem Value="{Binding StartTime}" />
+                												<cimbalinoBehaviors:MultiBindingItem Value="{Binding Duration}" />
+                											</cimbalinoBehaviors:MultiBindingBehavior>
+                										</i:Interaction.Behaviors>
+                									</Rectangle>
 
-                                                    <Border BorderThickness="2,2,2,2" >
-                                                        <Border.BorderBrush>
-                                                            <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
-                                                        </Border.BorderBrush>
-                                                    </Border>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                    <Grid IsHitTestVisible="False">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="15*"/>
-                                            <ColumnDefinition Width="82*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Border Grid.Column="0" BorderThickness="0,0,2,0">
-                                            <Border.BorderBrush>
-                                                <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
-                                            </Border.BorderBrush>
-                                        </Border>
-                                    </Grid>
-                                </Grid>
-                                <Border Height="1" Background="#FF807C7C"/>
-                            </StackPanel>
-                        </Grid>
-                    </ScrollViewer>
+                									<Border BorderThickness="2,2,2,2" >
+                										<Border.BorderBrush>
+                											<SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
+                										</Border.BorderBrush>
+                									</Border>
+                								</Grid>
+                							</DataTemplate>
+                						</ItemsControl.ItemTemplate>
+                					</ItemsControl>
+                					<Grid IsHitTestVisible="False">
+                						<Grid.ColumnDefinitions>
+                							<ColumnDefinition Width="15*"/>
+                							<ColumnDefinition Width="82*"/>
+                						</Grid.ColumnDefinitions>
+                						<Border Grid.Column="0" BorderThickness="0,0,2,0">
+                							<Border.BorderBrush>
+                								<SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
+                							</Border.BorderBrush>
+                						</Border>
+                					</Grid>
+                				</Grid>
+                				<Border Height="1" Background="#FF807C7C"/>
+                			</StackPanel>
+                		</Grid>
+                	</ScrollViewer>
                 </Grid>
             </Grid>
         </Grid>
