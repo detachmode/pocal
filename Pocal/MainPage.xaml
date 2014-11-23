@@ -193,7 +193,7 @@
                 <!--******** AGENDAVIEW BODY ********-->
                 <!--******** *************** ********-->
                 <Grid x:Name="AgendaViewBody" Margin="0,0,0,0" Grid.Row="1">
-                    <phone:LongListSelector  x:Name="AgendaViewListbox" Loaded="LongList_Loaded" ItemsSource="{Binding Days}"  HorizontalContentAlignment="Stretch" Background="Transparent" Margin="0,10,0,-10" >
+                    <phone:LongListSelector  x:Name="AgendaViewListbox" ManipulationCompleted="AgendaViewListbox_ManipulationCompleted" Loaded="LongList_Loaded" ItemsSource="{Binding Days}"  HorizontalContentAlignment="Stretch" Background="Transparent" Margin="0,10,0,-10" >
                         <phone:LongListSelector.ItemTemplate >
                             <DataTemplate >
                                 <Grid Tap="OpenSdvAndSetTappedDay" Canvas.ZIndex="10" Background="Black" Margin="0,0,-14,0">

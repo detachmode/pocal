@@ -46,7 +46,20 @@ namespace Pocal
         }
 
 
-        #region Longlistselektor Scrolling Events
+        #region AgendaView Events
+
+        private void AgendaViewListbox_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
+        {
+            if (e.FinalVelocities.LinearVelocity.X > 0)
+            {
+                leaveOverview();
+            }
+            if (e.FinalVelocities.LinearVelocity.X < 0)
+            {
+                enterOverview();
+                
+            }
+        }
 
         private  void LongList_Loaded(object sender, RoutedEventArgs e)
         {
@@ -238,7 +251,12 @@ namespace Pocal
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            foundDayCards_ItemsControll =  new List<ItemsControl>();
+            enterOverview();
+        }
+
+        private void enterOverview()
+        {
+            foundDayCards_ItemsControll = new List<ItemsControl>();
             foundStackPanels = new List<StackPanel>();
 
             findItemControll(AgendaViewListbox);
@@ -248,10 +266,15 @@ namespace Pocal
             foundStackPanels = new List<StackPanel>();
             findStackPanels(AgendaViewListbox, "DayCardStackPanel");
             playStoryboardOfFoundStackPanels("EnterOverview");
+        }
+        private void ApplicationBarIconButton_Click_1(object sender, EventArgs e)
+        {
+            leaveOverview();
 
 
         }
-        private void ApplicationBarIconButton_Click_1(object sender, EventArgs e)
+
+        private void leaveOverview()
         {
             foundDayCards_ItemsControll = new List<ItemsControl>();
             foundStackPanels = new List<StackPanel>();
@@ -263,8 +286,6 @@ namespace Pocal
             foundStackPanels = new List<StackPanel>();
             findStackPanels(AgendaViewListbox, "DayCardStackPanel");
             playStoryboardOfFoundStackPanels("LeaveOverview");
-
-
         }
 
 
@@ -343,6 +364,8 @@ namespace Pocal
         }
 
         #endregion
+
+
 
     }
 }
