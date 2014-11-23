@@ -1,6 +1,9 @@
 ﻿using Pocal.Helper;
 using Pocal.ViewModel;
+using System.ComponentModel;
+using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Pocal
 {
@@ -19,41 +22,72 @@ namespace Pocal
 		private static int additionalOffset = 175;
 
 
-
+        private static Day temporaryTappedDay;
 
 		public static void SwitchToSDV(object sender)
 		{
 			if (currentViewIsSDV())
 				return;
-			openSDV(mainpage);
-			setTappedDay(sender);
-            App.ViewModel.ConflictManager.solveConflicts();
 
+			openSDV();
 
-			ScrollTo();
+            setTemporaryTappedDay(sender);
 
-			//Debug.WriteLine("(OpenSdvAndSetTappedDay)");
+            removePreviousDataContext();
+
+            scrollToRightPosition();
+
+            setTappedDayAsynchron(sender);
+
 		}
+
+        private static void setTemporaryTappedDay(object sender)
+        {
+            var element = (FrameworkElement)sender;
+            temporaryTappedDay = element.DataContext as Day;
+        }
+
+        private static void removePreviousDataContext()
+        {
+            Day blankDay = new Day();
+            blankDay.PocalApptsOfDay = new System.Collections.ObjectModel.ObservableCollection<PocalAppointment>();
+            foreach (PocalAppointment pa in temporaryTappedDay.PocalApptsOfDay)
+            {
+                if (pa.AllDay)
+                {
+                    blankDay.PocalApptsOfDay.Add(new PocalAppointment() { AllDay = true });
+                }
+            }
+            App.ViewModel.SingleDayViewModel.TappedDay = blankDay;
+        }
 
 		private static bool currentViewIsSDV()
 		{
 			return mainpage.SingleDayView.Opacity == 100;
 		}
 
-		private static void openSDV(MainPage mainpage)
+		private static void openSDV()
 		{
 			//mainpage.SingleDayView.Visibility = Visibility.Visible;
 			VisualStateManager.GoToState(mainpage, "OpenDelay", true);
-		}
-
-		private static void setTappedDay(object sender)
-		{
-			//Set selectedItem 
-			var element = (FrameworkElement)sender;
-			Day selectedDay = element.DataContext as Day;
-			App.ViewModel.SingleDayViewModel.TappedDay = selectedDay;
             
 		}
+
+        
+
+		private static void setTappedDayAsynchron(object sender)
+		{
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                // Update UI in here as this part will run on the UI thread.
+                App.ViewModel.SingleDayViewModel.TappedDay = temporaryTappedDay;
+                App.ViewModel.ConflictManager.solveConflicts();
+                
+            });
+            
+		}
+
+
 
 
 		private static void calculateOffset()
@@ -77,7 +111,7 @@ namespace Pocal
 
 
 
-		private static void ScrollTo()
+		private static void scrollToRightPosition()
 		{
 			switch (from)
 			{
@@ -111,14 +145,14 @@ namespace Pocal
 
 		private static void ScrollToApptStartTime()
 		{
-			calculateOffset();
+            //calculateOffset();
             //mainpage.SingleDayScrollViewer.UpdateLayout();
             mainpage.SingleDayScrollViewer.ScrollToVerticalOffset(ScrollToPA.StartTime.Hour * HourLine.Height - additionalOffset + offsetFromAllDays);
 		}
 
 		private static void ScrollTo1200()
 		{
-			calculateOffset();
+            //calculateOffset();
             mainpage.SingleDayScrollViewer.ScrollToVerticalOffset(12 * HourLine.Height - additionalOffset + offsetFromAllDays);
         }
 
