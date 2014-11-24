@@ -50,15 +50,18 @@ namespace Pocal
         private static void removePreviousDataContext()
         {
             Day blankDay = new Day();
-            blankDay.PocalApptsOfDay = new System.Collections.ObjectModel.ObservableCollection<PocalAppointment>();
+            blankDay.PocalApptsOfDay = null;
+            System.Collections.ObjectModel.ObservableCollection<PocalAppointment> tempCollection = new System.Collections.ObjectModel.ObservableCollection<PocalAppointment>();
             foreach (PocalAppointment pa in temporaryTappedDay.PocalApptsOfDay)
             {
                 if (pa.AllDay)
                 {
-                    blankDay.PocalApptsOfDay.Add(new PocalAppointment() { AllDay = true });
+                    tempCollection.Add(new PocalAppointment() { AllDay = true });
                 }
             }
+            blankDay.PocalApptsOfDay = tempCollection;
             App.ViewModel.SingleDayViewModel.TappedDay = blankDay;
+
         }
 
 		private static bool currentViewIsSDV()
