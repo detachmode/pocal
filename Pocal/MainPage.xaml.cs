@@ -26,6 +26,7 @@ namespace Pocal
         {
 
             load();
+            //CalendarAPI.AddTestAppointments();
 
         }
 
@@ -34,17 +35,13 @@ namespace Pocal
 
             DataContext = App.ViewModel;
             InitializeComponent();
-
+            
             VisualStateManager.GoToState(this, "Close", true);
             await App.ViewModel.ReloadPocalApptsAndDays();
 
-            //AppointmentsOnGrid.DataContext = new CollectionViewSource { Source = App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay};  //"{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay , Mode=OneWay}
-            //= new CollectionViewSource { Source = MyMusic };
-
-            //DebugSettings.IsOverdrawHeatMapEnabled = true;
             AgendaViewListbox.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
 
-
+            
 
             watchPositionOfLongListSelector();
         }
@@ -55,68 +52,20 @@ namespace Pocal
         private KeyTime kt3 = KeyTime.FromTimeSpan(new TimeSpan(0, 0, 0, 2, 0));
         private KeyTime kt4 = KeyTime.FromTimeSpan(new TimeSpan(0, 0, 0, 2, 500));
 
+        #region AgendaView Events
 
-        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        private void AgendaViewListbox_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
         {
+            if (e.FinalVelocities.LinearVelocity.X > 0)
+            {
+                leaveOverview();
+            }
+            if (e.FinalVelocities.LinearVelocity.X < 0)
+            {
+                enterOverview();
 
-            BounceEase b = new BounceEase();
-            b.Bounces = 1;
-            b.Bounciness = 1;
-            b.EasingMode = EasingMode.EaseOut;
-
-
-            /************** DoubleAnimation  **************/
-            DoubleAnimationUsingKeyFrames animation = new DoubleAnimationUsingKeyFrames();
-
-            EasingDoubleKeyFrame key1 = new EasingDoubleKeyFrame();
-            key1.KeyTime = kt0;
-            key1.Value = 0.2;
-            key1.EasingFunction = b;
-
-            EasingDoubleKeyFrame key2 = new EasingDoubleKeyFrame();
-            key2.KeyTime = kt1;
-            key2.Value = 1;
-            key2.EasingFunction = b;
-
-            animation.KeyFrames.Add(key1);
-            animation.KeyFrames.Add(key2);
-            //{ BeginTime = TimeSpan.FromSeconds(0), Duration = TimeSpan.FromSeconds(3) };
-
-            //doubleAanimation.From = 1.0;
-            //doubleAanimation.To = 0.0;
-            //doubleAanimation.EasingFunction = b;
-
-
-            /************** determine Property  **************/
-
-            Storyboard.SetTarget(animation, SingleDayView.RenderTransform);
-            //Storyboard.SetTargetProperty(animation, new PropertyPath("ScaleY"));
-            Storyboard.SetTargetProperty(animation, new PropertyPath("TranslateY"));
-            //Storyboard.SetTarget(animation, SingleDayView);
-            //Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
-
-            //Storyboard.SetTarget(keyFrameAnimation, box);
-            //Storyboard.SetTargetProperty(keyFrameAnimation, new PropertyPath("Height"));
-
-            //CompositeTransform transform = this.SingleDayView.RenderTransform as CompositeTransform;
-            ////transform.TranslateY = 0;
-            //this.SingleDayView.RenderTransform = transform;
-            //this.SingleDayView.Opacity = 1.0;
-
-            /************** Adding Stuff  **************/
-            openStoryboard.Children.Add(animation);
-            //storyboard.Children.Add(keyFrameAnimation);
-            Resources.Add("Storyboard", openStoryboard);
-
-
-            //storyboard.Completed += showMessage;
-
-
-
+            }
         }
-
-
-        #region Longlistselektor Scrolling Events
 
         private void LongList_Loaded(object sender, RoutedEventArgs e)
         {
@@ -301,42 +250,139 @@ namespace Pocal
             Debug.WriteLine("Tapped on Daycard");
             //ViewSwitcher.SwitchToSDV(sender);
 
-            //this.SingleDayView.Visibility = Visibility.Visible;
-
-
-            openStoryboard.Begin();
-
         }
         #endregion
 
+        #region Play Enter / Leave Overview Storyboard Animation
+
+        private List<ItemsControl> foundDayCards_ItemsControll;
+        private List<StackPanel> foundStackPanels;
+
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            LongListSelector FoundList = (AgendaViewListbox as LongListSelector);
+            enterOverview();
+        }
 
-            //ListBox source = (ListBox)sender;
-            
-            FindItemControll(FoundList);
+        private void enterOverview()
+        {
+            Storyboard storyboard = AgendaViewBody.Resources["EnterOverview"] as Storyboard;
+            storyboard.Begin();
 
-            for (int j = 0; j < foundDayCards.Count; j++)
+            foundDayCards_ItemsControll = new List<ItemsControl>();
+            foundStackPanels = new List<StackPanel>();
+
+            findItemControll(AgendaViewListbox);
+            findItemStackPanelInItemsControll("DayCard_ApptItem");
+            playStoryboardOfFoundStackPanels("EnterOverview");
+
+            foundStackPanels = new List<StackPanel>();
+            findStackPanels(AgendaViewListbox, "DayCardStackPanel");
+            playStoryboardOfFoundStackPanels("EnterOverview");
+        }
+        private void ApplicationBarIconButton_Click_1(object sender, EventArgs e)
+        {
+            leaveOverview();
+
+
+        }
+
+        private void leaveOverview()
+        {
+            Storyboard storyboard = AgendaViewBody.Resources["LeaveOverview"] as Storyboard;
+            storyboard.Begin();
+
+            foundDayCards_ItemsControll = new List<ItemsControl>();
+            foundStackPanels = new List<StackPanel>();
+
+            findItemControll(AgendaViewListbox);
+            findItemStackPanelInItemsControll("DayCard_ApptItem");
+            playStoryboardOfFoundStackPanels("LeaveOverview");
+
+            foundStackPanels = new List<StackPanel>();
+            findStackPanels(AgendaViewListbox, "DayCardStackPanel");
+            playStoryboardOfFoundStackPanels("LeaveOverview");
+        }
+
+
+        private void findItemControll(DependencyObject targeted_control)
+        {
+
+            var count = VisualTreeHelper.GetChildrenCount(targeted_control);
+            if (count > 0)
             {
-                for (int i = 0; i < foundDayCards[j].Items.Count; i++)
+                for (int i = 0; i < count; i++)
                 {
-                    DependencyObject d = foundDayCards[j].ItemContainerGenerator.ContainerFromIndex(i);
-                    SearchAndPlayStoryboard(d);
+                    var child = VisualTreeHelper.GetChild(targeted_control, i);
+                    var test = child.GetType();
+                    if (child is ItemsControl)
+                    {
+                        foundDayCards_ItemsControll.Add((ItemsControl)child);
+                    }
+                    else
+                    {
+                        findItemControll(child);
+                    }
                 }
             }
-            foreach (var dayCard in foundDayCards)
+            return;
+        }
+
+        private void findItemStackPanelInItemsControll(string stackPanelName)
+        {
+            for (int j = 0; j < foundDayCards_ItemsControll.Count; j++)
             {
-                SearchAndPlayStoryboard(dayCard);
+                for (int i = 0; i < foundDayCards_ItemsControll[j].Items.Count; i++)
+                {
+                    DependencyObject d = foundDayCards_ItemsControll[j].ItemContainerGenerator.ContainerFromIndex(i);
+                    findStackPanels(d, stackPanelName);
+                }
+            }
+        }
+
+
+        private void findStackPanels(DependencyObject targeted_control, string stackPanelName)
+        {
+            var count = VisualTreeHelper.GetChildrenCount(targeted_control);
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    var child = VisualTreeHelper.GetChild(targeted_control, i);
+                    if (child is StackPanel)
+                    {
+                        StackPanel stackpanel = (StackPanel)child;
+                        if (stackpanel.Name == stackPanelName)
+                        {
+                            foundStackPanels.Add(stackpanel);
+                        }
+                    }
+                    else
+                    {
+                        findStackPanels(child, stackPanelName);
+                    }
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void playStoryboardOfFoundStackPanels(string storyBoardKey)
+        {
+            foreach (var stackpanel in foundStackPanels)
+            {
+                Storyboard StyBrd = stackpanel.Resources[storyBoardKey] as Storyboard;
+                StyBrd.Begin();
             }
 
         }
 
-        private List<ItemsControl> foundDayCards = new List<ItemsControl>();
+        #endregion
 
         private void FindItemControll(DependencyObject targeted_control)
         {
-            
+  
             var count = VisualTreeHelper.GetChildrenCount(targeted_control);
             if (count > 0)
             {

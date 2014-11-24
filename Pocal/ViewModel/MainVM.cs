@@ -38,9 +38,10 @@ namespace Pocal.ViewModel
             if (appoinmentBuffer.Any())
             {
                 await createAllPocalApptointments();
-                createDays();
+               
                 //SingleDayViewModel.TappedDay = Days[0]; Nur unkommentieren, wenn SDV beim start geöffnet wird. Sonst funzt tapAndScroll nicht.
             }
+            createDays();
 
         }
 
