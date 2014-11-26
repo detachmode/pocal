@@ -52,13 +52,30 @@ namespace Pocal
         {
             if (e.FinalVelocities.LinearVelocity.X > 0)
             {
-                leaveOverview();
+                //enterOverview();
+                switchMainPageView();
             }
             if (e.FinalVelocities.LinearVelocity.X < 0)
             {
-                enterOverview();
+                switchMainPageView();
+                //leaveOverview();
                 
             }
+        }
+
+        private void switchMainPageView()
+        {
+            if (App.ViewModel.InModus == MainVM.Modi.OverView)
+            {  
+                leaveOverview();
+                App.ViewModel.InModus = MainVM.Modi.AgendaView;
+            }
+            else
+            {
+                enterOverview();
+                App.ViewModel.InModus = MainVM.Modi.OverView;
+            }
+           
         }
 
         private  void LongList_Loaded(object sender, RoutedEventArgs e)

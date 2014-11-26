@@ -16,6 +16,8 @@ namespace Pocal.ViewModel
     public class MainVM : ViewModelBase
     {
 
+        public enum Modi { AgendaView, OverView };
+        public Modi InModus = Modi.AgendaView;
         public ObservableCollection<PocalAppointment> AllPocalAppointments = new ObservableCollection<PocalAppointment>();
         public SingleDayViewVM SingleDayViewModel { get; private set; }
         public ConflictManager ConflictManager { get; private set; }
@@ -124,7 +126,7 @@ namespace Pocal.ViewModel
         #endregion
 
         #region Days
-        internal int howManyDays = 7;
+        internal int howManyDays = 27;
         public ObservableCollection<Day> Days { get; private set; }
 
         public void createDays()

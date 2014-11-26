@@ -29,12 +29,10 @@ namespace Pocal
 			if (currentViewIsSDV())
 				return;
 
-			openSDV();
-
+		
             setTemporaryTappedDay(sender);
-
             removePreviousDataContext();
-
+            openSDV();
             scrollToRightPosition();
 
             setTappedDayAsynchron(sender);
@@ -80,13 +78,13 @@ namespace Pocal
 
 		private static void setTappedDayAsynchron(object sender)
 		{
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
+            //Deployment.Current.Dispatcher.BeginInvoke(() =>
+            //{
                 // Update UI in here as this part will run on the UI thread.
                 App.ViewModel.SingleDayViewModel.TappedDay = temporaryTappedDay;
                 App.ViewModel.ConflictManager.solveConflicts();
                 
-            });
+            //});
             
 		}
 
