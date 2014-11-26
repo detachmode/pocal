@@ -34,27 +34,21 @@ namespace Pocal.ViewModel
             TimeSpan delta = DateTime.Now - start;
             Debug.WriteLine("Timestamp delta: " + (delta.Seconds + (1.0 / 1000) * delta.Milliseconds) + " sekunden");
 
-
-            if (appoinmentBuffer.Any())
-            {
-                await createAllPocalApptointments();
-               
-                //SingleDayViewModel.TappedDay = Days[0]; Nur unkommentieren, wenn SDV beim start geöffnet wird. Sonst funzt tapAndScroll nicht.
-            }
+            await createAllPocalApptointments();
             createDays();
 
         }
 
-        public async void refreshData()
-        {
-            object oldDay = ViewSwitcher.mainpage.GetFirstVisibleItem();
-            int oldindex = ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource.IndexOf(oldDay);
+        //public async void refreshData()
+        //{
+        //    object oldDay = ViewSwitcher.mainpage.GetFirstVisibleItem();
+        //    int oldindex = ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource.IndexOf(oldDay);
 
-            await ReloadPocalApptsAndDays();
+        //    await ReloadPocalApptsAndDays();
 
-            if (oldindex != -1)
-                ViewSwitcher.mainpage.AgendaViewListbox.ScrollTo(ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource[oldindex]);
-        }
+        //    if (oldindex != -1)
+        //        ViewSwitcher.mainpage.AgendaViewListbox.ScrollTo(ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource[oldindex]);
+        //}
         #endregion
 
         #region PocalAppointments

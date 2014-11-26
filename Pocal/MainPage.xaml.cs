@@ -34,15 +34,16 @@ namespace Pocal
 
             DataContext = App.ViewModel;
             InitializeComponent();
-            
-            VisualStateManager.GoToState(this, "Close", true);
+
+            SingleDayView.Opacity = 0.01;
+
             await App.ViewModel.ReloadPocalApptsAndDays();
+            VisualStateManager.GoToState(this, "Close", true);
+
 
             AgendaViewListbox.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
-
-            
-
-            watchPositionOfLongListSelector();
+            AgendaViewListbox.ItemRealized += LLS_ItemRealized;
+            //watchPositionOfLongListSelector();
         }
 
 
@@ -59,14 +60,14 @@ namespace Pocal
             {
                 switchMainPageView();
                 //leaveOverview();
-                
+
             }
         }
 
         private void switchMainPageView()
         {
             if (App.ViewModel.InModus == MainVM.Modi.OverView)
-            {  
+            {
                 leaveOverview();
                 App.ViewModel.InModus = MainVM.Modi.AgendaView;
             }
@@ -75,10 +76,10 @@ namespace Pocal
                 enterOverview();
                 App.ViewModel.InModus = MainVM.Modi.OverView;
             }
-           
+
         }
 
-        private  void LongList_Loaded(object sender, RoutedEventArgs e)
+        private void LongList_Loaded(object sender, RoutedEventArgs e)
         {
             var sb = ((FrameworkElement)VisualTreeHelper.GetChild(AgendaViewListbox, 0)).FindName("VerticalScrollBar") as ScrollBar;
             sb.Margin = new Thickness(-10, 0, 0, 0);
@@ -96,64 +97,90 @@ namespace Pocal
         // Wird benötigt um die Position im Longlistselektor zu bestimmen um damit DeltaDays auszurechnen.
         private Dictionary<object, ContentPresenter> items = new Dictionary<object, ContentPresenter>();
 
-        private void watchPositionOfLongListSelector()
-        {
-            AgendaViewListbox.ItemRealized += LLS_ItemRealized;
-            AgendaViewListbox.ItemUnrealized += LLS_ItemUnrealized;
+        //private void watchPositionOfLongListSelector()
+        //{
+        //    AgendaViewListbox.ItemRealized += LLS_ItemRealized;
+        //    AgendaViewListbox.ItemUnrealized += LLS_ItemUnrealized;
 
-            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 40); // TODO performance
-            dispatcherTimer.Start();
-        }
+        //    DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        //    dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+        //    dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 40); // TODO performance
+        //    dispatcherTimer.Start();
+        //}
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
-        {
+        //private void dispatcherTimer_Tick(object sender, EventArgs e)
+        //{
 
-            Day testday = (Day)GetFirstVisibleItem();
-            if (testday != null)
-            {
-                // Switch Highlighted Day
-                Day d = App.ViewModel.CurrentTop;
-                if (d != null)
-                {
-                    d.IsHighlighted = false;
-                }
-                App.ViewModel.CurrentTop = testday;
-                testday.IsHighlighted = true;
-            }
+        //    Day testday = (Day)GetFirstVisibleItem();
+        //    if (testday != null)
+        //    {
+        //        // Switch Highlighted Day
+        //        Day d = App.ViewModel.CurrentTop;
+        //        if (d != null)
+        //        {
+        //            d.IsHighlighted = false;
+        //        }
+        //        App.ViewModel.CurrentTop = testday;
+        //        testday.IsHighlighted = true;
+        //    }
 
-        }
+        //}
 
-        public object GetFirstVisibleItem()
-        {
-            if (items.Count > 1)
-            {
-                var offset = FindViewport(AgendaViewListbox).Viewport.Top;
-                return (items.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight > offset)
-                    .OrderBy(x => Canvas.GetTop(x.Value)).ToList())[1].Key;
-            }
-            else
-                return null;
+        //public object GetFirstVisibleItem()
+        //{
+        //    if (items.Count > 1)
+        //    {
+        //        var offset = FindViewport(AgendaViewListbox).Viewport.Top;
+        //        return (items.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight > offset)
+        //            .OrderBy(x => Canvas.GetTop(x.Value)).ToList())[1].Key;
+        //    }
+        //    else
+        //        return null;
 
-        }
+        //}
+
+        //private void LLS_ItemRealized(object sender, ItemRealizationEventArgs e)
+        //{
+        //    if (e.ItemKind == LongListSelectorItemKind.Item)
+        //    {
+        //        object o = e.Container.DataContext;
+        //        items[o] = e.Container;
+        //    }
+        //}
+
+        //private void LLS_ItemUnrealized(object sender, ItemRealizationEventArgs e)
+        //{
+        //    if (e.ItemKind == LongListSelectorItemKind.Item)
+        //    {
+        //        object o = e.Container.DataContext;
+        //        items.Remove(o);
+        //    }
+        //}
 
         private void LLS_ItemRealized(object sender, ItemRealizationEventArgs e)
         {
             if (e.ItemKind == LongListSelectorItemKind.Item)
             {
-                object o = e.Container.DataContext;
-                items[o] = e.Container;
+                if (App.ViewModel.InModus == MainVM.Modi.OverView)
+                {
+                    setItemStyleToOverview(e.Container);
+                }
+                //object o = e.Container.DataContext;
+                //Day d = o as Day;
+                //items[o] = e.Container;
             }
         }
 
-        private void LLS_ItemUnrealized(object sender, ItemRealizationEventArgs e)
+        private void setItemStyleToOverview(ContentPresenter contentPresenter)
         {
-            if (e.ItemKind == LongListSelectorItemKind.Item)
-            {
-                object o = e.Container.DataContext;
-                items.Remove(o);
-            }
+
+            foundDayCards_ItemsControll = new List<ItemsControl>();
+            foundStackPanels = new List<StackPanel>();
+
+            findItemControll(contentPresenter);
+            findItemStackPanelInItemsControll("DayCard_ApptItem");
+            playStoryboardOfFoundStackPanels("EnterOverviewForSingleItem");
+
         }
 
         private static ViewportControl FindViewport(DependencyObject parent)
@@ -185,6 +212,7 @@ namespace Pocal
 
         private void closeDayView()
         {
+
             VisualStateManager.GoToState(this, "Close", true);
         }
 
@@ -242,14 +270,33 @@ namespace Pocal
 
         private void DayCard_ApptTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            addBitmapCacheToSDV();
             ViewSwitcher.setScrollToPa(((FrameworkElement)sender).DataContext as PocalAppointment);
             ViewSwitcher.from = ViewSwitcher.Sender.ApptTap;
+            removeBitmapCacheAfterAnimation();
+        }
 
+        private void addBitmapCacheToSDV()
+        {
+
+            SingleDayWindowBody.CacheMode = new BitmapCache() { RenderAtScale = 0.6 };
+        }
+
+        private void removeBitmapCacheAfterAnimation()
+        {
+            Dispatcher.BeginInvoke(delegate
+            {
+                Thread.Sleep(400);
+                SingleDayWindowBody.CacheMode = null;
+
+            });
         }
 
         private void DayCard_HeaderTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            addBitmapCacheToSDV();
             ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
+            removeBitmapCacheAfterAnimation();
         }
 
 
@@ -268,7 +315,7 @@ namespace Pocal
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            enterOverview();
+            switchMainPageView();
         }
 
         private void enterOverview()
@@ -281,15 +328,50 @@ namespace Pocal
 
             findItemControll(AgendaViewListbox);
             findItemStackPanelInItemsControll("DayCard_ApptItem");
+            assignBimtapCacheOnFoundStackPanels();
             playStoryboardOfFoundStackPanels("EnterOverview");
 
-            foundStackPanels = new List<StackPanel>();
-            findStackPanels(AgendaViewListbox, "DayCardStackPanel");
-            playStoryboardOfFoundStackPanels("EnterOverview");
+
+        }
+        private List<TextBlock> foundTextBoxes;
+
+        private void assignBimtapCacheOnFoundStackPanels()
+        {
+            foundTextBoxes = new List<TextBlock>();
+            foreach (var itemcontrol in foundDayCards_ItemsControll)
+            {
+                findTextboxes(itemcontrol);
+
+            }
+            foreach (var textbox in foundTextBoxes)
+            {
+                textbox.CacheMode = new BitmapCache() { RenderAtScale = 0.5 };  
+            }
+        }
+
+        private void findTextboxes(DependencyObject stackpanel)
+        {
+            var count = VisualTreeHelper.GetChildrenCount(stackpanel);
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    var child = VisualTreeHelper.GetChild(stackpanel, i);
+                    var test = child.GetType();
+                    if (child is TextBlock)
+                    {
+                        foundTextBoxes.Add((TextBlock)child);
+                    }
+                    else
+                    {
+                        findTextboxes(child);
+                    }
+                }
+            }
         }
         private void ApplicationBarIconButton_Click_1(object sender, EventArgs e)
         {
-            leaveOverview();
+            //leaveOverview();
 
 
         }
@@ -306,9 +388,6 @@ namespace Pocal
             findItemStackPanelInItemsControll("DayCard_ApptItem");
             playStoryboardOfFoundStackPanels("LeaveOverview");
 
-            foundStackPanels = new List<StackPanel>();
-            findStackPanels(AgendaViewListbox, "DayCardStackPanel");
-            playStoryboardOfFoundStackPanels("LeaveOverview");
         }
 
 
