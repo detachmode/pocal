@@ -18,7 +18,7 @@ namespace Pocal.ViewModel
         public bool isCurrentlyLoading = false;
         public enum Modi { AgendaView, OverView };
         public Modi InModus = Modi.AgendaView;
-        public ObservableCollection<PocalAppointment> AllPocalAppointments = new ObservableCollection<PocalAppointment>();
+        public List<PocalAppointment> AllPocalAppointments = new List<PocalAppointment>();
         public SingleDayViewVM SingleDayViewModel { get; private set; }
         public ConflictManager ConflictManager { get; private set; }
 
@@ -135,14 +135,28 @@ namespace Pocal.ViewModel
         {
 
             appoinmentBuffer = await CalendarAPI.getAppointments(startDay, howManyDays);
-            var appt = appoinmentBuffer[0];
 
-            await createAllPocalApptointments();
+            await createAndAddToAllPocalApptointments();
             createDays(startDay, howManyDays);
             App.ViewModel.isCurrentlyLoading = false;
 
 
         }
+
+        public async Task loadDatesOfThePast(int howManyDays)
+        {
+            if (App.ViewModel.Days.Count == 0)
+                return;
+
+            DateTime startDay = App.ViewModel.Days[0].DT.AddDays(-howManyDays);
+
+            appoinmentBuffer = await CalendarAPI.getAppointments(startDay, howManyDays);
+            await createAndAddToAllPocalApptointments();
+            createAndInsertPastDays(startDay, howManyDays);
+            App.ViewModel.isCurrentlyLoading = false;
+
+        }
+
 
         
 
@@ -160,7 +174,7 @@ namespace Pocal.ViewModel
 
         #region PocalAppointments
 
-        private async Task createAllPocalApptointments()
+        private async Task createAndAddToAllPocalApptointments()
         {
             //AllPocalAppointments.Clear();
             await CalendarAPI.setCalendars();
@@ -171,6 +185,7 @@ namespace Pocal.ViewModel
                 AllPocalAppointments.Add(pocalAppt);
             }
         }
+
         public PocalAppointment createPocalAppoinment(Appointment appt)
         {
             var cal = CalendarAPI.calendars.First(c => c.LocalId == appt.CalendarId);
@@ -239,6 +254,33 @@ namespace Pocal.ViewModel
             {
                 // Create New Day with its Appointments
                 Days.Add(new Day()
+                {
+                    DT = dt,
+                    PocalApptsOfDay = getPocalApptsOfDay(dt)
+                });
+
+                // Sunday Attribute
+                if (dt.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    Days[i].Sunday = true;
+                }
+
+                // Iteration ++ ein Tag
+                dt = dt.AddDays(1);
+
+            }
+        }
+
+        public void createAndInsertPastDays(DateTime startDay, int howManyDays)
+        {
+            DateTime dt = startDay;
+            CultureInfo ci = new CultureInfo("de-DE");
+
+            //Days.Clear();
+            for (int i = 0; i < howManyDays; i++)
+            {
+                // Create New Day with its Appointments
+                Days.Insert(i,new Day()
                 {
                     DT = dt,
                     PocalApptsOfDay = getPocalApptsOfDay(dt)

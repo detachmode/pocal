@@ -52,9 +52,13 @@ namespace Pocal
             App.ViewModel.isCurrentlyLoading = true;
             if (App.ViewModel.Days.Count == 0)
             {
+                DateTime dt = DateTime.Now.Date.AddDays(-10);
+                           
                 await App.ViewModel.LoadPocalApptsAndDays(DateTime.Now, 10);
+                await App.ViewModel.loadDatesOfThePast(10);  
+
             }else
-                await App.ViewModel.LoadPocalApptsAndDays(App.ViewModel.Days[App.ViewModel.Days.Count-1].DT.AddDays(1), 10);
+               await App.ViewModel.LoadPocalApptsAndDays(App.ViewModel.Days[App.ViewModel.Days.Count-1].DT.AddDays(1), 10);
             
         }
         #region AgendaView Events
@@ -105,11 +109,11 @@ namespace Pocal
         }
 
         // Wird benötigt um die Position im Longlistselektor zu bestimmen um damit DeltaDays auszurechnen.
-        private Dictionary<object, ContentPresenter> items = new Dictionary<object, ContentPresenter>();
+        //private Dictionary<object, ContentPresenter> items = new Dictionary<object, ContentPresenter>();
         //private void watchPositionOfLongListSelector()
         //{
-        //    AgendaViewListbox.ItemRealized += LLS_ItemRealized;
-        //    AgendaViewListbox.ItemUnrealized += LLS_ItemUnrealized;
+        //    //AgendaViewListbox.ItemRealized += LLS_ItemRealized;
+        //    //AgendaViewListbox.ItemUnrealized += LLS_ItemUnrealized;
 
         //    DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         //    dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
