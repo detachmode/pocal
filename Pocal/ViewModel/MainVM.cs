@@ -15,7 +15,7 @@ namespace Pocal.ViewModel
 
     public class MainVM : ViewModelBase
     {
-
+        public bool isCurrentlyLoading = false;
         public enum Modi { AgendaView, OverView };
         public Modi InModus = Modi.AgendaView;
         public ObservableCollection<PocalAppointment> AllPocalAppointments = new ObservableCollection<PocalAppointment>();
@@ -23,153 +23,6 @@ namespace Pocal.ViewModel
         public ConflictManager ConflictManager { get; private set; }
 
         private IReadOnlyList<Appointment> appoinmentBuffer;
-
-        #region RELOAD
-        public async Task ReloadPocalApptsAndDays()
-        {
-            DateTime start = DateTime.Now;
-
-            appoinmentBuffer = await CalendarAPI.getAppointments();
-
-            TimeSpan delta = DateTime.Now - start;
-            Debug.WriteLine("Timestamp delta: " + (delta.Seconds + (1.0 / 1000) * delta.Milliseconds) + " sekunden");
-
-            await createAllPocalApptointments();
-            createDays();
-
-        }
-
-        //public async void refreshData()
-        //{
-        //    object oldDay = ViewSwitcher.mainpage.GetFirstVisibleItem();
-        //    int oldindex = ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource.IndexOf(oldDay);
-
-        //    await ReloadPocalApptsAndDays();
-
-        //    if (oldindex != -1)
-        //        ViewSwitcher.mainpage.AgendaViewListbox.ScrollTo(ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource[oldindex]);
-        //}
-        #endregion
-
-        #region PocalAppointments
-
-        private async Task createAllPocalApptointments()
-        {
-            AllPocalAppointments.Clear();
-            await CalendarAPI.setCalendars();
-
-            foreach (var appt in appoinmentBuffer)
-            {
-                PocalAppointment pocalAppt = createPocalAppoinment(appt);
-                AllPocalAppointments.Add(pocalAppt);
-            }
-        }
-        public PocalAppointment createPocalAppoinment(Appointment appt)
-        {
-            var cal = CalendarAPI.calendars.First(c => c.LocalId == appt.CalendarId);
-
-            PocalAppointment pocalAppt = new PocalAppointment { Appt = appt, CalColor = getCalendarColorBrush(appt, cal) };
-            return pocalAppt;
-        }
-
-        private Dictionary<AppointmentCalendar, SolidColorBrush> calColors = new Dictionary<AppointmentCalendar, SolidColorBrush>();
-        private SolidColorBrush getCalendarColorBrush(Appointment appt, AppointmentCalendar cal)
-        {
-            SolidColorBrush brush = null;
-            calColors.TryGetValue(cal, out brush);
-
-            if (brush == null)
-            {
-                var calColor = new System.Windows.Media.Color() { A = cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
-                brush = new SolidColorBrush(calColor);
-                calColors.Add(cal, brush);
-                return brush;
-            }
-            return brush;
-        }
-
-        private ObservableCollection<PocalAppointment> getPocalApptsOfDay(DateTime dt)
-        {
-
-            ObservableCollection<PocalAppointment> thisDayAppts = new ObservableCollection<PocalAppointment>();
-            foreach (PocalAppointment pocalAppt in AllPocalAppointments)
-            {
-                if (pocalAppt.StartTime.Date == dt.Date)
-                {
-                    thisDayAppts.Add(pocalAppt);
-                }
-            }
-            thisDayAppts = sortAppointments(thisDayAppts);
-
-            return thisDayAppts;
-        }
-
-        public ObservableCollection<PocalAppointment> sortAppointments(ObservableCollection<PocalAppointment> thisDayAppts)
-        {
-            ObservableCollection<PocalAppointment> sorted = new ObservableCollection<PocalAppointment>();
-            IEnumerable<PocalAppointment> query = thisDayAppts.OrderBy(appt => appt.StartTime);
-
-            foreach (PocalAppointment appt in query)
-            {
-                sorted.Add(appt);
-            }
-
-            return sorted;
-        }
-
-        #endregion
-
-        #region Days
-        internal int howManyDays = 27;
-        public ObservableCollection<Day> Days { get; private set; }
-
-        public void createDays()
-        {
-            DateTime dt = DateTime.Now;
-            CultureInfo ci = new CultureInfo("de-DE");
-
-            Days.Clear();
-            for (int i = 0; i < howManyDays; i++)
-            {
-                // Create New Day with its Appointments
-                Days.Add(new Day()
-                {
-                    DT = dt,
-                    PocalApptsOfDay = getPocalApptsOfDay(dt)
-                });
-
-                // Sunday Attribute
-                if (dt.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    Days[i].Sunday = true;
-                }
-
-                // Iteration ++ ein Tag
-                dt = dt.AddDays(1);
-
-            }
-        }
-        #endregion
-
-
-
-
-        private Day _currentTop;
-        public Day CurrentTop
-        {
-            get
-            {
-                return _currentTop;
-            }
-            set
-            {
-                if (value != _currentTop)
-                {
-                    _currentTop = value;
-                    NotifyPropertyChanged("CurrentTop");
-                }
-            }
-        }
 
         public MainVM()
         {
@@ -276,6 +129,155 @@ namespace Pocal.ViewModel
 
 
         }
+
+        #region RELOAD
+        public async Task LoadPocalApptsAndDays(DateTime startDay, int howManyDays)
+        {
+
+            appoinmentBuffer = await CalendarAPI.getAppointments(startDay, howManyDays);
+            var appt = appoinmentBuffer[0];
+
+            await createAllPocalApptointments();
+            createDays(startDay, howManyDays);
+            App.ViewModel.isCurrentlyLoading = false;
+
+
+        }
+
+        
+
+        //public async void refreshData()
+        //{
+        //    object oldDay = ViewSwitcher.mainpage.GetFirstVisibleItem();
+        //    int oldindex = ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource.IndexOf(oldDay);
+
+        //    await ReloadPocalApptsAndDays();
+
+        //    if (oldindex != -1)
+        //        ViewSwitcher.mainpage.AgendaViewListbox.ScrollTo(ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource[oldindex]);
+        //}
+        #endregion
+
+        #region PocalAppointments
+
+        private async Task createAllPocalApptointments()
+        {
+            //AllPocalAppointments.Clear();
+            await CalendarAPI.setCalendars();
+
+            foreach (var appt in appoinmentBuffer)
+            {
+                PocalAppointment pocalAppt = createPocalAppoinment(appt);
+                AllPocalAppointments.Add(pocalAppt);
+            }
+        }
+        public PocalAppointment createPocalAppoinment(Appointment appt)
+        {
+            var cal = CalendarAPI.calendars.First(c => c.LocalId == appt.CalendarId);
+
+            PocalAppointment pocalAppt = new PocalAppointment { Appt = appt, CalColor = getCalendarColorBrush(appt, cal) };
+            return pocalAppt;
+        }
+
+        private Dictionary<AppointmentCalendar, SolidColorBrush> calColors = new Dictionary<AppointmentCalendar, SolidColorBrush>();
+        private SolidColorBrush getCalendarColorBrush(Appointment appt, AppointmentCalendar cal)
+        {
+            SolidColorBrush brush = null;
+            calColors.TryGetValue(cal, out brush);
+
+            if (brush == null)
+            {
+                var calColor = new System.Windows.Media.Color() { A = cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
+                brush = new SolidColorBrush(calColor);
+                calColors.Add(cal, brush);
+                return brush;
+            }
+            return brush;
+        }
+
+        private ObservableCollection<PocalAppointment> getPocalApptsOfDay(DateTime dt)
+        {
+
+            ObservableCollection<PocalAppointment> thisDayAppts = new ObservableCollection<PocalAppointment>();
+            foreach (PocalAppointment pocalAppt in AllPocalAppointments)
+            {
+                if (pocalAppt.StartTime.Date == dt.Date)
+                {
+                    thisDayAppts.Add(pocalAppt);
+                }
+            }
+            thisDayAppts = sortAppointments(thisDayAppts);
+
+            return thisDayAppts;
+        }
+
+        public ObservableCollection<PocalAppointment> sortAppointments(ObservableCollection<PocalAppointment> thisDayAppts)
+        {
+            ObservableCollection<PocalAppointment> sorted = new ObservableCollection<PocalAppointment>();
+            IEnumerable<PocalAppointment> query = thisDayAppts.OrderBy(appt => appt.StartTime);
+
+            foreach (PocalAppointment appt in query)
+            {
+                sorted.Add(appt);
+            }
+
+            return sorted;
+        }
+
+        #endregion
+
+        #region Days
+        public ObservableCollection<Day> Days { get; private set; }
+
+        public void createDays(DateTime startDay, int howManyDays)
+        {
+            DateTime dt = startDay;
+            CultureInfo ci = new CultureInfo("de-DE");
+
+            //Days.Clear();
+            for (int i = 0; i < howManyDays; i++)
+            {
+                // Create New Day with its Appointments
+                Days.Add(new Day()
+                {
+                    DT = dt,
+                    PocalApptsOfDay = getPocalApptsOfDay(dt)
+                });
+
+                // Sunday Attribute
+                if (dt.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    Days[i].Sunday = true;
+                }
+
+                // Iteration ++ ein Tag
+                dt = dt.AddDays(1);
+
+            }
+        }
+        #endregion
+
+
+
+
+        private Day _currentTop;
+        public Day CurrentTop
+        {
+            get
+            {
+                return _currentTop;
+            }
+            set
+            {
+                if (value != _currentTop)
+                {
+                    _currentTop = value;
+                    NotifyPropertyChanged("CurrentTop");
+                }
+            }
+        }
+
+
 
     }
 }

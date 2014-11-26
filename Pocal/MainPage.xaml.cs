@@ -20,6 +20,7 @@ namespace Pocal
     public partial class MainPage : PhoneApplicationPage
     {
 
+       
         // Constructor
         public MainPage()
         {
@@ -29,7 +30,7 @@ namespace Pocal
 
         }
 
-        private async void load()
+        private void load()
         {
 
             DataContext = App.ViewModel;
@@ -37,16 +38,25 @@ namespace Pocal
 
             SingleDayView.Opacity = 0.01;
 
-            await App.ViewModel.ReloadPocalApptsAndDays();
-            VisualStateManager.GoToState(this, "Close", true);
+            LoadDataFromSource();
 
+            VisualStateManager.GoToState(this, "Close", true);
 
             AgendaViewListbox.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
             AgendaViewListbox.ItemRealized += LLS_ItemRealized;
             //watchPositionOfLongListSelector();
         }
 
-
+        private async void LoadDataFromSource()
+        {
+            App.ViewModel.isCurrentlyLoading = true;
+            if (App.ViewModel.Days.Count == 0)
+            {
+                await App.ViewModel.LoadPocalApptsAndDays(DateTime.Now, 10);
+            }else
+                await App.ViewModel.LoadPocalApptsAndDays(App.ViewModel.Days[App.ViewModel.Days.Count-1].DT.AddDays(1), 10);
+            
+        }
         #region AgendaView Events
 
         private void AgendaViewListbox_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
@@ -96,7 +106,6 @@ namespace Pocal
 
         // Wird benötigt um die Position im Longlistselektor zu bestimmen um damit DeltaDays auszurechnen.
         private Dictionary<object, ContentPresenter> items = new Dictionary<object, ContentPresenter>();
-
         //private void watchPositionOfLongListSelector()
         //{
         //    AgendaViewListbox.ItemRealized += LLS_ItemRealized;
@@ -157,6 +166,8 @@ namespace Pocal
         //    }
         //}
 
+        
+        
         private void LLS_ItemRealized(object sender, ItemRealizationEventArgs e)
         {
             if (e.ItemKind == LongListSelectorItemKind.Item)
@@ -165,9 +176,17 @@ namespace Pocal
                 {
                     setItemStyleToOverview(e.Container);
                 }
-                //object o = e.Container.DataContext;
-                //Day d = o as Day;
-                //items[o] = e.Container;
+                Day day = e.Container.Content as Day;
+                if (day != null)
+                {
+                    int offset = 2;
+                    // Only if there is no data that is currently getting loaded would be initiate the loading again
+                    if (!App.ViewModel.isCurrentlyLoading && App.ViewModel.Days.Count - App.ViewModel.Days.IndexOf(day) <= offset)
+                    {
+                        LoadDataFromSource();
+                        //MessageBox.Show("endOfList");
+                    }
+                }
             }
         }
 
@@ -328,47 +347,12 @@ namespace Pocal
 
             findItemControll(AgendaViewListbox);
             findItemStackPanelInItemsControll("DayCard_ApptItem");
-            assignBimtapCacheOnFoundStackPanels();
+           
             playStoryboardOfFoundStackPanels("EnterOverview");
 
 
         }
-        private List<TextBlock> foundTextBoxes;
 
-        private void assignBimtapCacheOnFoundStackPanels()
-        {
-            foundTextBoxes = new List<TextBlock>();
-            foreach (var itemcontrol in foundDayCards_ItemsControll)
-            {
-                findTextboxes(itemcontrol);
-
-            }
-            foreach (var textbox in foundTextBoxes)
-            {
-                textbox.CacheMode = new BitmapCache() { RenderAtScale = 0.5 };  
-            }
-        }
-
-        private void findTextboxes(DependencyObject stackpanel)
-        {
-            var count = VisualTreeHelper.GetChildrenCount(stackpanel);
-            if (count > 0)
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    var child = VisualTreeHelper.GetChild(stackpanel, i);
-                    var test = child.GetType();
-                    if (child is TextBlock)
-                    {
-                        foundTextBoxes.Add((TextBlock)child);
-                    }
-                    else
-                    {
-                        findTextboxes(child);
-                    }
-                }
-            }
-        }
         private void ApplicationBarIconButton_Click_1(object sender, EventArgs e)
         {
             //leaveOverview();

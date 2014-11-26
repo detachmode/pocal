@@ -30,12 +30,12 @@ namespace Pocal
         // ******** Get the Appointments of the next 30 Days *********//
         // ******** **************************************** *********//
 
-        public static async Task<IReadOnlyList<Appointment>> getAppointments()
+        public static async Task<IReadOnlyList<Appointment>> getAppointments(DateTime startDay, int howManyDays)
         {
             await setAppointmentStore();
             FindAppointmentsOptions findOptions = getFindOptions();
 
-            return await appointmentStore.FindAppointmentsAsync(DateTime.Now.Date, TimeSpan.FromDays(App.ViewModel.howManyDays), findOptions);
+            return await appointmentStore.FindAppointmentsAsync(startDay.Date, TimeSpan.FromDays(howManyDays), findOptions);
 
         }
 
@@ -51,7 +51,7 @@ namespace Pocal
             findOptions.FetchProperties.Add(AppointmentProperties.AllDay);
             findOptions.FetchProperties.Add(AppointmentProperties.Duration);
 
-            IReadOnlyList<Appointment> appts = await appointmentStore.FindAppointmentsAsync(DateTime.Now.Date, TimeSpan.FromDays(App.ViewModel.howManyDays), findOptions);
+            IReadOnlyList<Appointment> appts = await appointmentStore.FindAppointmentsAsync(DateTime.Now.Date, TimeSpan.FromDays(App.ViewModel.Days.Count), findOptions);
             foreach (var appt in appts)
             {
                 if (appt.Subject.Contains(subject))
@@ -140,7 +140,7 @@ namespace Pocal
                     calendar.FindAllInstancesAsync(
                         localID,
                         DateTime.Today,
-                        TimeSpan.FromDays(App.ViewModel.howManyDays),
+                        TimeSpan.FromDays(App.ViewModel.Days.Count),
                         getFindOptions());
 
                 foreach (var appt in appointmentInstances)
