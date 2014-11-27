@@ -265,31 +265,27 @@
 
                                 <Grid 
                                       Tap="OpenSdvAndSetTappedDay" Margin="0,0,-14,0" RenderTransformOrigin="0.5,0.5" Background="#FF131313">
-                                    <StackPanel x:Name="DayCardStackPanel" RenderTransformOrigin="0.0,1.0">
+                                    <StackPanel Margin="0,0,0,20" x:Name="DayCardStackPanel" RenderTransformOrigin="0.0,1.0">
+
+                                        <Grid Background="#FF131313" Height="20" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center"/>
 
 
                                         <!--******** ****************** ********-->
                                         <!--******** DAYCARD WEEKNUMBER ********-->
                                         <!--******** ****************** ********-->
-
-                                        <Grid Background="#FF131313" Height="20" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center" >
-
-                                        </Grid>
-                                        <Border Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}" BorderThickness="1" Height="1" BorderBrush="White" Margin="0"/>
+                                        <Border Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}" BorderThickness="1" Height="1" BorderBrush="DarkGray" Margin="0"/>
                                         <Grid Background="Black" Height="60" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center" >
                                             <!--<Border BorderThickness="1" Height="1" BorderBrush="White" Margin="0"/>-->
                                             <Grid Background="Black" HorizontalAlignment="Center">
-                                                <TextBlock   Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}" Margin="6,0,0,0" FontSize="30"   VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Thin" />
+                                                <TextBlock  Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}" Margin="6,0,0,0" FontSize="30"   VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Thin" RenderTransformOrigin="0.5,0.5" >
+                                                    <TextBlock.RenderTransform>
+                                                        <CompositeTransform TranslateX="-95"/>
+                                                    </TextBlock.RenderTransform>
+                                                </TextBlock>
                                             </Grid>
-
                                         </Grid>
-                                        <!--<Grid Background="Black" Height="2" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center" >
-                                            --><!--<Border BorderThickness="1" Height="1" BorderBrush="#FF535353" Margin="0"/>-->
-                                            <!--<Grid Background="#00000000" HorizontalAlignment="Center">
-                                                <TextBlock   Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}" Margin="6,0,0,0" FontSize="30"   VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Thin"  />
-                                            </Grid>--><!--
-                                        </Grid>-->
-                                        <Border BorderThickness="1" Height="1" BorderBrush="White" Margin="0"  
+
+                                        <Border BorderThickness="1" Height="1" BorderBrush="DarkGray" Margin="0"  
                                                 Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}"/>
 
                                         <!--******** ************** ********-->
@@ -490,7 +486,7 @@
             <!--******** SDV ******** -->
             <!--******** *** ******** -->
             <Grid x:Name="SingleDayView" 
-				Background="#AD000000" RenderTransformOrigin="0.5,0.5" >
+				Background="#AD000000" RenderTransformOrigin="0.5,0.5" d:IsHidden="True" >
                 <Grid.RenderTransform>
                     <CompositeTransform/>
                 </Grid.RenderTransform>
