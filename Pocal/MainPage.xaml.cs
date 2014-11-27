@@ -183,7 +183,7 @@ namespace Pocal
                 Day day = e.Container.Content as Day;
                 if (day != null)
                 {
-                    int offset = 2;
+                    int offset = 10;
                     // Only if there is no data that is currently getting loaded would be initiate the loading again
                     if (!App.ViewModel.isCurrentlyLoading && App.ViewModel.Days.Count - App.ViewModel.Days.IndexOf(day) <= offset)
                     {

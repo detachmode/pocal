@@ -271,30 +271,31 @@
                                         <!--******** ****************** ********-->
                                         <!--******** DAYCARD WEEKNUMBER ********-->
                                         <!--******** ****************** ********-->
-                                        
+
                                         <Grid Background="#FF131313" Height="20" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center" >
-                                          
+
                                         </Grid>
-                                        <Border Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}" BorderThickness="1" Height="1" BorderBrush="#FF535353" Margin="0"/>
+                                        <Border Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}" BorderThickness="1" Height="1" BorderBrush="White" Margin="0"/>
                                         <Grid Background="Black" Height="60" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center" >
-                                            <Border BorderThickness="1" Height="1" BorderBrush="#FF535353" Margin="0"/>
+                                            <!--<Border BorderThickness="1" Height="1" BorderBrush="White" Margin="0"/>-->
                                             <Grid Background="Black" HorizontalAlignment="Center">
-                                                <TextBlock   Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}" Margin="6,0,0,0" FontSize="30"   VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Thin"  />
+                                                <TextBlock   Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}" Margin="6,0,0,0" FontSize="30"   VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Thin" />
                                             </Grid>
-                                             
+
                                         </Grid>
-                                        <Grid Background="Black" Height="2" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center" >
-                                            <!--<Border BorderThickness="1" Height="1" BorderBrush="#FF535353" Margin="0"/>-->
+                                        <!--<Grid Background="Black" Height="2" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center" >
+                                            --><!--<Border BorderThickness="1" Height="1" BorderBrush="#FF535353" Margin="0"/>-->
                                             <!--<Grid Background="#00000000" HorizontalAlignment="Center">
                                                 <TextBlock   Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}" Margin="6,0,0,0" FontSize="30"   VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Thin"  />
-                                            </Grid>-->
-                                        </Grid>
+                                            </Grid>--><!--
+                                        </Grid>-->
+                                        <Border BorderThickness="1" Height="1" BorderBrush="White" Margin="0"  
+                                                Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}"/>
 
                                         <!--******** ************** ********-->
                                         <!--******** DAYCARD HEADER ********-->
                                         <!--******** ************** ********-->
-                                        <Border BorderThickness="1" Height="1" BorderBrush="#FF535353" Margin="0"
-                                                Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}"/>
+
                                         <TextBlock x:Name="DayCardHeader" Tap="DayCard_HeaderTap" 
                                                    Foreground ="{Binding DT, Converter={StaticResource pastDaysForeground}}" 
                                                    Text="{Binding DT, Converter={StaticResource DateConverter}}" FontSize="34" 
@@ -445,9 +446,9 @@
                                                                 <TextBlock.RenderTransform>
                                                                     <CompositeTransform/>
                                                                 </TextBlock.RenderTransform>
-                                                                <!--<TextBlock.CacheMode>
-                                                                    <BitmapCache RenderAtScale="0.5"/>
-                                                                </TextBlock.CacheMode>-->
+                                                                <TextBlock.CacheMode>
+                                                                    <BitmapCache RenderAtScale="1"/>
+                                                                </TextBlock.CacheMode>
 
                                                             </TextBlock>
 
@@ -460,9 +461,9 @@
                                                                 <TextBlock.RenderTransform>
                                                                     <CompositeTransform/>
                                                                 </TextBlock.RenderTransform>
-                                                                <!--<TextBlock.CacheMode>
-                                                                    <BitmapCache RenderAtScale="0.5"/>
-                                                                </TextBlock.CacheMode>-->
+                                                                <TextBlock.CacheMode>
+                                                                    <BitmapCache RenderAtScale="1"/>
+                                                                </TextBlock.CacheMode>
                                                                 <!--<TextBlock.Foreground>
                                                                     <SolidColorBrush Color="{StaticResource PhoneTextBoxColor}"/>
                                                                 </TextBlock.Foreground>-->
