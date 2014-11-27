@@ -55,10 +55,10 @@ namespace Pocal
                 DateTime dt = DateTime.Now.Date.AddDays(-10);
                            
                 await App.ViewModel.LoadPocalApptsAndDays(DateTime.Now, 10);
-                await App.ViewModel.loadDatesOfThePast(10);  
+                await App.ViewModel.loadDatesOfThePast(3);  
 
             }else
-               await App.ViewModel.LoadPocalApptsAndDays(App.ViewModel.Days[App.ViewModel.Days.Count-1].DT.AddDays(1), 10);
+               await App.ViewModel.LoadPocalApptsAndDays(App.ViewModel.Days[App.ViewModel.Days.Count-1].DT.AddDays(1), 20);
             
         }
         #region AgendaView Events

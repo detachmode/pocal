@@ -191,7 +191,40 @@ namespace Pocal.Converter
     }
 
 
+    public class startTimeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var appt = (value as PocalAppointment);
 
+            if (appt != null)
+            {
+
+                //System.Diagnostics.Debug.WriteLine(" " + appt.Subject + " " + appt.Duration.Days.ToString()+ "\n AllDay: "+appt.AllDay.ToString());
+                //Zeit
+                if (appt.AllDay || appt.Duration == TimeSpan.FromDays(1))
+                {
+                    return "";
+
+                }
+                string str = "";
+                str += appt.StartTime.Hour.ToString("00");
+                str += ":";
+                str += appt.StartTime.Minute.ToString("00");
+                return str;
+            }
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+
+            return null;
+        }
+
+
+
+    }
 
 
     public class secondLineConverter : IValueConverter
@@ -320,7 +353,7 @@ namespace Pocal.Converter
             if (weeknumber % 2 == 1)
                 return converterBrushes.DarkGray;
             else
-                return  converterBrushes.Black;
+                return converterBrushes.Black;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -336,8 +369,8 @@ namespace Pocal.Converter
         {
             DateTime dt = (DateTime)value;
             //if (dt.Date < DateTime.Now.Date)
-            int weeknumber = (dt.DayOfYear +1)/ 7;
-            if (weeknumber%2 == 0)
+            int weeknumber = (dt.DayOfYear + 1) / 7;
+            if (weeknumber % 2 == 0)
                 return converterBrushes.DarkGray;
             else
                 return converterBrushes.Black;
@@ -356,9 +389,9 @@ namespace Pocal.Converter
             DateTime dt = (DateTime)value;
 
             if (dt.Date < DateTime.Now.Date)
-               return converterBrushes.weekendHeader;
+                return converterBrushes.weekendHeader;
 
-           return converterBrushes.noWeekendHeader;
+            return converterBrushes.noWeekendHeader;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -374,14 +407,14 @@ namespace Pocal.Converter
             DateTime dt = (DateTime)value;
 
             if (dt.Date < DateTime.Now.Date)
-               return converterBrushes.weekendHeader;
+                return converterBrushes.weekendHeader;
 
             if (dt.Date == DateTime.Now.Date)
                 return converterBrushes.Red;
-            
 
-           
-           return converterBrushes.noWeekendHeader;
+
+
+            return converterBrushes.noWeekendHeader;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -439,7 +472,7 @@ namespace Pocal.Converter
             {
                 int weeknumber = day.DT.DayOfYear / 7 + 2;
 
-                return "  KW " + weeknumber+ "  ";
+                return "  KW " + weeknumber + "  ";
             }
             else
                 return null;
