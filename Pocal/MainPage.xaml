@@ -437,8 +437,15 @@
                                                         </StackPanel.RenderTransform>
 
                                                         <!--Subject and SecondLine-->
-                                                        <StackPanel  Margin="12,0,0,0">
-                                                            <TextBlock x:Name="FirstLine"  Text="{Binding Appt, Converter={StaticResource subjectConverter}}" Foreground="{Binding CalColor}" FontSize="20" RenderTransformOrigin="0,0">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            
+                                                            <TextBlock x:Name="StartTime"  Text="Ganztägig" Width="80" FontSize="18" Margin="0,0,10,0"/>
+                                                            <Rectangle Margin="0,3" Fill="{Binding CalColor}" Width="3"/>
+
+                                                            <StackPanel  Margin="12,0,0,0">
+                                                            <TextBlock x:Name="FirstLine"  
+                                                                       Text="{Binding Appt, Converter={StaticResource subjectConverter}}" 
+                                                                       FontSize="20" RenderTransformOrigin="0,0">
                                                                 <TextBlock.RenderTransform>
                                                                     <CompositeTransform/>
                                                                 </TextBlock.RenderTransform>
@@ -451,9 +458,7 @@
                                                             <TextBlock x:Name="SecondLine"  Text="{Binding Appt, Converter={StaticResource secondLineConverter}}" 
 																Foreground ="{Binding StartTime.DateTime, Converter={StaticResource pastDaysForeground}}" 
 																FontFamily="{StaticResource PhoneFontFamilyLight}" 
-																CharacterSpacing="1" 
-																Padding="0" 
-																Margin="0,-6,0,0">
+																Padding="0"  FontSize="18" Margin="0,0,0,0">
                                                                 <TextBlock.RenderTransform>
                                                                     <CompositeTransform/>
                                                                 </TextBlock.RenderTransform>
@@ -466,7 +471,7 @@
                                                             </TextBlock>
 
                                                         </StackPanel>
-
+                                                        </StackPanel>
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
