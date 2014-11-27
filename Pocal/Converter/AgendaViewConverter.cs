@@ -288,6 +288,7 @@ namespace Pocal.Converter
         public static SolidColorBrush noWeekendHeader = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
         public static SolidColorBrush DarkGray = new SolidColorBrush(Color.FromArgb(255, 20, 20, 20));
         public static SolidColorBrush Black = new SolidColorBrush(Colors.Black);
+        public static SolidColorBrush Red = new SolidColorBrush(Colors.Red);
 
     }
 
@@ -348,18 +349,39 @@ namespace Pocal.Converter
         }
     }
 
-    public class pastDaysForeground : IValueConverter
+    public class secondLinesForeground : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             DateTime dt = (DateTime)value;
 
             if (dt.Date < DateTime.Now.Date)
-            {
-                return converterBrushes.weekendHeader;
-            }
-            else
-                return converterBrushes.noWeekendHeader;
+               return converterBrushes.weekendHeader;
+
+           return converterBrushes.noWeekendHeader;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    public class dayHeadersForeground : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DateTime dt = (DateTime)value;
+
+            if (dt.Date < DateTime.Now.Date)
+               return converterBrushes.weekendHeader;
+
+            if (dt.Date == DateTime.Now.Date)
+                return converterBrushes.Red;
+            
+
+           
+           return converterBrushes.noWeekendHeader;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

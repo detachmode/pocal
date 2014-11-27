@@ -176,10 +176,10 @@ namespace Pocal
         {
             if (e.ItemKind == LongListSelectorItemKind.Item)
             {
-                if (App.ViewModel.InModus == MainVM.Modi.OverView)
-                {
-                    setItemStyleToOverview(e.Container);
-                }
+                //if (App.ViewModel.InModus == MainVM.Modi.OverView)
+                //{
+                //    setItemStyleToOverview(e.Container);
+                //}
                 Day day = e.Container.Content as Day;
                 if (day != null)
                 {

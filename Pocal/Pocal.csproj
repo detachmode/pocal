@@ -95,7 +95,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converter\AgendaViewConverter.cs" />
-    <Compile Include="Converter\PointerRoutedEventArgs.cs" />
+    <Compile Include="Converter\OverViewConverter.cs" />
     <Compile Include="Converter\SingleDayViewConverter.cs" />
     <Compile Include="Helper\Cluster.cs" />
     <Compile Include="Helper\ColorConverter.cs" />
