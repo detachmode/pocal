@@ -158,7 +158,7 @@ namespace Pocal.ViewModel
         }
 
 
-        
+
 
         //public async void refreshData()
         //{
@@ -190,12 +190,12 @@ namespace Pocal.ViewModel
         {
             var cal = CalendarAPI.calendars.First(c => c.LocalId == appt.CalendarId);
 
-            PocalAppointment pocalAppt = new PocalAppointment { Appt = appt, CalColor = getCalendarColorBrush(appt, cal) };
+            PocalAppointment pocalAppt = new PocalAppointment { Appt = appt, CalColor = getAppointmentColorBrush(appt, cal) };
             return pocalAppt;
         }
 
         private Dictionary<AppointmentCalendar, SolidColorBrush> calColors = new Dictionary<AppointmentCalendar, SolidColorBrush>();
-        private SolidColorBrush getCalendarColorBrush(Appointment appt, AppointmentCalendar cal)
+        private SolidColorBrush getAppointmentColorBrush(Appointment appt, AppointmentCalendar cal)
         {
             SolidColorBrush brush = null;
             calColors.TryGetValue(cal, out brush);
@@ -206,6 +206,31 @@ namespace Pocal.ViewModel
                 brush = new SolidColorBrush(calColor);
                 calColors.Add(cal, brush);
                 return brush;
+            }
+            brush = darkenBrushIfInPastDay(brush, (appt.StartTime + appt.Duration));
+
+            return brush;
+        }
+
+
+
+
+        private SolidColorBrush darkenBrushIfInPastDay(SolidColorBrush brush, DateTimeOffset endTime)
+        {
+            if (endTime.Date < DateTime.Now.Date)
+            {
+                RGB rgb = new RGB(){ B=brush.Color.B, G =brush.Color.G, R=brush.Color.R };    
+                HSB hsb = ColorConverter.ConvertToHSB(rgb);
+                hsb.S *= 0.8;
+                hsb.B *= 0.8;
+                rgb =  ColorConverter.ConvertToRGB(hsb);
+
+                Color color = new Color() { A = 255, B = (byte)rgb.B, G = (byte)rgb.G, R = (byte)rgb.R };    
+
+              
+                SolidColorBrush newbrush = new SolidColorBrush() { Color = color };
+                return newbrush;
+                
             }
             return brush;
         }
@@ -280,7 +305,7 @@ namespace Pocal.ViewModel
             for (int i = 0; i < howManyDays; i++)
             {
                 // Create New Day with its Appointments
-                Days.Insert(i,new Day()
+                Days.Insert(i, new Day()
                 {
                     DT = dt,
                     PocalApptsOfDay = getPocalApptsOfDay(dt)

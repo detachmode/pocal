@@ -98,6 +98,7 @@
     <Compile Include="Converter\PointerRoutedEventArgs.cs" />
     <Compile Include="Converter\SingleDayViewConverter.cs" />
     <Compile Include="Helper\Cluster.cs" />
+    <Compile Include="Helper\ColorConverter.cs" />
     <Compile Include="Helper\ConflictManager.cs" />
     <Compile Include="Helper\Hourline.cs" />
     <Compile Include="Helper\PocalAppointmentUpdater.cs" />
