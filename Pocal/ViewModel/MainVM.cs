@@ -207,7 +207,7 @@ namespace Pocal.ViewModel
                 calColors.Add(cal, brush);
                 return brush;
             }
-            brush = darkenBrushIfInPastDay(brush, (appt.StartTime + appt.Duration));
+            //brush = darkenBrushIfInPastDay(brush, (appt.StartTime + appt.Duration));
 
             return brush;
         }

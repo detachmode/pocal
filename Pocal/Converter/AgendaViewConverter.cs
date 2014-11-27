@@ -286,7 +286,9 @@ namespace Pocal.Converter
     {
         public static SolidColorBrush weekendHeader = new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
         public static SolidColorBrush noWeekendHeader = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
-       
+        public static SolidColorBrush DarkGray = new SolidColorBrush(Color.FromArgb(255, 20, 20, 20));
+        public static SolidColorBrush Black = new SolidColorBrush(Colors.Black);
+
     }
 
     //public class highlightedDayConverter : IValueConverter
@@ -306,7 +308,65 @@ namespace Pocal.Converter
     //    {
     //        return null;
     //    }
-    //}
+    //}     
+    public class pastDaysBackgroundInverted : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DateTime dt = (DateTime)value;
+            //if (dt.Date < DateTime.Now.Date)
+            int weeknumber = (dt.DayOfYear + 1) / 7;
+            if (weeknumber % 2 == 1)
+                return converterBrushes.DarkGray;
+            else
+                return  converterBrushes.Black;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+
+    public class pastDaysBackground : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DateTime dt = (DateTime)value;
+            //if (dt.Date < DateTime.Now.Date)
+            int weeknumber = (dt.DayOfYear +1)/ 7;
+            if (weeknumber%2 == 0)
+                return converterBrushes.DarkGray;
+            else
+                return converterBrushes.Black;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    public class pastDaysForeground : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DateTime dt = (DateTime)value;
+
+            if (dt.Date < DateTime.Now.Date)
+            {
+                return converterBrushes.weekendHeader;
+            }
+            else
+                return converterBrushes.noWeekendHeader;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
 
     public class weekendForeground : IValueConverter
     {
