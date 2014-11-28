@@ -90,7 +90,7 @@ namespace Pocal.Converter
 
 
             }
-            else return null;
+            else return "Null";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

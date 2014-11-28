@@ -193,26 +193,6 @@
                 </Grid.RowDefinitions>
 
 
-                <!--******** ***************** ********-->
-                <!--******** AGENDAVIEW HEADER ********-->
-                <!--******** ***************** ********-->
-                <!--<Grid x:Name="AgendaHeader" Grid.Row="0" Canvas.ZIndex="4" Background="Black" 
-						>
-                    <StackPanel x:Name="HeaderStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock x:Name="WeekCounter"  Text="{Binding CurrentTop, Converter={StaticResource CurrentTopWeekConverter}}" FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="22" HorizontalAlignment="Center" >
-                            <TextBlock.Foreground>
-                                <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-                            </TextBlock.Foreground>
-                        </TextBlock>
-                        <TextBlock x:Name="DaysCounter"  Text="{Binding CurrentTop, Converter={StaticResource CurrentTopDayConverter}}"  FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="22" HorizontalAlignment="Center" Margin="8,0,0,0" >
-                            <TextBlock.Foreground>
-                                <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-                            </TextBlock.Foreground>
-                        </TextBlock>
-                    </StackPanel>
-                    <Border Height="1" Background="#FF363636" VerticalAlignment="Bottom"/>
-                </Grid>-->
-
                 <!--******** *************** ********-->
                 <!--******** AGENDAVIEW BODY ********-->
                 <!--******** *************** ********-->
@@ -264,7 +244,7 @@
                     </Grid.RenderTransform>
 
                     <phone:LongListSelector   x:Name="AgendaViewListbox" ManipulationCompleted="AgendaViewListbox_ManipulationCompleted" Loaded="LongList_Loaded"                                             
-                                             ItemsSource="{Binding Days }"  HorizontalContentAlignment="Stretch" Background="Transparent" Margin="0,10,0,-10" >
+                                             ItemsSource="{Binding Days }"  HorizontalContentAlignment="Stretch" Background="Transparent" Margin="0,0,0,0" >
                         <phone:LongListSelector.ItemTemplate >
                             <DataTemplate >
 
@@ -517,6 +497,26 @@
                         </phone:LongListSelector.RenderTransform>
                     </phone:LongListSelector>
                 </Grid>
+
+                <!--******** ***************** ********-->
+                <!--******** AGENDAVIEW HEADER ********-->
+                <!--******** ***************** ********-->
+                <Grid x:Name="AgendaHeader" Height="60"  Grid.Row="1"   >
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="Black" >
+                        <Rectangle Height="2" Width="40" Fill="White"/>
+
+                        <StackPanel x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center">
+                        <TextBlock x:Name="WeekCounter"  Text="{Binding DayAtCenterOfScreen, Converter={StaticResource CurrentTopWeekConverter}}"
+                                   FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="22" HorizontalAlignment="Center" >
+                        </TextBlock>
+                        <TextBlock x:Name="DaysCounter"  Text="{Binding DayAtCenterOfScreen , Converter={StaticResource CurrentTopDayConverter}}" 
+                                   FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="22" HorizontalAlignment="Center" Margin="8,0,0,0" >
+                        </TextBlock>
+                    </StackPanel>
+                    </StackPanel>
+                    <!--<Border Height="1" Background="#FF363636" VerticalAlignment="Bottom"/>-->
+                </Grid>
+                
             </Grid>
 
             <!--******** *** ******** -->

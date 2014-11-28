@@ -327,19 +327,19 @@ namespace Pocal.ViewModel
 
 
 
-        private Day _currentTop;
+        private Day _dayAtCenterOfScreen;
         public Day DayAtCenterOfScreen
         {
             get
             {
-                return _currentTop;
+                return _dayAtCenterOfScreen;
             }
             set
             {
-                if (value != _currentTop)
+                if (value != _dayAtCenterOfScreen)
                 {
-                    _currentTop = value;
-                    NotifyPropertyChanged("CurrentTop");
+                    _dayAtCenterOfScreen = value;
+                    NotifyPropertyChanged("DayAtCenterOfScreen");
                 }
             }
         }

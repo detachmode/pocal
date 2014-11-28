@@ -44,6 +44,7 @@ namespace Pocal
 
             AgendaViewListbox.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
             AgendaViewListbox.ItemRealized += LLS_ItemRealized2;
+            AgendaViewListbox.ItemRealized += LLS_ItemRealized;
             AgendaViewListbox.ItemUnrealized += LLS_ItemUnrealized2;
             watchPositionOfLongListSelector();
         }
@@ -119,7 +120,7 @@ namespace Pocal
 
             DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 2000); // TODO performance
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 40); // TODO performance
             dispatcherTimer.Start();
         }
 
@@ -145,14 +146,15 @@ namespace Pocal
         {
             if (realizedPocalAppointmentItems.Count > 1)
             {
-                var offset = FindViewport(AgendaViewListbox).Viewport.Top +400;
-                //object keys = realizedPocalAppointmentItems.Last()
-                ContentPresenter key = realizedPocalAppointmentItems.Last().Value;
-                var test = Canvas.GetTop(key);
+                var offset = FindViewport(AgendaViewListbox).Viewport.Top;
+                if (App.ViewModel.InModus == MainVM.Modi.OverView)
+                    offset += ((730+600)/ 2);
+                else
+                    offset += (730 / 2);
 
-                IEnumerable<KeyValuePair<object, ContentPresenter>> keyValuePairs = realizedPocalAppointmentItems.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight > offset);
+                IEnumerable<KeyValuePair<object, ContentPresenter>> keyValuePairs = realizedPocalAppointmentItems.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight >= offset);
                 List<KeyValuePair<object, ContentPresenter>> keyValuePairsSorted = keyValuePairs.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
-                object obj = keyValuePairsSorted[1].Key;
+                object obj = keyValuePairsSorted[0].Key;
 
                 return obj;
             }
