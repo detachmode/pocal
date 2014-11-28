@@ -278,15 +278,18 @@
                                         <!--******** ****************** ********-->
                                         <!--******** DAYCARD WEEKNUMBER ********-->
                                         <!--******** ****************** ********-->
-                                        <Border Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}" BorderThickness="1" Height="1" BorderBrush="DarkGray" Margin="0"/>
-                                        <Grid Background="Black" Height="60" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center" >
+                                        <Border Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}" 
+                                                BorderThickness="1" Height="1" BorderBrush="DarkGray" Margin="0"/>
+                                        <Grid Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" 
+                                              VerticalAlignment="Center" Background="Black" Height="60"  >
                                             <!--<Border BorderThickness="1" Height="1" BorderBrush="White" Margin="0"/>-->
                                             <Grid  Width="467" Background="Black" HorizontalAlignment="Left">
-                                                <TextBlock  Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}" Margin="6,0,0,0" FontSize="30"   VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Thin" RenderTransformOrigin="0.5,0.5" >
+                                                <TextBlock  Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}"
+                                                            Margin="6,0,0,0" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                            FontWeight="Thin" RenderTransformOrigin="0.5,0.5" >
                                                 </TextBlock>
                                             </Grid>
                                         </Grid>
-
                                         <Border BorderThickness="1" Height="1" BorderBrush="DarkGray" Margin="0"  
                                                 Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}"/>
                                         <Grid Background="#FF131313" Height="20" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center"/>
@@ -294,7 +297,6 @@
                                         <!--******** ************** ********-->
                                         <!--******** DAYCARD HEADER ********-->
                                         <!--******** ************** ********-->
-
                                         <TextBlock x:Name="DayCardHeader" Tap="DayCard_HeaderTap" 
                                                    Foreground ="{Binding DT, Converter={StaticResource dayHeadersForeground}}" 
                                                    Text="{Binding DT, Converter={StaticResource DateConverter}}" FontSize="34" 

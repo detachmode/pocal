@@ -43,8 +43,9 @@ namespace Pocal
             VisualStateManager.GoToState(this, "Close", true);
 
             AgendaViewListbox.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
-            AgendaViewListbox.ItemRealized += LLS_ItemRealized;
-            //watchPositionOfLongListSelector();
+            AgendaViewListbox.ItemRealized += LLS_ItemRealized2;
+            AgendaViewListbox.ItemUnrealized += LLS_ItemUnrealized2;
+            watchPositionOfLongListSelector();
         }
 
         private async void LoadDataFromSource()
@@ -61,6 +62,7 @@ namespace Pocal
                await App.ViewModel.LoadPocalApptsAndDays(App.ViewModel.Days[App.ViewModel.Days.Count-1].DT.AddDays(1), 20);
             
         }
+       
         #region AgendaView Events
 
         private void AgendaViewListbox_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
@@ -108,78 +110,83 @@ namespace Pocal
 
         }
 
-        // Wird benötigt um die Position im Longlistselektor zu bestimmen um damit DeltaDays auszurechnen.
-        //private Dictionary<object, ContentPresenter> items = new Dictionary<object, ContentPresenter>();
-        //private void watchPositionOfLongListSelector()
-        //{
-        //    //AgendaViewListbox.ItemRealized += LLS_ItemRealized;
-        //    //AgendaViewListbox.ItemUnrealized += LLS_ItemUnrealized;
+         //Wird benötigt um die Position im Longlistselektor zu bestimmen um damit DeltaDays auszurechnen.
+        private Dictionary<object, ContentPresenter> realizedPocalAppointmentItems = new Dictionary<object, ContentPresenter>();
+        private void watchPositionOfLongListSelector()
+        {
+            //AgendaViewListbox.ItemRealized += LLS_ItemRealized;
+            //AgendaViewListbox.ItemUnrealized += LLS_ItemUnrealized;
 
-        //    DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-        //    dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-        //    dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 40); // TODO performance
-        //    dispatcherTimer.Start();
-        //}
+            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 2000); // TODO performance
+            dispatcherTimer.Start();
+        }
 
-        //private void dispatcherTimer_Tick(object sender, EventArgs e)
-        //{
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
 
-        //    Day testday = (Day)GetFirstVisibleItem();
-        //    if (testday != null)
-        //    {
-        //        // Switch Highlighted Day
-        //        Day d = App.ViewModel.CurrentTop;
-        //        if (d != null)
-        //        {
-        //            d.IsHighlighted = false;
-        //        }
-        //        App.ViewModel.CurrentTop = testday;
-        //        testday.IsHighlighted = true;
-        //    }
+            Day testday = (Day)GetFirstVisibleItem();
+            if (testday != null)
+            {
+                // Switch Highlighted Day
+                Day d = App.ViewModel.DayAtCenterOfScreen;
+                if (d != null)
+                {
+                    d.IsHighlighted = false;
+                }
+                App.ViewModel.DayAtCenterOfScreen = testday;
+                testday.IsHighlighted = true;
+            }
 
-        //}
+        }
 
-        //public object GetFirstVisibleItem()
-        //{
-        //    if (items.Count > 1)
-        //    {
-        //        var offset = FindViewport(AgendaViewListbox).Viewport.Top;
-        //        return (items.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight > offset)
-        //            .OrderBy(x => Canvas.GetTop(x.Value)).ToList())[1].Key;
-        //    }
-        //    else
-        //        return null;
+        public object GetFirstVisibleItem()
+        {
+            if (realizedPocalAppointmentItems.Count > 1)
+            {
+                var offset = FindViewport(AgendaViewListbox).Viewport.Top +400;
+                //object keys = realizedPocalAppointmentItems.Last()
+                ContentPresenter key = realizedPocalAppointmentItems.Last().Value;
+                var test = Canvas.GetTop(key);
 
-        //}
+                IEnumerable<KeyValuePair<object, ContentPresenter>> keyValuePairs = realizedPocalAppointmentItems.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight > offset);
+                List<KeyValuePair<object, ContentPresenter>> keyValuePairsSorted = keyValuePairs.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
+                object obj = keyValuePairsSorted[1].Key;
 
-        //private void LLS_ItemRealized(object sender, ItemRealizationEventArgs e)
-        //{
-        //    if (e.ItemKind == LongListSelectorItemKind.Item)
-        //    {
-        //        object o = e.Container.DataContext;
-        //        items[o] = e.Container;
-        //    }
-        //}
+                return obj;
+            }
+            else
+                return null;
 
-        //private void LLS_ItemUnrealized(object sender, ItemRealizationEventArgs e)
-        //{
-        //    if (e.ItemKind == LongListSelectorItemKind.Item)
-        //    {
-        //        object o = e.Container.DataContext;
-        //        items.Remove(o);
-        //    }
-        //}
+        }
+
+        private void LLS_ItemRealized2(object sender, ItemRealizationEventArgs e)
+        {
+            if (e.ItemKind == LongListSelectorItemKind.Item)
+            {
+                object o = e.Container.DataContext;
+                realizedPocalAppointmentItems[o] = e.Container;
+            }
+        }
+
+        private void LLS_ItemUnrealized2(object sender, ItemRealizationEventArgs e)
+        {
+            if (e.ItemKind == LongListSelectorItemKind.Item)
+            {
+                object o = e.Container.DataContext;
+                realizedPocalAppointmentItems.Remove(o);
+            }
+        }
 
         
+
+
         
         private void LLS_ItemRealized(object sender, ItemRealizationEventArgs e)
         {
             if (e.ItemKind == LongListSelectorItemKind.Item)
             {
-                //if (App.ViewModel.InModus == MainVM.Modi.OverView)
-                //{
-                //    setItemStyleToOverview(e.Container);
-                //}
                 Day day = e.Container.Content as Day;
                 if (day != null)
                 {
@@ -194,17 +201,6 @@ namespace Pocal
             }
         }
 
-        private void setItemStyleToOverview(ContentPresenter contentPresenter)
-        {
-
-            foundDayCards_ItemsControll = new List<ItemsControl>();
-            foundStackPanels = new List<StackPanel>();
-
-            findItemControll(contentPresenter);
-            findItemStackPanelInItemsControll("DayCard_ApptItem");
-            playStoryboardOfFoundStackPanels("EnterOverviewForSingleItem");
-
-        }
 
         private static ViewportControl FindViewport(DependencyObject parent)
         {

@@ -122,7 +122,7 @@ namespace Pocal.ViewModel
 
 
                 SingleDayViewModel.TappedDay = Days[0];
-                CurrentTop = new Day { DT = dt.AddHours(24) };
+                DayAtCenterOfScreen = new Day { DT = dt.AddHours(24) };
 
             }
             #endregion
@@ -328,7 +328,7 @@ namespace Pocal.ViewModel
 
 
         private Day _currentTop;
-        public Day CurrentTop
+        public Day DayAtCenterOfScreen
         {
             get
             {
