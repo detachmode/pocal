@@ -41,10 +41,10 @@
         <local:weekConverter x:Key="weekConverter"/>
         <local:DateConverter x:Key="DateConverter"/>
         <local:secondLineConverter x:Key="secondLineConverter"/>
-        <local:subjectConverter x:Key="subjectConverter"/>
         <local:hourConverter x:Key="hourConverter"/>
         <local:minuteConverter x:Key="minuteConverter"/>
         <local:CurrentTopWeekConverter x:Key="CurrentTopWeekConverter"/>
+        <local:deltaWeekVisibility x:Key="deltaWeekVisibility"/>
         <local:CurrentTopDayConverter x:Key="CurrentTopDayConverter"/>
 
         <local:singelDayApptHeight x:Key="singelDayApptHeight"/>
@@ -336,9 +336,9 @@
                                                                     <EasingDoubleKeyFrame KeyTime="0:0:0.0" Value="1"/>
                                                                     <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
                                                                 </DoubleAnimationUsingKeyFrames>
-                                                                
+
                                                             </Storyboard>
-                                                            
+
                                                             <Storyboard x:Name="EnterOverviewForSingleItem">
 
                                                                 <Storyboard>
@@ -454,7 +454,7 @@
                                                             <StackPanel  Margin="6,0,0,0">
                                                                 <TextBlock x:Name="FirstLine"  
                                                                        Foreground="{Binding CalColor}" 
-                                                                       Text="{Binding Appt, Converter={StaticResource subjectConverter}}" 
+                                                                       Text="{Binding Appt.Subject}"
                                                                        FontSize="20" RenderTransformOrigin="0,0">
                                                                     <TextBlock.RenderTransform>
                                                                         <CompositeTransform ScaleX="{Binding AllDay, Converter={StaticResource overview_SecondLineSale}}" 
@@ -501,22 +501,32 @@
                 <!--******** ***************** ********-->
                 <!--******** AGENDAVIEW HEADER ********-->
                 <!--******** ***************** ********-->
-                <Grid x:Name="AgendaHeader" Height="60"  Grid.Row="1"   >
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="Black" >
-                        <Rectangle Height="2" Width="40" Fill="White"/>
+                <Grid x:Name="AgendaHeader" Height="60" Grid.Row="1"   >
+                    <Grid  HorizontalAlignment="Right"  >
+                        <Grid Width="170">
+                            <Grid.Background>
+                                <ImageBrush ImageSource="/Images/deltaTimeArrow.png" Stretch="Fill"/>
+                            </Grid.Background>
 
-                        <StackPanel x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center">
-                        <TextBlock x:Name="WeekCounter"  Text="{Binding DayAtCenterOfScreen, Converter={StaticResource CurrentTopWeekConverter}}"
-                                   FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="22" HorizontalAlignment="Center" >
-                        </TextBlock>
-                        <TextBlock x:Name="DaysCounter"  Text="{Binding DayAtCenterOfScreen , Converter={StaticResource CurrentTopDayConverter}}" 
-                                   FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="22" HorizontalAlignment="Center" Margin="8,0,0,0" >
-                        </TextBlock>
-                    </StackPanel>
-                    </StackPanel>
+                        </Grid>
+
+                        <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                <TextBlock x:Name="WeekCounter" Text="{Binding DayAtCenterOfScreen, Converter={StaticResource CurrentTopWeekConverter}}"
+                                    FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="18" HorizontalAlignment="Center"
+                                    Visibility="{Binding DayAtCenterOfScreen, Converter={StaticResource deltaWeekVisibility}}" >
+                                   
+                                </TextBlock>
+                                <TextBlock x:Name="DaysCounter"  Text="{Binding DayAtCenterOfScreen , Converter={StaticResource CurrentTopDayConverter}}" 
+                                   FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="18" HorizontalAlignment="Center" Margin="8,0,0,0" />
+
+                            </StackPanel>
+                            
+
+
+                    </Grid>
                     <!--<Border Height="1" Background="#FF363636" VerticalAlignment="Bottom"/>-->
                 </Grid>
-                
+
             </Grid>
 
             <!--******** *** ******** -->

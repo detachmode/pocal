@@ -176,6 +176,7 @@
     <Content Include="Images\check.png" />
     <Content Include="Images\close.png" />
     <Content Include="Images\delete.png" />
+    <Content Include="Images\deltaTimeArrow.png" />
     <Content Include="Images\download.png" />
     <Content Include="Images\edit.png" />
     <Content Include="Images\favs.addto.png" />

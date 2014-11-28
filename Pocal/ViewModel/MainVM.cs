@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Diagnostics;
 using Pocal.Helper;
+using System.Windows;
 
 namespace Pocal.ViewModel
 {
@@ -21,6 +22,7 @@ namespace Pocal.ViewModel
         public List<PocalAppointment> AllPocalAppointments = new List<PocalAppointment>();
         public SingleDayViewVM SingleDayViewModel { get; private set; }
         public ConflictManager ConflictManager { get; private set; }
+
 
         private IReadOnlyList<Appointment> appoinmentBuffer;
 
