@@ -26,7 +26,7 @@ namespace Pocal
         {
 
             load();
-            //CalendarAPI.AddTestAppointments();
+            CalendarAPI.AddTestAppointments();
 
         }
 

@@ -6,6 +6,7 @@ using System.Windows.Media;
 using Windows.ApplicationModel.Appointments;
 using System.Linq;
 using System.Windows;
+using Pocal.Helper;
 
 namespace Pocal.Converter
 {
@@ -141,43 +142,14 @@ namespace Pocal.Converter
 
             if (value is Day)
             {
-               
-                
                 DateTime dt = ((Day)value).DT;
-                if (dt.Date == DateTime.Now.Date)
-                    return "heute";
-
-                if (dt.Date == DateTime.Now.Date.AddDays(1))
-                    return "morgen";
-
-                if (dt.Date == DateTime.Now.Date.AddDays(-1))
-                    return "gestern";
-                TimeSpan ts = dt.Date - DateTime.Now.Date;
-                string str = " ";
-
-                int delta = ts.Days % 7;
-                if (delta == 0)
-                {
-                    return "";
-                }
-                if (ts.Days > 7)
-                    str += "und ";
-                else
-                    str += "in ";
-
-                str += delta.ToString() + " Tag";
-                if (delta > 1)
-                    str += "en";
-
-                return str;
-
-
-
-
+                return DeltaTimeStringCreator.getDeltaDays(dt);
 
             }
             else return null;
         }
+
+
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

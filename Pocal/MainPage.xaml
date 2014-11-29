@@ -502,28 +502,32 @@
                 <!--******** AGENDAVIEW HEADER ********-->
                 <!--******** ***************** ********-->
                 <Grid x:Name="AgendaHeader" Height="60" Grid.Row="1"   >
-                    <Grid  HorizontalAlignment="Right"  >
-                        <Grid Width="170">
+                    <Grid.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="2,0">
+                            <GradientStop Color="#C4000000" Offset="0.803"/>
+                            <GradientStop Offset="0.952"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  >
+                        <!--<Grid Width="50">
                             <Grid.Background>
-                                <ImageBrush ImageSource="/Images/deltaTimeArrow.png" Stretch="Fill"/>
+                                <ImageBrush Stretch="Uniform" ImageSource="/Images/back.png" Opacity="0.5"/>
                             </Grid.Background>
 
-                        </Grid>
-
-                        <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right">
+                        </Grid>-->
+                        <!--<Border BorderThickness="2,2,0,2" Background="#D8000000" BorderBrush="DarkGray">-->
+                            <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <TextBlock x:Name="WeekCounter" Text="{Binding DayAtCenterOfScreen, Converter={StaticResource CurrentTopWeekConverter}}"
                                     FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="18" HorizontalAlignment="Center"
                                     Visibility="{Binding DayAtCenterOfScreen, Converter={StaticResource deltaWeekVisibility}}" >
                                    
                                 </TextBlock>
                                 <TextBlock x:Name="DaysCounter"  Text="{Binding DayAtCenterOfScreen , Converter={StaticResource CurrentTopDayConverter}}" 
-                                   FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="18" HorizontalAlignment="Center" Margin="8,0,0,0" />
+                                   FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="18" HorizontalAlignment="Left" Margin="8,0,0,0" />
 
                             </StackPanel>
-                            
-
-
-                    </Grid>
+                        <!--</Border>-->
+                    </StackPanel>
                     <!--<Border Height="1" Background="#FF363636" VerticalAlignment="Bottom"/>-->
                 </Grid>
 
