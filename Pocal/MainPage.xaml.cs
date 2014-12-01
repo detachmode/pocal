@@ -147,9 +147,9 @@ namespace Pocal
         private double getLLS_OffsetAtCenterOfScreen()
         {
             var offset = FindViewport(AgendaViewLLS).Viewport.Top;
-            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
-                offset += ((730 + 600) / 2);
-            else
+            //if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            //    offset += ((730 + 600) / 2);
+            //else
                 offset += (730 / 2);
             return offset;
         }
