@@ -16,15 +16,35 @@ namespace Pocal.ViewModel
 
     public class MainViewModel : ViewModelBase
     {
-        public bool isCurrentlyLoading = false;
+
         public enum Modi { AgendaView, OverView };
-        public Modi InModus = Modi.AgendaView;
-        public List<PocalAppointment> AllPocalAppointments = new List<PocalAppointment>();
+        public Modi InModus = Modi.AgendaView; 
+ 
+        public bool IsCurrentlyLoading = false;
+
+        public ObservableCollection<Day> Days { get; set; }
         public SingleDayViewVM SingleDayViewModel { get; private set; }
         public ConflictManager ConflictManager { get; private set; }
 
+        private Day _dayAtCenterOfScreen;
+        public Day DayAtCenterOfScreen
+        {
+            get
+            {
+                return _dayAtCenterOfScreen;
+            }
+            set
+            {
+                if (value != _dayAtCenterOfScreen)
+                {
+                    _dayAtCenterOfScreen = value;
+                    NotifyPropertyChanged("DayAtCenterOfScreen");
+                }
+            }
+        }
 
-        private IReadOnlyList<Appointment> appoinmentBuffer;
+
+
 
         public MainViewModel()
         {
@@ -129,149 +149,78 @@ namespace Pocal.ViewModel
             }
             #endregion
 
-
         }
 
-        #region RELOAD
-        public async Task LoadPocalApptsAndDays(DateTime startDay, int howManyDays)
+
+
+        public async void LoadStartupDays()
         {
+            IsCurrentlyLoading = true;
+            DateTime dt = DateTime.Now.Date.AddDays(-10);
 
-            appoinmentBuffer = await CalendarAPI.getAppointments(startDay, howManyDays);
+            await loadPocalApptsAndDays(DateTime.Now, 10);
+            await loadDatesOfThePast(3);
+        }
 
-            await createAndAddToAllPocalApptointments();
+        public async void LoadMoreDays(int howMany)
+        {
+            IsCurrentlyLoading = true;
+            await loadPocalApptsAndDays(Days[Days.Count - 1].DT.AddDays(1), howMany);
+        }
+
+
+
+        #region LOAD
+        private IReadOnlyList<Appointment> appoinmentBuffer;
+        private List<PocalAppointment> pocalAppointmentsBuffer = new List<PocalAppointment>();
+
+
+
+
+
+
+        private async Task loadPocalApptsAndDays(DateTime startDay, int howManyDays)
+        {
+            await getPocalAppointments(howManyDays, startDay);
             createDays(startDay, howManyDays);
-            App.ViewModel.isCurrentlyLoading = false;
+            App.ViewModel.IsCurrentlyLoading = false;
 
 
         }
 
-        public async Task loadDatesOfThePast(int howManyDays)
+        private async Task loadDatesOfThePast(int howManyDays)
         {
-            if (App.ViewModel.Days.Count == 0)
-                return;
-
             DateTime startDay = App.ViewModel.Days[0].DT.AddDays(-howManyDays);
 
-            appoinmentBuffer = await CalendarAPI.getAppointments(startDay, howManyDays);
-            await createAndAddToAllPocalApptointments();
+            await getPocalAppointments(howManyDays, startDay);
             createAndInsertPastDays(startDay, howManyDays);
-            App.ViewModel.isCurrentlyLoading = false;
+            App.ViewModel.IsCurrentlyLoading = false;
 
         }
 
+        private async Task getPocalAppointments(int howManyDays, DateTime startDay)
+        {
+            appoinmentBuffer = await CalendarAPI.getAppointments(startDay, howManyDays);
+            await convertAppointmentBuffer();
+        }
 
-
-
-        //public async void refreshData()
-        //{
-        //    object oldDay = ViewSwitcher.mainpage.GetFirstVisibleItem();
-        //    int oldindex = ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource.IndexOf(oldDay);
-
-        //    await ReloadPocalApptsAndDays();
-
-        //    if (oldindex != -1)
-        //        ViewSwitcher.mainpage.AgendaViewListbox.ScrollTo(ViewSwitcher.mainpage.AgendaViewListbox.ItemsSource[oldindex]);
-        //}
-        #endregion
-
-        #region PocalAppointments
-
-        private async Task createAndAddToAllPocalApptointments()
+        private async Task convertAppointmentBuffer()
         {
             //AllPocalAppointments.Clear();
             await CalendarAPI.setCalendars();
 
             foreach (var appt in appoinmentBuffer)
             {
-                PocalAppointment pocalAppt = createPocalAppoinment(appt);
-                AllPocalAppointments.Add(pocalAppt);
+                PocalAppointment pocalAppt = CreatePocalAppoinment(appt);
+                pocalAppointmentsBuffer.Add(pocalAppt);
             }
         }
-
-        public PocalAppointment createPocalAppoinment(Appointment appt)
-        {
-            var cal = CalendarAPI.calendars.First(c => c.LocalId == appt.CalendarId);
-
-            PocalAppointment pocalAppt = new PocalAppointment { Appt = appt, CalColor = getAppointmentColorBrush(appt, cal) };
-            return pocalAppt;
-        }
-
-        private Dictionary<AppointmentCalendar, SolidColorBrush> calColors = new Dictionary<AppointmentCalendar, SolidColorBrush>();
-        private SolidColorBrush getAppointmentColorBrush(Appointment appt, AppointmentCalendar cal)
-        {
-            SolidColorBrush brush = null;
-            calColors.TryGetValue(cal, out brush);
-
-            if (brush == null)
-            {
-                var calColor = new System.Windows.Media.Color() { A = cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
-                brush = new SolidColorBrush(calColor);
-                calColors.Add(cal, brush);
-                return brush;
-            }
-            //brush = darkenBrushIfInPastDay(brush, (appt.StartTime + appt.Duration));
-
-            return brush;
-        }
-
-
-
-
-        private SolidColorBrush darkenBrushIfInPastDay(SolidColorBrush brush, DateTimeOffset endTime)
-        {
-            if (endTime.Date < DateTime.Now.Date)
-            {
-                RGB rgb = new RGB(){ B=brush.Color.B, G =brush.Color.G, R=brush.Color.R };    
-                HSB hsb = ColorConverter.ConvertToHSB(rgb);
-                hsb.S *= 0.8;
-                hsb.B *= 0.8;
-                rgb =  ColorConverter.ConvertToRGB(hsb);
-
-                Color color = new Color() { A = 255, B = (byte)rgb.B, G = (byte)rgb.G, R = (byte)rgb.R };    
-
-              
-                SolidColorBrush newbrush = new SolidColorBrush() { Color = color };
-                return newbrush;
-                
-            }
-            return brush;
-        }
-
-        private ObservableCollection<PocalAppointment> getPocalApptsOfDay(DateTime dt)
-        {
-
-            ObservableCollection<PocalAppointment> thisDayAppts = new ObservableCollection<PocalAppointment>();
-            foreach (PocalAppointment pocalAppt in AllPocalAppointments)
-            {
-                if (pocalAppt.StartTime.Date == dt.Date)
-                {
-                    thisDayAppts.Add(pocalAppt);
-                }
-            }
-            thisDayAppts = sortAppointments(thisDayAppts);
-
-            return thisDayAppts;
-        }
-
-        public ObservableCollection<PocalAppointment> sortAppointments(ObservableCollection<PocalAppointment> thisDayAppts)
-        {
-            ObservableCollection<PocalAppointment> sorted = new ObservableCollection<PocalAppointment>();
-            IEnumerable<PocalAppointment> query = thisDayAppts.OrderBy(appt => appt.StartTime);
-
-            foreach (PocalAppointment appt in query)
-            {
-                sorted.Add(appt);
-            }
-
-            return sorted;
-        }
-
         #endregion
 
         #region Days
-        public ObservableCollection<Day> Days { get; set; }
 
-        public void createDays(DateTime startDay, int howManyDays)
+
+        private void createDays(DateTime startDay, int howManyDays)
         {
             DateTime dt = startDay;
             CultureInfo ci = new CultureInfo("de-DE");
@@ -298,7 +247,7 @@ namespace Pocal.ViewModel
             }
         }
 
-        public void createAndInsertPastDays(DateTime startDay, int howManyDays)
+        private void createAndInsertPastDays(DateTime startDay, int howManyDays)
         {
             DateTime dt = startDay;
             CultureInfo ci = new CultureInfo("de-DE");
@@ -326,27 +275,70 @@ namespace Pocal.ViewModel
         }
         #endregion
 
+        #region PocalAppointments
+        private Dictionary<AppointmentCalendar, SolidColorBrush> calColors = new Dictionary<AppointmentCalendar, SolidColorBrush>();
 
-
-
-        private Day _dayAtCenterOfScreen;
-        public Day DayAtCenterOfScreen
+        public PocalAppointment CreatePocalAppoinment(Appointment appt)
         {
-            get
+            var cal = CalendarAPI.calendars.First(c => c.LocalId == appt.CalendarId);
+
+            PocalAppointment pocalAppt = new PocalAppointment { Appt = appt, CalColor = getAppointmentColorBrush(appt, cal) };
+            return pocalAppt;
+        }
+
+        private SolidColorBrush getAppointmentColorBrush(Appointment appt, AppointmentCalendar cal)
+        {
+            SolidColorBrush brush = null;
+            calColors.TryGetValue(cal, out brush);
+
+            if (brush == null)
             {
-                return _dayAtCenterOfScreen;
+                var calColor = new System.Windows.Media.Color() { A = cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
+                brush = new SolidColorBrush(calColor);
+                calColors.Add(cal, brush);
+                return brush;
             }
-            set
-            {
-                if (value != _dayAtCenterOfScreen)
-                {
-                    _dayAtCenterOfScreen = value;
-                    NotifyPropertyChanged("DayAtCenterOfScreen");
-                }
-            }
+
+            return brush;
         }
 
 
 
+        private ObservableCollection<PocalAppointment> getPocalApptsOfDay(DateTime dt)
+        {
+
+            ObservableCollection<PocalAppointment> thisDayAppts = new ObservableCollection<PocalAppointment>();
+            foreach (PocalAppointment pocalAppt in pocalAppointmentsBuffer)
+            {
+                if (pocalAppt.StartTime.Date == dt.Date)
+                {
+                    thisDayAppts.Add(pocalAppt);
+                }
+            }
+            thisDayAppts = sortAppointments(thisDayAppts);
+
+            return thisDayAppts;
+        }
+
+
+        private ObservableCollection<PocalAppointment> sortAppointments(ObservableCollection<PocalAppointment> thisDayAppts)
+        {
+            ObservableCollection<PocalAppointment> sorted = new ObservableCollection<PocalAppointment>();
+            IEnumerable<PocalAppointment> query = thisDayAppts.OrderBy(appt => appt.StartTime);
+
+            foreach (PocalAppointment appt in query)
+            {
+                sorted.Add(appt);
+            }
+
+            return sorted;
+        }
+
+        #endregion
+
+
+
     }
+
+
 }

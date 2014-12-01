@@ -107,7 +107,7 @@ namespace Pocal
             string localID = localIDs[0];
 
             Appointment newAppointment = await appointmentStore.GetAppointmentAsync(localID);
-            PocalAppointment newPa = App.ViewModel.createPocalAppoinment(newAppointment);
+            PocalAppointment newPa = App.ViewModel.CreatePocalAppoinment(newAppointment);
 
             PocalAppointmentUpdater.Update(null, newPa);
         }
@@ -183,7 +183,7 @@ namespace Pocal
             PocalAppointment newPA = null;
             if (newAppt != null)
             {
-                newPA = App.ViewModel.createPocalAppoinment(newAppt);
+                newPA = App.ViewModel.CreatePocalAppoinment(newAppt);
             }
             PocalAppointmentUpdater.Update(pA, newPA);
 

@@ -19,98 +19,83 @@ namespace Pocal
 
     public partial class MainPage : PhoneApplicationPage
     {
-
+        private Dictionary<object, ContentPresenter> realizedPocalAppointmentItems = new Dictionary<object, ContentPresenter>();
 
         // Constructor
         public MainPage()
         {
 
-            load();
+            loadStartup();
             //CalendarAPI.AddTestAppointments();
 
         }
 
-        private void load()
+        private void loadStartup()
         {
 
             DataContext = App.ViewModel;
             InitializeComponent();
 
+            //fixme
             SingleDayView.Opacity = 0.01;
 
-            LoadDataFromSource();
+            App.ViewModel.LoadStartupDays();
 
             VisualStateManager.GoToState(this, "Close", true);
 
-            AgendaViewListbox.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
-            AgendaViewListbox.ItemRealized += LLS_ItemRealized2;
-            AgendaViewListbox.ItemRealized += LLS_ItemRealized;
-            AgendaViewListbox.ItemUnrealized += LLS_ItemUnrealized2;
-            watchPositionOfLongListSelector();
+            watchScrollingOfLLS();
         }
 
-        private async void LoadDataFromSource()
+        #region watch Scrolling of AgendaViewLLS
+        private void watchScrollingOfLLS()
         {
-            App.ViewModel.isCurrentlyLoading = true;
-            if (App.ViewModel.Days.Count == 0)
+
+            AgendaViewLLS.ItemRealized += LLS_EndOfList;
+            AgendaViewLLS.ItemRealized += LLS_AddRealizedPocalAppointmentItem;
+            AgendaViewLLS.ItemUnrealized += LLS_RemoveRealizedPocalAppointmentItem;
+
+            
+            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(checkDayAtCenterOfScreen_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 40); // performance
+            dispatcherTimer.Start();
+
+            AgendaViewLLS.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
+        }
+
+        private void LLS_EndOfList(object sender, ItemRealizationEventArgs e)
+        {
+            if (e.ItemKind == LongListSelectorItemKind.Item)
             {
-                DateTime dt = DateTime.Now.Date.AddDays(-10);
-
-                await App.ViewModel.LoadPocalApptsAndDays(DateTime.Now, 10);
-                await App.ViewModel.loadDatesOfThePast(3);
-
-            }
-            else
-                await App.ViewModel.LoadPocalApptsAndDays(App.ViewModel.Days[App.ViewModel.Days.Count - 1].DT.AddDays(1), 20);
-
-        }
-
-        private void scrollToToday()
-        {
-            AgendaViewListbox.ScrollTo(App.ViewModel.Days[3]); 
-
-        }
-
-
-        #region AgendaView Events
-
-        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
-        {
-            scrollToToday();
-            e.Cancel = true;
-            base.OnBackKeyPress(e);
-        }
-
-        private void AgendaViewListbox_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
-        {
-            if (e.FinalVelocities.LinearVelocity.X > 0)
-            {
-                //enterOverview();
-                switchMainPageView();
-            }
-            if (e.FinalVelocities.LinearVelocity.X < 0)
-            {
-                switchMainPageView();
-                //leaveOverview();
-
+                Day day = e.Container.Content as Day;
+                if (day != null)
+                {
+                    int offset = 10;
+                    if (!App.ViewModel.IsCurrentlyLoading && App.ViewModel.Days.Count - App.ViewModel.Days.IndexOf(day) <= offset)
+                    {
+                        App.ViewModel.LoadMoreDays(20);
+                    }
+                }
             }
         }
 
-        private void switchMainPageView()
-        {
-            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
-                leaveOverview();
-            else
-                enterOverview();
 
+        private void LLS_AddRealizedPocalAppointmentItem(object sender, ItemRealizationEventArgs e)
+        {
+            if (e.ItemKind == LongListSelectorItemKind.Item)
+            {
+                object o = e.Container.DataContext;
+                realizedPocalAppointmentItems[o] = e.Container;
+            }
         }
 
-        private void LongList_Loaded(object sender, RoutedEventArgs e)
+        private void LLS_RemoveRealizedPocalAppointmentItem(object sender, ItemRealizationEventArgs e)
         {
-            var sb = ((FrameworkElement)VisualTreeHelper.GetChild(AgendaViewListbox, 0)).FindName("VerticalScrollBar") as ScrollBar;
-            sb.Margin = new Thickness(-10, 0, 0, 0);
-            sb.Width = 0;
-
+            if (e.ItemKind == LongListSelectorItemKind.Item)
+            {
+                object o = e.Container.DataContext;
+                realizedPocalAppointmentItems.Remove(o);
+            }
         }
 
         private void AgendaScrolling_WhileSingleDayViewIsOpen_Fix(object sender, EventArgs e)
@@ -120,23 +105,12 @@ namespace Pocal
 
         }
 
-        //Wird benötigt um die Position im Longlistselektor zu bestimmen um damit DeltaDays auszurechnen.
-        private Dictionary<object, ContentPresenter> realizedPocalAppointmentItems = new Dictionary<object, ContentPresenter>();
-        private void watchPositionOfLongListSelector()
-        {
-            //AgendaViewListbox.ItemRealized += LLS_ItemRealized;
-            //AgendaViewListbox.ItemUnrealized += LLS_ItemUnrealized;
 
-            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 40); // TODO performance
-            dispatcherTimer.Start();
-        }
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        private void checkDayAtCenterOfScreen_Tick(object sender, EventArgs e)
         {
 
-            Day testday = (Day)GetFirstVisibleItem();
+            Day testday = (Day)getItemAtCenterOfScreen();
             if (testday != null)
             {
                 // Switch Highlighted Day
@@ -151,17 +125,13 @@ namespace Pocal
 
         }
 
-        public object GetFirstVisibleItem()
+        private object getItemAtCenterOfScreen()
         {
             if (realizedPocalAppointmentItems.Count > 1)
             {
-                var offset = FindViewport(AgendaViewListbox).Viewport.Top;
-                if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
-                    offset += ((730 + 600) / 2);
-                else
-                    offset += (730 / 2);
+                var LLS_Offset = getLLS_OffsetAtCenterOfScreen();
 
-                IEnumerable<KeyValuePair<object, ContentPresenter>> keyValuePairs = realizedPocalAppointmentItems.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight >= offset);
+                IEnumerable<KeyValuePair<object, ContentPresenter>> keyValuePairs = realizedPocalAppointmentItems.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight >= LLS_Offset);
                 List<KeyValuePair<object, ContentPresenter>> keyValuePairsSorted = keyValuePairs.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
                 object obj = keyValuePairsSorted[0].Key;
 
@@ -172,45 +142,17 @@ namespace Pocal
 
         }
 
-        private void LLS_ItemRealized2(object sender, ItemRealizationEventArgs e)
+        private double getLLS_OffsetAtCenterOfScreen()
         {
-            if (e.ItemKind == LongListSelectorItemKind.Item)
-            {
-                object o = e.Container.DataContext;
-                realizedPocalAppointmentItems[o] = e.Container;
-            }
-        }
-
-        private void LLS_ItemUnrealized2(object sender, ItemRealizationEventArgs e)
-        {
-            if (e.ItemKind == LongListSelectorItemKind.Item)
-            {
-                object o = e.Container.DataContext;
-                realizedPocalAppointmentItems.Remove(o);
-            }
+            var offset = FindViewport(AgendaViewLLS).Viewport.Top;
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+                offset += ((730 + 600) / 2);
+            else
+                offset += (730 / 2);
+            return offset;
         }
 
 
-
-
-
-        private void LLS_ItemRealized(object sender, ItemRealizationEventArgs e)
-        {
-            if (e.ItemKind == LongListSelectorItemKind.Item)
-            {
-                Day day = e.Container.Content as Day;
-                if (day != null)
-                {
-                    int offset = 10;
-                    // Only if there is no data that is currently getting loaded would be initiate the loading again
-                    if (!App.ViewModel.isCurrentlyLoading && App.ViewModel.Days.Count - App.ViewModel.Days.IndexOf(day) <= offset)
-                    {
-                        LoadDataFromSource();
-                        //MessageBox.Show("endOfList");
-                    }
-                }
-            }
-        }
 
 
         private static ViewportControl FindViewport(DependencyObject parent)
@@ -225,6 +167,58 @@ namespace Pocal
             }
             return null;
         }
+
+        #endregion 
+
+
+
+        #region AgendaView Events
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            scrollToToday();
+            e.Cancel = true;
+            base.OnBackKeyPress(e);
+        }
+
+        private void scrollToToday()
+        {
+            Day today = App.ViewModel.Days[3];
+            AgendaViewLLS.ScrollTo(today);
+
+        }
+
+        
+        private void toggleOverView_Gesture(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
+        {
+            if (e.FinalVelocities.LinearVelocity.X > 0)
+            {
+                toggleOverView();
+            }
+            if (e.FinalVelocities.LinearVelocity.X < 0)
+            {
+                toggleOverView();
+            }
+        }
+
+        private void toggleOverView()
+        {
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+                leaveOverview();
+            else
+                enterOverview();
+
+        }
+
+        private void LongList_Loaded(object sender, RoutedEventArgs e)
+        {
+            var sb = ((FrameworkElement)VisualTreeHelper.GetChild(AgendaViewLLS, 0)).FindName("VerticalScrollBar") as ScrollBar;
+            sb.Margin = new Thickness(-10, 0, 0, 0);
+            sb.Width = 0;
+
+        }
+
+    
         #endregion
 
         #region Exit/Closing Events
@@ -346,7 +340,7 @@ namespace Pocal
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            switchMainPageView();
+            scrollToToday();
         }
 
         private void enterOverview()
@@ -358,7 +352,7 @@ namespace Pocal
             foundDayCards_ItemsControll = new List<ItemsControl>();
             foundStackPanels = new List<StackPanel>();
 
-            findItemControll(AgendaViewListbox);
+            findItemControll(AgendaViewLLS);
             findItemStackPanelInItemsControll("DayCard_ApptItem");
             playStoryboardOfFoundStackPanels("EnterOverview");
 
@@ -390,7 +384,7 @@ namespace Pocal
             foundDayCards_ItemsControll = new List<ItemsControl>();
             foundStackPanels = new List<StackPanel>();
 
-            findItemControll(AgendaViewListbox);
+            findItemControll(AgendaViewLLS);
             findItemStackPanelInItemsControll("DayCard_ApptItem");
             playStoryboardOfFoundStackPanels("LeaveOverview");
 
