@@ -98,15 +98,15 @@ namespace Pocal.Converter
 
     }
 
-    public class deltaWeekVisibility : IValueConverter
+    public class DeltaTimeSecondLineVisibility : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Day)
+            if (value is DateTime)
             {
-                TimeSpan ts = ((Day)value).DT.Date - DateTime.Now.Date;
+                TimeSpan ts = ((DateTime)value).Date - DateTime.Now.Date;
 
-                if (ts.Days < 7)
+                if (ts.Days % 7 == 0 || ts.Days < 7)
                 {
                     return Visibility.Collapsed;
                 }

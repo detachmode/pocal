@@ -44,7 +44,7 @@
         <local:hourConverter x:Key="hourConverter"/>
         <local:minuteConverter x:Key="minuteConverter"/>
         <local:DeltaTimeSecondLine x:Key="DeltaTimeSecondLine"/>
-        <local:deltaWeekVisibility x:Key="deltaWeekVisibility"/>
+        <local:DeltaTimeSecondLineVisibility x:Key="DeltaTimeSecondLineVisibility"/>
         <local:DeltaTimeFirstLine x:Key="DeltaTimeFirstLine"/>
 
         <local:singelDayApptHeight x:Key="singelDayApptHeight"/>
@@ -526,7 +526,7 @@
                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
                                                 Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
                             </Storyboard>
-                            <Storyboard x:Key="LeaveOverview">
+                            <Storyboard x:Key="LeaveOverview">                                     
                                 <DoubleAnimation Duration="0:0:0.5" To="150" 
                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
                                                 Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
@@ -547,14 +547,15 @@
                             </Grid.Background>
                             <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" 
                                      HorizontalAlignment="Center">
-                                <TextBlock x:Name="WeekCounter" Margin="18,0" 
+                                <TextBlock x:Name="WeekCounter" Margin="16,0" 
                                        Text="{Binding DayAtCenterOfScreen, Converter={StaticResource DeltaTimeFirstLine}}"
-                                    FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="16" HorizontalAlignment="left"                  >
+                                    FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="left"                  >
                                 </TextBlock>
                                 <!--<Rectangle Height="2" Fill="Red"/>-->
-                                <TextBlock x:Name="DaysCounter" Margin="18,0" 
+                                <TextBlock x:Name="DaysCounter" Margin="16,0" 
                                        Text="{Binding DayAtCenterOfScreen , Converter={StaticResource DeltaTimeSecondLine}}" 
-                                   FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="16" HorizontalAlignment="Left" />
+                                           Visibility="{Binding DayAtCenterOfScreen.DT, Converter={StaticResource DeltaTimeSecondLineVisibility}}"
+                                   FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="Left" />
 
                             </StackPanel>
                         </Grid>
