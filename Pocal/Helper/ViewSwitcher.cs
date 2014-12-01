@@ -134,7 +134,7 @@ namespace Pocal
 
 		private static void scrollToRightPosition()
 		{
-            //mainpage.SingleDayScrollViewer.UpdateLayout();
+            mainpage.SingleDayScrollViewer.UpdateLayout();
 			switch (from)
 			{
 				case Sender.HeaderTap:

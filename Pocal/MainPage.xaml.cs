@@ -40,7 +40,7 @@ namespace Pocal
             //SingleDayView.Opacity = 0.01;
 
             App.ViewModel.LoadStartupDays();
-            //VisualStateManager.GoToState(this, "Close", true);
+            VisualStateManager.GoToState(this, "Close", true);
             
 
             watchScrollingOfLLS();
