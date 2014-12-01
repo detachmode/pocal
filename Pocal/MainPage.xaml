@@ -572,7 +572,7 @@
             <!--******** SDV ******** -->
             <!--******** *** ******** -->
             <Grid x:Name="SingleDayView" 
-				Background="#AD000000" RenderTransformOrigin="0.5,0.5" >
+				Background="#AD000000" RenderTransformOrigin="0.5,0.5" d:IsHidden="True" >
                 <Grid.RenderTransform>
                     <CompositeTransform/>
                 </Grid.RenderTransform>
