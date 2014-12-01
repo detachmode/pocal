@@ -178,8 +178,18 @@ namespace Pocal.ViewModel
         {
             IsCurrentlyLoading = true;
 
-            await loadPocalApptsAndDays(DateTime.Now, 10);
-            await loadDatesOfThePast(3);
+            await loadPocalApptsAndDays(DateTime.Now, 1);
+
+            loadDaysOfPastAsync();
+        }
+
+        private void loadDaysOfPastAsync()
+        {
+            ((MainPage)App.RootFrame.Content).Dispatcher.BeginInvoke(async delegate
+            {
+                Thread.Sleep(200);
+                await loadDatesOfThePast(3);
+            });
         }
 
         public void ReloadStartupDays()
@@ -189,12 +199,7 @@ namespace Pocal.ViewModel
 
             Days.Add(daysList.FirstOrDefault(x => x.DT.Date == DateTime.Now.Date));
 
-
-            ((MainPage)App.RootFrame.Content).Dispatcher.BeginInvoke(async delegate
-             {
-                 Thread.Sleep(200);
-                 await loadDatesOfThePast(3);
-             });
+            loadDaysOfPastAsync();
 
         }
 
