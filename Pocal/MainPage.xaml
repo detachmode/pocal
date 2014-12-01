@@ -541,9 +541,9 @@
                                 <CompositeTransform TranslateX="43"/>
                             </Grid.RenderTransform>
                         </Grid>
-                        <Grid Height="90" Width="200" Margin="0,0,-7,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Grid Height="90" Width="200" Margin="0,0,-7,0" HorizontalAlignment="Right" CacheMode="Bitmapcache" VerticalAlignment="Center">
                             <Grid.Background>
-                                <ImageBrush Stretch="None" ImageSource="/Images/DeltaTimeArrow3.png"/>
+                                <ImageBrush Stretch="None" ImageSource="/Images/DeltaTimeArrow3.png" />
                             </Grid.Background>
                             <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" 
                                      HorizontalAlignment="Center">

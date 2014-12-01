@@ -297,8 +297,10 @@ namespace Pocal
 
         private void DayCard_ApptTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            addBitmapCacheToSDV();
             ViewSwitcher.setScrollToPa(((FrameworkElement)sender).DataContext as PocalAppointment);
             ViewSwitcher.from = ViewSwitcher.Sender.ApptTap;
+            removeBitmapCacheAfterAnimation();
 
         }
 
