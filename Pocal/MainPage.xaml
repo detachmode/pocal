@@ -524,7 +524,7 @@
                                 <DoubleAnimation Duration="0:0:0.5" To="45" 
                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
                                                 Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
-                                <DoubleAnimation Duration="0:0:0.5" To="-165" 
+                                <DoubleAnimation Duration="0:0:0.5" To="-163" 
                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" 
                                                 Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
                                 
