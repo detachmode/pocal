@@ -14,7 +14,7 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (App.ViewModel.InModus == MainVM.Modi.OverView)
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
             {
                 return 0;
             }
@@ -33,7 +33,7 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (App.ViewModel.InModus == MainVM.Modi.OverView)
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
             {
                 return 1.6;
             }

@@ -14,7 +14,7 @@
     mc:Ignorable="d"
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="False"
-    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainVM}">
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainViewModel}">
 
     <!--******** ********* ******** -->
     <!--******** RESOURCES ******** -->
@@ -54,6 +54,7 @@
         <Color x:Key="Color90Black">#FF0F0F0F</Color>
         <Color x:Key="ColorBorderGrey">#FF767676</Color>
         <System:Double x:Key="DefaultSize">22</System:Double>
+        <Color x:Key="LightGray">#FF131313</Color>
     </phone:PhoneApplicationPage.Resources>
     <phone:PhoneApplicationPage.FontFamily>
         <StaticResource ResourceKey="PhoneFontFamilyNormal"/>
@@ -249,30 +250,34 @@
                             <DataTemplate >
 
                                 <Grid 
-                                      Tap="OpenSdvAndSetTappedDay" Margin="0,0,-14,0" RenderTransformOrigin="0.5,0.5" Background="#FF131313">
+                                      Tap="OpenSdvAndSetTappedDay" Margin="0,0,-14,0" RenderTransformOrigin="0.5,0.5">
+
                                     <StackPanel Margin="0,0,0,20" x:Name="DayCardStackPanel" RenderTransformOrigin="0.0,1.0">
-
-                                        <Grid Background="#FF131313" Height="20" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center"/>
-
 
                                         <!--******** ****************** ********-->
                                         <!--******** DAYCARD WEEKNUMBER ********-->
                                         <!--******** ****************** ********-->
-                                        <Border Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}" 
-                                                BorderThickness="1" Height="1" BorderBrush="DarkGray" Margin="0"/>
+                                        <Grid Background="Black" Height="20" 
+                                              Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  
+                                              VerticalAlignment="Center"/>
+                                        <!--<Border Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}" 
+                                                BorderThickness="1" Height="1" BorderBrush="DarkGray" Margin="0"/>-->
                                         <Grid Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" 
-                                              VerticalAlignment="Center" Background="Black" Height="60"  >
+                                              VerticalAlignment="Center" Height="60"  >
+                                            <Grid.Background>
+                                                <SolidColorBrush Color="{StaticResource PhoneChromeColor}"/>
+                                            </Grid.Background>
                                             <!--<Border BorderThickness="1" Height="1" BorderBrush="White" Margin="0"/>-->
-                                            <Grid  Width="467" Background="Black" HorizontalAlignment="Left">
+                                            <Grid  Width="467" HorizontalAlignment="Left">
                                                 <TextBlock  Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}"
                                                             Margin="6,0,0,0" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                             FontWeight="Thin" RenderTransformOrigin="0.5,0.5" >
                                                 </TextBlock>
                                             </Grid>
                                         </Grid>
-                                        <Border BorderThickness="1" Height="1" BorderBrush="DarkGray" Margin="0"  
-                                                Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}"/>
-                                        <Grid Background="#FF131313" Height="20" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center"/>
+                                        <!--<Border BorderThickness="1" Height="1" BorderBrush="DarkGray" Margin="0"  
+                                                Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}"/>-->
+                                        <Grid Background="Black" Height="20" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center"/>
 
                                         <!--******** ************** ********-->
                                         <!--******** DAYCARD HEADER ********-->
@@ -499,33 +504,43 @@
                 </Grid>
 
                 <!--******** ***************** ********-->
-                <!--******** AGENDAVIEW HEADER ********-->
+                <!--******** AGENDAVIEW POINTER ********-->
                 <!--******** ***************** ********-->
-                <Grid x:Name="AgendaHeader" Height="60" Grid.Row="1"   >
-                    <Grid.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="2,0">
-                            <GradientStop Color="#C4000000" Offset="0.803"/>
-                            <GradientStop Offset="0.952"/>
-                        </LinearGradientBrush>
-                    </Grid.Background>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  >
-                        <!--<Grid Width="50">
+                <Grid  Height="60" Grid.Row="1" >
+
+
+
+                    <StackPanel x:Name="AgendaPointer" Orientation="Horizontal" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5"  >
+                        <StackPanel.Resources>
+                            <Storyboard x:Key="EnterOverview">
+                                <DoubleAnimation Duration="0:0:0.5" To="0" 
+                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
+                                                Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
+                            </Storyboard>
+                            <Storyboard x:Key="LeaveOverview">
+                                <DoubleAnimation Duration="0:0:0.5" To="120" 
+                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
+                                                Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
+                            </Storyboard>
+                        </StackPanel.Resources>
+                        <StackPanel.RenderTransform>
+                            <CompositeTransform TranslateX="120"/>
+                        </StackPanel.RenderTransform>
+                        
+                        <Grid Width="20" Margin="0,0,-1,0" >
                             <Grid.Background>
-                                <ImageBrush Stretch="Uniform" ImageSource="/Images/back.png" Opacity="0.5"/>
+                                <ImageBrush Stretch="None" ImageSource="/Images/DeltaTimeDreieck.png"/>
                             </Grid.Background>
+                        </Grid>
+                        <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock x:Name="WeekCounter" Margin="18,6" Text="{Binding DayAtCenterOfScreen, Converter={StaticResource CurrentTopWeekConverter}}"
+                                    FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="16" HorizontalAlignment="left"                  >
+                            </TextBlock>
+                            <Rectangle Height="2" Fill="Red"/>
+                            <TextBlock x:Name="DaysCounter" Margin="18,6" Text="{Binding DayAtCenterOfScreen , Converter={StaticResource CurrentTopDayConverter}}" 
+                                   FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="16" HorizontalAlignment="Left" />
 
-                        </Grid>-->
-                        <!--<Border BorderThickness="2,2,0,2" Background="#D8000000" BorderBrush="DarkGray">-->
-                            <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <TextBlock x:Name="WeekCounter" Text="{Binding DayAtCenterOfScreen, Converter={StaticResource CurrentTopWeekConverter}}"
-                                    FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="18" HorizontalAlignment="Center"
-                                    Visibility="{Binding DayAtCenterOfScreen, Converter={StaticResource deltaWeekVisibility}}" >
-                                   
-                                </TextBlock>
-                                <TextBlock x:Name="DaysCounter"  Text="{Binding DayAtCenterOfScreen , Converter={StaticResource CurrentTopDayConverter}}" 
-                                   FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="18" HorizontalAlignment="Left" Margin="8,0,0,0" />
-
-                            </StackPanel>
+                        </StackPanel>
                         <!--</Border>-->
                     </StackPanel>
                     <!--<Border Height="1" Background="#FF363636" VerticalAlignment="Bottom"/>-->

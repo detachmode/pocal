@@ -14,7 +14,7 @@ using System.Windows;
 namespace Pocal.ViewModel
 {
 
-    public class MainVM : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         public bool isCurrentlyLoading = false;
         public enum Modi { AgendaView, OverView };
@@ -26,7 +26,7 @@ namespace Pocal.ViewModel
 
         private IReadOnlyList<Appointment> appoinmentBuffer;
 
-        public MainVM()
+        public MainViewModel()
         {
             this.Days = new ObservableCollection<Day>();
             SingleDayViewModel = new SingleDayViewVM();
@@ -269,7 +269,7 @@ namespace Pocal.ViewModel
         #endregion
 
         #region Days
-        public ObservableCollection<Day> Days { get; private set; }
+        public ObservableCollection<Day> Days { get; set; }
 
         public void createDays(DateTime startDay, int howManyDays)
         {

@@ -294,13 +294,17 @@ namespace Pocal.Converter
                     //str += (appt.StartTime + appt.Duration).DateTime.Hour.ToString();
                     //str += ":";
                     //str += (appt.StartTime + appt.Duration).DateTime.Minute.ToString("00");
-                    str = appt.Duration.Hours + " Stunde";
-                    if (appt.Duration.Hours > 1)
-                        str += "n";
+                    if (appt.Duration.Hours != 0)
+                    {
+                        str = appt.Duration.Hours + " Stunde";
+                        if (appt.Duration.Hours > 1)
+                            str += "n";
+                        str += " ";
+                    }
 
                     if (appt.Duration.Minutes != 0)
                     {
-                        str += " " + appt.Duration.Minutes + " Minute";
+                        str += "" + appt.Duration.Minutes + " Minute";
                         if (appt.Duration.Minutes > 1)
                             str += "n";
                     }

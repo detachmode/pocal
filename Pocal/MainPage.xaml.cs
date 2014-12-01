@@ -20,13 +20,13 @@ namespace Pocal
     public partial class MainPage : PhoneApplicationPage
     {
 
-       
+
         // Constructor
         public MainPage()
         {
 
             load();
-            CalendarAPI.AddTestAppointments();
+            //CalendarAPI.AddTestAppointments();
 
         }
 
@@ -55,16 +55,31 @@ namespace Pocal
             if (App.ViewModel.Days.Count == 0)
             {
                 DateTime dt = DateTime.Now.Date.AddDays(-10);
-                           
-                await App.ViewModel.LoadPocalApptsAndDays(DateTime.Now, 10);
-                await App.ViewModel.loadDatesOfThePast(3);  
 
-            }else
-               await App.ViewModel.LoadPocalApptsAndDays(App.ViewModel.Days[App.ViewModel.Days.Count-1].DT.AddDays(1), 20);
-            
+                await App.ViewModel.LoadPocalApptsAndDays(DateTime.Now, 10);
+                await App.ViewModel.loadDatesOfThePast(3);
+
+            }
+            else
+                await App.ViewModel.LoadPocalApptsAndDays(App.ViewModel.Days[App.ViewModel.Days.Count - 1].DT.AddDays(1), 20);
+
         }
-       
+
+        private void scrollToToday()
+        {
+            AgendaViewListbox.ScrollTo(App.ViewModel.Days[3]); 
+
+        }
+
+
         #region AgendaView Events
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            scrollToToday();
+            e.Cancel = true;
+            base.OnBackKeyPress(e);
+        }
 
         private void AgendaViewListbox_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
         {
@@ -83,16 +98,10 @@ namespace Pocal
 
         private void switchMainPageView()
         {
-            if (App.ViewModel.InModus == MainVM.Modi.OverView)
-            {
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
                 leaveOverview();
-                App.ViewModel.InModus = MainVM.Modi.AgendaView;
-            }
             else
-            {
                 enterOverview();
-                App.ViewModel.InModus = MainVM.Modi.OverView;
-            }
 
         }
 
@@ -111,7 +120,7 @@ namespace Pocal
 
         }
 
-         //Wird benötigt um die Position im Longlistselektor zu bestimmen um damit DeltaDays auszurechnen.
+        //Wird benötigt um die Position im Longlistselektor zu bestimmen um damit DeltaDays auszurechnen.
         private Dictionary<object, ContentPresenter> realizedPocalAppointmentItems = new Dictionary<object, ContentPresenter>();
         private void watchPositionOfLongListSelector()
         {
@@ -147,8 +156,8 @@ namespace Pocal
             if (realizedPocalAppointmentItems.Count > 1)
             {
                 var offset = FindViewport(AgendaViewListbox).Viewport.Top;
-                if (App.ViewModel.InModus == MainVM.Modi.OverView)
-                    offset += ((730+600)/ 2);
+                if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+                    offset += ((730 + 600) / 2);
                 else
                     offset += (730 / 2);
 
@@ -181,10 +190,10 @@ namespace Pocal
             }
         }
 
-        
 
 
-        
+
+
         private void LLS_ItemRealized(object sender, ItemRealizationEventArgs e)
         {
             if (e.ItemKind == LongListSelectorItemKind.Item)
@@ -291,10 +300,9 @@ namespace Pocal
 
         private void DayCard_ApptTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            addBitmapCacheToSDV();
             ViewSwitcher.setScrollToPa(((FrameworkElement)sender).DataContext as PocalAppointment);
             ViewSwitcher.from = ViewSwitcher.Sender.ApptTap;
-            removeBitmapCacheAfterAnimation();
+
         }
 
         private void addBitmapCacheToSDV()
@@ -323,8 +331,10 @@ namespace Pocal
 
         private void OpenSdvAndSetTappedDay(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            Debug.WriteLine("Tapped on Daycard");
-            ViewSwitcher.SwitchToSDV(sender);
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+                leaveOverview();
+            else
+                ViewSwitcher.SwitchToSDV(sender);
 
         }
         #endregion
@@ -341,6 +351,7 @@ namespace Pocal
 
         private void enterOverview()
         {
+            App.ViewModel.InModus = MainViewModel.Modi.OverView;
             Storyboard storyboard = AgendaViewBody.Resources["EnterOverview"] as Storyboard;
             storyboard.Begin();
 
@@ -349,10 +360,17 @@ namespace Pocal
 
             findItemControll(AgendaViewListbox);
             findItemStackPanelInItemsControll("DayCard_ApptItem");
-           
             playStoryboardOfFoundStackPanels("EnterOverview");
 
+            playStoryboardOfAgendaPointer("EnterOverview");
 
+
+        }
+
+        private void playStoryboardOfAgendaPointer(string storyBoardKey)
+        {
+            Storyboard storyboard2 = AgendaPointer.Resources[storyBoardKey] as Storyboard;
+            storyboard2.Begin();
         }
 
         private void ApplicationBarIconButton_Click_1(object sender, EventArgs e)
@@ -364,6 +382,8 @@ namespace Pocal
 
         private void leaveOverview()
         {
+            App.ViewModel.InModus = MainViewModel.Modi.AgendaView;
+
             Storyboard storyboard = AgendaViewBody.Resources["LeaveOverview"] as Storyboard;
             storyboard.Begin();
 
@@ -373,6 +393,8 @@ namespace Pocal
             findItemControll(AgendaViewListbox);
             findItemStackPanelInItemsControll("DayCard_ApptItem");
             playStoryboardOfFoundStackPanels("LeaveOverview");
+
+            playStoryboardOfAgendaPointer("LeaveOverview");
 
         }
 
