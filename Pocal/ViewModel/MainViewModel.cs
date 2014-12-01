@@ -175,7 +175,6 @@ namespace Pocal.ViewModel
         public async void LoadStartupDays()
         {
             IsCurrentlyLoading = true;
-            DateTime dt = DateTime.Now.Date.AddDays(-10);
 
             await loadPocalApptsAndDays(DateTime.Now, 10);
             await loadDatesOfThePast(3);
@@ -184,7 +183,8 @@ namespace Pocal.ViewModel
         public void ReloadStartupDays()
         {
             this.Days.Clear();
-            LoadStartupDays();
+            loadPocalApptsAndDays(DateTime.Now, 1);
+            //LoadStartupDays();
         }
 
         public async void LoadMoreDays(int howMany)
