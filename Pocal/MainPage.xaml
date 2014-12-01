@@ -519,45 +519,43 @@
                 <!--******** ***************** ********-->
                 <Grid  Height="90" Grid.Row="1" >
 
-
-
                     <StackPanel Tap="Grid_Tap" x:Name="AgendaPointer" Orientation="Horizontal" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5"  >
                         <StackPanel.Resources>
                             <Storyboard x:Key="EnterOverview">
-                                <DoubleAnimation Duration="0:0:0.5" To="0" 
+                                <DoubleAnimation Duration="0:0:0.5" To="50" 
                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
                                                 Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
                             </Storyboard>
                             <Storyboard x:Key="LeaveOverview">
-                                <DoubleAnimation Duration="0:0:0.5" To="120" 
+                                <DoubleAnimation Duration="0:0:0.5" To="150" 
                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
                                                 Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
                             </Storyboard>
                         </StackPanel.Resources>
                         <StackPanel.RenderTransform>
-                            <CompositeTransform TranslateX="120"/>
+                            <CompositeTransform TranslateX="150"/>
                         </StackPanel.RenderTransform>
 
-                        <Grid Width="60" Height="90" Background="Transparent" >
-                            <Grid Width="30" Height="30" Margin="0,0,-7,0" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                <Grid.Background>
-                                    <ImageBrush Stretch="None" ImageSource="/Images/DeltaTimeDreieck.png"/>
-                                </Grid.Background>
-                            </Grid>
-                        </Grid>
-
-                        <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" 
-                                     HorizontalAlignment="Center" Background="#9C000000">
-                            <TextBlock x:Name="WeekCounter" Margin="18,0" 
+                        <Grid Height="90" Width="200" Margin="0,0,-7,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Grid.Background>
+                                <ImageBrush Stretch="None" ImageSource="/Images/DeltaTimeArrow2.png"/>
+                            </Grid.Background>
+                            <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" 
+                                     HorizontalAlignment="Center">
+                                <TextBlock x:Name="WeekCounter" Margin="18,0" 
                                        Text="{Binding DayAtCenterOfScreen, Converter={StaticResource DeltaTimeFirstLine}}"
                                     FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="16" HorizontalAlignment="left"                  >
-                            </TextBlock>
-                            <!--<Rectangle Height="2" Fill="Red"/>-->
-                            <TextBlock x:Name="DaysCounter" Margin="18,0" 
+                                </TextBlock>
+                                <!--<Rectangle Height="2" Fill="Red"/>-->
+                                <TextBlock x:Name="DaysCounter" Margin="18,0" 
                                        Text="{Binding DayAtCenterOfScreen , Converter={StaticResource DeltaTimeSecondLine}}" 
                                    FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="16" HorizontalAlignment="Left" />
 
-                        </StackPanel>
+                            </StackPanel>
+                        </Grid>
+
+
+
                         <!--</Border>-->
                     </StackPanel>
                     <!--<Border Height="1" Background="#FF363636" VerticalAlignment="Bottom"/>-->
