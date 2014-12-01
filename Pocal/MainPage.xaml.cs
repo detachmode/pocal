@@ -314,7 +314,7 @@ namespace Pocal
         {
             Dispatcher.BeginInvoke(delegate
             {
-                Thread.Sleep(400);
+                Thread.Sleep(200);
                 SingleDayWindowBody.CacheMode = null;
 
             });

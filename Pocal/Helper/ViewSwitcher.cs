@@ -29,9 +29,9 @@ namespace Pocal
 			if (currentViewIsSDV())
 				return;
 
-		
+
             setTemporaryTappedDay(sender);
-            removePreviousDataContext();
+            //removePreviousDataContext();
             openSDV();
             scrollToRightPosition();
 
@@ -114,6 +114,7 @@ namespace Pocal
 
 		private static void scrollToRightPosition()
 		{
+            mainpage.SingleDayScrollViewer.UpdateLayout();
 			switch (from)
 			{
 				case Sender.HeaderTap:
