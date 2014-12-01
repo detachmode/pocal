@@ -15,10 +15,7 @@ namespace Pocal.ViewModel
         {
             get
             {
-
-                triggerScrollToOffset(EventArgs.Empty);
                 return _tappedDay;
-               
             }
             set
             {
@@ -64,19 +61,6 @@ namespace Pocal.ViewModel
             return null;
 
         }
-
-
-
-        public event EventHandler TriggerScrollToOffset;
-        protected virtual void triggerScrollToOffset(EventArgs args)
-        {
-            var handler = this.TriggerScrollToOffset;
-            if (handler != null)
-            {
-                handler(this, args);
-            }
-        }
-
 
 
     }

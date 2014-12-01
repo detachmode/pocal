@@ -12,6 +12,8 @@ namespace Pocal
 		public enum Sender { HeaderTap, ApptTap }
 		public static Sender from;
 
+        private static bool openFirstTime = true;
+
 		public static MainPage mainpage = (MainPage)App.RootFrame.Content;
 		private static PocalAppointment ScrollToPA;
 		public static void setScrollToPa(PocalAppointment pa)
@@ -31,13 +33,26 @@ namespace Pocal
 
 
             setTemporaryTappedDay(sender);
-            //removePreviousDataContext();
+
+            removePreviousDataContext();           
             openSDV();
             scrollToRightPosition();
+            if (openFirstTime)
+            {
+                setTappedDayAsynchron();
+                openFirstTime = false;
+            }
+            else
+            {
+                setTappedDay();
+            }
+            
 
-            setTappedDayAsynchron(sender);
+            
 
 		}
+
+
 
         private static void setTemporaryTappedDay(object sender)
         {
@@ -69,6 +84,7 @@ namespace Pocal
 
 		private static void openSDV()
 		{
+            
 			//mainpage.SingleDayView.Visibility = Visibility.Visible;
 			VisualStateManager.GoToState(mainpage, "OpenDelay", true);
             
@@ -76,18 +92,22 @@ namespace Pocal
 
         
 
-		private static void setTappedDayAsynchron(object sender)
+		private static void setTappedDayAsynchron()
 		{
-            //Deployment.Current.Dispatcher.BeginInvoke(() =>
-            //{
-                // Update UI in here as this part will run on the UI thread.
-                App.ViewModel.SingleDayViewModel.TappedDay = temporaryTappedDay;
-                App.ViewModel.ConflictManager.solveConflicts();
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                 //Update UI in here as this part will run on the UI thread.
+                setTappedDay();
                 
-            //});
+            });
             
 		}
 
+        private static void setTappedDay()
+        {
+            App.ViewModel.SingleDayViewModel.TappedDay = temporaryTappedDay;
+            App.ViewModel.ConflictManager.solveConflicts();
+        }
 
 
 
@@ -114,7 +134,7 @@ namespace Pocal
 
 		private static void scrollToRightPosition()
 		{
-            mainpage.SingleDayScrollViewer.UpdateLayout();
+            //mainpage.SingleDayScrollViewer.UpdateLayout();
 			switch (from)
 			{
 				case Sender.HeaderTap:
