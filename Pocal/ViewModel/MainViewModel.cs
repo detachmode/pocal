@@ -18,11 +18,30 @@ namespace Pocal.ViewModel
     {
 
         public enum Modi { AgendaView, OverView };
-        public Modi InModus = Modi.AgendaView; 
- 
+        public Modi InModus = Modi.AgendaView;
+
         public bool IsCurrentlyLoading = false;
 
-        public ObservableCollection<Day> Days { get; set; }
+        //public ObservableCollection<Day> Days { get; set; }
+
+        public ObservableCollection<Day> _days;
+        public ObservableCollection<Day> Days
+        {
+            get
+            {
+                return _days;
+            }
+            set
+            {
+                if (value != _days)
+                {
+                    _days = value;
+                    NotifyPropertyChanged("Days");
+                }
+            }
+        }
+
+
         public SingleDayViewVM SingleDayViewModel { get; private set; }
         public ConflictManager ConflictManager { get; private set; }
 
@@ -162,6 +181,12 @@ namespace Pocal.ViewModel
             await loadDatesOfThePast(3);
         }
 
+        public void ReloadStartupDays()
+        {
+            this.Days.Clear();
+            LoadStartupDays();
+        }
+
         public async void LoadMoreDays(int howMany)
         {
             IsCurrentlyLoading = true;
@@ -174,7 +199,23 @@ namespace Pocal.ViewModel
         private IReadOnlyList<Appointment> appoinmentBuffer;
         private List<PocalAppointment> pocalAppointmentsBuffer = new List<PocalAppointment>();
 
+        private async Task getPocalAppointments(int howManyDays, DateTime startDay)
+        {
+            appoinmentBuffer = await CalendarAPI.getAppointments(startDay, howManyDays);
+            await convertAppointmentBuffer();
+        }
 
+        private async Task convertAppointmentBuffer()
+        {
+            pocalAppointmentsBuffer.Clear();
+            await CalendarAPI.setCalendars();
+
+            foreach (var appt in appoinmentBuffer)
+            {
+                PocalAppointment pocalAppt = CreatePocalAppoinment(appt);
+                pocalAppointmentsBuffer.Add(pocalAppt);
+            }
+        }
 
 
 
@@ -198,23 +239,7 @@ namespace Pocal.ViewModel
 
         }
 
-        private async Task getPocalAppointments(int howManyDays, DateTime startDay)
-        {
-            appoinmentBuffer = await CalendarAPI.getAppointments(startDay, howManyDays);
-            await convertAppointmentBuffer();
-        }
 
-        private async Task convertAppointmentBuffer()
-        {
-            //AllPocalAppointments.Clear();
-            await CalendarAPI.setCalendars();
-
-            foreach (var appt in appoinmentBuffer)
-            {
-                PocalAppointment pocalAppt = CreatePocalAppoinment(appt);
-                pocalAppointmentsBuffer.Add(pocalAppt);
-            }
-        }
         #endregion
 
         #region Days

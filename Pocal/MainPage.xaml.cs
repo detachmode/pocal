@@ -70,10 +70,10 @@ namespace Pocal
                 Day day = e.Container.Content as Day;
                 if (day != null)
                 {
-                    int offset = 10;
+                    int offset = 5;
                     if (!App.ViewModel.IsCurrentlyLoading && App.ViewModel.Days.Count - App.ViewModel.Days.IndexOf(day) <= offset)
                     {
-                        App.ViewModel.LoadMoreDays(20);
+                        App.ViewModel.LoadMoreDays(7);
                     }
                 }
             }
@@ -183,8 +183,9 @@ namespace Pocal
 
         private void scrollToToday()
         {
-            Day today = App.ViewModel.Days[3];
-            AgendaViewLLS.ScrollTo(today);
+            App.ViewModel.ReloadStartupDays();
+            //Day today = App.ViewModel.Days[3];
+            //AgendaViewLLS.ScrollTo(today);
 
         }
 
@@ -468,6 +469,13 @@ namespace Pocal
         }
 
         #endregion
+
+        private void Grid_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            toggleOverView();
+        }
+
+
 
 
 

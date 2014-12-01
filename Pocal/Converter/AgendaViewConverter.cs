@@ -42,7 +42,7 @@ namespace Pocal.Converter
                 return "Woche " + str;
 
             }
-            else return null;
+            else return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -65,7 +65,7 @@ namespace Pocal.Converter
                 return dt.ToString("dddd", cultureSettings.ci) + ", " + dt.ToString("M", cultureSettings.ci);
 
             }
-            else return null;
+            else return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -76,24 +76,14 @@ namespace Pocal.Converter
     }
 
 
-    public class CurrentTopWeekConverter : IValueConverter
+    public class DeltaTimeFirstLine : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is Day)
             {
-                TimeSpan ts = ((Day)value).DT.Date - DateTime.Now.Date;
-
-                if (ts.Days < 7)
-                {
-                    return "";
-                }
-                else
-                {
-                    int delta = (int)ts.Days / 7;
-                    return "in " + delta.ToString() + " Wochen";
-                }
-
+                DateTime dt = ((Day)value).DT;
+                return DeltaTimeStringCreator.getFirstLine(dt);
 
             }
             else return "";
@@ -134,7 +124,7 @@ namespace Pocal.Converter
 
     }
 
-    public class CurrentTopDayConverter : IValueConverter
+    public class DeltaTimeSecondLine : IValueConverter
     {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -143,10 +133,10 @@ namespace Pocal.Converter
             if (value is Day)
             {
                 DateTime dt = ((Day)value).DT;
-                return DeltaTimeStringCreator.getDeltaDays(dt);
+                return DeltaTimeStringCreator.getSecondLine(dt);
 
             }
-            else return null;
+            else return "";
         }
 
 
@@ -176,7 +166,7 @@ namespace Pocal.Converter
 
 
             }
-            return null;
+            return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -210,7 +200,7 @@ namespace Pocal.Converter
 
 
             }
-            return null;
+            return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -245,7 +235,7 @@ namespace Pocal.Converter
                 str += appt.StartTime.Minute.ToString("00");
                 return str;
             }
-            return null;
+            return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -327,7 +317,7 @@ namespace Pocal.Converter
 
                 return str;
             }
-            return null;
+            return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -476,7 +466,7 @@ namespace Pocal.Converter
                 return "  KW " + weeknumber + "  ";
             }
             else
-                return null;
+                return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
