@@ -522,7 +522,7 @@
                     <StackPanel Tap="Grid_Tap" x:Name="AgendaPointer" Orientation="Horizontal" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5"  >
                         <StackPanel.Resources>
                             <Storyboard x:Key="EnterOverview">
-                                <DoubleAnimation Duration="0:0:0.5" To="50" 
+                                <DoubleAnimation Duration="0:0:0.5" To="45" 
                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
                                                 Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
                             </Storyboard>
@@ -535,10 +535,15 @@
                         <StackPanel.RenderTransform>
                             <CompositeTransform TranslateX="150"/>
                         </StackPanel.RenderTransform>
-
+                       
+                        <Grid Width="63" Background="Transparent" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <CompositeTransform TranslateX="43"/>
+                            </Grid.RenderTransform>
+                        </Grid>
                         <Grid Height="90" Width="200" Margin="0,0,-7,0" HorizontalAlignment="Right" VerticalAlignment="Center">
                             <Grid.Background>
-                                <ImageBrush Stretch="None" ImageSource="/Images/DeltaTimeArrow2.png"/>
+                                <ImageBrush Stretch="None" ImageSource="/Images/DeltaTimeArrow3.png"/>
                             </Grid.Background>
                             <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" 
                                      HorizontalAlignment="Center">

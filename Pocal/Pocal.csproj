@@ -179,6 +179,7 @@
     <Content Include="Images\delete.png" />
     <Content Include="Images\deltaTimeArrow.png" />
     <Content Include="Images\deltaTimeArrow2.png" />
+    <Content Include="Images\deltaTimeArrow3.png" />
     <Content Include="Images\DeltaTimeDreieck.png" />
     <Content Include="Images\DeltaTimeDreieck2.png" />
     <Content Include="Images\download.png" />
