@@ -28,9 +28,6 @@ namespace Pocal.Converter
             if (value is DateTime)
             {
                 DateTime time = (DateTime)value;
-                // Seriously cheat.  If its Monday, Tuesday or Wednesday, then it'll 
-                // be the same week# as whatever Thursday, Friday or Saturday are,
-                // and we always get those right
                 DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(time);
                 if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
                 {

@@ -37,13 +37,15 @@ namespace Pocal
             InitializeComponent();
 
             //fixme
-            SingleDayView.Opacity = 0.01;
+            //SingleDayView.Opacity = 0.01;
 
             App.ViewModel.LoadStartupDays();
 
-            VisualStateManager.GoToState(this, "Close", true);
+            
 
             watchScrollingOfLLS();
+
+            VisualStateManager.GoToState(this, "Close", true);
         }
 
         #region watch Scrolling of AgendaViewLLS

@@ -32,11 +32,10 @@ namespace Pocal.Converter
                     return "Heute";
 
                 }
-                else
-                    return dt.ToString("dddd", cultureSettings.ci) + ", " + dt.ToString("M", cultureSettings.ci);
+                return dt.ToString("dddd", cultureSettings.ci) + ", " + dt.ToString("M", cultureSettings.ci);
 
             }
-            else return null;
+            else return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -55,8 +54,7 @@ namespace Pocal.Converter
             {
                 return System.Windows.Visibility.Collapsed;
             }
-            else
-                return System.Windows.Visibility.Visible;
+            return System.Windows.Visibility.Visible;
 
         }
 
@@ -77,8 +75,7 @@ namespace Pocal.Converter
             {
                 return System.Windows.Visibility.Visible;
             }
-            else
-                return System.Windows.Visibility.Collapsed;
+            return System.Windows.Visibility.Collapsed;
 
         }
 
@@ -206,9 +203,13 @@ namespace Pocal.Converter
     {
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
+            TranslateTransform myTranslate = new TranslateTransform();
+            TransformGroup myTransformGroup = new TransformGroup();
+            myTransformGroup.Children.Add(myTranslate);
+
             if (values[0] == null || values[1] == null || values[2] == null)
             {
-                return null;
+                return myTransformGroup;
             }
 
             int conflicts = (int)values[0];
@@ -221,13 +222,13 @@ namespace Pocal.Converter
             if (conflicts == 0)
                 conflicts = 1;
 
-            TranslateTransform myTranslate = new TranslateTransform();
+            
             calcY(starttime, myTranslate);
             calcX(conflicts, column, myTranslate);
 
 
-            TransformGroup myTransformGroup = new TransformGroup();
-            myTransformGroup.Children.Add(myTranslate);
+            
+            
 
 
             return myTransformGroup;
@@ -262,7 +263,7 @@ namespace Pocal.Converter
 
         public override object[] ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 
