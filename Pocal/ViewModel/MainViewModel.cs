@@ -10,6 +10,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using Pocal.Helper;
 using System.Windows;
+using System.Threading;
+
 
 namespace Pocal.ViewModel
 {
@@ -182,9 +184,18 @@ namespace Pocal.ViewModel
 
         public void ReloadStartupDays()
         {
+            List<Day> daysList = Days.ToList<Day>();
             this.Days.Clear();
-            loadPocalApptsAndDays(DateTime.Now, 1);
-            //LoadStartupDays();
+
+            Days.Add(daysList.FirstOrDefault(x => x.DT.Date == DateTime.Now.Date));
+
+
+            ((MainPage)App.RootFrame.Content).Dispatcher.BeginInvoke(async delegate
+             {
+                 Thread.Sleep(200);
+                 await loadDatesOfThePast(3);
+             });
+
         }
 
         public async void LoadMoreDays(int howMany)

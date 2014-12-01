@@ -186,7 +186,7 @@ namespace Pocal
         private void scrollToToday()
         {
             App.ViewModel.ReloadStartupDays();
-            //Day today = App.ViewModel.Days[3];
+            //Day today = App.ViewModel.dispDays[3];
             //AgendaViewLLS.ScrollTo(today);
 
         }
@@ -318,6 +318,7 @@ namespace Pocal
                 SingleDayWindowBody.CacheMode = null;
 
             });
+
         }
 
         private void DayCard_HeaderTap(object sender, System.Windows.Input.GestureEventArgs e)
