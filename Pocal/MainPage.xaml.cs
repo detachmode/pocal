@@ -39,7 +39,7 @@ namespace Pocal
             //fixme
             //SingleDayView.Opacity = 0.01;
 
-            App.ViewModel.LoadStartupDays();
+            App.ViewModel.GoToDate(DateTime.Now);
             VisualStateManager.GoToState(this, "Close", true);
             
 
@@ -185,7 +185,7 @@ namespace Pocal
 
         private void scrollToToday()
         {
-            App.ViewModel.ReloadStartupDays();
+            App.ViewModel.GoToDate(DateTime.Now);
             //Day today = App.ViewModel.dispDays[3];
             //AgendaViewLLS.ScrollTo(today);
 
