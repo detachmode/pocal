@@ -19,7 +19,7 @@ namespace Pocal
 
     public partial class MainPage : PhoneApplicationPage
     {
-        private Dictionary<object, ContentPresenter> realizedPocalAppointmentItems = new Dictionary<object, ContentPresenter>();
+        private Dictionary<object, ContentPresenter> realizedDayItems = new Dictionary<object, ContentPresenter>();
 
         // Constructor
         public MainPage()
@@ -59,12 +59,55 @@ namespace Pocal
             
             DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(checkDayAtCenterOfScreen_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 40); // performance
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 40);
             dispatcherTimer.Start();
+           
+            // FIXME Performance / Naming
+            DispatcherTimer dispatcherTimer2 = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer2.Tick += new EventHandler(checkDayATTopOfScreen_Tick); // TODO Performance   !!!!!!!!!
+            dispatcherTimer2.Interval = new TimeSpan(0, 0, 0, 0, 1000); 
+            dispatcherTimer2.Start();
 
             AgendaViewLLS.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
         }
 
+        private void checkDayATTopOfScreen_Tick(object sender, EventArgs e)
+        {
+            //Day centerDay = (Day)getItemAtCenterOfScreen();
+            Day topDay = (Day)getItemAtTopOfScreen();
+            if (topDay != null)
+            {
+                // if topDay == Item
+
+                IEnumerable<KeyValuePair<object, ContentPresenter>> daysLoadedBeforeTopDay = realizedDayItems.Where(x => ((x.Value).DataContext as Day).DT < topDay.DT);
+                //List<KeyValuePair<object, ContentPresenter>> keyValuePairsSorted = daysLoadedBeforeTopDay.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
+                int count = daysLoadedBeforeTopDay.Count();
+                if (count < 7)
+                {
+                    App.ViewModel.LoadDaysOfPastAsync(7);
+                }
+
+                //App.ViewModel.DayAtCenterOfScreen = topDay;
+
+            }
+        }
+
+        private object getItemAtTopOfScreen()
+        {
+            if (realizedDayItems.Count > 1)
+            {
+                var LLS_Offset = FindViewport(AgendaViewLLS).Viewport.Top;
+                IEnumerable<KeyValuePair<object, ContentPresenter>> keyValuePairs = realizedDayItems.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight >= LLS_Offset);
+                List<KeyValuePair<object, ContentPresenter>> keyValuePairsSorted = keyValuePairs.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
+                object obj = keyValuePairsSorted[0].Key;
+
+                return obj;
+            }
+            else
+                return null;
+        }
+
+ 
         private void LLS_EndOfList(object sender, ItemRealizationEventArgs e)
         {
             if (e.ItemKind == LongListSelectorItemKind.Item)
@@ -87,7 +130,7 @@ namespace Pocal
             if (e.ItemKind == LongListSelectorItemKind.Item)
             {
                 object o = e.Container.DataContext;
-                realizedPocalAppointmentItems[o] = e.Container;
+                realizedDayItems[o] = e.Container;
             }
         }
 
@@ -96,7 +139,7 @@ namespace Pocal
             if (e.ItemKind == LongListSelectorItemKind.Item)
             {
                 object o = e.Container.DataContext;
-                realizedPocalAppointmentItems.Remove(o);
+                realizedDayItems.Remove(o);
             }
         }
 
@@ -129,11 +172,11 @@ namespace Pocal
 
         private object getItemAtCenterOfScreen()
         {
-            if (realizedPocalAppointmentItems.Count > 1)
+            if (realizedDayItems.Count > 1)
             {
                 var LLS_Offset = getLLS_OffsetAtCenterOfScreen();
 
-                IEnumerable<KeyValuePair<object, ContentPresenter>> keyValuePairs = realizedPocalAppointmentItems.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight >= LLS_Offset);
+                IEnumerable<KeyValuePair<object, ContentPresenter>> keyValuePairs = realizedDayItems.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight >= LLS_Offset);
                 List<KeyValuePair<object, ContentPresenter>> keyValuePairsSorted = keyValuePairs.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
                 object obj = keyValuePairsSorted[0].Key;
 

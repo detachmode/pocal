@@ -180,11 +180,11 @@ namespace Pocal.ViewModel
 
             this.Days.Clear();
             await loadPocalApptsAndDays(dt, 1);
-            loadDaysOfPastAsync(7);
+            LoadDaysOfPastAsync(7);
 
         }
 
-        private void loadDaysOfPastAsync(int howMany)
+        public void LoadDaysOfPastAsync(int howMany)
         {
             ((MainPage)App.RootFrame.Content).Dispatcher.BeginInvoke(async delegate
             {
