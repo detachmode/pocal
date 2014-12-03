@@ -59,13 +59,13 @@ namespace Pocal
             
             DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(checkDayAtCenterOfScreen_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 40);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             dispatcherTimer.Start();
            
             // FIXME Performance / Naming
             DispatcherTimer dispatcherTimer2 = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer2.Tick += new EventHandler(checkDayATTopOfScreen_Tick); // TODO Performance   !!!!!!!!!
-            dispatcherTimer2.Interval = new TimeSpan(0, 0, 0, 0, 1000); 
+            dispatcherTimer2.Interval = new TimeSpan(0, 0, 0, 0, 100); 
             dispatcherTimer2.Start();
 
             AgendaViewLLS.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
@@ -79,10 +79,10 @@ namespace Pocal
             {
                 // if topDay == Item
 
-                IEnumerable<KeyValuePair<object, ContentPresenter>> daysLoadedBeforeTopDay = realizedDayItems.Where(x => ((x.Value).DataContext as Day).DT < topDay.DT);
+               IEnumerable<Day> daysLoadedBeforeTopDay = App.ViewModel.Days.Where(x => x.DT < topDay.DT);
                 //List<KeyValuePair<object, ContentPresenter>> keyValuePairsSorted = daysLoadedBeforeTopDay.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
                 int count = daysLoadedBeforeTopDay.Count();
-                if (count < 7)
+                if (!App.ViewModel.IsCurrentlyLoading && count < 7)
                 {
                     App.ViewModel.LoadDaysOfPastAsync(7);
                 }
@@ -178,8 +178,10 @@ namespace Pocal
 
                 IEnumerable<KeyValuePair<object, ContentPresenter>> keyValuePairs = realizedDayItems.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight >= LLS_Offset);
                 List<KeyValuePair<object, ContentPresenter>> keyValuePairsSorted = keyValuePairs.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
-                object obj = keyValuePairsSorted[0].Key;
+                if (keyValuePairsSorted.Count == 0)
+                    return null;
 
+                object obj = keyValuePairsSorted[0].Key;
                 return obj;
             }
             else

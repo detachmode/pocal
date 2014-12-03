@@ -176,28 +176,43 @@ namespace Pocal.ViewModel
 
         public async void GoToDate(DateTime dt)
         {
+            //Debug.WriteLine(dt.ToString());
             IsCurrentlyLoading = true;
 
             this.Days.Clear();
+            //((MainPage)App.RootFrame.Content).AgendaViewLLS.UpdateLayout();
+
             await loadPocalApptsAndDays(dt, 1);
-            LoadDaysOfPastAsync(7);
+            await LoadMoreDays(3);
+            await LoadDaysOfPastAsync(3);
 
+            IsCurrentlyLoading = false;
         }
 
-        public void LoadDaysOfPastAsync(int howMany)
+        public async Task LoadDaysOfPastAsync(int howMany)
         {
-            ((MainPage)App.RootFrame.Content).Dispatcher.BeginInvoke(async delegate
+            if (Days.Count > 1)
             {
-                Thread.Sleep(200);
-                await loadDatesOfThePast(howMany);
-            });
+                //((MainPage)App.RootFrame.Content).Dispatcher.BeginInvoke(async delegate
+                //{
+                    //Thread.Sleep(200);
+                    await loadDatesOfThePast(howMany);
+
+
+                //});
+            }
         }
 
 
-        public async void LoadMoreDays(int howMany)
+        public async Task LoadMoreDays(int howMany)
         {
             IsCurrentlyLoading = true;
-            await loadPocalApptsAndDays(Days[Days.Count - 1].DT.AddDays(1), howMany);
+            if (Days.Count > 0)
+            {
+                await loadPocalApptsAndDays(Days[Days.Count - 1].DT.AddDays(1), howMany);
+            }
+           
+            IsCurrentlyLoading = false;
         }
 
 
@@ -230,18 +245,23 @@ namespace Pocal.ViewModel
         {
             await getPocalAppointments(howManyDays, startDay);
             createDays(startDay, howManyDays);
-            App.ViewModel.IsCurrentlyLoading = false;
+          
 
 
         }
 
         private async Task loadDatesOfThePast(int howManyDays)
         {
+            IsCurrentlyLoading = true;
             DateTime startDay = App.ViewModel.Days[0].DT.AddDays(-howManyDays);
+            
+            Debug.WriteLine(startDay.ToString());
+            Debug.WriteLine("Dayscounter: "+Days.Count.ToString());
+
 
             await getPocalAppointments(howManyDays, startDay);
             createAndInsertPastDays(startDay, howManyDays);
-            App.ViewModel.IsCurrentlyLoading = false;
+            IsCurrentlyLoading = false;
 
         }
 
