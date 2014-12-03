@@ -207,12 +207,17 @@ namespace Pocal.ViewModel
         public async Task LoadMoreDays(int howMany)
         {
             IsCurrentlyLoading = true;
+            DateTime fromDate = Days[Days.Count - 1].DT.AddDays(1);
+            Debug.WriteLine("\nLoadMoreDays from: " + fromDate.ToString() + " + " + howMany.ToString());
+
             if (Days.Count > 0)
             {
-                await loadPocalApptsAndDays(Days[Days.Count - 1].DT.AddDays(1), howMany);
+                await loadPocalApptsAndDays(fromDate, howMany);
             }
-           
+
+            Debug.WriteLine("LoadMoreDays - Dayscounter: " + Days.Count.ToString());
             IsCurrentlyLoading = false;
+
         }
 
 
@@ -254,13 +259,13 @@ namespace Pocal.ViewModel
         {
             IsCurrentlyLoading = true;
             DateTime startDay = App.ViewModel.Days[0].DT.AddDays(-howManyDays);
-            
-            Debug.WriteLine(startDay.ToString());
-            Debug.WriteLine("Dayscounter: "+Days.Count.ToString());
-
+            Debug.WriteLine("\nloadDatesOfThePast from:" + startDay.ToString());
+           
 
             await getPocalAppointments(howManyDays, startDay);
             createAndInsertPastDays(startDay, howManyDays);
+
+            Debug.WriteLine("loadDatesOfThePast - Dayscounter: " + Days.Count.ToString());
             IsCurrentlyLoading = false;
 
         }

@@ -59,13 +59,13 @@ namespace Pocal
             
             DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(checkDayAtCenterOfScreen_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 40);
             dispatcherTimer.Start();
            
             // FIXME Performance / Naming
             DispatcherTimer dispatcherTimer2 = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer2.Tick += new EventHandler(checkDayATTopOfScreen_Tick); // TODO Performance   !!!!!!!!!
-            dispatcherTimer2.Interval = new TimeSpan(0, 0, 0, 0, 100); 
+            dispatcherTimer2.Interval = new TimeSpan(0, 0, 0, 0, 40); 
             dispatcherTimer2.Start();
 
             AgendaViewLLS.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
@@ -82,7 +82,7 @@ namespace Pocal
                IEnumerable<Day> daysLoadedBeforeTopDay = App.ViewModel.Days.Where(x => x.DT < topDay.DT);
                 //List<KeyValuePair<object, ContentPresenter>> keyValuePairsSorted = daysLoadedBeforeTopDay.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
                 int count = daysLoadedBeforeTopDay.Count();
-                if (!App.ViewModel.IsCurrentlyLoading && count < 7)
+                if (!App.ViewModel.IsCurrentlyLoading && count < 10)
                 {
                     App.ViewModel.LoadDaysOfPastAsync(7);
                 }
@@ -115,7 +115,7 @@ namespace Pocal
                 Day day = e.Container.Content as Day;
                 if (day != null)
                 {
-                    int offset = 5;
+                    int offset = 10;
                     if (!App.ViewModel.IsCurrentlyLoading && App.ViewModel.Days.Count - App.ViewModel.Days.IndexOf(day) <= offset)
                     {
                         App.ViewModel.LoadMoreDays(7);
