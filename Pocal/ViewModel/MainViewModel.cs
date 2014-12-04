@@ -11,6 +11,7 @@ using System.Diagnostics;
 using Pocal.Helper;
 using System.Windows;
 using System.Threading;
+using System.Windows.Threading;
 
 
 namespace Pocal.ViewModel
@@ -65,13 +66,46 @@ namespace Pocal.ViewModel
         }
 
 
+        private string _time;
+        public string Time
+		{
+			get
+			{
+                return _time;
+			}
+			private set
+			{
+                if (value != _time)
+				{
+                    _time = value;
+                    NotifyPropertyChanged("Time");
+				}
+			}
+		}
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            DateTime currentTime = DateTime.Now;
+            Time = currentTime.Hour + ":"+ currentTime.Minute.ToString("00");
+
+            
+
+        }
+
+
 
 
         public MainViewModel()
         {
+
             this.Days = new ObservableCollection<Day>();
             SingleDayViewModel = new SingleDayViewVM();
             ConflictManager = new ConflictManager();
+
+            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 5000); // TODO performance
+            dispatcherTimer.Start();
 
             #region DESIGN TIME DATA
             if (DesignerProperties.IsInDesignTool)

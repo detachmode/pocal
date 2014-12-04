@@ -530,6 +530,15 @@ namespace Pocal
             toggleOverView();
         }
 
+        //private void AppointmentsOnGrid_Unloaded(object sender, RoutedEventArgs e)
+        //{
+
+        //    ItemsControl itemscontrol = sender as ItemsControl;
+
+        //    itemscontrol.ClearValue(FrameworkElement.DataContextProperty);
+
+        //}
+
 
 
 

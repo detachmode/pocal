@@ -84,6 +84,7 @@
     </phone:PhoneApplicationPage.ApplicationBar>
 
     <Grid x:Name="LayoutRoot">
+        
 
         <!--******** ************* ******** -->
         <!--******** VISUAL STATES ******** -->
@@ -185,6 +186,17 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+
+        <Grid Grid.Row="0" Height="30" VerticalAlignment="Top" Canvas.ZIndex="2"  >
+ 
+            <TextBlock Text="{Binding Time}" Margin="0,2,23,2" HorizontalAlignment="Right" Style="{StaticResource PhoneTextNormalStyle}">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{StaticResource PhoneBorderColor}"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+
+
+        </Grid>
 
         <Grid x:Name="grid" Margin="0" >
             <Grid Background="Black" x:Name="AgendaView" >
@@ -626,7 +638,7 @@
                     </Border>
 
                     <!--******** ******** ******** -->
-                    <ScrollViewer x:Name="SingleDayScrollViewer"  VerticalScrollBarVisibility="Hidden" ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
+                    <ScrollViewer x:Name="SingleDayScrollViewer" Unloaded="AppointmentsOnGrid_Unloaded" VerticalScrollBarVisibility="Hidden" ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
                         <Grid>
                             <Grid.Background>
                                 <SolidColorBrush Color="{StaticResource Color90Black}"/>
