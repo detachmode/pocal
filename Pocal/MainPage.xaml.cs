@@ -342,17 +342,17 @@ namespace Pocal
 
         private void DayCard_ApptTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            addBitmapCacheToSDV();
             ViewSwitcher.setScrollToPa(((FrameworkElement)sender).DataContext as PocalAppointment);
+            Thread.Sleep(1);
             ViewSwitcher.from = ViewSwitcher.Sender.ApptTap;
-            removeBitmapCacheAfterAnimation();
 
         }
 
         private void addBitmapCacheToSDV()
         {
+            BitmapCache bmc = new BitmapCache() { RenderAtScale = 0.5 };
+            SingleDayWindowBody.CacheMode = bmc;
 
-            SingleDayWindowBody.CacheMode = new BitmapCache() { RenderAtScale = 0.6 };
         }
 
         private void removeBitmapCacheAfterAnimation()
@@ -362,24 +362,28 @@ namespace Pocal
                 Thread.Sleep(200);
                 SingleDayWindowBody.CacheMode = null;
 
+
+
             });
 
         }
 
         private void DayCard_HeaderTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            addBitmapCacheToSDV();
+            
             ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
-            removeBitmapCacheAfterAnimation();
+           
         }
 
 
         private void OpenSdvAndSetTappedDay(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            addBitmapCacheToSDV();
             if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
                 leaveOverview();
             else
                 ViewSwitcher.SwitchToSDV(sender);
+            removeBitmapCacheAfterAnimation();
 
         }
         #endregion

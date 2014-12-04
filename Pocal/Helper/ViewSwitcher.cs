@@ -33,17 +33,21 @@ namespace Pocal
 
 
             setTemporaryTappedDay(sender);
-
-            removePreviousDataContext();           
+            Thread.Sleep(1);
+            //removePreviousDataContext();
+            //Thread.Sleep(1);
             openSDV();
+
             scrollToRightPosition();
             if (openFirstTime)
             {
+                
                 setTappedDayAsynchron();
                 openFirstTime = false;
             }
             else
             {
+                Thread.Sleep(1);
                 setTappedDay();
             }
             
@@ -96,6 +100,7 @@ namespace Pocal
 		{
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
+                Thread.Sleep(1);
                  //Update UI in here as this part will run on the UI thread.
                 setTappedDay();
                 

@@ -607,9 +607,9 @@
                     <!--******** ******** ******** -->
                     <!--******** SDV BODY ******** -->
                     <!--******** ********** ******** -->
-                    <Border Canvas.ZIndex="3"  Margin="0,-41,0,0" Height="41" VerticalAlignment="Top" BorderThickness="0,1,0,1" BorderBrush="#FF5D5D5D" >
+                    <Border x:Name="SingleDayHeader" Canvas.ZIndex="3"  Margin="0,-41,0,0" Height="41" VerticalAlignment="Top" BorderThickness="0,1,0,1" BorderBrush="#FF5D5D5D" >
                         <Border.Background>
-                            <SolidColorBrush Color="#FF232323"/>
+                            <SolidColorBrush Color="#FFC10000"/>
                         </Border.Background>
                         <TextBlock  x:Name="SingleDayWindowHeader" 
                                     Foreground="White"
