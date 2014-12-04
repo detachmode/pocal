@@ -104,7 +104,7 @@ namespace Pocal.ViewModel
 
             DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 5000); // TODO performance
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000); // TODO performance
             dispatcherTimer.Start();
 
             #region DESIGN TIME DATA

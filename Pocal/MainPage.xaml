@@ -79,7 +79,7 @@
             <shell:ApplicationBarIconButton IconUri="/Images/back.png" Text="Heute" Click="ApplicationBarIconButton_Click"/>
             <shell:ApplicationBarIconButton IconUri="/Images/add.png" Text="Neu" Click="ApplicationBarIconButton_Click_1"/>
             <shell:ApplicationBarIconButton IconUri="/Images/feature.calendar.png" Text="Gehe zu Tag"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/feature.search.png" Text="Termin suchen"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/feature.search.png" Text="Overview" Click="ApplicationBarIconButton_Click_2"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
@@ -638,7 +638,7 @@
                     </Border>
 
                     <!--******** ******** ******** -->
-                    <ScrollViewer x:Name="SingleDayScrollViewer" Unloaded="AppointmentsOnGrid_Unloaded" VerticalScrollBarVisibility="Hidden" ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
+                    <ScrollViewer x:Name="SingleDayScrollViewer" VerticalScrollBarVisibility="Hidden" ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
                         <Grid>
                             <Grid.Background>
                                 <SolidColorBrush Color="{StaticResource Color90Black}"/>

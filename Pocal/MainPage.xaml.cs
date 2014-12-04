@@ -381,7 +381,14 @@ namespace Pocal
             addBitmapCacheToSDV();
             
             if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            {
                 leaveOverview();
+                var element = (FrameworkElement)sender;
+                App.ViewModel.GoToDate((element.DataContext as Day).DT);
+
+                //ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
+                //ViewSwitcher.SwitchToSDV(sender);
+            }
             else
                 ViewSwitcher.SwitchToSDV(sender);
             removeBitmapCacheAfterAnimation();
@@ -526,6 +533,11 @@ namespace Pocal
         #endregion
 
         private void Grid_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            toggleOverView();
+        }
+
+        private void ApplicationBarIconButton_Click_2(object sender, EventArgs e)
         {
             toggleOverView();
         }
