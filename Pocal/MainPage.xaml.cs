@@ -40,7 +40,7 @@ namespace Pocal
             //SingleDayView.Opacity = 0.01;
 
             App.ViewModel.GoToDate(DateTime.Now);
-            VisualStateManager.GoToState(this, "Close", true);
+            //VisualStateManager.GoToState(this, "Close", true);
             
 
             watchScrollingOfLLS();
@@ -379,6 +379,7 @@ namespace Pocal
         private void OpenSdvAndSetTappedDay(object sender, System.Windows.Input.GestureEventArgs e)
         {
             addBitmapCacheToSDV();
+            
             if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
                 leaveOverview();
             else

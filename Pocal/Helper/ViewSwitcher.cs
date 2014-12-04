@@ -3,6 +3,7 @@ using Pocal.ViewModel;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace Pocal
@@ -32,14 +33,16 @@ namespace Pocal
 				return;
 
 
+
             setTemporaryTappedDay(sender);
             Thread.Sleep(1);
-            //removePreviousDataContext();
-            //Thread.Sleep(1);
+            removePreviousDataContext();
+            Thread.Sleep(1);
+
             openSDV();
 
             scrollToRightPosition();
-            if (openFirstTime)
+            if (openFirstTime || temporaryTappedDay.PocalApptsOfDay.Count>3)
             {
                 
                 setTappedDayAsynchron();
@@ -88,7 +91,7 @@ namespace Pocal
 
 		private static void openSDV()
 		{
-            
+            Canvas.SetZIndex(mainpage.SingleDayView, 1);
 			//mainpage.SingleDayView.Visibility = Visibility.Visible;
 			VisualStateManager.GoToState(mainpage, "OpenDelay", true);
             

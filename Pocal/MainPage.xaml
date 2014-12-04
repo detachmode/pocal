@@ -186,8 +186,8 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Grid x:Name="grid" Margin="0">
-            <Grid x:Name="AgendaView" >
+        <Grid x:Name="grid" Margin="0" >
+            <Grid Background="Black" x:Name="AgendaView" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0"/>
                     <RowDefinition Height="*"/>
@@ -580,7 +580,8 @@
             <!--******** SDV ******** -->
             <!--******** *** ******** -->
             <Grid x:Name="SingleDayView" 
-				Background="#AD000000" RenderTransformOrigin="0.5,0.5" >
+                  
+				Background="#AD000000" RenderTransformOrigin="0.5,0.5" Canvas.ZIndex="-1" >
                 <Grid.RenderTransform>
                     <CompositeTransform/>
                 </Grid.RenderTransform>
