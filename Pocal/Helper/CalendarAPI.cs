@@ -92,6 +92,15 @@ namespace Pocal
 
         }
 
+        public static async void addAllDayAppointment(DateTime starttime)
+        {
+
+            var appointment = newAppointmentPreset(starttime);
+            appointment.AllDay = true;
+            await addAppointment(appointment);
+
+        }
+
         private static async Task addAppointment(Appointment appointment)
         {
             await setAppointmentStore();

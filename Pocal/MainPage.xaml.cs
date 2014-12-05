@@ -13,6 +13,7 @@ using System.Threading;
 using Pocal.Helper;
 using System.Windows.Data;
 using System.Windows.Media.Animation;
+using Microsoft.Phone.Shell;
 
 namespace Pocal
 {
@@ -42,7 +43,7 @@ namespace Pocal
             App.ViewModel.GoToDate(DateTime.Now);
             //VisualStateManager.GoToState(this, "Close", true);
 
-
+            DefaultAppbar();
             watchScrollingOfLLS();
 
 
@@ -159,12 +160,12 @@ namespace Pocal
             if (testday != null)
             {
                 // Switch Highlighted Day
-                Day d = App.ViewModel.DayAtCenterOfScreen;
+                Day d = App.ViewModel.DayAtPointer;
                 if (d != null)
                 {
                     d.IsHighlighted = false;
                 }
-                App.ViewModel.DayAtCenterOfScreen = testday;
+                App.ViewModel.DayAtPointer = testday;
                 testday.IsHighlighted = true;
             }
 
@@ -392,10 +393,7 @@ namespace Pocal
         private List<ItemsControl> foundDayCards_ItemsControll;
         private List<StackPanel> foundStackPanels;
 
-        private void ApplicationBarIconButton_Click(object sender, EventArgs e)
-        {
-            scrollToToday();
-        }
+
 
         private void enterOverview()
         {
@@ -528,11 +526,68 @@ namespace Pocal
             toggleOverView();
         }
 
-        private void ApplicationBarIconButton_Click_2(object sender, EventArgs e)
-        {
-            toggleOverView();
-        }
 
+
+        private void DefaultAppbar()
+        {
+
+
+            ApplicationBar = new ApplicationBar();
+            /*********** MENU ITEMS ***********/
+            ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
+            item1.Text = "Einstellungen";
+            ApplicationBar.MenuItems.Add(item1);
+            ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
+            item2.Text = "Tutorial";
+            ApplicationBar.MenuItems.Add(item2);
+
+            ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
+            item3.Text = "Info";
+            ApplicationBar.MenuItems.Add(item3);
+
+            /*********** BUTTONs ***********/
+            ApplicationBarIconButton button1 = new ApplicationBarIconButton();
+            button1.IconUri = new Uri("/Images/back.png", UriKind.Relative);
+            button1.Text = "Heute";
+            ApplicationBar.Buttons.Add(button1);
+            button1.Click += new EventHandler(delegate(object sender, EventArgs e)
+            {
+                scrollToToday();
+            });
+
+            /*********** ADD METHODE BUTTON ***********/
+            ApplicationBarIconButton button2 = new ApplicationBarIconButton();
+            button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
+            button2.Text = "add";
+            ApplicationBar.Buttons.Add(button2);
+            button2.Click += new EventHandler(delegate(object sender, EventArgs e)
+            {
+                CalendarAPI.addAllDayAppointment(App.ViewModel.DayAtPointer.DT);
+
+            });
+
+            /*********** SELECT MODE BUTTON ***********/
+            ApplicationBarIconButton button3 = new ApplicationBarIconButton();
+            button3.IconUri = new Uri("/Images/feature.calendar.png", UriKind.Relative);
+            button3.Text = "Gehe zu";
+            ApplicationBar.Buttons.Add(button3);
+            button3.Click += new EventHandler(delegate(object sender, EventArgs e)
+            {
+                //App.ViewModel.ClassViewModel.SelectedClass.EnterMultiSelect();
+                //App.ViewModel.ClassViewModel.InModus = ClassViewModel.modi.multiSelect;
+                //ClassPage_Edit();
+            });
+
+
+            ApplicationBarIconButton button4 = new ApplicationBarIconButton();
+            button4.IconUri = new Uri("/Images/feature.search.png", UriKind.Relative);
+            button4.Text = "Overview";
+            ApplicationBar.Buttons.Add(button4);
+            button4.Click += new EventHandler(delegate(object sender, EventArgs e)
+            {
+                toggleOverView();
+            });
+        }
         //private void AppointmentsOnGrid_Unloaded(object sender, RoutedEventArgs e)
         //{
 

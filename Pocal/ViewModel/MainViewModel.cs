@@ -49,7 +49,7 @@ namespace Pocal.ViewModel
         public ConflictManager ConflictManager { get; private set; }
 
         private Day _dayAtCenterOfScreen;
-        public Day DayAtCenterOfScreen
+        public Day DayAtPointer
         {
             get
             {
@@ -199,7 +199,7 @@ namespace Pocal.ViewModel
 
 
                 SingleDayViewModel.TappedDay = Days[0];
-                DayAtCenterOfScreen = new Day { DT = dt.AddHours(24) };
+                DayAtPointer = new Day { DT = dt.AddHours(24) };
 
             }
             #endregion
@@ -217,10 +217,29 @@ namespace Pocal.ViewModel
             //((MainPage)App.RootFrame.Content).AgendaViewLLS.UpdateLayout();
 
             await loadPocalApptsAndDays(dt, 1);
-            await LoadMoreDays(3);
+            await loadEnoughMoreDay();
             await LoadDaysOfPastAsync(3);
 
             IsCurrentlyLoading = false;
+        }
+
+        private async Task loadEnoughMoreDay()
+        {
+            await LoadMoreDays(3);
+            if (countLoadedAppointments() < 18)
+            {
+                await LoadMoreDays(3);
+            }
+        }
+
+        private int countLoadedAppointments()
+        {
+            int counter = 0;
+            foreach (Day day in Days)
+            {
+                counter += day.PocalApptsOfDay.Count;  
+            }
+            return counter;
         }
 
         public async Task LoadDaysOfPastAsync(int howMany)

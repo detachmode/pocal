@@ -69,19 +69,7 @@
     <!--******** ******* ******** -->
     <!--******** APP BAR ******** -->
     <!--******** ******* ******** -->
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="True" IsVisible="True">
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="Einstellungen" />
-                <shell:ApplicationBarMenuItem Text="Tutorial" />
-                <shell:ApplicationBarMenuItem Text="Info"/>
-            </shell:ApplicationBar.MenuItems>
-            <shell:ApplicationBarIconButton IconUri="/Images/back.png" Text="Heute" Click="ApplicationBarIconButton_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/add.png" Text="Neu" Click="ApplicationBarIconButton_Click_1"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/feature.calendar.png" Text="Gehe zu Tag"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/feature.search.png" Text="Overview" Click="ApplicationBarIconButton_Click_2"/>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+
 
     <Grid x:Name="LayoutRoot">
         
