@@ -549,13 +549,13 @@
                             <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" 
                                      HorizontalAlignment="Center">
                                 <TextBlock x:Name="WeekCounter" Margin="16,0" 
-                                       Text="{Binding DayAtCenterOfScreen, Converter={StaticResource DeltaTimeFirstLine}}"
+                                       Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeFirstLine}}"
                                     FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="left"                  >
                                 </TextBlock>
                                 <!--<Rectangle Height="2" Fill="Red"/>-->
                                 <TextBlock x:Name="DaysCounter" Margin="16,0" 
-                                       Text="{Binding DayAtCenterOfScreen , Converter={StaticResource DeltaTimeSecondLine}}" 
-                                           Visibility="{Binding DayAtCenterOfScreen.DT, Converter={StaticResource DeltaTimeSecondLineVisibility}}"
+                                       Text="{Binding DayAtPointer , Converter={StaticResource DeltaTimeSecondLine}}" 
+                                           Visibility="{Binding DayAtPointer.DT, Converter={StaticResource DeltaTimeSecondLineVisibility}}"
                                    FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="Left" />
 
                             </StackPanel>

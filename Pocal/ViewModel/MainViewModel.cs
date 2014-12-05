@@ -48,19 +48,19 @@ namespace Pocal.ViewModel
         public SingleDayViewVM SingleDayViewModel { get; private set; }
         public ConflictManager ConflictManager { get; private set; }
 
-        private Day _dayAtCenterOfScreen;
+        private Day _dayAtPointer;
         public Day DayAtPointer
         {
             get
             {
-                return _dayAtCenterOfScreen;
+                return _dayAtPointer;
             }
             set
             {
-                if (value != _dayAtCenterOfScreen)
+                if (value != _dayAtPointer)
                 {
-                    _dayAtCenterOfScreen = value;
-                    NotifyPropertyChanged("DayAtCenterOfScreen");
+                    _dayAtPointer = value;
+                    NotifyPropertyChanged("DayAtPointer");
                 }
             }
         }
