@@ -41,11 +41,11 @@ namespace Pocal
 
             App.ViewModel.GoToDate(DateTime.Now);
             //VisualStateManager.GoToState(this, "Close", true);
-            
+
 
             watchScrollingOfLLS();
 
-            
+
         }
 
         #region watch Scrolling of AgendaViewLLS
@@ -56,16 +56,16 @@ namespace Pocal
             AgendaViewLLS.ItemRealized += LLS_AddRealizedPocalAppointmentItem;
             AgendaViewLLS.ItemUnrealized += LLS_RemoveRealizedPocalAppointmentItem;
 
-            
+
             DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(checkDayAtCenterOfScreen_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 40);
             dispatcherTimer.Start();
-           
+
             // FIXME Performance / Naming
             DispatcherTimer dispatcherTimer2 = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer2.Tick += new EventHandler(checkDayATTopOfScreen_Tick); // TODO Performance   !!!!!!!!!
-            dispatcherTimer2.Interval = new TimeSpan(0, 0, 0, 0, 40); 
+            dispatcherTimer2.Interval = new TimeSpan(0, 0, 0, 0, 40);
             dispatcherTimer2.Start();
 
             AgendaViewLLS.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
@@ -79,7 +79,7 @@ namespace Pocal
             {
                 // if topDay == Item
 
-               IEnumerable<Day> daysLoadedBeforeTopDay = App.ViewModel.Days.Where(x => x.DT < topDay.DT);
+                IEnumerable<Day> daysLoadedBeforeTopDay = App.ViewModel.Days.Where(x => x.DT < topDay.DT);
                 //List<KeyValuePair<object, ContentPresenter>> keyValuePairsSorted = daysLoadedBeforeTopDay.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
                 int count = daysLoadedBeforeTopDay.Count();
                 if (!App.ViewModel.IsCurrentlyLoading && count < 10)
@@ -107,7 +107,7 @@ namespace Pocal
                 return null;
         }
 
- 
+
         private void LLS_EndOfList(object sender, ItemRealizationEventArgs e)
         {
             if (e.ItemKind == LongListSelectorItemKind.Item)
@@ -195,7 +195,7 @@ namespace Pocal
             //if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
             //    offset += ((730 + 600) / 2);
             //else
-                offset += (730 / 2);
+            offset += (730 / 2);
             return offset;
         }
 
@@ -215,7 +215,7 @@ namespace Pocal
             return null;
         }
 
-        #endregion 
+        #endregion
 
 
 
@@ -236,7 +236,7 @@ namespace Pocal
 
         }
 
-        
+
         private void toggleOverView_Gesture(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
         {
             if (e.FinalVelocities.LinearVelocity.X > 0)
@@ -266,7 +266,7 @@ namespace Pocal
 
         }
 
-    
+
         #endregion
 
         #region Exit/Closing Events
@@ -370,27 +370,18 @@ namespace Pocal
 
         private void DayCard_HeaderTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            
+
             ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
-           
+
         }
 
 
         private void OpenSdvAndSetTappedDay(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            addBitmapCacheToSDV();
-            
             if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
-            {
-                leaveOverview();
-                var element = (FrameworkElement)sender;
-                App.ViewModel.GoToDate((element.DataContext as Day).DT);
-
-                //ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
-                //ViewSwitcher.SwitchToSDV(sender);
-            }
-            else
-                ViewSwitcher.SwitchToSDV(sender);
+                return;
+            addBitmapCacheToSDV();
+            ViewSwitcher.SwitchToSDV(sender);
             removeBitmapCacheAfterAnimation();
 
         }
