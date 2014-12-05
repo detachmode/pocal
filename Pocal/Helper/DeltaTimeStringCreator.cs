@@ -13,7 +13,7 @@ namespace Pocal.Helper
         public static string getFirstLine(DateTime dt)
         {
             //string str ="";
-            if ((dt.Date - DateTime.Now.Date).Days < 7)
+            if (Math.Abs((dt.Date - DateTime.Now.Date).Days) < 7)
             {
                 return getDeltaDays(dt);
             }
@@ -29,7 +29,7 @@ namespace Pocal.Helper
         public static string getSecondLine(DateTime dt)
         {
             //string str ="";
-            if ((dt.Date - DateTime.Now.Date).Days < 7)
+            if (Math.Abs((dt.Date - DateTime.Now.Date).Days) < 7)
             {
                 return "";
             }
@@ -44,7 +44,7 @@ namespace Pocal.Helper
 
         private static string getDeltaDays(DateTime dt)
         {
-            
+
             if (dt.Date == DateTime.Now.Date)
                 return "heute";
 
@@ -61,13 +61,16 @@ namespace Pocal.Helper
             {
                 return "";
             }
-            if (ts.Days > 7)
-                str += "und ";
-            else
-                str += "in ";
 
-            str += delta.ToString() + " Tag";
-            if (delta > 1)
+            if ((-7) < ts.Days && ts.Days < 0)
+                str += "vor ";
+            if (ts.Days > 0 && ts.Days <= 7)
+                str += "in ";
+            if (ts.Days > 7 || ts.Days < -7)
+                str += "und ";
+
+            str += Math.Abs(delta).ToString() + " Tag";
+            if (Math.Abs(delta) > 1)
                 str += "en";
 
             return str;
@@ -79,14 +82,27 @@ namespace Pocal.Helper
         {
             TimeSpan ts = dt.Date - DateTime.Now.Date;
 
-            if (ts.Days < 7)
+            if (ts.Days < 7 && ts.Days > -7)
             {
                 return "";
             }
             else
             {
-                int delta = (int)ts.Days / 7;
-                return "in " + delta.ToString() + " Wochen";
+                int delta = Math.Abs((int)ts.Days / 7);
+                string str = "";
+
+                if (ts.Days <= (-7))
+                    str += "vor ";
+                else
+                    str += "in ";
+
+                str += delta.ToString() + " Woche";
+                if (delta>1)
+                {
+                    str += "n";
+                }
+
+                return str;
             }
         }
     }

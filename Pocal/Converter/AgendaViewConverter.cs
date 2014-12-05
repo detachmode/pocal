@@ -103,7 +103,7 @@ namespace Pocal.Converter
             {
                 TimeSpan ts = ((DateTime)value).Date - DateTime.Now.Date;
 
-                if (ts.Days % 7 == 0 || ts.Days < 7)
+                if (ts.Days % 7 == 0 || Math.Abs(ts.Days) < 7)
                 {
                     return Visibility.Collapsed;
                 }
