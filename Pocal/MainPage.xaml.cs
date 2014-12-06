@@ -31,6 +31,25 @@ namespace Pocal
 
         }
 
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.NavigationMode == System.Windows.Navigation.NavigationMode.Back)
+            {
+                return;
+            }
+            
+            string goToDate = "";
+            if (NavigationContext.QueryString.TryGetValue("GoToDate", out goToDate))
+            {
+                App.ViewModel.GoToDate(DateTime.Now);
+            }
+            else
+                App.ViewModel.GoToDate(DateTime.Now);
+
+        }
+
         private void loadStartup()
         {
 
@@ -40,7 +59,7 @@ namespace Pocal
             //fixme
             //SingleDayView.Opacity = 0.01;
 
-            App.ViewModel.GoToDate(DateTime.Now);
+            //App.ViewModel.GoToDate(DateTime.Now);
             //VisualStateManager.GoToState(this, "Close", true);
 
             DefaultAppbar();
@@ -79,11 +98,11 @@ namespace Pocal
             if (topDay != null)
             {
                 // if topDay == Item
-
+                int offset = 10;
                 IEnumerable<Day> daysLoadedBeforeTopDay = App.ViewModel.Days.Where(x => x.DT < topDay.DT);
                 //List<KeyValuePair<object, ContentPresenter>> keyValuePairsSorted = daysLoadedBeforeTopDay.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
                 int count = daysLoadedBeforeTopDay.Count();
-                if (!App.ViewModel.IsCurrentlyLoading && count < 10)
+                if (!App.ViewModel.IsCurrentlyLoading && count < offset)
                 {
                     App.ViewModel.LoadDaysOfPastAsync(7);
                 }
@@ -573,6 +592,7 @@ namespace Pocal
             ApplicationBar.Buttons.Add(button3);
             button3.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
+                NavigationService.Navigate(new Uri("/MonthView.xaml", UriKind.Relative));
                 //App.ViewModel.ClassViewModel.SelectedClass.EnterMultiSelect();
                 //App.ViewModel.ClassViewModel.InModus = ClassViewModel.modi.multiSelect;
                 //ClassPage_Edit();

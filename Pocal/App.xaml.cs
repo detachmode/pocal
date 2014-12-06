@@ -140,7 +140,7 @@ namespace Pocal
 
 			// Create the frame but don't set it as RootVisual yet; this allows the splash
 			// screen to remain active until the application is ready to render.
-			RootFrame = new PhoneApplicationFrame();
+            RootFrame = new TransitionFrame();
 			RootFrame.Navigated += CompleteInitializePhoneApplication;
 
 			// Handle navigation failures
@@ -214,6 +214,7 @@ namespace Pocal
 		{
 			try
 			{
+               
 				// Set the font to match the display language defined by the
 				// ResourceLanguage resource string for each supported language.
 				//
