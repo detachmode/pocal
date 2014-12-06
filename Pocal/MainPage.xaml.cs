@@ -22,6 +22,7 @@ namespace Pocal
     {
         private Dictionary<object, ContentPresenter> realizedDayItems = new Dictionary<object, ContentPresenter>();
 
+        private bool isPlayingOverviewAninmation = false;
         // Constructor
         public MainPage()
         {
@@ -39,7 +40,7 @@ namespace Pocal
             {
                 return;
             }
-            
+
             string goToDate = "";
             if (NavigationContext.QueryString.TryGetValue("GoToDate", out goToDate))
             {
@@ -243,7 +244,13 @@ namespace Pocal
 
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         {
-            scrollToToday();
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            {
+                leaveOverview();
+            }
+            else
+                scrollToToday();
+
             e.Cancel = true;
             base.OnBackKeyPress(e);
         }
@@ -259,15 +266,36 @@ namespace Pocal
 
         private void toggleOverView_Gesture(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
         {
-            if (e.FinalVelocities.LinearVelocity.X > 0)
-            {
-                toggleOverView();
-            }
-            if (e.FinalVelocities.LinearVelocity.X < 0)
-            {
-                toggleOverView();
-            }
+            //if (e.FinalVelocities.LinearVelocity.X > 0)
+            //{
+            //    toggleOverView();
+            //}
+            //if (e.FinalVelocities.LinearVelocity.X < 0)
+            //{
+            //    toggleOverView();
+            //}
+            isPlayingOverviewAninmation = false;
         }
+
+
+        private void AgendaViewLLS_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
+        {
+            if (isPlayingOverviewAninmation)
+                return;
+            
+
+            if (Math.Abs(e.DeltaManipulation.Translation.X) > 30)
+            {
+                isPlayingOverviewAninmation = true;
+                toggleOverView();
+            }
+               
+
+            Debug.WriteLine("\nTranslation: ");
+            Debug.WriteLine(e.DeltaManipulation.Translation.X.ToString());
+            Debug.WriteLine(e.DeltaManipulation.Translation.Y.ToString());
+        }
+
 
         private void toggleOverView()
         {
@@ -416,6 +444,7 @@ namespace Pocal
 
         private void enterOverview()
         {
+
             App.ViewModel.InModus = MainViewModel.Modi.OverView;
             Storyboard storyboard = AgendaViewBody.Resources["EnterOverview"] as Storyboard;
             storyboard.Begin();
@@ -447,6 +476,7 @@ namespace Pocal
 
         private void leaveOverview()
         {
+
             App.ViewModel.InModus = MainViewModel.Modi.AgendaView;
 
             Storyboard storyboard = AgendaViewBody.Resources["LeaveOverview"] as Storyboard;
@@ -460,6 +490,7 @@ namespace Pocal
             playStoryboardOfFoundStackPanels("LeaveOverview");
 
             playStoryboardOfAgendaPointer("LeaveOverview");
+
 
         }
 
@@ -608,6 +639,13 @@ namespace Pocal
                 toggleOverView();
             });
         }
+
+        private void AgendaViewLLS_ManipulationStarted(object sender, System.Windows.Input.ManipulationStartedEventArgs e)
+        {
+            
+        }
+
+
         //private void AppointmentsOnGrid_Unloaded(object sender, RoutedEventArgs e)
         //{
 

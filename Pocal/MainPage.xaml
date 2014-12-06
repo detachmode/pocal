@@ -270,7 +270,7 @@
                         <CompositeTransform/>
                     </Grid.RenderTransform>
 
-                    <phone:LongListSelector   x:Name="AgendaViewLLS" ManipulationCompleted="toggleOverView_Gesture" Loaded="LongList_Loaded"                                             
+                    <phone:LongListSelector   x:Name="AgendaViewLLS" ManipulationCompleted="toggleOverView_Gesture"  ManipulationDelta="AgendaViewLLS_ManipulationDelta"  ManipulationStarted="AgendaViewLLS_ManipulationStarted" Loaded="LongList_Loaded"                                             
                                              ItemsSource="{Binding Days }"  HorizontalContentAlignment="Stretch" Background="Transparent" Margin="-10,0,10,0" >
                         <phone:LongListSelector.ItemTemplate >
                             <DataTemplate >
