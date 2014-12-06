@@ -246,8 +246,10 @@ namespace Pocal
         {
             if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
             {
+                DefaultAppbar();
                 leaveOverview();
             }
+
             else
                 scrollToToday();
 
@@ -282,18 +284,10 @@ namespace Pocal
         {
             if (isPlayingOverviewAninmation)
                 return;
-            
 
-            if (Math.Abs(e.DeltaManipulation.Translation.X) > 30)
-            {
-                isPlayingOverviewAninmation = true;
-                toggleOverView();
-            }
-               
+            isPlayingOverviewAninmation = true;
+            toggleOverView();
 
-            Debug.WriteLine("\nTranslation: ");
-            Debug.WriteLine(e.DeltaManipulation.Translation.X.ToString());
-            Debug.WriteLine(e.DeltaManipulation.Translation.Y.ToString());
         }
 
 
@@ -453,7 +447,7 @@ namespace Pocal
             foundStackPanels = new List<StackPanel>();
 
             findItemControll(AgendaViewLLS);
-            findItemStackPanelInItemsControll("DayCard_ApptItem");
+            findItemStackPanelInItemsControll("DayCard_ApptItem");                                                              
             playStoryboardOfFoundStackPanels("EnterOverview");
 
             playStoryboardOfAgendaPointer("EnterOverview");
@@ -476,7 +470,7 @@ namespace Pocal
 
         private void leaveOverview()
         {
-
+            
             App.ViewModel.InModus = MainViewModel.Modi.AgendaView;
 
             Storyboard storyboard = AgendaViewBody.Resources["LeaveOverview"] as Storyboard;
@@ -576,6 +570,130 @@ namespace Pocal
             toggleOverView();
         }
 
+        private void Appbar_Overview()
+        {
+
+
+            ApplicationBar = new ApplicationBar();
+            /*********** MENU ITEMS ***********/
+            ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
+            item1.Text = "Einstellungen";
+            ApplicationBar.MenuItems.Add(item1);
+            ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
+            item2.Text = "Tutorial";
+            ApplicationBar.MenuItems.Add(item2);
+
+            ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
+            item3.Text = "Info";
+            ApplicationBar.MenuItems.Add(item3);
+
+            /*********** BUTTONs ***********/
+            ApplicationBarIconButton button1 = new ApplicationBarIconButton();
+            button1.IconUri = new Uri("/Images/back.png", UriKind.Relative);
+            button1.Text = "Heute";
+            ApplicationBar.Buttons.Add(button1);
+            button1.Click += new EventHandler(delegate(object sender, EventArgs e)
+            {
+                scrollToToday();
+            });
+
+            /*********** ADD METHODE BUTTON ***********/
+            ApplicationBarIconButton button2 = new ApplicationBarIconButton();
+            button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
+            button2.Text = "add";
+            ApplicationBar.Buttons.Add(button2);
+            button2.Click += new EventHandler(delegate(object sender, EventArgs e)
+            {
+                CalendarAPI.addAllDayAppointment(App.ViewModel.DayAtPointer.DT);
+
+            });
+
+            ///*********** SELECT MODE BUTTON ***********/
+            //ApplicationBarIconButton button3 = new ApplicationBarIconButton();
+            //button3.IconUri = new Uri("/Images/feature.search.png", UriKind.Relative);
+            //button3.Text = "Suche";
+            //ApplicationBar.Buttons.Add(button3);
+            //button3.Click += new EventHandler(delegate(object sender, EventArgs e)
+            //{
+            //    //NavigationService.Navigate(new Uri("/MonthView.xaml", UriKind.Relative));
+            //});
+
+
+            ApplicationBarIconButton button4 = new ApplicationBarIconButton();
+            button4.IconUri = new Uri("/Images/cancel.png", UriKind.Relative);
+            button4.Text = "Close Overview";
+            ApplicationBar.Buttons.Add(button4);
+            button4.Click += new EventHandler(delegate(object sender, EventArgs e)
+            {
+                leaveOverview();
+                DefaultAppbar();
+            });
+        }
+
+
+        private void Appbar_Search()
+        {
+
+
+            ApplicationBar = new ApplicationBar();
+            /*********** MENU ITEMS ***********/
+            ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
+            item1.Text = "Einstellungen";
+            ApplicationBar.MenuItems.Add(item1);
+            ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
+            item2.Text = "Tutorial";
+            ApplicationBar.MenuItems.Add(item2);
+
+            ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
+            item3.Text = "Info";
+            ApplicationBar.MenuItems.Add(item3);
+
+            /*********** BUTTONs ***********/
+            ApplicationBarIconButton button1 = new ApplicationBarIconButton();
+            button1.IconUri = new Uri("/Images/back.png", UriKind.Relative);
+            button1.Text = "Heute";
+            ApplicationBar.Buttons.Add(button1);
+            button1.Click += new EventHandler(delegate(object sender, EventArgs e)
+            {
+                scrollToToday();
+            });
+
+            /*********** ADD METHODE BUTTON ***********/
+            ApplicationBarIconButton button2 = new ApplicationBarIconButton();
+            button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
+            button2.Text = "add";
+            ApplicationBar.Buttons.Add(button2);
+            button2.Click += new EventHandler(delegate(object sender, EventArgs e)
+            {
+                CalendarAPI.addAllDayAppointment(App.ViewModel.DayAtPointer.DT);
+
+            });
+
+            ///*********** SELECT MODE BUTTON ***********/
+            //ApplicationBarIconButton button3 = new ApplicationBarIconButton();
+            //button3.IconUri = new Uri("/Images/feature.search.png", UriKind.Relative);
+            //button3.Text = "Suche";
+            //ApplicationBar.Buttons.Add(button3);
+            //button3.Click += new EventHandler(delegate(object sender, EventArgs e)
+            //{
+            //    //NavigationService.Navigate(new Uri("/MonthView.xaml", UriKind.Relative));
+            //});
+
+
+            ApplicationBarIconButton button4 = new ApplicationBarIconButton();
+            button4.IconUri = new Uri("/Images/cancel.png", UriKind.Relative);
+            button4.Text = "Close Overview";
+            ApplicationBar.Buttons.Add(button4);
+            button4.Click += new EventHandler(delegate(object sender, EventArgs e)
+            {
+                if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+                {
+                    toggleOverView();
+                }
+
+                DefaultAppbar();
+            });
+        }
 
 
         private void DefaultAppbar()
@@ -624,9 +742,7 @@ namespace Pocal
             button3.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
                 NavigationService.Navigate(new Uri("/MonthView.xaml", UriKind.Relative));
-                //App.ViewModel.ClassViewModel.SelectedClass.EnterMultiSelect();
-                //App.ViewModel.ClassViewModel.InModus = ClassViewModel.modi.multiSelect;
-                //ClassPage_Edit();
+
             });
 
 
@@ -636,14 +752,15 @@ namespace Pocal
             ApplicationBar.Buttons.Add(button4);
             button4.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
-                toggleOverView();
+                if (App.ViewModel.InModus == MainViewModel.Modi.AgendaView)
+                {
+                    toggleOverView();
+                }
+                Appbar_Search();
             });
         }
 
-        private void AgendaViewLLS_ManipulationStarted(object sender, System.Windows.Input.ManipulationStartedEventArgs e)
-        {
-            
-        }
+
 
 
         //private void AppointmentsOnGrid_Unloaded(object sender, RoutedEventArgs e)

@@ -18,15 +18,21 @@ namespace Pocal.Converter
     }
 
 
+
+
     public class windowHeaderDateConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var day = value as Day;
-            if (day != null)
+            var dt = (DateTime)value;
+            if (dt != null)
             {
 
-                DateTime dt = day.DT;
+                if (dt.Year == 1)
+                {
+                    return "";
+                }
+                //DateTime dt = day.DT;
                 if (dt.Date == DateTime.Now.Date)
                 {
                     return "Heute";
