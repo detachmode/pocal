@@ -285,8 +285,12 @@ namespace Pocal
             if (isPlayingOverviewAninmation)
                 return;
 
-            isPlayingOverviewAninmation = true;
-            toggleOverView();
+            if (Math.Abs(e.DeltaManipulation.Translation.X) > 10 )
+            {
+                isPlayingOverviewAninmation = true;
+                toggleOverView();
+
+            }
 
         }
 
