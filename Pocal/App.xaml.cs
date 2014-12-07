@@ -12,19 +12,19 @@ namespace Pocal
 {
 	public partial class App : Application
 	{
-		private static MainVM viewModel = null;
+		private static MainViewModel viewModel = null;
 
 		/// <summary>
 		/// A static ViewModel used by the views to bind against.
 		/// </summary>
 		/// <returns>The MainViewModel object.</returns>
-		public static MainVM ViewModel
+		public static MainViewModel ViewModel
 		{
 			get
 			{
 				// Delay creation of the view model until necessary
 				if (viewModel == null)
-					viewModel = new MainVM();
+					viewModel = new MainViewModel();
 
 				return viewModel;
 			}
@@ -57,7 +57,7 @@ namespace Pocal
 			if (Debugger.IsAttached)
 			{
 				// Display the current frame rate counters.
-				Application.Current.Host.Settings.EnableFrameRateCounter = true;
+                Application.Current.Host.Settings.EnableFrameRateCounter = true;
 
 
 				// Show the areas of the app that are being redrawn in each frame.
@@ -140,7 +140,7 @@ namespace Pocal
 
 			// Create the frame but don't set it as RootVisual yet; this allows the splash
 			// screen to remain active until the application is ready to render.
-			RootFrame = new PhoneApplicationFrame();
+            RootFrame = new TransitionFrame();
 			RootFrame.Navigated += CompleteInitializePhoneApplication;
 
 			// Handle navigation failures
@@ -214,6 +214,7 @@ namespace Pocal
 		{
 			try
 			{
+               
 				// Set the font to match the display language defined by the
 				// ResourceLanguage resource string for each supported language.
 				//

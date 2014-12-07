@@ -5,9 +5,21 @@ using System.Windows.Data;
 using System.Windows.Media;
 using Windows.ApplicationModel.Appointments;
 using System.Linq;
+using System.Windows;
+using Pocal.Helper;
 
 namespace Pocal.Converter
 {
+    public static class converterBrushes
+    {
+        public static SolidColorBrush weekendHeader = new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
+        public static SolidColorBrush noWeekendHeader = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+        public static SolidColorBrush DarkGray = new SolidColorBrush(Color.FromArgb(255, 20, 20, 20));
+        public static SolidColorBrush Black = new SolidColorBrush(Colors.Black);
+        public static SolidColorBrush Red = new SolidColorBrush(Colors.Red);
+
+    }
+
 
     public class weekConverter : IValueConverter
     {
@@ -16,9 +28,6 @@ namespace Pocal.Converter
             if (value is DateTime)
             {
                 DateTime time = (DateTime)value;
-                // Seriously cheat.  If its Monday, Tuesday or Wednesday, then it'll 
-                // be the same week# as whatever Thursday, Friday or Saturday are,
-                // and we always get those right
                 DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(time);
                 if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
                 {
@@ -30,7 +39,7 @@ namespace Pocal.Converter
                 return "Woche " + str;
 
             }
-            else return null;
+            else return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -50,16 +59,10 @@ namespace Pocal.Converter
             {
 
                 DateTime dt = (DateTime)value;
-                if (dt.Date == DateTime.Now.Date)
-                {
-                    return "Heute";
-
-                }
-                else
-                    return dt.ToString("dddd", cultureSettings.ci) + ", " + dt.ToString("M", cultureSettings.ci);
+                return dt.ToString("dddd", cultureSettings.ci) + ", " + dt.ToString("M", cultureSettings.ci);
 
             }
-            else return null;
+            else return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -70,27 +73,17 @@ namespace Pocal.Converter
     }
 
 
-    public class CurrentTopWeekConverter : IValueConverter
+    public class DeltaTimeFirstLine : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is Day)
             {
-                TimeSpan ts = ((Day)value).DT.Date - DateTime.Now.Date;
-
-                if (ts.Days < 7)
-                {
-                    return "";
-                }
-                else
-                {
-                    int delta = (int)ts.Days / 7;
-                    return "in " + delta.ToString() + " Wochen";
-                }
-
+                DateTime dt = ((Day)value).DT;
+                return DeltaTimeStringCreator.getFirstLine(dt);
 
             }
-            else return null;
+            else return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -102,22 +95,48 @@ namespace Pocal.Converter
 
     }
 
-    public class CurrentTopDayConverter : IValueConverter
+    public class DeltaTimeSecondLineVisibility : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value is DateTime)
+            {
+                TimeSpan ts = ((DateTime)value).Date - DateTime.Now.Date;
+
+                if (ts.Days % 7 == 0 || Math.Abs(ts.Days) < 7)
+                {
+                    return Visibility.Collapsed;
+                }
+                return Visibility.Visible;
+            }
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+
+            return null;
+        }
+
+
+    }
+
+    public class DeltaTimeSecondLine : IValueConverter
+    {
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+
             if (value is Day)
             {
-
-                TimeSpan ts = ((Day)value).DT.Date - DateTime.Now.Date;
-                int delta = ts.Days % 7;
-                return "und " + delta.ToString() + " Tagen";
-
-
+                DateTime dt = ((Day)value).DT;
+                return DeltaTimeStringCreator.getSecondLine(dt);
 
             }
-            else return null;
+            else return "";
         }
+
+
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -144,7 +163,7 @@ namespace Pocal.Converter
 
 
             }
-            return null;
+            return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -155,6 +174,8 @@ namespace Pocal.Converter
 
 
     }
+
+
 
     public class minuteConverter : IValueConverter
     {
@@ -176,7 +197,7 @@ namespace Pocal.Converter
 
 
             }
-            return null;
+            return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -189,7 +210,40 @@ namespace Pocal.Converter
     }
 
 
+    public class startTimeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var appt = (value as PocalAppointment);
 
+            if (appt != null)
+            {
+
+                //System.Diagnostics.Debug.WriteLine(" " + appt.Subject + " " + appt.Duration.Days.ToString()+ "\n AllDay: "+appt.AllDay.ToString());
+                //Zeit
+                if (appt.AllDay || appt.Duration == TimeSpan.FromDays(1))
+                {
+                    return "";
+
+                }
+                string str = "";
+                str += appt.StartTime.Hour.ToString("00");
+                str += ":";
+                str += appt.StartTime.Minute.ToString("00");
+                return str;
+            }
+            return "";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+
+            return null;
+        }
+
+
+
+    }
 
 
     public class secondLineConverter : IValueConverter
@@ -218,22 +272,37 @@ namespace Pocal.Converter
                 }
                 else
                 {
-                    str += appt.StartTime.Hour.ToString();
-                    str += ":";
-                    str += appt.StartTime.Minute.ToString("00");
+                    //str += appt.StartTime.Hour.ToString();
+                    //str += ":";
+                    //str += appt.StartTime.Minute.ToString("00");
 
-                    str += " - ";
+                    //str += " - ";
 
-                    str += (appt.StartTime + appt.Duration).DateTime.Hour.ToString();
-                    str += ":";
-                    str += (appt.StartTime + appt.Duration).DateTime.Minute.ToString("00");
-                    //str = ts.Hours + " Stunde";
+                    //str += (appt.StartTime + appt.Duration).DateTime.Hour.ToString();
+                    //str += ":";
+                    //str += (appt.StartTime + appt.Duration).DateTime.Minute.ToString("00");
+                    if (appt.Duration.Hours != 0)
+                    {
+                        str = appt.Duration.Hours + " Stunde";
+                        if (appt.Duration.Hours > 1)
+                            str += "n";
+                        str += " ";
+                    }
+
+                    if (appt.Duration.Minutes != 0)
+                    {
+                        str += "" + appt.Duration.Minutes + " Minute";
+                        if (appt.Duration.Minutes > 1)
+                            str += "n";
+                    }
+
 
                 }
 
                 // Location
                 if (String.IsNullOrWhiteSpace(appt.Location))
                 {
+                    // Notes
                     if (!String.IsNullOrWhiteSpace(appt.Details))
                     {
                         string line1 = appt.Details.Split(new[] { '\r', '\n' }).FirstOrDefault();
@@ -245,7 +314,7 @@ namespace Pocal.Converter
 
                 return str;
             }
-            return null;
+            return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -258,53 +327,89 @@ namespace Pocal.Converter
 
     }
 
-    public class subjectConverter : IValueConverter
+
+
+
+
+    public class pastDaysBackgroundInverted : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var appt = (value as Appointment);
-            var subject = appt.Subject;
-            if (subject != null)
-            {
-                return subject;
-            }
-            else return "privat";
+            DateTime dt = (DateTime)value;
+            //if (dt.Date < DateTime.Now.Date)
+            int weeknumber = (dt.DayOfYear + 1) / 7;
+            if (weeknumber % 2 == 1)
+                return converterBrushes.DarkGray;
+            else
+                return converterBrushes.Black;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
             return null;
         }
-
-
     }
 
-    public static class converterBrushes
+
+    public class pastDaysBackground : IValueConverter
     {
-        public static SolidColorBrush weekendHeader = new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
-        public static SolidColorBrush noWeekendHeader = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
-       
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DateTime dt = (DateTime)value;
+            //if (dt.Date < DateTime.Now.Date)
+            int weeknumber = (dt.DayOfYear + 1) / 7;
+            if (weeknumber % 2 == 0)
+                return converterBrushes.DarkGray;
+            else
+                return converterBrushes.Black;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
     }
 
-    //public class highlightedDayConverter : IValueConverter
-    //{
-    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        var day = value as Day;
-    //        if ((day.DT.DayOfWeek == DayOfWeek.Saturday) || (day.DT.DayOfWeek == DayOfWeek.Sunday))
-    //        {
-    //            return new SolidColorBrush(Color.FromArgb(255, 40, 40, 40));
-    //        }
-    //        else
-    //            return new SolidColorBrush(Color.FromArgb(0, 255, 0, 0));
-    //    }
+    public class secondLinesForeground : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DateTime dt = (DateTime)value;
 
-    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        return null;
-    //    }
-    //}
+            if (dt.Date < DateTime.Now.Date)
+                return converterBrushes.weekendHeader;
+
+            return converterBrushes.noWeekendHeader;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    public class dayHeadersForeground : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DateTime dt = (DateTime)value;
+
+            if (dt.Date < DateTime.Now.Date)
+                return converterBrushes.weekendHeader;
+
+            if (dt.Date == DateTime.Now.Date)
+                return converterBrushes.Red;
+
+
+
+            return converterBrushes.noWeekendHeader;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
 
     public class weekendForeground : IValueConverter
     {
@@ -355,10 +460,10 @@ namespace Pocal.Converter
             {
                 int weeknumber = day.DT.DayOfYear / 7 + 2;
 
-                return "  KW " + weeknumber+ "  ";
+                return "  KW " + weeknumber + "  ";
             }
             else
-                return null;
+                return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

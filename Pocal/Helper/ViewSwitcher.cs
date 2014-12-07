@@ -3,6 +3,7 @@ using Pocal.ViewModel;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace Pocal
@@ -11,6 +12,8 @@ namespace Pocal
 	{
 		public enum Sender { HeaderTap, ApptTap }
 		public static Sender from;
+
+        private static bool openFirstTime = true;
 
 		public static MainPage mainpage = (MainPage)App.RootFrame.Content;
 		private static PocalAppointment ScrollToPA;
@@ -25,21 +28,38 @@ namespace Pocal
         private static Day temporaryTappedDay;
 
 		public static void SwitchToSDV(object sender)
-		{
+		{                                                                                  
 			if (currentViewIsSDV())
 				return;
 
-			openSDV();
+
 
             setTemporaryTappedDay(sender);
-
+            Thread.Sleep(1);
             removePreviousDataContext();
+            Thread.Sleep(1);
+
+            openSDV();
 
             scrollToRightPosition();
+            if (openFirstTime || temporaryTappedDay.PocalApptsOfDay.Count>3)
+            {
+                
+                setTappedDayAsynchron();
+                openFirstTime = false;
+            }
+            else
+            {
+                Thread.Sleep(1);
+                setTappedDay();
+            }
 
-            setTappedDayAsynchron(sender);
+
+            
 
 		}
+
+
 
         private static void setTemporaryTappedDay(object sender)
         {
@@ -62,7 +82,7 @@ namespace Pocal
             blankDay.PocalApptsOfDay = tempCollection;
             App.ViewModel.SingleDayViewModel.TappedDay = blankDay;
 
-		}
+        }
 
 		private static bool currentViewIsSDV()
 		{
@@ -71,6 +91,7 @@ namespace Pocal
 
 		private static void openSDV()
 		{
+            Canvas.SetZIndex(mainpage.SingleDayView, 1);
 			//mainpage.SingleDayView.Visibility = Visibility.Visible;
 			VisualStateManager.GoToState(mainpage, "OpenDelay", true);
             
@@ -78,18 +99,23 @@ namespace Pocal
 
         
 
-		private static void setTappedDayAsynchron(object sender)
+		private static void setTappedDayAsynchron()
 		{
             Deployment.Current.Dispatcher.BeginInvoke(() =>
-		{
-                // Update UI in here as this part will run on the UI thread.
-                App.ViewModel.SingleDayViewModel.TappedDay = temporaryTappedDay;
-                App.ViewModel.ConflictManager.solveConflicts();
+            {
+                Thread.Sleep(1);
+                 //Update UI in here as this part will run on the UI thread.
+                setTappedDay();
                 
             });
             
 		}
 
+        private static void setTappedDay()
+        {
+            App.ViewModel.SingleDayViewModel.TappedDay = temporaryTappedDay;
+            App.ViewModel.ConflictManager.solveConflicts();
+        }
 
 
 
@@ -116,6 +142,7 @@ namespace Pocal
 
 		private static void scrollToRightPosition()
 		{
+            mainpage.SingleDayScrollViewer.UpdateLayout();
 			switch (from)
 			{
 				case Sender.HeaderTap:
@@ -148,13 +175,13 @@ namespace Pocal
 
 		private static void ScrollToApptStartTime()
 		{
-			calculateOffset();
+            calculateOffset(); 
             mainpage.SingleDayScrollViewer.ScrollToVerticalOffset(ScrollToPA.StartTime.Hour * HourLine.Height - additionalOffset + offsetFromAllDays);
 		}
 
 		private static void ScrollTo1200()
 		{
-			calculateOffset();
+            calculateOffset();
             mainpage.SingleDayScrollViewer.ScrollToVerticalOffset(12 * HourLine.Height - additionalOffset + offsetFromAllDays);
         }
 
