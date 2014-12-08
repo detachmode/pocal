@@ -47,9 +47,14 @@
         <local:overview_SecondLineSale x:Key="overview_SecondLineSale"/>
 
         <local:dayHeadersForeground x:Key="dayHeadersForeground"/>
+        
         <local:secondLinesForeground x:Key="secondLinesForeground"/>
         <local:startTimeConverter x:Key="startTimeConverter"/>
+        <local:overview_StartTimeScale x:Key="overview_StartTimeScale"/>
+        <local:overview_StartTimeOpacity x:Key="overview_StartTimeOpacity"/>
         <local:overview_SecondLineOpacity x:Key="overview_SecondLineOpacity"/>
+        <local:overview_FirstLineX x:Key="overview_FirstLineX"/>
+        
 
         <local:pastDaysBackground x:Key="pastDaysBackground"/>
         <local:pastDaysBackgroundInverted x:Key="pastDaysBackgroundInverted"/>
@@ -393,54 +398,6 @@
 
                                                             </Storyboard>
 
-                                                            <Storyboard x:Name="EnterOverviewForSingleItem">
-
-                                                                <Storyboard>
-                                                                    <ObjectAnimationUsingKeyFrames 
-                                                                        Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" 
-                                                                        Storyboard.TargetName="FirstLine"  >
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="1.6"  />
-                                                                    </ObjectAnimationUsingKeyFrames>
-
-                                                                    <ObjectAnimationUsingKeyFrames 
-                                                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" 
-                                                                        Storyboard.TargetName="FirstLine"  >
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="1.6"  />
-                                                                    </ObjectAnimationUsingKeyFrames>
-
-                                                                    <ObjectAnimationUsingKeyFrames 
-                                                                        Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
-                                                                        Storyboard.TargetName="FirstLine"  >
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="0"  />
-                                                                    </ObjectAnimationUsingKeyFrames>
-
-                                                                    <ObjectAnimationUsingKeyFrames 
-                                                                        Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" 
-                                                                        Storyboard.TargetName="FirstLine"  >
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="0"  />
-                                                                    </ObjectAnimationUsingKeyFrames>
-
-                                                                    <ObjectAnimationUsingKeyFrames 
-                                                                    Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
-                                                                    Storyboard.TargetName="SecondLine">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="100"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-
-                                                                    <ObjectAnimationUsingKeyFrames 
-                                                                        Storyboard.TargetProperty="(UIElement.Opacity)" 
-                                                                        Storyboard.TargetName="SecondLine">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="0"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-
-                                                                    <ObjectAnimationUsingKeyFrames 
-                                                                        Storyboard.TargetProperty="(UIElement.Opacity)" 
-                                                                        Storyboard.TargetName="StartTime">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                    
-                                                                </Storyboard>
-                                                            </Storyboard>
-
 
                                                             <Storyboard x:Name="LeaveOverview">
 
@@ -512,11 +469,12 @@
 
                                                             <Grid Width="60" Height="30" VerticalAlignment="Top">
                                                                 <TextBlock x:Name="StartTime"  Text="{Binding Converter={StaticResource startTimeConverter}}"  FontSize="18" 
-                                                                           Opacity="{Binding AllDay, Converter={StaticResource overview_SecondLineOpacity}}"
+                                                                           Opacity="{Binding AllDay, Converter={StaticResource overview_StartTimeOpacity}}"
                                                                            Foreground ="{Binding StartTime.DateTime, Converter={StaticResource secondLinesForeground}}" 
                                                                            Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center">
                                                                     <TextBlock.RenderTransform>
-                                                                        <CompositeTransform/>
+                                                                        <CompositeTransform ScaleX="{Binding AllDay, Converter={StaticResource overview_StartTimeScale}}"
+                                                                                            ScaleY="{Binding AllDay, Converter={StaticResource overview_StartTimeScale}}"/>
                                                                     </TextBlock.RenderTransform>
                                                                     <TextBlock.CacheMode>
                                                                         <BitmapCache RenderAtScale="1"/>
@@ -530,8 +488,10 @@
                                                                        Text="{Binding Appt.Subject}"
                                                                        FontSize="20" RenderTransformOrigin="0,0">
                                                                 <TextBlock.RenderTransform>
-                                                                        <CompositeTransform ScaleX="{Binding AllDay, Converter={StaticResource overview_SecondLineSale}}" 
-                                                                                            ScaleY="{Binding AllDay, Converter={StaticResource overview_SecondLineSale}}" />
+                                                                        <CompositeTransform 
+                                                                            TranslateX ="{Binding AllDay, Converter={StaticResource overview_FirstLineX}}" 
+                                                                            ScaleX="{Binding AllDay, Converter={StaticResource overview_SecondLineSale}}" 
+                                                                            ScaleY="{Binding AllDay, Converter={StaticResource overview_SecondLineSale}}" />
                                                                 </TextBlock.RenderTransform>
                                                                 <TextBlock.CacheMode>
                                                                     <BitmapCache RenderAtScale="1"/>

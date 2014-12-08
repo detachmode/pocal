@@ -10,6 +10,60 @@ using System.Windows.Data;
 namespace Pocal.Converter
 {
 
+
+    public class overview_FirstLineX : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            {
+                return 20;
+            }
+            else
+                return 0;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+    public class overview_StartTimeOpacity : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            {
+                return 0.7;
+            }
+            else
+                return 1;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    public class overview_StartTimeScale : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            {
+                return 1.6;
+            }
+            else
+                return 1;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
     public class overview_SecondLineOpacity : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
