@@ -105,7 +105,7 @@ namespace Pocal
                 int count = daysLoadedBeforeTopDay.Count();
                 if (!App.ViewModel.IsCurrentlyLoading && count < offset)
                 {
-                    App.ViewModel. LoadIncrementalBackwards(7, DateTime.Now.Ticks);
+                    App.ViewModel.LoadIncrementalBackwards(7, DateTime.Now.Ticks);
                 }
 
                 //App.ViewModel.DayAtCenterOfScreen = topDay;
@@ -343,20 +343,31 @@ namespace Pocal
         public void SDV_AppointmentTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             PocalAppointment pocalAppointment = ((FrameworkElement)sender).DataContext as PocalAppointment;
-            CalendarAPI.editAppointment(pocalAppointment);
-
+            Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
+            storyboard.Begin();
+            Dispatcher.BeginInvoke(() =>
+            {
+                Thread.Sleep(250);
+                CalendarAPI.editAppointment(pocalAppointment);
+            });
 
         }
 
         private void SDV_Hourline_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             HourLine hourLine = ((FrameworkElement)sender).DataContext as HourLine;
-            var starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine.Text);
-            if (starttime != null)
+            Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
+            storyboard.Begin();
+            Dispatcher.BeginInvoke(() =>
             {
-                DateTime dt = (DateTime)starttime;
-                CalendarAPI.addAppointment(dt);
-            }
+                Thread.Sleep(200);
+                var starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine.Text);
+                if (starttime != null)
+                {
+                    DateTime dt = (DateTime)starttime;
+                    CalendarAPI.addAppointment(dt);
+                }
+            });
 
         }
 
@@ -435,12 +446,13 @@ namespace Pocal
             //    ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
             //}
 
-            Dispatcher.BeginInvoke(() =>{
+            Dispatcher.BeginInvoke(() =>
+            {
                 Thread.Sleep(150);
                 ViewSwitcher.SwitchToSDV(sender);
                 removeBitmapCacheAfterAnimation();
-            }) ;
-            
+            });
+
 
         }
         #endregion
