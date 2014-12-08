@@ -343,31 +343,35 @@ namespace Pocal
         public void SDV_AppointmentTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             PocalAppointment pocalAppointment = ((FrameworkElement)sender).DataContext as PocalAppointment;
-            Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
-            storyboard.Begin();
             Dispatcher.BeginInvoke(() =>
             {
-                Thread.Sleep(250);
-                CalendarAPI.editAppointment(pocalAppointment);
+                Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
+                storyboard.Begin();
             });
+
+            CalendarAPI.editAppointment(pocalAppointment);
+
 
         }
 
         private void SDV_Hourline_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             HourLine hourLine = ((FrameworkElement)sender).DataContext as HourLine;
-            Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
-            storyboard.Begin();
             Dispatcher.BeginInvoke(() =>
             {
-                Thread.Sleep(200);
+                Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
+                storyboard.Begin();
+            });
+            //Dispatcher.BeginInvoke(() =>
+            //{
+                //Thread.Sleep(200);
                 var starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine.Text);
                 if (starttime != null)
                 {
                     DateTime dt = (DateTime)starttime;
                     CalendarAPI.addAppointment(dt);
                 }
-            });
+            //});
 
         }
 
