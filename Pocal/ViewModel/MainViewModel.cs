@@ -203,15 +203,20 @@ namespace Pocal.ViewModel
         }
 
         private double newestGoToDateStamp = DateTime.Now.Ticks;
+        private Object mylock = new Object();
 
         public async void GoToDate(DateTime dt)
         {
+            double stamp;
+
             newestGoToDateStamp = DateTime.Now.Ticks;
-            double stamp = DateTime.Now.Ticks;
+            stamp = DateTime.Now.Ticks;
             IsCurrentlyLoading = true;
-
-
             this.Days.Clear();
+
+
+           
+
             if (!isStampNewest(stamp))
                 return;
             else

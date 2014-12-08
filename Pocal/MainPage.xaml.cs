@@ -424,9 +424,14 @@ namespace Pocal
 
         private void OpenSdvAndSetTappedDay(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
-                return;
+            //if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            //      return;
             addBitmapCacheToSDV();
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            {
+                ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
+            }  
+
             ViewSwitcher.SwitchToSDV(sender);
             removeBitmapCacheAfterAnimation();
 
@@ -444,6 +449,7 @@ namespace Pocal
         {
 
             App.ViewModel.InModus = MainViewModel.Modi.OverView;
+            //Searchbox.Opacity = 0.5;
             Storyboard storyboard = AgendaViewBody.Resources["EnterOverview"] as Storyboard;
             storyboard.Begin();
 
@@ -476,6 +482,7 @@ namespace Pocal
         {
 
             App.ViewModel.InModus = MainViewModel.Modi.AgendaView;
+            //Searchbox.Opacity = 0;
 
             Storyboard storyboard = AgendaViewBody.Resources["LeaveOverview"] as Storyboard;
             storyboard.Begin();
@@ -762,6 +769,17 @@ namespace Pocal
                 }
                 Appbar_Search();
             });
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            //Searchbox.Opacity = 1;
+
+        }
+
+        private void Searchbox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //Searchbox.Opacity = 0.5;
         }
 
 
