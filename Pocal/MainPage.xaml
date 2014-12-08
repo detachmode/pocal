@@ -416,14 +416,19 @@
                                                                         <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0.2"/>
                                                                         <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1"/>
                                                                     </DoubleAnimationUsingKeyFrames>-->
-                                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.GlobalOffsetZ)" Storyboard.TargetName="FirstLine">
+                                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"  Storyboard.TargetName="StartTime">
                                                                         <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                                                        <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="-150"/>
+                                                                        <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="-15"/>
                                                                         <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
                                                                     </DoubleAnimationUsingKeyFrames>
-                                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.GlobalOffsetZ)" Storyboard.TargetName="SecondLine">
-                                                                        <EasingDoubleKeyFrame KeyTime="0" Value="-14"/>
-                                                                        <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="-150"/>
+                                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"  Storyboard.TargetName="FirstLine">
+                                                                        <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                                        <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="-15"/>
+                                                                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+                                                                    </DoubleAnimationUsingKeyFrames>
+                                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="SecondLine">
+                                                                        <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                                        <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="-15"/>
                                                                         <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
                                                                     </DoubleAnimationUsingKeyFrames>
                                                                 </Storyboard>

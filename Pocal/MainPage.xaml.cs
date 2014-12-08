@@ -430,10 +430,10 @@ namespace Pocal
             //if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
             //      return;
             addBitmapCacheToSDV();
-            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
-            {
-                ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
-            }
+            //if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            //{
+            //    ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
+            //}
 
             Dispatcher.BeginInvoke(() =>{
                 Thread.Sleep(150);
