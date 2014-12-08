@@ -105,7 +105,7 @@ namespace Pocal
                 int count = daysLoadedBeforeTopDay.Count();
                 if (!App.ViewModel.IsCurrentlyLoading && count < offset)
                 {
-                    App.ViewModel. LoadIncrementalBackwards(7);
+                    App.ViewModel. LoadIncrementalBackwards(7, DateTime.Now.Ticks);
                 }
 
                 //App.ViewModel.DayAtCenterOfScreen = topDay;
@@ -139,7 +139,7 @@ namespace Pocal
                     int offset = 10;
                     if (!App.ViewModel.IsCurrentlyLoading && App.ViewModel.Days.Count - App.ViewModel.Days.IndexOf(day) <= offset)
                     {
-                        App.ViewModel.LoadIncrementalForward(7);
+                        App.ViewModel.LoadIncrementalForward(7, DateTime.Now.Ticks);
                     }
                 }
             }

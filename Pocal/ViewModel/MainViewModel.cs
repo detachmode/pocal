@@ -91,9 +91,6 @@ namespace Pocal.ViewModel
 
         }
 
-
-
-
         public MainViewModel()
         {
 
@@ -205,37 +202,51 @@ namespace Pocal.ViewModel
 
         }
 
-
+        private double newestGoToDateStamp = DateTime.Now.Ticks;
 
         public async void GoToDate(DateTime dt)
         {
+            newestGoToDateStamp = DateTime.Now.Ticks;
+            double stamp = DateTime.Now.Ticks;
             IsCurrentlyLoading = true;
 
-            this.Days.Clear();
 
-            await loadFirstDay(dt);
-            await loadEnoughMoreDay();
-            await loadPastDays(3);
+            this.Days.Clear();
+            if (!isStampNewest(stamp))
+                return;
+            else
+                await loadFirstDay(dt, stamp);
+
+            if (!isStampNewest(stamp))
+                return;
+            else
+                await loadEnoughMoreDay(stamp);
+
+            if (!isStampNewest(stamp))
+                return;
+            else
+                await loadPastDays(3, stamp);
+
 
             IsCurrentlyLoading = false;
         }
 
-        private async Task loadFirstDay(DateTime dt)
+        private async Task loadFirstDay(DateTime dt, double stamp)
         {
-            await loadDays(dt, 1);
+            await loadDays(dt, 1, stamp);
         }
 
-        private async Task loadEnoughMoreDay()
+        private async Task loadEnoughMoreDay(double stamp)
         {
-            await LoadMoreDays(3);
+            await LoadMoreDays(3, stamp);
             if (countLoadedAppointments() < 18)
             {
-                await LoadMoreDays(3);
+                await LoadMoreDays(3, stamp);
             }
         }
 
         private int countLoadedAppointments()
-        {                                 
+        {
             int counter = 0;
             foreach (Day day in Days)
             {
@@ -244,27 +255,27 @@ namespace Pocal.ViewModel
             return counter;
         }
 
-        public async Task LoadIncrementalBackwards(int howMany)
+        public async Task LoadIncrementalBackwards(int howMany, double stamp)
         {
             IsCurrentlyLoading = true;
-            await loadPastDays(howMany);
+            await loadPastDays(howMany, stamp);
             IsCurrentlyLoading = false;
         }
 
 
-        public async Task LoadIncrementalForward(int howMany)
+        public async Task LoadIncrementalForward(int howMany, double stamp)
         {
             IsCurrentlyLoading = true;
-            await LoadMoreDays(howMany);
+            await LoadMoreDays(howMany, stamp);
             IsCurrentlyLoading = false;
         }
 
 
-        private async Task LoadMoreDays(int howMany)
+        private async Task LoadMoreDays(int howMany, double stamp)
         {
             DateTime fromDate = Days[Days.Count - 1].DT.AddDays(1);
             if (Days.Count > 0)
-                await loadDays(fromDate, howMany);
+                await loadDays(fromDate, howMany, stamp);
         }
 
 
@@ -293,24 +304,24 @@ namespace Pocal.ViewModel
 
 
 
-        private async Task loadDays(DateTime startDay, int howManyDays)
+        private async Task loadDays(DateTime startDay, int howManyDays, double stamp)
         {
             await getPocalAppointments(howManyDays, startDay);
-            createDays(startDay, howManyDays);
+            createAndAddDays(startDay, howManyDays, stamp);
 
 
 
         }
 
-        private async Task loadPastDays(int howManyDays)
+        private async Task loadPastDays(int howManyDays , double stamp)
         {
-            
+
             DateTime startDay = App.ViewModel.Days[0].DT.AddDays(-howManyDays);
 
             await getPocalAppointments(howManyDays, startDay);
-            createAndInsertPastDays(startDay, howManyDays);
+            createAndInsertPastDays(startDay, howManyDays, stamp);
 
-           
+
         }
 
 
@@ -319,7 +330,7 @@ namespace Pocal.ViewModel
         #region Days
 
 
-        private void createDays(DateTime startDay, int howManyDays)
+        private void createAndAddDays(DateTime startDay, int howManyDays, double stamp)
         {
             DateTime dt = startDay;
             CultureInfo ci = new CultureInfo("de-DE");
@@ -327,7 +338,12 @@ namespace Pocal.ViewModel
             //Days.Clear();
             for (int i = 0; i < howManyDays; i++)
             {
+                if (!isStampNewest(stamp))
+                    return;
+
                 // Create New Day with its Appointments
+                if (Days.Count != 0 && Days.LastOrDefault().DT != dt.AddDays(-1))
+                    return;
                 Days.Add(new Day()
                 {
                     DT = dt,
@@ -346,7 +362,12 @@ namespace Pocal.ViewModel
             }
         }
 
-        private void createAndInsertPastDays(DateTime startDay, int howManyDays)
+        private bool isStampNewest(double stamp)
+        {
+            return newestGoToDateStamp <= stamp;
+        }
+
+        private void createAndInsertPastDays(DateTime startDay, int howManyDays, double stamp)
         {
             DateTime dt = startDay;
             CultureInfo ci = new CultureInfo("de-DE");
@@ -354,6 +375,8 @@ namespace Pocal.ViewModel
             //Days.Clear();
             for (int i = 0; i < howManyDays; i++)
             {
+                if (!isStampNewest(stamp))
+                    return;
                 // Create New Day with its Appointments
                 Days.Insert(i, new Day()
                 {
