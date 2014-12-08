@@ -388,8 +388,11 @@ namespace Pocal
 
         private void DayCard_ApptTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            ViewSwitcher.setScrollToPa(((FrameworkElement)sender).DataContext as PocalAppointment);
+
+            Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
+            storyboard.Begin();
             Thread.Sleep(1);
+            ViewSwitcher.setScrollToPa(((FrameworkElement)sender).DataContext as PocalAppointment);
             ViewSwitcher.from = ViewSwitcher.Sender.ApptTap;
 
         }
@@ -430,10 +433,14 @@ namespace Pocal
             if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
             {
                 ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
-            }  
+            }
 
-            ViewSwitcher.SwitchToSDV(sender);
-            removeBitmapCacheAfterAnimation();
+            Dispatcher.BeginInvoke(() =>{
+                Thread.Sleep(150);
+                ViewSwitcher.SwitchToSDV(sender);
+                removeBitmapCacheAfterAnimation();
+            }) ;
+            
 
         }
         #endregion
