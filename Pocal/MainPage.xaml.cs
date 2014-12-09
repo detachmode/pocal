@@ -360,7 +360,7 @@ namespace Pocal
             Dispatcher.BeginInvoke(() =>
             {
                 Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
-                storyboard.Begin();
+                storyboard.Begin();                                                            
             });
             //Dispatcher.BeginInvoke(() =>
             //{
@@ -444,7 +444,7 @@ namespace Pocal
         {
             //if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
             //      return;
-            addBitmapCacheToSDV();
+            
             //if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
             //{
             //    ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
@@ -452,6 +452,7 @@ namespace Pocal
 
             Dispatcher.BeginInvoke(() =>
             {
+                addBitmapCacheToSDV();
                 Thread.Sleep(150);
                 ViewSwitcher.SwitchToSDV(sender);
                 removeBitmapCacheAfterAnimation();
@@ -808,14 +809,14 @@ namespace Pocal
 
 
 
-        //private void AppointmentsOnGrid_Unloaded(object sender, RoutedEventArgs e)
-        //{
+        private void unloadClearValue(object sender, RoutedEventArgs e)
+        {
 
-        //    ItemsControl itemscontrol = sender as ItemsControl;
+            ScrollViewer scrollViewer = sender as ScrollViewer;
 
-        //    itemscontrol.ClearValue(FrameworkElement.DataContextProperty);
+            scrollViewer.ClearValue(FrameworkElement.DataContextProperty);
 
-        //}
+        }
 
 
 
