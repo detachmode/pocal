@@ -8,6 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Windows.Media;
+using Microsoft.Xna.Framework;
 
 namespace Pocal
 {
@@ -27,6 +28,8 @@ namespace Pocal
         }
 
         private List<int> daysForGridSetup;
+        private List<DateTime> daysForGridSetupDateTimes;
+
         private void gridSetup()
         {
             daysForGridSetup = createDaysArray(new DateTime(2014,12,1));
@@ -38,13 +41,31 @@ namespace Pocal
                 {
                     
                     Border brd = createBorder(x, y, (howManyRows-1));
+                    Grid dayGrid = new Grid();
                     TextBlock txt = createTextBlock();
+                    addCurrentDayMark(dayGrid, gridCounter);
                     txt.Text = daysForGridSetup[gridCounter].ToString();
                     gridCounter++;
-                    brd.Child = txt;
+                    dayGrid.Children.Add(txt);
+                    brd.Child = dayGrid;
+                    
 
                     (MonthViewGrid as Grid).Children.Add(brd);
                 }
+            }
+        }
+
+        private void addCurrentDayMark(Grid dayGrid, int gridCounter)
+        {
+            if (daysForGridSetupDateTimes[gridCounter].Date == DateTime.Now.Date)
+            {
+                Grid grid = new Grid();
+                grid.Height = 10;
+                grid.Width = 10;
+                grid.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+                grid.Background = new SolidColorBrush(Colors.Red);
+                dayGrid.Children.Add(grid);
             }
         }
 
@@ -79,10 +100,11 @@ namespace Pocal
         }
 
 
-        private static List<int> createDaysArray(DateTime forMonth)
+        private List<int> createDaysArray(DateTime forMonth)
         {
 
             List<int> days = new List<int>();
+            daysForGridSetupDateTimes = new List<DateTime>();
             DateTime firstDay = forMonth.AddDays(-forMonth.Day).AddDays(1);
             int offsetBegin = 0;
             int lastDayOfPreviousMonth = firstDay.AddDays(-1).Day;
@@ -118,17 +140,21 @@ namespace Pocal
 
             for (int i = (offsetBegin - 1); i >= 0; i--)
             {
-                days.Add(lastDayOfPreviousMonth - i);
+                int day = lastDayOfPreviousMonth - i;
+                days.Add(day);
+                daysForGridSetupDateTimes.Add(new DateTime(firstDay.Year, firstDay.AddMonths(-1).Month,day));
+                
             }
-
             for (int i = 1; i <= lastDayInThisMonth; i++)
             {
                 days.Add(i);
+                daysForGridSetupDateTimes.Add(new DateTime(firstDay.Year, firstDay.Month , i));
             }
 
             for (int i = 1; i < 8; i++)
             {
                 days.Add(i);
+                daysForGridSetupDateTimes.Add(new DateTime(firstDay.Year, firstDay.AddMonths(+1).Month, i));
             }
             return days;
         }
@@ -138,10 +164,10 @@ namespace Pocal
             Border brd = new Border();
 
 
-            int leftThinkness = 2;
-            int topThinkness = 2;
+            int leftThinkness = 1;
+            int topThinkness = 1;
             int rightThinkness = 0;
-            int bottomThinkness = 2;
+            int bottomThinkness = 1;
 
             if (y != maxY)
                 bottomThinkness = 0;

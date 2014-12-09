@@ -40,7 +40,7 @@
        
         <phone:Pivot  Background="Black" Margin="0,12,0,0">
             <phone:PivotItem Header="Dezember"  Margin="0">
-                <Grid x:Name="MonthViewGrid" Height="480" VerticalAlignment="Top" Margin="0,70" Background="Blue" Tap="Grid_Tap">
+                <Grid x:Name="MonthViewGrid" Height="480" VerticalAlignment="Top" Margin="0,70" Tap="Grid_Tap">
                     <StackPanel Orientation="Horizontal" Height="30"  VerticalAlignment="Top" Margin="0,-30" >
                         <TextBlock Width="68.5" Padding="6,0" Foreground="Gray">Mo</TextBlock>
                         <TextBlock Width="68.5" Padding="6,0" Foreground="Gray">Di</TextBlock>
