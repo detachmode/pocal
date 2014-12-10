@@ -113,59 +113,80 @@ namespace Pocal.Converter
 
     public class singelDayApptHeight : IValueConverter
     {
+        private Appointment appt;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var appt = (value as Appointment);
-            if (appt != null)
+            var apptTest = (value as Appointment);
+            if (apptTest != null)
             {
-                if (appt.AllDay)
-                    return 0;
+                if (apptTest.AllDay) return 0;
 
-                double result = (appt.Duration.Hours) * HourLine.Height;
+                appt = apptTest;
+                double result;
                 DateTimeOffset endTime = (DateTimeOffset)appt.StartTime + appt.Duration;
 
-                if ( endTime.Date > App.ViewModel.SingleDayViewModel.TappedDay.DT.Date)
+                if (apptBeginsAndEndsThisDay(endTime))
+                {
+                    result = (appt.Duration.Hours) * HourLine.Height;
+                    if (appt.StartTime.Minute > 0 && endTime.Minute > 30)
+                    {
+                        result += HourLine.Height;
+                        return result;
+                    }
+                    if (appt.Duration.Minutes != 0)
+                        result += HourLine.Height / 2;
+
+                    if (appt.StartTime.Minute != 0)
+                        result += HourLine.Height / 2;
+
+                    if ((appt.Duration.Hours) == 0)
+                        result = HourLine.Height / 2;
+                    return result + 1;
+                }
+
+                
+                if (apptJustBeginsThisDay(endTime))              
                 {
                     result = (HourLine.Height * 24 +1) ;
-                    if (appt.StartTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.DT.Date)
-	                {
-		                  result -= (appt.StartTime.Hour)*HourLine.Height;
-	                }
+                    result -= (appt.StartTime.Hour)*HourLine.Height;
                     return result;
-
                 }
 
-                if (appt.StartTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.DT.Date)
+                if (apptJustEndsThisDay(endTime))
                 {
-                   result =  (endTime.Hour * HourLine.Height);
-                   if (endTime.Minute != 0)
+                    result = (endTime.Hour * HourLine.Height);
+                    if (endTime.Minute != 0)
                         result += HourLine.Height / 2;
-                    return result;
+                    return result + 1;
+
                 }
 
-                
-                if (appt.StartTime.Minute > 0 && endTime.Minute > 30)
-                {
-                    result += HourLine.Height;
-                    return result;
-                }
-                
+                var completeDayHeight = (HourLine.Height * 24);
+                return completeDayHeight + 1;
 
-                if (appt.Duration.Minutes != 0)
-                    result += HourLine.Height / 2;
-
-                if (appt.StartTime.Minute != 0)
-                    result += HourLine.Height / 2;
-
-                if ((appt.Duration.Hours) == 0)
-                    result = HourLine.Height / 2;
-
-
-
-                return result + 1;
             }
             return 0;
         }
+
+        private bool apptBeginsAndEndsThisDay(DateTimeOffset endTime)
+        {
+            var testDate = App.ViewModel.SingleDayViewModel.TappedDay.DT.Date;
+            return (appt.StartTime.Date == testDate && endTime.Date == testDate);
+        }
+        
+        private bool apptJustEndsThisDay(DateTimeOffset endTime)
+        {
+            return (appt.StartTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.DT.Date 
+                && endTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.DT.Date);
+        }
+
+        private bool apptJustBeginsThisDay(DateTimeOffset endTime)
+        {
+            return (endTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.DT.Date
+                 && appt.StartTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.DT.Date);
+        }
+
+
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
