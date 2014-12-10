@@ -114,6 +114,7 @@ namespace Pocal.Converter
     public class singelDayApptHeight : IValueConverter
     {
         private Appointment appt;
+        private DateTimeOffset endTime;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var apptTest = (value as Appointment);
@@ -123,9 +124,9 @@ namespace Pocal.Converter
 
                 appt = apptTest;
                 double result;
-                DateTimeOffset endTime = (DateTimeOffset)appt.StartTime + appt.Duration;
+                endTime = (DateTimeOffset)appt.StartTime + appt.Duration;
 
-                if (apptBeginsAndEndsThisDay(endTime))
+                if (apptBeginsAndEndsThisDay())
                 {
                     result = (appt.Duration.Hours) * HourLine.Height;
                     if (appt.StartTime.Minute > 0 && endTime.Minute > 30)
@@ -145,14 +146,14 @@ namespace Pocal.Converter
                 }
 
                 
-                if (apptJustBeginsThisDay(endTime))              
+                if (apptJustBeginsThisDay())              
                 {
                     result = (HourLine.Height * 24 +1) ;
                     result -= (appt.StartTime.Hour)*HourLine.Height;
                     return result;
                 }
 
-                if (apptJustEndsThisDay(endTime))
+                if (apptJustEndsThisDay())
                 {
                     result = (endTime.Hour * HourLine.Height);
                     if (endTime.Minute != 0)
@@ -168,19 +169,19 @@ namespace Pocal.Converter
             return 0;
         }
 
-        private bool apptBeginsAndEndsThisDay(DateTimeOffset endTime)
+        private bool apptBeginsAndEndsThisDay()
         {
             var testDate = App.ViewModel.SingleDayViewModel.TappedDay.DT.Date;
             return (appt.StartTime.Date == testDate && endTime.Date == testDate);
         }
         
-        private bool apptJustEndsThisDay(DateTimeOffset endTime)
+        private bool apptJustEndsThisDay()
         {
             return (appt.StartTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.DT.Date 
                 && endTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.DT.Date);
         }
 
-        private bool apptJustBeginsThisDay(DateTimeOffset endTime)
+        private bool apptJustBeginsThisDay()
         {
             return (endTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.DT.Date
                  && appt.StartTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.DT.Date);
