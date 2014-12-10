@@ -24,11 +24,8 @@ namespace Pocal
                 appointmentStore = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
         }
 
-        #region GET 30 DAYS
+        #region GET DAYS
 
-        // ******** **************************************** *********//
-        // ******** Get the Appointments of the next 30 Days *********//
-        // ******** **************************************** *********//
 
         public static async Task<IReadOnlyList<Appointment>> getAppointments(DateTime startDay, int howManyDays)
         {

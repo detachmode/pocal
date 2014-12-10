@@ -441,7 +441,7 @@ namespace Pocal.ViewModel
             ObservableCollection<PocalAppointment> thisDayAppts = new ObservableCollection<PocalAppointment>();
             foreach (PocalAppointment pocalAppt in pocalAppointmentsBuffer)
             {
-                if (pocalAppt.StartTime.Date == dt.Date)
+                if (pocalAppt.isInTimeFrameOfDate(dt.Date))
                 {
                     thisDayAppts.Add(pocalAppt);
                 }

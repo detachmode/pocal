@@ -135,6 +135,15 @@ namespace Pocal.Converter
 
                 }
 
+                if (appt.StartTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.DT.Date)
+                {
+                   result =  (endTime.Hour * HourLine.Height);
+                   if (endTime.Minute != 0)
+                        result += HourLine.Height / 2;
+                    return result;
+                }
+
+                
                 if (appt.StartTime.Minute > 0 && endTime.Minute > 30)
                 {
                     result += HourLine.Height;
@@ -252,15 +261,7 @@ namespace Pocal.Converter
             calcX(conflicts, column, myTranslate);
 
 
-            
-            
-
-
             return myTransformGroup;
-
-
-
-
 
         }
 
