@@ -18,46 +18,70 @@ namespace Pocal
         {
             InitializeComponent();
             gridSetup();
+            (MonthViewGrid as Grid).Background = new SolidColorBrush(Colors.Blue);
+            (MonthViewGrid as Grid).ManipulationStarted += MonthView_ManipulationStarted;
         }
 
         private void Grid_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             NavigationService.Navigate(new Uri("/MainPage.xaml?GoToDate=" + (DateTime.Now.Date.ToShortDateString()), UriKind.Relative));
-
-
         }
 
-        private List<int> daysForGridSetup;
-        private List<DateTime> daysForGridSetupDateTimes;
+        //private List<int> daysForGridSetup;
+        private List<DateTime> gridDateTimes;
+        int gridCounter ;
 
         private void gridSetup()
         {
-            daysForGridSetup = createDaysArray(new DateTime(2014,12,1));
-            int gridCounter = 0;
+            gridCounter = 0;
+            createDaysArray(new DateTime(2014, 12, 1));
+            
             int howManyRows = getHowManyRows();
             for (int y = 0; y < howManyRows; y++)
             {
                 for (int x = 0; x < 7; x++)
                 {
-                    
                     Border brd = createBorder(x, y, (howManyRows-1));
+                    //brd.Tap += dayGrid_Tap;
                     Grid dayGrid = new Grid();
+                   
+
+                    //dayGrid.DataContext = gridDateTimes[gridCounter];
+                   
+
                     TextBlock txt = createTextBlock();
-                    addCurrentDayMark(dayGrid, gridCounter);
-                    txt.Text = daysForGridSetup[gridCounter].ToString();
+                    
+                    addCurrentDayMark(dayGrid);
+                    txt.Text = gridDateTimes[gridCounter].Day.ToString();
                     gridCounter++;
                     dayGrid.Children.Add(txt);
                     brd.Child = dayGrid;
+
                     
 
-                    (MonthViewGrid as Grid).Children.Add(brd);
+                    //(MonthViewGrid as Grid).Children.Add(brd);
+                   
+
                 }
             }
         }
 
-        private void addCurrentDayMark(Grid dayGrid, int gridCounter)
+        void MonthView_ManipulationStarted(object sender, System.Windows.Input.ManipulationStartedEventArgs e)
         {
-            if (daysForGridSetupDateTimes[gridCounter].Date == DateTime.Now.Date)
+            throw new NotImplementedException();
+        }
+
+        void MonthView_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+        private void addCurrentDayMark(Grid dayGrid)
+        {
+            if (gridDateTimes[gridCounter].Date == DateTime.Now.Date)
             {
                 Grid grid = new Grid();
                 grid.Height = 10;
@@ -73,19 +97,18 @@ namespace Pocal
         {
             int counter = 0;
             bool firstOneEncountered = false;
-            foreach (int i in daysForGridSetup)
+            foreach (var d in gridDateTimes)
             {
-                if (firstOneEncountered && i == 1)
+                if (firstOneEncountered && d.Day == 1)
                 {
                     break;
                 }
-                if (i == 1)
+                if (d.Day == 1)
                 {
                     firstOneEncountered = true; 
                 }
                 counter++;
             }
-            //return 6;
             return ((int)(counter / 7.0 + 1));
         }
 
@@ -100,15 +123,14 @@ namespace Pocal
         }
 
 
-        private List<int> createDaysArray(DateTime forMonth)
+        private void createDaysArray(DateTime forMonth)
         {
-
-            List<int> days = new List<int>();
-            daysForGridSetupDateTimes = new List<DateTime>();
+            gridDateTimes = new List<DateTime>();
             DateTime firstDay = forMonth.AddDays(-forMonth.Day).AddDays(1);
             int offsetBegin = 0;
-            int lastDayOfPreviousMonth = firstDay.AddDays(-1).Day;
-            int lastDayInThisMonth = DateTime.DaysInMonth(firstDay.Year, firstDay.Month); 
+            DateTime lastDayOfPreviousMonth = firstDay.AddDays(-1);
+            int lastDayInThisMonth = DateTime.DaysInMonth(firstDay.Year, firstDay.Month);
+            DateTime firstDayInNextMonth = new DateTime(firstDay.Year, firstDay.Month, lastDayInThisMonth).AddDays(1);
 
             switch (firstDay.DayOfWeek)
             {
@@ -140,26 +162,22 @@ namespace Pocal
 
             for (int i = (offsetBegin - 1); i >= 0; i--)
             {
-                int day = lastDayOfPreviousMonth - i;
-                days.Add(day);
-                daysForGridSetupDateTimes.Add(new DateTime(firstDay.Year, firstDay.AddMonths(-1).Month,day));
+                gridDateTimes.Add(lastDayOfPreviousMonth.AddDays(-i));
                 
             }
             for (int i = 1; i <= lastDayInThisMonth; i++)
             {
-                days.Add(i);
-                daysForGridSetupDateTimes.Add(new DateTime(firstDay.Year, firstDay.Month , i));
+                gridDateTimes.Add(new DateTime(firstDay.Year, firstDay.Month , i));
             }
 
-            for (int i = 1; i < 8; i++)
+            for (int i = 0; i < 7; i++)
             {
-                days.Add(i);
-                daysForGridSetupDateTimes.Add(new DateTime(firstDay.Year, firstDay.AddMonths(+1).Month, i));
+                gridDateTimes.Add(firstDayInNextMonth.AddDays(i));
             }
-            return days;
+
         }
 
-        private static Border createBorder(int x, int y, int maxY)
+        private Border createBorder(int x, int y, int maxY)
         {
             Border brd = new Border();
 
@@ -179,7 +197,13 @@ namespace Pocal
             brd.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             brd.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             brd.BorderBrush = new SolidColorBrush(Colors.White);
-            
+
+            var testDayOfWeek = gridDateTimes[gridCounter].DayOfWeek;
+            if (testDayOfWeek == DayOfWeek.Saturday || testDayOfWeek == DayOfWeek.Sunday )
+            {
+                brd.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255,40,40,40));
+            }
+
             double height = (483 / 7);
             double width = (483 / 7);
             brd.Height = height;
@@ -190,5 +214,7 @@ namespace Pocal
             brd.Margin = new Thickness(leftmargin, topmargin, 0, 0);
             return brd;
         }
+
+
     }
 }
