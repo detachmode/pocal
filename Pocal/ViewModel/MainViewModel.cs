@@ -207,33 +207,37 @@ namespace Pocal.ViewModel
 
         public async void GoToDate(DateTime dt)
         {
-            double stamp;
-
-            newestGoToDateStamp = DateTime.Now.Ticks;
-            stamp = DateTime.Now.Ticks;
-            IsCurrentlyLoading = true;
-            this.Days.Clear();
-
-
-           
-
-            if (!isStampNewest(stamp))
-                return;
-            else
-                await loadFirstDay(dt, stamp);
-
-            if (!isStampNewest(stamp))
-                return;
-            else
-                await loadEnoughMoreDay(stamp);
-
-            if (!isStampNewest(stamp))
-                return;
-            else
-                await loadPastDays(3, stamp);
+            try
+            {
+                double stamp;
+                newestGoToDateStamp = DateTime.Now.Ticks;
+                stamp = DateTime.Now.Ticks;
+                IsCurrentlyLoading = true;
+                this.Days.Clear();
 
 
-            IsCurrentlyLoading = false;
+                if (!isStampNewest(stamp))
+                    return;
+                else
+                    await loadFirstDay(dt, stamp);
+
+                if (!isStampNewest(stamp))
+                    return;
+                else
+                    await loadEnoughMoreDay(stamp);
+
+                if (!isStampNewest(stamp))
+                    return;
+                else
+                    await loadPastDays(3, stamp);
+
+
+                IsCurrentlyLoading = false;
+            }
+            catch (Exception)
+            {
+            }
+            
         }
 
         private async Task loadFirstDay(DateTime dt, double stamp)
