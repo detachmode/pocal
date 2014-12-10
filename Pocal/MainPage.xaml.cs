@@ -358,7 +358,10 @@ namespace Pocal
         {
 
             Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
-            storyboard.Begin();
+            if (storyboard != null)
+            {
+                storyboard.Begin();
+            }
             Thread.Sleep(1);
             ViewSwitcher.setScrollToPa(((FrameworkElement)sender).DataContext as PocalAppointment);
             ViewSwitcher.from = ViewSwitcher.Sender.ApptTap;
@@ -429,7 +432,11 @@ namespace Pocal
             Dispatcher.BeginInvoke(() =>
             {
                 Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
-                storyboard.Begin();
+                if (storyboard != null)
+                {
+                    storyboard.Begin();
+                }
+               
             });
 
             CalendarAPI.editAppointment(pocalAppointment);
@@ -443,7 +450,10 @@ namespace Pocal
             Dispatcher.BeginInvoke(() =>
             {
                 Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
-                storyboard.Begin();                                                            
+                if (storyboard != null)
+                {
+                    storyboard.Begin();
+                }                                                          
             });
             //Dispatcher.BeginInvoke(() =>
             //{
@@ -557,7 +567,10 @@ namespace Pocal
 
             App.ViewModel.InModus = MainViewModel.Modi.OverView;
             Storyboard storyboard = AgendaViewBody.Resources["EnterOverview"] as Storyboard;
-            storyboard.Begin();
+            if (storyboard != null)
+            {
+                storyboard.Begin();
+            }
 
             foundDayCards_ItemsControll = new List<ItemsControl>();
             foundStackPanels = new List<StackPanel>();
@@ -583,7 +596,10 @@ namespace Pocal
             App.ViewModel.InModus = MainViewModel.Modi.AgendaView;
         
             Storyboard storyboard = AgendaViewBody.Resources["LeaveOverview"] as Storyboard;
-            storyboard.Begin();
+            if (storyboard != null)
+            {
+                storyboard.Begin();
+            }
 
             foundDayCards_ItemsControll = new List<ItemsControl>();
             foundStackPanels = new List<StackPanel>();
@@ -664,8 +680,11 @@ namespace Pocal
         {
             foreach (var stackpanel in foundStackPanels)
             {
-                Storyboard StyBrd = stackpanel.Resources[storyBoardKey] as Storyboard;
-                StyBrd.Begin();
+                Storyboard storyboard = stackpanel.Resources[storyBoardKey] as Storyboard;
+                if (storyboard != null)
+                {
+                    storyboard.Begin();
+                }
             }
 
         }
