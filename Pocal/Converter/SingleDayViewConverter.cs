@@ -122,6 +122,25 @@ namespace Pocal.Converter
                     return 0;
 
                 double result = (appt.Duration.Hours) * HourLine.Height;
+                DateTimeOffset endTime = (DateTimeOffset)appt.StartTime + appt.Duration;
+
+                if ( endTime.Date > App.ViewModel.SingleDayViewModel.TappedDay.DT.Date)
+                {
+                    result = (HourLine.Height * 24 +1) ;
+                    if (appt.StartTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.DT.Date)
+	                {
+		                  result -= (appt.StartTime.Hour)*HourLine.Height;
+	                }
+                    return result;
+
+                }
+
+                if (appt.StartTime.Minute > 0 && endTime.Minute > 30)
+                {
+                    result += HourLine.Height;
+                    return result;
+                }
+                
 
                 if (appt.Duration.Minutes != 0)
                     result += HourLine.Height / 2;
@@ -249,10 +268,16 @@ namespace Pocal.Converter
         {
             double value = 0;
 
+            if (starttime.Date < App.ViewModel.SingleDayViewModel.TappedDay.DT.Date)
+            {
+                myTranslate.Y = 0;
+                return;
+            }
+
             value = (starttime.Hour * HourLine.Height);
 
 
-            if (starttime.Minute > 30)
+            if (starttime.Minute >= 30)
             {
                 value = value + HourLine.Height / 2;
 
