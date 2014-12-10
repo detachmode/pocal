@@ -301,7 +301,7 @@
 											Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  
 											VerticalAlignment="Center"/>
 
-                                        <Grid Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" 
+                                        <Grid toolkit:TiltEffect.SuppressTilt="True" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" 
 											VerticalAlignment="Center" Height="60"  >
                                             <!--<Grid.Background>
                                                 <SolidColorBrush Color="{StaticResource PhoneChromeColor}"/>

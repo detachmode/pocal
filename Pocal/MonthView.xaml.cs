@@ -18,14 +18,10 @@ namespace Pocal
         {
             InitializeComponent();
             gridSetup();
-            (MonthViewGrid as Grid).Background = new SolidColorBrush(Colors.Blue);
-            (MonthViewGrid as Grid).ManipulationStarted += MonthView_ManipulationStarted;
+
         }
 
-        private void Grid_Tap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/MainPage.xaml?GoToDate=" + (DateTime.Now.Date.ToShortDateString()), UriKind.Relative));
-        }
+
 
         //private List<int> daysForGridSetup;
         private List<DateTime> gridDateTimes;
@@ -44,9 +40,9 @@ namespace Pocal
                     Border brd = createBorder(x, y, (howManyRows-1));
                     //brd.Tap += dayGrid_Tap;
                     Grid dayGrid = new Grid();
-                   
 
-                    //dayGrid.DataContext = gridDateTimes[gridCounter];
+
+                    
                    
 
                     TextBlock txt = createTextBlock();
@@ -57,23 +53,13 @@ namespace Pocal
                     dayGrid.Children.Add(txt);
                     brd.Child = dayGrid;
 
-                    
 
-                    //(MonthViewGrid as Grid).Children.Add(brd);
+
+                    (MonthViewGrid as Grid).Children.Add(brd);
                    
 
                 }
             }
-        }
-
-        void MonthView_ManipulationStarted(object sender, System.Windows.Input.ManipulationStartedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        void MonthView_Tap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
 
@@ -203,6 +189,14 @@ namespace Pocal
             {
                 brd.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255,40,40,40));
             }
+            else
+            {
+                brd.Background = new SolidColorBrush(Colors.Black);
+            }
+
+
+            brd.DataContext = gridDateTimes[gridCounter];
+            brd.Tap += brdTap;
 
             double height = (483 / 7);
             double width = (483 / 7);
@@ -214,6 +208,17 @@ namespace Pocal
             brd.Margin = new Thickness(leftmargin, topmargin, 0, 0);
             return brd;
         }
+
+
+
+        void brdTap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            DateTime dt = (DateTime)((FrameworkElement)sender).DataContext;
+            App.ViewModel.GoToDate(dt);
+            NavigationService.Navigate(new Uri("/Mainpage.xaml?GoToDate=", UriKind.Relative), dt);
+            
+        }
+
 
 
     }

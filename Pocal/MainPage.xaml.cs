@@ -53,10 +53,10 @@ namespace Pocal
                 return;
             }
 
-            string goToDate = "";
-            if (NavigationContext.QueryString.TryGetValue("GoToDate", out goToDate))
+            object navigationData = NavigationService.GetNavigationData();
+            if (navigationData != null)
             {
-                App.ViewModel.GoToDate(DateTime.Now);
+                App.ViewModel.GoToDate((DateTime)navigationData);
             }
             else
                 App.ViewModel.GoToDate(DateTime.Now);

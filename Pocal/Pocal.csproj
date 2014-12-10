@@ -100,6 +100,7 @@
     <Compile Include="Helper\Cluster.cs" />
     <Compile Include="Helper\ConflictManager.cs" />
     <Compile Include="Helper\DeltaTimeStringCreator.cs" />
+    <Compile Include="Helper\Extensions.cs" />
     <Compile Include="Helper\Hourline.cs" />
     <Compile Include="Helper\PocalAppointmentUpdater.cs" />
     <Compile Include="Helper\ViewSwitcher.cs" />
