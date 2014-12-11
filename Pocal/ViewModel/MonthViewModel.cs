@@ -35,8 +35,12 @@ namespace Pocal.ViewModel
         public MonthViewModel()
         {
             Months = new ObservableCollection<Month>();
-            Months.Add(new Month(DateTime.Now));
-            Months.Add(new Month(DateTime.Now.AddMonths(1)));
+
+            for (int i = 0; i < 6; i++)
+            {
+                Months.Add(new Month(DateTime.Now.AddMonths(i))); 
+            }
+            Months.Add(new Month(DateTime.Now.AddMonths(-1))); 
 
             //MonthViewPivot.ItemsSource = Months;
         }

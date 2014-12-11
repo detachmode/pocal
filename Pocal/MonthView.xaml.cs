@@ -11,6 +11,7 @@ using System.Windows.Media;
 using Microsoft.Xna.Framework;
 using Pocal.Converter;
 using System.Collections.ObjectModel;
+using Pocal.ViewModel;
 
 namespace Pocal
 {
@@ -183,7 +184,7 @@ namespace Pocal
             {
                 brd.Background = new SolidColorBrush(Colors.Black);
             }
-
+        
 
             brd.DataContext = gridDateTimes[gridCounter];
             brd.Tap += brdTap;
@@ -205,6 +206,50 @@ namespace Pocal
             App.ViewModel.GoToDate(dt);
             NavigationService.Navigate(new Uri("/Mainpage.xaml?GoToDate=", UriKind.Relative), dt);
 
+        }
+
+        private static DependencyObject FindMonthGrid(DependencyObject parent)
+        {
+            var childCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (var i = 0; i < childCount; i++)
+            {
+                DependencyObject elt = VisualTreeHelper.GetChild(parent, i);
+                if (((FrameworkElement)elt).Name == "MonthViewGrid") return elt;
+
+                var result = FindMonthGrid(elt);
+                if (result != null) return result;
+            }
+            return null;
+        }
+
+        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            DependencyObject pivotItem = ((Pivot)sender).ItemContainerGenerator.ContainerFromIndex(((Pivot)sender).SelectedIndex);
+
+            if (pivotItem != null)
+            {
+                loadMonthViewGridInPivotItem((PivotItem)pivotItem);
+            }
+           
+
+        }
+
+        private void loadMonthViewGridInPivotItem(PivotItem pivotItem)
+        {
+            Month month = pivotItem.DataContext as Month;
+            var monthViewGrid = FindMonthGrid((DependencyObject)pivotItem);
+            gridSetup((Grid)monthViewGrid, month.DateTime);
+        }
+
+        private void Pivot_Loaded(object sender, RoutedEventArgs e)
+        {
+            DependencyObject pivotItem = ((Pivot)sender).ItemContainerGenerator.ContainerFromIndex(((Pivot)sender).SelectedIndex);
+
+            if (pivotItem != null)
+            {
+                loadMonthViewGridInPivotItem((PivotItem)pivotItem);
+            }
         }
 
 
