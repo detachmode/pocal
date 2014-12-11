@@ -19,87 +19,15 @@ namespace Pocal
       
         public MonthView()
         {
-            this.DataContext = App.ViewModel.MonthViewModel;
+            DataContext = App.ViewModel.MonthViewModel;
 
             InitializeComponent();
-
-            
-
-            //createPivots();
-            
-
+            MonthViewPivot.SelectedIndex = 1;
+            //MonthViewPivot.SelectedIndex = 0;
 
 
         }
 
-        private void createPivots()
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                if (i == 5)
-                    createInitialPivotItem(DateTime.Now.AddMonths(-1));
-                else
-                    createInitialPivotItem(DateTime.Now.AddMonths(i));
-            }
-
-
-        }
-
-
-
-        private void createInitialPivotItem(DateTime dt)
-        {
-            PivotItem pi = new PivotItem();
-            pi.Loaded += pi_Loaded;
-            pi.Margin = new Thickness(0, 0, 0, 0);
-            pi.Header = dt.ToString("MMMMMM", cultureSettings.ci);
-            pi.DataContext = dt;
-
-            Grid monthViewGrid = new Grid();
-            monthViewGrid.Height = 480;
-            monthViewGrid.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            monthViewGrid.Margin = new Thickness(0, 70, 0, 70);
-            //monthViewGrid.Background = new SolidColorBrush(Colors.Blue);
-
-            StackPanel stack = new StackPanel();
-            stack.Orientation = System.Windows.Controls.Orientation.Horizontal;
-            stack.Height = 30;
-            stack.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            stack.Margin = new Thickness(0, -30, 0, 0);
-
-            string[] weekNames = { "Mo", "Di", "Mi", "Do", "Fr", "Sa", "So" };
-
-
-            foreach (string str in weekNames)
-            {
-                TextBlock txt = new TextBlock();
-                txt.Width = 68.5;
-                txt.Padding = new Thickness(6, 0, 6, 0);
-                txt.Foreground = new SolidColorBrush(Colors.Gray);
-                txt.Text = str;
-
-                stack.Children.Add(txt);
-            }
-
-            monthViewGrid.Children.Add(stack);
-
-
-
-            //monthViewGrid = gridSetup(monthViewGrid, dt);
-
-            pi.Content = monthViewGrid;
-
-            (MonthViewPivot as Pivot).Items.Add(pi);
-        }
-
-        void pi_Loaded(object sender, RoutedEventArgs e)
-        {
-           //throw new NotImplementedException();
-        }
-
-
-
-        //private List<int> daysForGridSetup;
         private List<DateTime> gridDateTimes;
         int gridCounter;
 
@@ -131,9 +59,6 @@ namespace Pocal
             }
             return monthViewGrid;
         }
-
-
-
 
         private void addCurrentDayMark(Grid dayGrid)
         {
@@ -168,8 +93,6 @@ namespace Pocal
             return ((int)(counter / 7.0 + 1));
         }
 
-
-
         private static TextBlock createTextBlock()
         {
             TextBlock txt = new TextBlock();
@@ -177,7 +100,6 @@ namespace Pocal
             txt.Margin = new Thickness(6);
             return txt;
         }
-
 
         private void createDaysArray(DateTime forMonth)
         {
@@ -279,8 +201,6 @@ namespace Pocal
             return brd;
         }
 
-
-
         void brdTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             DateTime dt = (DateTime)((FrameworkElement)sender).DataContext;
@@ -288,38 +208,6 @@ namespace Pocal
             NavigationService.Navigate(new Uri("/Mainpage.xaml?GoToDate=", UriKind.Relative), dt);
 
         }
-
-        private void MonthViewPivot_LoadedPivotItem(object sender, PivotItemEventArgs e)
-        {
-            //if 
-            //{
-            //addOneMorePivotForward();
-
-
-            PivotItem pi = new PivotItem();
-            //pi.Loaded += pi_Loaded;
-            pi.Margin = new Thickness(0, 0, 0, 0);
-            pi.Header = "test";
-            (MonthViewPivot as Pivot).Items.Add(pi);
-            //pi.DataContext = dt;
-            //}
-        }
-
-        private void addOneMorePivotForward()
-        {
-            DateTime latestMonth = (DateTime)((FrameworkElement)MonthViewPivot.Items.ElementAt(MonthViewPivot.Items.Count - 2)).DataContext;
-            createInitialPivotItem(latestMonth.AddMonths(1));
-        }
-
-        private void MonthViewPivot_Loaded_1(object sender, RoutedEventArgs e)
-        {
-            MonthViewPivot.UpdateLayout();
-            MonthViewPivot.LoadedPivotItem += MonthViewPivot_LoadedPivotItem;
-        }
-
-
-
-
 
 
     }

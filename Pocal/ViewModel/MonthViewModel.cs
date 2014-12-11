@@ -7,9 +7,28 @@ using System.Threading.Tasks;
 
 namespace Pocal.ViewModel
 {
-    public class MonthViewModel
+    public class MonthViewModel : ViewModelBase
     {
-        public ObservableCollection<DateTime> Months { get; set; }
+
+        private ObservableCollection<DateTime> _months;
+        public ObservableCollection<DateTime> Months
+        {
+            get
+            {
+                return _months;
+            }
+
+            set
+            {
+                if (_months != value)
+                {
+                    _months = value;
+                    NotifyPropertyChanged("Months");
+                }
+                    
+
+            }
+        }
 
         public MonthViewModel()
         {
