@@ -44,6 +44,7 @@ namespace Pocal.ViewModel
         }
 
 
+        public MonthViewModel MonthViewModel { get; set; }
         public SingleDayViewVM SingleDayViewModel { get; private set; }
         public ConflictManager ConflictManager { get; private set; }
 
@@ -95,6 +96,7 @@ namespace Pocal.ViewModel
         {
 
             this.Days = new ObservableCollection<Day>();
+            MonthViewModel = new MonthViewModel();
             SingleDayViewModel = new SingleDayViewVM();
             ConflictManager = new ConflictManager();
 
@@ -214,6 +216,8 @@ namespace Pocal.ViewModel
                 stamp = DateTime.Now.Ticks;
                 IsCurrentlyLoading = true;
                 this.Days.Clear();
+ 
+                
 
 
                 if (!isStampNewest(stamp))

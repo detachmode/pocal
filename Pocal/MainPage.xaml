@@ -301,7 +301,7 @@
 											Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  
 											VerticalAlignment="Center"/>
 
-                                        <Grid toolkit:TiltEffect.SuppressTilt="True" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" 
+                                        <Grid Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" 
 											VerticalAlignment="Center" Height="60"  >
                                             <!--<Grid.Background>
                                                 <SolidColorBrush Color="{StaticResource PhoneChromeColor}"/>
@@ -329,14 +329,12 @@
 
                                         <Grid Background="Black" Height="20" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center"/>
 
-                                        <!--******** ************** ********-->
-                                        <!--******** DAYCARD HEADER ********-->
 
                                         <!--******** ************ ********-->
                                         <!--******** DAYCARD BODY ********-->
                                         <!--******** ************** ********-->
 
-                                        <TextBlock x:Name="DayCardHeader" toolkit:TiltEffect.IsTiltEnabled="True" Tap="DayCard_HeaderTap" 
+                                        <TextBlock x:Name="DayCardHeader"  Tap="DayCard_HeaderTap" 
 										Foreground ="{Binding DT, Converter={StaticResource dayHeadersForeground}}" 
 										Text="{Binding DT, Converter={StaticResource DateConverter}}" FontSize="34" 
 										FontFamily="{StaticResource PhoneFontFamilyLight}"  Margin="18,6,0,0">

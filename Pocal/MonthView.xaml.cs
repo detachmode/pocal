@@ -9,57 +9,127 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Windows.Media;
 using Microsoft.Xna.Framework;
+using Pocal.Converter;
+using System.Collections.ObjectModel;
 
 namespace Pocal
 {
     public partial class MonthView : PhoneApplicationPage
     {
+      
         public MonthView()
         {
-            InitializeComponent();
-            gridSetup();
+            this.DataContext = App.ViewModel.MonthViewModel;
 
+            InitializeComponent();
+
+            
+
+            //createPivots();
+            
+
+
+
+        }
+
+        private void createPivots()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                if (i == 5)
+                    createInitialPivotItem(DateTime.Now.AddMonths(-1));
+                else
+                    createInitialPivotItem(DateTime.Now.AddMonths(i));
+            }
+
+
+        }
+
+
+
+        private void createInitialPivotItem(DateTime dt)
+        {
+            PivotItem pi = new PivotItem();
+            pi.Loaded += pi_Loaded;
+            pi.Margin = new Thickness(0, 0, 0, 0);
+            pi.Header = dt.ToString("MMMMMM", cultureSettings.ci);
+            pi.DataContext = dt;
+
+            Grid monthViewGrid = new Grid();
+            monthViewGrid.Height = 480;
+            monthViewGrid.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            monthViewGrid.Margin = new Thickness(0, 70, 0, 70);
+            //monthViewGrid.Background = new SolidColorBrush(Colors.Blue);
+
+            StackPanel stack = new StackPanel();
+            stack.Orientation = System.Windows.Controls.Orientation.Horizontal;
+            stack.Height = 30;
+            stack.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            stack.Margin = new Thickness(0, -30, 0, 0);
+
+            string[] weekNames = { "Mo", "Di", "Mi", "Do", "Fr", "Sa", "So" };
+
+
+            foreach (string str in weekNames)
+            {
+                TextBlock txt = new TextBlock();
+                txt.Width = 68.5;
+                txt.Padding = new Thickness(6, 0, 6, 0);
+                txt.Foreground = new SolidColorBrush(Colors.Gray);
+                txt.Text = str;
+
+                stack.Children.Add(txt);
+            }
+
+            monthViewGrid.Children.Add(stack);
+
+
+
+            //monthViewGrid = gridSetup(monthViewGrid, dt);
+
+            pi.Content = monthViewGrid;
+
+            (MonthViewPivot as Pivot).Items.Add(pi);
+        }
+
+        void pi_Loaded(object sender, RoutedEventArgs e)
+        {
+           //throw new NotImplementedException();
         }
 
 
 
         //private List<int> daysForGridSetup;
         private List<DateTime> gridDateTimes;
-        int gridCounter ;
+        int gridCounter;
 
-        private void gridSetup()
+        private Grid gridSetup(Grid monthViewGrid, DateTime dt)
         {
             gridCounter = 0;
-            createDaysArray(new DateTime(2014, 12, 1));
-            
+            createDaysArray(dt.Date);
+
             int howManyRows = getHowManyRows();
             for (int y = 0; y < howManyRows; y++)
             {
                 for (int x = 0; x < 7; x++)
                 {
-                    Border brd = createBorder(x, y, (howManyRows-1));
+                    Border brd = createBorder(x, y, (howManyRows - 1));
                     //brd.Tap += dayGrid_Tap;
                     Grid dayGrid = new Grid();
 
 
-                    
-                   
-
                     TextBlock txt = createTextBlock();
-                    
+
                     addCurrentDayMark(dayGrid);
                     txt.Text = gridDateTimes[gridCounter].Day.ToString();
                     gridCounter++;
                     dayGrid.Children.Add(txt);
                     brd.Child = dayGrid;
 
-
-
-                    (MonthViewGrid as Grid).Children.Add(brd);
-                   
-
+                    monthViewGrid.Children.Add(brd);
                 }
             }
+            return monthViewGrid;
         }
 
 
@@ -91,14 +161,14 @@ namespace Pocal
                 }
                 if (d.Day == 1)
                 {
-                    firstOneEncountered = true; 
+                    firstOneEncountered = true;
                 }
                 counter++;
             }
             return ((int)(counter / 7.0 + 1));
         }
 
-       
+
 
         private static TextBlock createTextBlock()
         {
@@ -129,10 +199,10 @@ namespace Pocal
                 case DayOfWeek.Wednesday:
                     offsetBegin = 2;
                     break;
-                case DayOfWeek.Friday:
+                case DayOfWeek.Thursday:
                     offsetBegin = 3;
                     break;
-                case DayOfWeek.Thursday:
+                case DayOfWeek.Friday:
                     offsetBegin = 4;
                     break;
                 case DayOfWeek.Saturday:
@@ -149,11 +219,11 @@ namespace Pocal
             for (int i = (offsetBegin - 1); i >= 0; i--)
             {
                 gridDateTimes.Add(lastDayOfPreviousMonth.AddDays(-i));
-                
+
             }
             for (int i = 1; i <= lastDayInThisMonth; i++)
             {
-                gridDateTimes.Add(new DateTime(firstDay.Year, firstDay.Month , i));
+                gridDateTimes.Add(new DateTime(firstDay.Year, firstDay.Month, i));
             }
 
             for (int i = 0; i < 7; i++)
@@ -185,9 +255,9 @@ namespace Pocal
             brd.BorderBrush = new SolidColorBrush(Colors.White);
 
             var testDayOfWeek = gridDateTimes[gridCounter].DayOfWeek;
-            if (testDayOfWeek == DayOfWeek.Saturday || testDayOfWeek == DayOfWeek.Sunday )
+            if (testDayOfWeek == DayOfWeek.Saturday || testDayOfWeek == DayOfWeek.Sunday)
             {
-                brd.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255,40,40,40));
+                brd.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 40, 40, 40));
             }
             else
             {
@@ -216,8 +286,39 @@ namespace Pocal
             DateTime dt = (DateTime)((FrameworkElement)sender).DataContext;
             App.ViewModel.GoToDate(dt);
             NavigationService.Navigate(new Uri("/Mainpage.xaml?GoToDate=", UriKind.Relative), dt);
-            
+
         }
+
+        private void MonthViewPivot_LoadedPivotItem(object sender, PivotItemEventArgs e)
+        {
+            //if 
+            //{
+            //addOneMorePivotForward();
+
+
+            PivotItem pi = new PivotItem();
+            //pi.Loaded += pi_Loaded;
+            pi.Margin = new Thickness(0, 0, 0, 0);
+            pi.Header = "test";
+            (MonthViewPivot as Pivot).Items.Add(pi);
+            //pi.DataContext = dt;
+            //}
+        }
+
+        private void addOneMorePivotForward()
+        {
+            DateTime latestMonth = (DateTime)((FrameworkElement)MonthViewPivot.Items.ElementAt(MonthViewPivot.Items.Count - 2)).DataContext;
+            createInitialPivotItem(latestMonth.AddMonths(1));
+        }
+
+        private void MonthViewPivot_Loaded_1(object sender, RoutedEventArgs e)
+        {
+            MonthViewPivot.UpdateLayout();
+            MonthViewPivot.LoadedPivotItem += MonthViewPivot_LoadedPivotItem;
+        }
+
+
+
 
 
 
