@@ -22,11 +22,9 @@ namespace Pocal
             DataContext = App.ViewModel.MonthViewModel;
 
             InitializeComponent();
-            MonthViewPivot.SelectedIndex = 1;
-            //MonthViewPivot.SelectedIndex = 0;
-
 
         }
+
 
         private List<DateTime> gridDateTimes;
         int gridCounter;

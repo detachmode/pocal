@@ -10,8 +10,8 @@ namespace Pocal.ViewModel
     public class MonthViewModel : ViewModelBase
     {
 
-        private ObservableCollection<DateTime> _months;
-        public ObservableCollection<DateTime> Months
+        private ObservableCollection<Month> _months;
+        public ObservableCollection<Month> Months
         {
             get
             {
@@ -30,13 +30,27 @@ namespace Pocal.ViewModel
             }
         }
 
+       
+
         public MonthViewModel()
         {
-            Months = new ObservableCollection<DateTime>();
-            Months.Add(DateTime.Now);
-            Months.Add(DateTime.Now.AddMonths(1));
+            Months = new ObservableCollection<Month>();
+            Months.Add(new Month(DateTime.Now));
+            Months.Add(new Month(DateTime.Now.AddMonths(1)));
 
             //MonthViewPivot.ItemsSource = Months;
         }
+    }
+
+    public class Month
+    {
+        public Month(DateTime dt)
+        {
+            DateTime = dt;
+            Name = dt.ToString("MMMMMM"); ;
+        }
+
+        public string Name { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

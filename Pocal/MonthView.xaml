@@ -38,17 +38,23 @@
     <!--LayoutRoot ist das Stammraster, in dem alle anderen Seiteninhalte platziert werden-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
 
-        <phone:Pivot  x:Name="MonthViewPivot" Background="Black" Margin="0,12,0,0" ItemsSource="{Binding Months}">
+        <phone:Pivot ItemsSource="{Binding Months}">
             <phone:Pivot.HeaderTemplate>
-                <DataTemplate>            
-                <Grid>
-                    <TextBlock Text="{Binding Month}"></TextBlock>
-                </Grid>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock Padding="0,0,0,0" Text="{Binding Name}" RenderTransformOrigin="0.5,0.5">
+                            <TextBlock.RenderTransform>
+                                <CompositeTransform TranslateX="0" TranslateY="24"/>
+                            </TextBlock.RenderTransform>
+
+                        </TextBlock>
+
+                    </Grid>
                 </DataTemplate>
             </phone:Pivot.HeaderTemplate>
             <phone:Pivot.ItemTemplate>
                 <DataTemplate>
-                    <Grid x:Name="MonthViewGrid" Height="480" VerticalAlignment="Top" Margin="0,70">
+                    <Grid x:Name="MonthViewGrid" Height="480" VerticalAlignment="Top" Margin="0,70" Background="Blue">
                         <StackPanel Orientation="Horizontal" Height="30"  VerticalAlignment="Top" Margin="0,-30" >
                             <TextBlock Width="68.5" Padding="6,0" Foreground="Gray">Mo</TextBlock>
                             <TextBlock Width="68.5" Padding="6,0" Foreground="Gray">Di</TextBlock>
@@ -57,14 +63,14 @@
                             <TextBlock Width="68.5" Padding="6,0" Foreground="Gray">Fr</TextBlock>
                             <TextBlock Width="68.5" Padding="6,0" Foreground="Gray">Sa</TextBlock>
                             <TextBlock Width="68.5" Padding="6,0" Foreground="Gray">So</TextBlock>
-                        </StackPanel>                      
-                    </Grid>                
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </phone:Pivot.ItemTemplate>
         </phone:Pivot>
-        
-        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Height="30" VerticalAlignment="Top" Margin="24,6"  FontWeight="SemiBold">2014</TextBlock>
-    
+
+        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Height="30" VerticalAlignment="Top" Margin="24,16"  FontWeight="SemiBold">2014</TextBlock>
+
     </Grid>
 
 </phone:PhoneApplicationPage>
