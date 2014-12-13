@@ -92,6 +92,7 @@ namespace Pocal
 		private void Application_Activated(object sender, ActivatedEventArgs e)
 		{
             //App.ViewModel.ReloadPocalApptsAndDays();
+            LiveTile.UpdateTile();
 		}
 
 		// Code to execute when the application is deactivated (sent to background)

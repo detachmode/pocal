@@ -14,6 +14,7 @@ using Pocal.Helper;
 using System.Windows.Data;
 using System.Windows.Media.Animation;
 using Microsoft.Phone.Shell;
+using Pocal.Resources;
 
 namespace Pocal
 {
@@ -35,6 +36,7 @@ namespace Pocal
         private void loadStartup()
         {
 
+            LiveTile.UpdateTile();
             DataContext = App.ViewModel;
             InitializeComponent();
 

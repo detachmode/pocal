@@ -117,6 +117,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\LiveTile.xaml.cs">
+      <DependentUpon>LiveTile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Day.cs" />
     <Compile Include="Helper\CalendarAPI.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -135,6 +138,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MonthView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\LiveTile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -220,7 +227,6 @@
     <Content Include="Images\transport.play.png" />
     <Content Include="Images\transport.rew.png" />
     <Content Include="Images\upload.png" />
-    <Content Include="README_FIRST.txt" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />

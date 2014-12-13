@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Pocal.Resources.LiveTile"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="336" d:DesignWidth="336">
+
+    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneAccentBrush}">
+        <StackPanel Margin="12" >
+            <TextBlock FontSize="40" x:Name="tb1"></TextBlock>
+            <TextBlock>Test</TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <TextBlock VerticalAlignment="Bottom" FontWeight="Medium" Margin="12,12" FontSize="36">Sa</TextBlock>
+            <TextBlock FontSize="100" FontWeight="SemiBold" Margin="0,0,18,18" Height="110" Width="89">13</TextBlock>
+
+        </StackPanel>
+
+
+    </Grid>
+</UserControl>
