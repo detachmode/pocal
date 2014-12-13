@@ -36,12 +36,14 @@ namespace Pocal
         private void loadStartup()
         {
 
-            LiveTile.UpdateTile();
+            
             DataContext = App.ViewModel;
             InitializeComponent();
 
             AgendaViewAppbar();
             watchScrollingOfLLS();
+            LiveTile.UpdateTile();
+
 
 
         }

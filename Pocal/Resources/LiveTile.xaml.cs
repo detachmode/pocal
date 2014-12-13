@@ -9,6 +9,9 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Windows.Media.Imaging;
 using System.IO.IsolatedStorage;
+using Pocal.ViewModel;
+using Windows.ApplicationModel.Appointments;
+using System.Threading.Tasks;
 
 namespace Pocal.Resources
 {
@@ -17,21 +20,92 @@ namespace Pocal.Resources
         public LiveTile()
         {
             InitializeComponent();
-            tb1.Text = DateTime.Now.ToShortTimeString();
-            LayoutRoot.UpdateLayout();
+
+        }
+
+        public static async Task<Appointment> getNextAppointment()
+        {
+            IReadOnlyList<Appointment> appts = await CalendarAPI.getAppointments(DateTime.Now, 2);
+
+            foreach (Appointment appt in appts)
+            {
+               if (appt.StartTime >= DateTime.Now)
+               {
+                   return appt;
+
+               }
+            }
+
+            ////foreach (Day day in App.ViewModel.Days)
+            ////{
+            ////   foreach (PocalAppointment pa in day.PocalApptsOfDay)
+            ////    {
+            ////        if (pa.StartTime < DateTime.Now)
+            ////            continue;
+            ////        else
+            ////            return pa;
+
+            ////    } 
+            ////}
+            return null;
+        }
+
+        public void UpdateTextBox(Appointment appt)
+        {
+
+            dayOfWeekTb.Text = DateTime.Now.DayOfWeek.ToString().Substring(0, 2);
+            dayTb.Text = DateTime.Now.Day.ToString();
+            if (appt == null)
+            {
+                tb1.Text = "";
+                tb2.Text = "";
+                LayoutRoot.UpdateLayout();
+            }
+            else
+            {
+                tb1.Text = appt.Subject;
+               
+                tb2.Text = tb2Text(appt);
+                LayoutRoot.UpdateLayout();
+            }
+           
+        }
+
+        private static string tb2Text(Appointment appt)
+        {
+            DateTimeOffset endTime = appt.StartTime + appt.Duration;
+            if (appt.StartTime.Date != endTime.Date)
+            {
+                return (appt.StartTime.DayOfWeek.ToString() + " bis " +endTime.DayOfWeek.ToString());
+            }
+            return (appt.StartTime.Hour.ToString("00") + ":" + appt.StartTime.Minute.ToString("00") + " - " + endTime.Hour.ToString("00") + ":" + endTime.Minute.ToString("00"));
         }
 
 
-        public static void UpdateTile()
+
+        //public async void DoUpdateTile()
+        //{
+        //    await  setNextAppointment();
+        //    UpdateTile();
+        //}
+
+
+        public static async void UpdateTile()
         {
-            
+            Appointment appt = await getNextAppointment();
+
             var customTile = new LiveTile();
             customTile.Measure(new Size(336, 336));
             customTile.Arrange(new Rect(0, 0, 336, 336));
+            customTile.UpdateTextBox(appt);
+
+           
+
 
             var customTileWide = new LiveTile();
             customTileWide.Measure(new Size(691, 336));
             customTileWide.Arrange(new Rect(0, 0, 691, 336));
+            customTileWide.UpdateTextBox(appt);
 
             var bmp = new WriteableBitmap(336, 336);
             bmp.Render(customTile, null);
