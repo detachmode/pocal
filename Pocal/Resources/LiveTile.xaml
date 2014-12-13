@@ -12,7 +12,7 @@
     <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneAccentBrush}">
         <StackPanel Margin="12" >
             <TextBlock FontSize="40" x:Name="tb1"></TextBlock>
-            <TextBlock FontSize="26" x:Name="tb2"></TextBlock>
+            <TextBlock FontSize="30" x:Name="tb2"></TextBlock>
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
             <TextBlock x:Name="dayOfWeekTb"  VerticalAlignment="Bottom" FontWeight="Medium" Margin="12,12" FontSize="36"></TextBlock>

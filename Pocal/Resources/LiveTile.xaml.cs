@@ -74,11 +74,21 @@ namespace Pocal.Resources
         private static string tb2Text(Appointment appt)
         {
             DateTimeOffset endTime = appt.StartTime + appt.Duration;
+            string str = "";
+
+            if (appt.StartTime != DateTime.Now)
+            {
+                str += "Morgen: ";
+            }
             if (appt.StartTime.Date != endTime.Date)
             {
-                return (appt.StartTime.DayOfWeek.ToString() + " bis " +endTime.DayOfWeek.ToString());
+                str+= (appt.StartTime.DayOfWeek.ToString() + " bis " +endTime.DayOfWeek.ToString());
             }
-            return (appt.StartTime.Hour.ToString("00") + ":" + appt.StartTime.Minute.ToString("00") + " - " + endTime.Hour.ToString("00") + ":" + endTime.Minute.ToString("00"));
+
+            str += (appt.StartTime.Hour.ToString("00") + ":" + appt.StartTime.Minute.ToString("00") + " - " + endTime.Hour.ToString("00") + ":" + endTime.Minute.ToString("00"));
+            return str;
+
+
         }
 
 
