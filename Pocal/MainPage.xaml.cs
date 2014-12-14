@@ -42,7 +42,7 @@ namespace Pocal
 
             AgendaViewAppbar();
             watchScrollingOfLLS();
-            LiveTile.UpdateTile();
+            LiveTileManager.UpdateTile();
 
 
 

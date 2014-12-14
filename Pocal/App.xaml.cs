@@ -7,6 +7,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Pocal.Resources;
 using Pocal.ViewModel;
+using Pocal.Helper;
 
 namespace Pocal
 {
@@ -92,7 +93,7 @@ namespace Pocal
 		private void Application_Activated(object sender, ActivatedEventArgs e)
 		{
             //App.ViewModel.ReloadPocalApptsAndDays();
-            LiveTile.UpdateTile();
+            LiveTileManager.UpdateTile();
 		}
 
 		// Code to execute when the application is deactivated (sent to background)
