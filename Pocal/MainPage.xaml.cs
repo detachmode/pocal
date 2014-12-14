@@ -1,4 +1,4 @@
-﻿//#define DEBUG_AGENT
+﻿#define DEBUG_AGENT
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,39 +70,39 @@ namespace Pocal
         }
 
 
-        ResourceIntensiveTask resourceIntensiveTask;
+        PeriodicTask periodicTask;
 
 
-        string resourceIntensiveTaskName = "ResourceIntensiveAgent";
+        string periodicTaskName = "ResourceIntensiveAgent";
 
         private void StartResourceIntensiveAgent()
         {
 
-            resourceIntensiveTask = ScheduledActionService.Find(resourceIntensiveTaskName) as ResourceIntensiveTask;
+            periodicTask = ScheduledActionService.Find(periodicTaskName) as PeriodicTask;
 
             // If the task already exists and background agents are enabled for the
             // application, you must remove the task and then add it again to update 
             // the schedule.
-            if (resourceIntensiveTask != null)
+            if (periodicTask != null)
             {
-                RemoveAgent(resourceIntensiveTaskName);
+                RemoveAgent(periodicTaskName);
             }
 
-            resourceIntensiveTask = new ResourceIntensiveTask(resourceIntensiveTaskName);
+            periodicTask = new PeriodicTask(periodicTaskName);
 
             // The description is required for periodic agents. This is the string that the user
             // will see in the background services Settings page on the device.
-            resourceIntensiveTask.Description = "This demonstrates a resource-intensive task.";
-
+            periodicTask.Description = "This demonstrates a resource-intensive task.";
+           
             // Place the call to Add in a try block in case the user has disabled agents.
             try
             {
-                ScheduledActionService.Add(resourceIntensiveTask);
+                ScheduledActionService.Add(periodicTask);
              
 
                 // If debugging is enabled, use LaunchForTest to launch the agent in one minute.
 #if(DEBUG_AGENT)
-                ScheduledActionService.LaunchForTest(resourceIntensiveTaskName, TimeSpan.FromSeconds(10));
+                ScheduledActionService.LaunchForTest(periodicTaskName, TimeSpan.FromSeconds(10));
 #endif
             }
             catch (InvalidOperationException exception)
