@@ -1,4 +1,4 @@
-﻿#define DEBUG_AGENT
+﻿//#define DEBUG_AGENT
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,7 +92,7 @@ namespace Pocal
 
             // The description is required for periodic agents. This is the string that the user
             // will see in the background services Settings page on the device.
-            periodicTask.Description = "This demonstrates a resource-intensive task.";
+            periodicTask.Description = "Updates Pocal LiveTile";
            
             // Place the call to Add in a try block in case the user has disabled agents.
             try
@@ -109,7 +109,7 @@ namespace Pocal
             {
                 if (exception.Message.Contains("BNS Error: The action is disabled"))
                 {
-                    MessageBox.Show("Background agents for this application have been disabled by the user.");
+                    //MessageBox.Show("Background agents for this application have been disabled by the user.");
                 }
                 
             }

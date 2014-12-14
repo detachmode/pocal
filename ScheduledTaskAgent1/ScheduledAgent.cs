@@ -1,4 +1,4 @@
-﻿#define DEBUG_AGENT
+﻿//#define DEBUG_AGENT
 
 using System.Diagnostics;
 using System.Windows;
@@ -53,13 +53,13 @@ namespace ScheduledTaskAgent1
                 string toastMessage = "";
 
                 // Execute resource-intensive task actions here.
-                toastMessage = "Resource-intensive task running.";
+                toastMessage = "LiveTile geupdatet.";
 
 
                 // Launch a toast to show that the agent is running.
                 // The toast will not be shown if the foreground application is running.
                 ShellToast toast = new ShellToast();
-                toast.Title = "Background Agent Sample";
+                toast.Title = "Pocal";
                 toast.Content = toastMessage;
                 toast.Show();
                 LiveTileManager.UpdateTile();
