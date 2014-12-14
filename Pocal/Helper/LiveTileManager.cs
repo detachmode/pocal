@@ -35,7 +35,7 @@ namespace Pocal.Helper
             DateTimeOffset endTime = appt.StartTime + appt.Duration;
             string str = "";
 
-            if (appt.StartTime != DateTime.Now)
+            if (appt.StartTime.DayOfYear != DateTime.Now.DayOfYear)
             {
                 str += "Morgen: ";
             }
@@ -55,7 +55,7 @@ namespace Pocal.Helper
             DateTimeOffset endTime = appt.StartTime + appt.Duration;
             string str = "";
 
-            if (appt.StartTime != DateTime.Now)
+            if (appt.StartTime.DayOfYear != DateTime.Now.DayOfYear)
             {
                 str += "Morgen: ";
             }
