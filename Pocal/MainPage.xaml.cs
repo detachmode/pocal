@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define DEBUG_AGENT
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -15,6 +16,7 @@ using System.Windows.Data;
 using System.Windows.Media.Animation;
 using Microsoft.Phone.Shell;
 using Pocal.Resources;
+using Microsoft.Phone.Scheduler;
 
 namespace Pocal
 {
@@ -43,7 +45,7 @@ namespace Pocal
             AgendaViewAppbar();
             watchScrollingOfLLS();
             LiveTileManager.UpdateTile();
-
+            StartResourceIntensiveAgent();
 
 
         }
@@ -67,14 +69,70 @@ namespace Pocal
 
         }
 
-        //private void unloadClearValue(object sender, RoutedEventArgs e)
-        //{
 
-        //    ScrollViewer scrollViewer = sender as ScrollViewer;
+        ResourceIntensiveTask resourceIntensiveTask;
 
-        //    scrollViewer.ClearValue(FrameworkElement.DataContextProperty);
 
-        //}
+        string resourceIntensiveTaskName = "ResourceIntensiveAgent";
+
+        private void StartResourceIntensiveAgent()
+        {
+
+            resourceIntensiveTask = ScheduledActionService.Find(resourceIntensiveTaskName) as ResourceIntensiveTask;
+
+            // If the task already exists and background agents are enabled for the
+            // application, you must remove the task and then add it again to update 
+            // the schedule.
+            if (resourceIntensiveTask != null)
+            {
+                RemoveAgent(resourceIntensiveTaskName);
+            }
+
+            resourceIntensiveTask = new ResourceIntensiveTask(resourceIntensiveTaskName);
+
+            // The description is required for periodic agents. This is the string that the user
+            // will see in the background services Settings page on the device.
+            resourceIntensiveTask.Description = "This demonstrates a resource-intensive task.";
+
+            // Place the call to Add in a try block in case the user has disabled agents.
+            try
+            {
+                ScheduledActionService.Add(resourceIntensiveTask);
+             
+
+                // If debugging is enabled, use LaunchForTest to launch the agent in one minute.
+#if(DEBUG_AGENT)
+                ScheduledActionService.LaunchForTest(resourceIntensiveTaskName, TimeSpan.FromSeconds(10));
+#endif
+            }
+            catch (InvalidOperationException exception)
+            {
+                if (exception.Message.Contains("BNS Error: The action is disabled"))
+                {
+                    MessageBox.Show("Background agents for this application have been disabled by the user.");
+                }
+                
+            }
+            catch (SchedulerServiceException)
+            {
+                // No user action required.
+               
+            }
+
+
+        }
+
+        private void RemoveAgent(string name)
+        {
+            try
+            {
+                ScheduledActionService.Remove(name);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
 
 
         #region AgendaView Code Behind
