@@ -432,6 +432,7 @@ namespace Pocal
 
         public void SDV_AppointmentTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            UpdateLayout(); // Vielleicht verlangsamt das die UX! Vielleicht behebt das jedoch den TapOffset Bug.
             PocalAppointment pocalAppointment = ((FrameworkElement)sender).DataContext as PocalAppointment;
             Dispatcher.BeginInvoke(() =>
             {
