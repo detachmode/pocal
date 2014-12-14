@@ -389,8 +389,8 @@ namespace Pocal.Converter
             if (dt.Date < DateTime.Now.Date)
                 return converterBrushes.weekendHeader;
 
-            if (dt.Date == DateTime.Now.Date)
-                return converterBrushes.Red;
+            //if (dt.Date == DateTime.Now.Date)
+            //    return converterBrushes.Red;
 
 
 

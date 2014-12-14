@@ -216,8 +216,8 @@ namespace Pocal.ViewModel
                 stamp = DateTime.Now.Ticks;
                 IsCurrentlyLoading = true;
                 this.Days.Clear();
- 
-                
+
+
 
 
                 if (!isStampNewest(stamp))
@@ -241,7 +241,7 @@ namespace Pocal.ViewModel
             catch (Exception)
             {
             }
-            
+
         }
 
         private async Task loadFirstDay(DateTime dt, double stamp)
@@ -326,7 +326,7 @@ namespace Pocal.ViewModel
 
         }
 
-        private async Task loadPastDays(int howManyDays , double stamp)
+        private async Task loadPastDays(int howManyDays, double stamp)
         {
 
             DateTime startDay = App.ViewModel.Days[0].DT.AddDays(-howManyDays);
@@ -424,15 +424,21 @@ namespace Pocal.ViewModel
         private SolidColorBrush getAppointmentColorBrush(Appointment appt, AppointmentCalendar cal)
         {
             SolidColorBrush brush = null;
-            calColors.TryGetValue(cal, out brush);
+            //calColors.TryGetValue(cal, out brush);
 
-            if (brush == null)
+            //if (brush == null)
+            //{
+            Color calColor;
+            if (appt.StartTime.Date < DateTime.Now.Date)
             {
-                var calColor = new System.Windows.Media.Color() { A = cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
-                brush = new SolidColorBrush(calColor);
-                calColors.Add(cal, brush);
-                return brush;
+                calColor = new System.Windows.Media.Color() { A = 180, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
             }
+            else
+                calColor = new System.Windows.Media.Color() { A = cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
+            brush = new SolidColorBrush(calColor);
+            //calColors.Add(cal, brush);
+            //return brush;
+            //}
 
             return brush;
         }
