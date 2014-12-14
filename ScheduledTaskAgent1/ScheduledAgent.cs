@@ -5,6 +5,7 @@ using System.Windows;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using System;
+using Windows.ApplicationModel.Appointments;
 
 namespace ScheduledTaskAgent1
 {
@@ -43,47 +44,44 @@ namespace ScheduledTaskAgent1
         /// </remarks>
         /// 
 
-        protected override void OnInvoke(ScheduledTask task)
+        protected async override void OnInvoke(ScheduledTask task)
         {
-            //TODO: Add code to perform your task in background
-            string toastMessage = "";
+            LiveTileManager.AppointmentOnLiveTile = await LiveTileManager.getNextAppointment();
+            Deployment.Current.Dispatcher.BeginInvoke(delegate
+            {
+                //TODO: Add code to perform your task in background
+                string toastMessage = "";
 
-            // If your application uses both PeriodicTask and ResourceIntensiveTask
-            // you can branch your application code here. Otherwise, you don't need to.
-            if (task is PeriodicTask)
-            {
-                // Execute periodic task actions here.
-                toastMessage = "Periodic task running.";
-            }
-            else
-            {
                 // Execute resource-intensive task actions here.
                 toastMessage = "Resource-intensive task running.";
-            }
 
-            // Launch a toast to show that the agent is running.
-            // The toast will not be shown if the foreground application is running.
-            ShellToast toast = new ShellToast();
-            toast.Title = "Background Agent Sample";
-            toast.Content = toastMessage;
-            toast.Show();
 
-            // If debugging is enabled, launch the agent again in one minute.
-        #if DEBUG_AGENT
-            ScheduledActionService.LaunchForTest(task.Name, TimeSpan.FromSeconds(10));
-        #endif
+                // Launch a toast to show that the agent is running.
+                // The toast will not be shown if the foreground application is running.
+                ShellToast toast = new ShellToast();
+                toast.Title = "Background Agent Sample";
+                toast.Content = toastMessage;
+                toast.Show();
+                LiveTileManager.UpdateTile();
 
-                    // Call NotifyComplete to let the system know the agent is done working.
-                    NotifyComplete();
+
+                // If debugging is enabled, launch the agent again in one minute.
+#if DEBUG_AGENT
+                ScheduledActionService.LaunchForTest(task.Name, TimeSpan.FromSeconds(60));
+#endif
+
+                // Call NotifyComplete to let the system know the agent is done working.
+                NotifyComplete();
+            });
         }
 
 
         //protected override void OnInvoke(ScheduledTask task)
         //{
 
-        //    Deployment.Current.Dispatcher.BeginInvoke(delegate
-        //    {
-               
+        //Deployment.Current.Dispatcher.BeginInvoke(delegate
+        //{
+
         //        ShellToast toast = new ShellToast();
         //        toast.Title = "Pocal";
         //        toast.Content = "Updated LiveTile";

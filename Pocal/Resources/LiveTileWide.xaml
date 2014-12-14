@@ -9,7 +9,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="336" d:DesignWidth="691">
 
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid x:Name="LayoutRoot" Background="Purple">
         <StackPanel Margin="12" >
             <TextBlock FontSize="40" x:Name="tb1"></TextBlock>
             <TextBlock FontSize="30" x:Name="tb2"></TextBlock>

@@ -13,6 +13,7 @@ namespace ScheduledTaskAgent1
 {
     public static class LiveTileManager
     {
+        public static Appointment AppointmentOnLiveTile;
         public static async Task<Appointment> getNextAppointment()
         {
             IReadOnlyList<Appointment> appts = await CalendarAPI.getAppointments(DateTime.Now, 2);
@@ -70,20 +71,18 @@ namespace ScheduledTaskAgent1
 
         public static async void UpdateTile()
         {
-            Appointment appt = await getNextAppointment();
+
 
             var customTile = new LiveTile();
             customTile.Measure(new Size(336, 336));
             customTile.Arrange(new Rect(0, 0, 336, 336));
-            customTile.UpdateTextBox(appt);
-
-
+            customTile.UpdateTextBox(AppointmentOnLiveTile);
 
 
             var customTileWide = new LiveTileWide();
             customTileWide.Measure(new Size(691, 336));
             customTileWide.Arrange(new Rect(0, 0, 691, 336));
-            customTileWide.UpdateTextBox(appt);
+            customTileWide.UpdateTextBox(AppointmentOnLiveTile);
 
             var bmp = new WriteableBitmap(336, 336);
             bmp.Render(customTile, null);
