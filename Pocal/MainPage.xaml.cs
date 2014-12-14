@@ -38,7 +38,7 @@ namespace Pocal
         private void loadStartup()
         {
 
-            
+
             DataContext = App.ViewModel;
             InitializeComponent();
 
@@ -93,12 +93,12 @@ namespace Pocal
             // The description is required for periodic agents. This is the string that the user
             // will see in the background services Settings page on the device.
             periodicTask.Description = "Updates Pocal LiveTile";
-           
+
             // Place the call to Add in a try block in case the user has disabled agents.
             try
             {
                 ScheduledActionService.Add(periodicTask);
-             
+
 
                 // If debugging is enabled, use LaunchForTest to launch the agent in one minute.
 #if(DEBUG_AGENT)
@@ -111,12 +111,12 @@ namespace Pocal
                 {
                     //MessageBox.Show("Background agents for this application have been disabled by the user.");
                 }
-                
+
             }
             catch (SchedulerServiceException)
             {
                 // No user action required.
-               
+
             }
 
 
@@ -450,6 +450,11 @@ namespace Pocal
 
         private void DayCard_HeaderTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
+            if (storyboard != null)
+            {
+                storyboard.Begin();
+            }
             ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
         }
 
@@ -490,20 +495,23 @@ namespace Pocal
 
         public void SDV_AppointmentTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            UpdateLayout(); // Vielleicht verlangsamt das die UX! Vielleicht behebt das jedoch den TapOffset Bug.
+            //UpdateLayout(); // Vielleicht verlangsamt das die UX! Vielleicht behebt das jedoch den TapOffset Bug.
             PocalAppointment pocalAppointment = ((FrameworkElement)sender).DataContext as PocalAppointment;
+
+
+            Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
+            if (storyboard != null)
+            {
+                storyboard.Begin();
+            }
+
             Dispatcher.BeginInvoke(() =>
             {
-                Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
-                if (storyboard != null)
-                {
-                    storyboard.Begin();
-                }
-               
+
+                CalendarAPI.editAppointment(pocalAppointment);  
+
             });
-
-            CalendarAPI.editAppointment(pocalAppointment);
-
+            
 
         }
 
@@ -516,17 +524,17 @@ namespace Pocal
                 if (storyboard != null)
                 {
                     storyboard.Begin();
-                }                                                          
+                }
             });
             //Dispatcher.BeginInvoke(() =>
             //{
-                //Thread.Sleep(200);
-                var starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine.Text);
-                if (starttime != null)
-                {
-                    DateTime dt = (DateTime)starttime;
-                    CalendarAPI.addAppointment(dt);
-                }
+            //Thread.Sleep(200);
+            var starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine.Text);
+            if (starttime != null)
+            {
+                DateTime dt = (DateTime)starttime;
+                CalendarAPI.addAppointment(dt);
+            }
             //});
 
         }
@@ -646,7 +654,7 @@ namespace Pocal
 
 
         }
-        
+
         private void playStoryboardOfAgendaPointer(string storyBoardKey)
         {
             Storyboard storyboard2 = AgendaPointer.Resources[storyBoardKey] as Storyboard;
@@ -657,7 +665,7 @@ namespace Pocal
         private void leaveOverview()
         {
             App.ViewModel.InModus = MainViewModel.Modi.AgendaView;
-        
+
             Storyboard storyboard = AgendaViewBody.Resources["LeaveOverview"] as Storyboard;
             if (storyboard != null)
             {

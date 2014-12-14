@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Appointments;
 using Pocal.Helper;
+using System.Threading;
 
 namespace Pocal
 {
@@ -172,6 +173,7 @@ namespace Pocal
         public static async void editAppointment(PocalAppointment pA)
         {
             await setAppointmentStore();
+            Thread.Sleep(150);
 
             Appointment newAppt;
 
