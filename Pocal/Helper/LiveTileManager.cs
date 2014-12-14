@@ -101,10 +101,10 @@ namespace Pocal.Helper
 
             using (var isf = IsolatedStorageFile.GetUserStoreForApplication())
             {
-                if (!isf.DirectoryExists("/CustomLiveTiles"))
-                {
-                    isf.CreateDirectory("/CustomLiveTiles");
-                }
+                //if (!isf.DirectoryExists("/CustomLiveTiles"))
+                //{
+                //    isf.CreateDirectory("/CustomLiveTiles");
+                //}
 
 
                 using (IsolatedStorageFileStream imageStream = new IsolatedStorageFileStream("/Shared/ShellContent/" + filename + ".png", System.IO.FileMode.OpenOrCreate, isf))
