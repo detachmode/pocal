@@ -123,7 +123,6 @@
     <Compile Include="ViewModel\Day.cs" />
     <Compile Include="Helper\CalendarAPI.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\MonthViewModel.cs" />
     <Compile Include="ViewModel\PocalAppointment.cs" />
     <Compile Include="ViewModel\SingleDayViewVM.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
@@ -238,6 +237,7 @@
     <EmbeddedResource Include="Resources\AppResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

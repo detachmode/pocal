@@ -17,12 +17,13 @@ namespace Pocal
 {
     public partial class MonthView : PhoneApplicationPage
     {
+        public static  MonthView CurrentPage;
       
         public MonthView()
         {
-            //DataContext = App.ViewModel.MonthViewModel;
 
             InitializeComponent();
+            CurrentPage = this;
             addFirstThreePivots();
 
         }
@@ -39,6 +40,7 @@ namespace Pocal
             MonthViewItem monthViewItem =  new MonthViewItem();
             monthViewItem.loadGridSetup(dt);
             pi.Content = monthViewItem;
+            pi.Margin = new Thickness(0, 0, 0, 0);
             pi.Header = dt.ToString("MMMM");
             MonthsPivot.Items.Add(pi);
 
@@ -49,6 +51,7 @@ namespace Pocal
             monthViewItem.loadGridSetup(dt2);
             pi.Content = monthViewItem;
             pi.Header = dt2.ToString("MMMM");
+            pi.Margin = new Thickness(0, 0, 0, 0);
             MonthsPivot.Items.Add(pi);
 
             pi = new PivotItem();
@@ -57,6 +60,7 @@ namespace Pocal
             monthViewItem.loadGridSetup(dt3);
             pi.Content = monthViewItem;
             pi.Header = dt3.ToString("MMMM");
+            pi.Margin = new Thickness(0, 0, 0, 0);
             MonthsPivot.Items.Add(pi);
 
 
@@ -84,6 +88,7 @@ namespace Pocal
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //MonthsPivot.Items
+           
 
             DependencyObject pivotItem = ((Pivot)sender).ItemContainerGenerator.ContainerFromIndex(((Pivot)sender).SelectedIndex);
             if (pivotItem == null)
@@ -158,22 +163,12 @@ namespace Pocal
             return previousPivotItem;
         }
 
-        //private void loadMonthViewGridInPivotItem(PivotItem pivotItem)
-        //{
-        //    Month month = pivotItem.DataContext as Month;
-        //    var monthViewGrid = FindMonthGrid((DependencyObject)pivotItem);
-        //    gridSetup((Grid)monthViewGrid, month.DateTime);
-        //}
 
-        //private void Pivot_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    DependencyObject pivotItem = ((Pivot)sender).ItemContainerGenerator.ContainerFromIndex(((Pivot)sender).SelectedIndex);
-
-        //    if (pivotItem != null)
-        //    {
-        //        loadMonthViewGridInPivotItem((PivotItem)pivotItem);
-        //    }
-        //}
+        public void navigateBackToDay(DateTime dt)
+        {
+            App.ViewModel.GoToDate(dt);
+            NavigationService.Navigate(new Uri("/Mainpage.xaml?GoToDate=", UriKind.Relative), dt);
+        }
 
 
     }

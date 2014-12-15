@@ -13,7 +13,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="False">
 
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
@@ -38,11 +38,10 @@
 
     <!--LayoutRoot ist das Stammraster, in dem alle anderen Seiteninhalte platziert werden-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-
-        <phone:Pivot x:Name="MonthsPivot" Margin="0" SelectionChanged="Pivot_SelectionChanged">
+        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" VerticalAlignment="Top" Margin="24,24" FontWeight="SemiBold">2014</TextBlock>
+        <phone:Pivot x:Name="MonthsPivot" Margin="0,36,0,0" SelectionChanged="Pivot_SelectionChanged">
         </phone:Pivot>
         
-        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Height="30" VerticalAlignment="Top" Margin="24,6"  FontWeight="SemiBold">2014</TextBlock>
     
     </Grid>
 

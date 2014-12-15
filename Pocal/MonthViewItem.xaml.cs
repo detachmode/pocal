@@ -57,7 +57,7 @@ namespace Pocal
                     dayGrid.Children.Add(txt);
                     brd.Child = dayGrid;
 
-                    (LayoutRoot as Grid).Children.Add(brd);
+                    (MonthViewGrid as Grid).Children.Add(brd);
                 }
             }
         }
@@ -206,6 +206,9 @@ namespace Pocal
         void brdTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             DateTime dt = (DateTime)((FrameworkElement)sender).DataContext;
+            MonthView.CurrentPage.navigateBackToDay(dt);
+
+            //DateTime dt = (DateTime)((FrameworkElement)sender).DataContext;
             //App.ViewModel.GoToDate(dt);
             //NavigationService.Navigate(new Uri("/Mainpage.xaml?GoToDate=", UriKind.Relative), dt);
 
