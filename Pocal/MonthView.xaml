@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:local="clr-namespace:Pocal"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -37,39 +38,23 @@
 
     <!--LayoutRoot ist das Stammraster, in dem alle anderen Seiteninhalte platziert werden-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
+        
+        <phone:Pivot x:Name="MonthsPivot" Margin="0" SelectionChanged="Pivot_SelectionChanged">
 
-        <phone:Pivot ItemsSource="{Binding Months}" Margin="0" Loaded="Pivot_Loaded"  SelectionChanged="Pivot_SelectionChanged">
-            <phone:Pivot.HeaderTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <TextBlock Padding="0,0,0,0" Text="{Binding Name}" RenderTransformOrigin="0.5,0.5">
-                            <TextBlock.RenderTransform>
-                                <CompositeTransform TranslateX="0" TranslateY="24"/>
-                            </TextBlock.RenderTransform>
+            <!--<phone:PivotItem x:Name="Pivot1">
+                <local:MonthViewItem />
+            </phone:PivotItem>
 
-                        </TextBlock>
+            <phone:PivotItem  x:Name="Pivot2">
+                <local:MonthViewItem />
+            </phone:PivotItem >
 
-                    </Grid>
-                </DataTemplate>
-            </phone:Pivot.HeaderTemplate>
-            <phone:Pivot.ItemTemplate>
-                <DataTemplate>
-                    <Grid x:Name="MonthViewGrid" Height="480" VerticalAlignment="Top" Margin="-10,70">
-                        <StackPanel Orientation="Horizontal" Height="30"  VerticalAlignment="Top" Margin="0,-30" >
-                            <TextBlock Width="68.5" Padding="6,0" Foreground="Gray">Mo</TextBlock>
-                            <TextBlock Width="68.5" Padding="6,0" Foreground="Gray">Di</TextBlock>
-                            <TextBlock Width="68.5" Padding="6,0" Foreground="Gray">Mi</TextBlock>
-                            <TextBlock Width="68.5" Padding="6,0" Foreground="Gray">Do</TextBlock>
-                            <TextBlock Width="68.5" Padding="6,0" Foreground="Gray">Fr</TextBlock>
-                            <TextBlock Width="68.5" Padding="6,0" Foreground="Gray">Sa</TextBlock>
-                            <TextBlock Width="68.5" Padding="6,0" Foreground="Gray">So</TextBlock>
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </phone:Pivot.ItemTemplate>
+            <phone:PivotItem  x:Name="Pivot3">
+                <local:MonthViewItem />
+            </phone:PivotItem>-->
+
         </phone:Pivot>
-
-        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Height="30" VerticalAlignment="Top" Margin="24,16"  FontWeight="SemiBold">2014</TextBlock>
+        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Height="30" VerticalAlignment="Top" Margin="24,6"  FontWeight="SemiBold">2014</TextBlock>
 
     </Grid>
 

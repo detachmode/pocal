@@ -10,6 +10,8 @@ namespace Pocal.ViewModel
     public class MonthViewModel : ViewModelBase
     {
 
+        public static int Counter = 0;
+
         private ObservableCollection<Month> _months;
         public ObservableCollection<Month> Months
         {
