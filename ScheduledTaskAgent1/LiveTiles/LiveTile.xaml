@@ -11,7 +11,7 @@
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <StackPanel Margin="12" >
-            <TextBlock x:Name="tb1" FontWeight="SemiBold" TextWrapping="Wrap" 
+            <TextBlock x:Name="tb1" FontWeight="SemiBold" TextTrimming="WordEllipsis" TextWrapping="Wrap" 
                        FontSize="32" LineHeight="28"  MaxHeight="90">
             </TextBlock>
             <TextBlock FontSize="30" x:Name="tb2"></TextBlock>

@@ -176,7 +176,6 @@ namespace Pocal
             Thread.Sleep(150);
 
             Appointment newAppt;
-
             if (pA.Appt.OriginalStartTime == null)
             {
                 await appointmentStore.ShowAppointmentDetailsAsync(pA.Appt.LocalId);
@@ -194,7 +193,7 @@ namespace Pocal
                 newPA = App.ViewModel.CreatePocalAppoinment(newAppt);
             }
             PocalAppointmentUpdater.Update(pA, newPA);
-
+                                                                                                      
         }
 
 
