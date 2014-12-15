@@ -21,19 +21,20 @@ namespace Pocal
 
         public void loadGridSetup(DateTime dt)
         {
-            TextBlock txt = new TextBlock();
+            //TextBlock txt = new TextBlock();
 
             //MonthViewModel.Counter += 1;
             //txt.Text = ("HEllo WOrld " +MonthViewModel.Counter);
 
-            txt.Text = dt.ToShortDateString();
-            (LayoutRoot as Grid).Children.Add(txt);
+            //txt.Text = dt.ToShortDateString();
+            gridSetup(dt);
+            //(LayoutRoot as Grid).Children.Add(txt);
         }   
 
         private List<DateTime> gridDateTimes;
         int gridCounter;
 
-        private Grid gridSetup(Grid monthViewGrid, DateTime dt)
+        private void gridSetup(DateTime dt)
         {
             gridCounter = 0;
             createDaysArray(dt.Date);
@@ -56,10 +57,9 @@ namespace Pocal
                     dayGrid.Children.Add(txt);
                     brd.Child = dayGrid;
 
-                    monthViewGrid.Children.Add(brd);
+                    (LayoutRoot as Grid).Children.Add(brd);
                 }
             }
-            return monthViewGrid;
         }
 
         private void addCurrentDayMark(Grid dayGrid)

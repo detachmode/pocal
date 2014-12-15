@@ -39,6 +39,7 @@ namespace Pocal
             MonthViewItem monthViewItem =  new MonthViewItem();
             monthViewItem.loadGridSetup(dt);
             pi.Content = monthViewItem;
+            pi.Header = dt.ToString("MMMM");
             MonthsPivot.Items.Add(pi);
 
 
@@ -47,6 +48,7 @@ namespace Pocal
             monthViewItem = new MonthViewItem();
             monthViewItem.loadGridSetup(dt2);
             pi.Content = monthViewItem;
+            pi.Header = dt2.ToString("MMMM");
             MonthsPivot.Items.Add(pi);
 
             pi = new PivotItem();
@@ -54,6 +56,7 @@ namespace Pocal
             monthViewItem = new MonthViewItem();
             monthViewItem.loadGridSetup(dt3);
             pi.Content = monthViewItem;
+            pi.Header = dt3.ToString("MMMM");
             MonthsPivot.Items.Add(pi);
 
 
@@ -100,13 +103,14 @@ namespace Pocal
 
         private void forwardPan(DateTime addedDateTime)
         {
-            DependencyObject nextPivotItem = getNextPivotItem();
+            PivotItem nextPivotItem = (PivotItem)getNextPivotItem();
             DateTime newDateTime = addedDateTime.AddMonths(1);
 
             MonthViewItem monthViewItem = new MonthViewItem();
             monthViewItem.loadGridSetup(newDateTime);
-            ((PivotItem)nextPivotItem).DataContext = newDateTime;
-            ((PivotItem)nextPivotItem).Content = monthViewItem;
+            nextPivotItem.DataContext = newDateTime;
+            nextPivotItem.Content = monthViewItem;
+            nextPivotItem.Header = newDateTime.ToString("MMMM");
         }
 
         private DependencyObject getNextPivotItem()
@@ -129,13 +133,14 @@ namespace Pocal
         private void backwardPan(DateTime addedDateTime)
         {
 
-            DependencyObject previousPivotItem = getPreviousPivotItem();
+            PivotItem previousPivotItem = (PivotItem)getPreviousPivotItem();
             DateTime newDateTime = addedDateTime.AddMonths(-1);
 
             MonthViewItem monthViewItem = new MonthViewItem();
             monthViewItem.loadGridSetup(newDateTime);
-            ((PivotItem)previousPivotItem).DataContext = newDateTime;
-            ((PivotItem)previousPivotItem).Content = monthViewItem;
+            previousPivotItem.DataContext = newDateTime;
+            previousPivotItem.Content = monthViewItem;
+            previousPivotItem.Header = newDateTime.ToString("MMMM");
         }
 
         private DependencyObject getPreviousPivotItem()
