@@ -32,7 +32,7 @@ namespace Pocal
 
             DateTime dt = DateTime.Now.Date;
             DateTime dt2 = dt.AddMonths(1);
-            DateTime dt3 = dt.AddMonths(2);
+            DateTime dt3 = dt.AddMonths(-1);
 
             PivotItem pi = new PivotItem();
             pi.DataContext = dt; 
@@ -94,11 +94,22 @@ namespace Pocal
                 forwardPan(addedDateTime);
             }
             else
-                backwardPan(pivotItem as PivotItem);
+                backwardPan(addedDateTime);
 
         }
 
         private void forwardPan(DateTime addedDateTime)
+        {
+            DependencyObject nextPivotItem = getNextPivotItem();
+            DateTime newDateTime = addedDateTime.AddMonths(1);
+
+            MonthViewItem monthViewItem = new MonthViewItem();
+            monthViewItem.loadGridSetup(newDateTime);
+            ((PivotItem)nextPivotItem).DataContext = newDateTime;
+            ((PivotItem)nextPivotItem).Content = monthViewItem;
+        }
+
+        private DependencyObject getNextPivotItem()
         {
             int index = ((Pivot)MonthsPivot).SelectedIndex;
             int nextIndex;
@@ -108,23 +119,39 @@ namespace Pocal
             }
             else
                 nextIndex = index + 1;
-                   
-            DependencyObject nextpivotItem = ((Pivot)MonthsPivot).ItemContainerGenerator.ContainerFromIndex(nextIndex);
+
+            DependencyObject nextPivotItem = ((Pivot)MonthsPivot).ItemContainerGenerator.ContainerFromIndex(nextIndex);
+            return nextPivotItem;
+        }
+
+
+
+        private void backwardPan(DateTime addedDateTime)
+        {
+
+            DependencyObject previousPivotItem = getPreviousPivotItem();
+            DateTime newDateTime = addedDateTime.AddMonths(-1);
 
             MonthViewItem monthViewItem = new MonthViewItem();
-            monthViewItem.loadGridSetup(addedDateTime.AddMonths(1));
-            ((PivotItem)nextpivotItem).DataContext = addedDateTime.AddMonths(1);
-            ((PivotItem)nextpivotItem).Content = monthViewItem;
+            monthViewItem.loadGridSetup(newDateTime);
+            ((PivotItem)previousPivotItem).DataContext = newDateTime;
+            ((PivotItem)previousPivotItem).Content = monthViewItem;
         }
 
-        private void backwardPan(PivotItem pivotItem)
+        private DependencyObject getPreviousPivotItem()
         {
-            //MonthViewItem monthViewItem = new MonthViewItem();
-            //monthViewItem.loadGridSetup(new DateTime(2999, 1, 1));
-            //((PivotItem)pivotItem).Content = monthViewItem;
+            int index = ((Pivot)MonthsPivot).SelectedIndex;
+            int previousIndex;
+            if (index == 0)
+            {
+                previousIndex = 2;
+            }
+            else
+                previousIndex = index - 1;
+
+            DependencyObject previousPivotItem = ((Pivot)MonthsPivot).ItemContainerGenerator.ContainerFromIndex(previousIndex);
+            return previousPivotItem;
         }
-
-
 
         //private void loadMonthViewGridInPivotItem(PivotItem pivotItem)
         //{

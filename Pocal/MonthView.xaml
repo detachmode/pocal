@@ -39,23 +39,9 @@
     <!--LayoutRoot ist das Stammraster, in dem alle anderen Seiteninhalte platziert werden-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         
-        <phone:Pivot x:Name="MonthsPivot" Margin="0" SelectionChanged="Pivot_SelectionChanged">
-
-            <!--<phone:PivotItem x:Name="Pivot1">
-                <local:MonthViewItem />
-            </phone:PivotItem>
-
-            <phone:PivotItem  x:Name="Pivot2">
-                <local:MonthViewItem />
-            </phone:PivotItem >
-
-            <phone:PivotItem  x:Name="Pivot3">
-                <local:MonthViewItem />
-            </phone:PivotItem>-->
-
-        </phone:Pivot>
+        <phone:Pivot x:Name="MonthsPivot" Margin="0" SelectionChanged="Pivot_SelectionChanged"/>
         <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Height="30" VerticalAlignment="Top" Margin="24,6"  FontWeight="SemiBold">2014</TextBlock>
-
+    
     </Grid>
 
 </phone:PhoneApplicationPage>
