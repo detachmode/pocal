@@ -102,7 +102,6 @@
     <Compile Include="Helper\DeltaTimeStringCreator.cs" />
     <Compile Include="Helper\Extensions.cs" />
     <Compile Include="Helper\Hourline.cs" />
-    <Compile Include="Helper\LiveTileManager.cs" />
     <Compile Include="Helper\PocalAppointmentUpdater.cs" />
     <Compile Include="Helper\ViewSwitcher.cs" />
     <Compile Include="LocalizedStrings.cs" />
@@ -117,12 +116,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\LiveTile.xaml.cs">
-      <DependentUpon>LiveTile.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\LiveTileWide.xaml.cs">
-      <DependentUpon>LiveTileWide.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Day.cs" />
     <Compile Include="Helper\CalendarAPI.cs" />
@@ -142,14 +135,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MonthView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\LiveTile.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\LiveTileWide.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -149,5 +149,12 @@ namespace ScheduledTaskAgent1
                 //MessageBox.Show(e.Message);
             }
         }
+
+        public async static void UpdateTileFromForeground()
+        {
+            AppointmentOnLiveTile = await getNextAppointment();
+            UpdateTile();
+
+        }
     }
 }

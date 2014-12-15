@@ -17,6 +17,7 @@ using System.Windows.Media.Animation;
 using Microsoft.Phone.Shell;
 using Pocal.Resources;
 using Microsoft.Phone.Scheduler;
+using ScheduledTaskAgent1;
 
 namespace Pocal
 {
@@ -43,8 +44,8 @@ namespace Pocal
             InitializeComponent();
 
             AgendaViewAppbar();
-            watchScrollingOfLLS();
-            LiveTileManager.UpdateTile();
+            watchScrollingOfLLS();       
+            LiveTileManager.UpdateTileFromForeground();
             StartResourceIntensiveAgent();
 
 

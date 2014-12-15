@@ -7,7 +7,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Pocal.Resources;
 using Pocal.ViewModel;
-using Pocal.Helper;
+using ScheduledTaskAgent1;
 
 namespace Pocal
 {
@@ -92,8 +92,7 @@ namespace Pocal
 		// This code will not execute when the application is first launched
 		private void Application_Activated(object sender, ActivatedEventArgs e)
 		{
-            //App.ViewModel.ReloadPocalApptsAndDays();
-            LiveTileManager.UpdateTile();
+            LiveTileManager.UpdateTileFromForeground();
 		}
 
 		// Code to execute when the application is deactivated (sent to background)
