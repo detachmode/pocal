@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Windows.ApplicationModel.Appointments;
 using Pocal.Helper;
+using Pocal.Converter;
 
 namespace Pocal.Resources
 {
@@ -22,8 +23,10 @@ namespace Pocal.Resources
         public void UpdateTextBox(Appointment appt)
         {
 
-            dayOfWeekTb.Text = DateTime.Now.DayOfWeek.ToString().Substring(0, 2);
+            dayOfWeekTb.Text = DateTime.Now.ToString("dddd", CultureSettings.ci).Substring(0, 2);          
             dayTb.Text = DateTime.Now.Day.ToString();
+
+            dayTb.UpdateLayout();
             if (appt == null)
             {
                 tb1.Text = "";

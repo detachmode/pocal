@@ -73,18 +73,18 @@ namespace Pocal.Helper
         {
             Appointment appt = await getNextAppointment();
 
-            var customTile = new LiveTile();
+            var customTile = new LiveTile();      
+            customTile.UpdateTextBox(appt);
             customTile.Measure(new Size(336, 336));
             customTile.Arrange(new Rect(0, 0, 336, 336));
-            customTile.UpdateTextBox(appt);
 
 
 
 
             var customTileWide = new LiveTileWide();
+            customTileWide.UpdateTextBox(appt);
             customTileWide.Measure(new Size(691, 336));
             customTileWide.Arrange(new Rect(0, 0, 691, 336));
-            customTileWide.UpdateTextBox(appt);
 
             var bmp = new WriteableBitmap(336, 336);
             bmp.Render(customTile, null);

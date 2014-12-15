@@ -21,7 +21,7 @@ namespace ScheduledTaskAgent1
         public void UpdateTextBox(Appointment appt)
         {
 
-            dayOfWeekTb.Text = DateTime.Now.DayOfWeek.ToString().Substring(0, 2);
+            dayOfWeekTb.Text = DateTime.Now.ToString("dddd", CultureSettings.ci).Substring(0, 2);
             dayTb.Text = DateTime.Now.Day.ToString();
             if (appt == null)
             {

@@ -12,7 +12,7 @@ using System.Windows.Controls;
 namespace Pocal.Converter
 {
 
-    internal static class cultureSettings
+    internal static class CultureSettings
     {
         public static CultureInfo ci = new CultureInfo("de-DE");
     }
@@ -38,7 +38,7 @@ namespace Pocal.Converter
                     return "Heute";
 
                 }
-                return dt.ToString("dddd", cultureSettings.ci) + ", " + dt.ToString("M", cultureSettings.ci);
+                return dt.ToString("dddd", CultureSettings.ci) + ", " + dt.ToString("M", CultureSettings.ci);
 
             }
             else return "";

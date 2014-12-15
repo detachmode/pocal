@@ -59,7 +59,7 @@ namespace Pocal.Converter
             {
 
                 DateTime dt = (DateTime)value;
-                return dt.ToString("dddd", cultureSettings.ci) + ", " + dt.ToString("M", cultureSettings.ci);
+                return dt.ToString("dddd", CultureSettings.ci) + ", " + dt.ToString("M", CultureSettings.ci);
 
             }
             else return "";

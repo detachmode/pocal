@@ -72,17 +72,18 @@ namespace ScheduledTaskAgent1
         public static async void UpdateTile()
         {
 
-
             var customTile = new LiveTile();
+            customTile.UpdateTextBox(AppointmentOnLiveTile);
             customTile.Measure(new Size(336, 336));
             customTile.Arrange(new Rect(0, 0, 336, 336));
-            customTile.UpdateTextBox(AppointmentOnLiveTile);
+
 
 
             var customTileWide = new LiveTileWide();
+            customTileWide.UpdateTextBox(AppointmentOnLiveTile);
             customTileWide.Measure(new Size(691, 336));
             customTileWide.Arrange(new Rect(0, 0, 691, 336));
-            customTileWide.UpdateTextBox(AppointmentOnLiveTile);
+            
 
             var bmp = new WriteableBitmap(336, 336);
             bmp.Render(customTile, null);

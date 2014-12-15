@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="CalendarAPI.cs" />
     <Compile Include="LiveTileManager.cs" />
+    <Compile Include="LiveTiles\CultureSettings.cs" />
     <Compile Include="LiveTiles\LiveTile.xaml.cs">
       <DependentUpon>LiveTile.xaml</DependentUpon>
     </Compile>
