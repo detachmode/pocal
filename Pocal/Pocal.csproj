@@ -212,6 +212,8 @@
     <Content Include="Images\like.png" />
     <Content Include="Images\microphone.png" />
     <Content Include="Images\minus.png" />
+    <Content Include="Images\MonthViewDayNowMark.png" />
+    <Content Include="Images\MonthViewDeltaTimeMark.png" />
     <Content Include="Images\new.png" />
     <Content Include="Images\next.png" />
     <Content Include="Images\overflowdots.png" />

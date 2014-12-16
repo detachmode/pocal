@@ -18,10 +18,10 @@ namespace Pocal
         /// <param name="source">The URI of the content to navigate to.</param>
         /// <param name="data">The data that you need to pass to the other page 
         /// specified in URI.</param>
-        public static void Navigate(this NavigationService navigationService, Uri source, object data)
+        public static void GoBack(this NavigationService navigationService, object data)
         {
             Data = data;
-            navigationService.Navigate(source);
+            navigationService.GoBack();
         }
 
         /// <summary>

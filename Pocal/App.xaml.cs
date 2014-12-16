@@ -14,7 +14,7 @@ namespace Pocal
 	public partial class App : Application
 	{
 		private static MainViewModel viewModel = null;
-
+        public static bool FirstLaunch = true;
 		/// <summary>
 		/// A static ViewModel used by the views to bind against.
 		/// </summary>

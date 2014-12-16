@@ -27,11 +27,24 @@ namespace Pocal
         private Dictionary<object, ContentPresenter> realizedDayItems = new Dictionary<object, ContentPresenter>();
 
         private bool isPlayingOverviewAninmation = false;
+       
 
         public MainPage()
         {
 
-            loadStartup();
+            //if (App.FirstLaunch)
+            {
+                loadStartup(); 
+                App.FirstLaunch = false;
+            }
+            //else
+            //{
+            //    DataContext = App.ViewModel;
+            //    InitializeComponent();
+            //}
+           
+
+            
             //CalendarAPI.AddTestAppointments();
 
         }
@@ -53,12 +66,13 @@ namespace Pocal
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
+               base.OnNavigatedTo(e);
+            
 
-            if (e.NavigationMode == System.Windows.Navigation.NavigationMode.Back)
-            {
-                return;
-            }
+            //if (e.NavigationMode == System.Windows.Navigation.NavigationMode.Back)
+            //{
+            //    return;
+            //}
 
             object navigationData = NavigationService.GetNavigationData();
             if (navigationData != null)
@@ -204,7 +218,6 @@ namespace Pocal
 
         private void watchScrollingOfLLS()
         {
-
             AgendaViewLLS.ItemRealized += LLS_EndOfList;
             AgendaViewLLS.ItemRealized += LLS_AddRealizedPocalAppointmentItem;
             AgendaViewLLS.ItemUnrealized += LLS_RemoveRealizedPocalAppointmentItem;

@@ -17,7 +17,7 @@ namespace Pocal
 {
     public partial class MonthView : PhoneApplicationPage
     {
-        public static  MonthView CurrentPage;
+        public static MonthView CurrentPage;
         PivotItem pivotItem;
         MonthViewUserControl monthViewUserControl;
 
@@ -27,7 +27,7 @@ namespace Pocal
             InitializeComponent();
             CurrentPage = this;
             addFirstThreePivots();
-
+            YearDisplay.Text = DateTime.Now.Year.ToString();
         }
 
 
@@ -49,13 +49,15 @@ namespace Pocal
             addPivotItem(dt5);
 
 
+
+
         }
 
         private void addPivotItem(DateTime dt)
         {
             monthViewUserControl = new MonthViewUserControl();
             monthViewUserControl.loadGridSetup(dt);
-            
+
             pivotItem = new PivotItem();
             pivotItem.Content = monthViewUserControl;
             pivotItem.DataContext = dt;
@@ -74,14 +76,17 @@ namespace Pocal
                 return;
 
 
-            DateTime removedDateTime =  (DateTime)(e.RemovedItems[0] as PivotItem).DataContext;
-            DateTime addedDateTime =  (DateTime)(e.AddedItems[0] as PivotItem).DataContext;
+            DateTime removedDateTime = (DateTime)(e.RemovedItems[0] as PivotItem).DataContext;
+            DateTime addedDateTime = (DateTime)(e.AddedItems[0] as PivotItem).DataContext;
+
             if (removedDateTime < addedDateTime)
             {
                 forwardPan(addedDateTime);
             }
             else
                 backwardPan(addedDateTime);
+
+            YearDisplay.Text = addedDateTime.Year.ToString();
 
         }
 
@@ -102,7 +107,7 @@ namespace Pocal
             int index = ((Pivot)MonthsPivot).SelectedIndex;
             int lastIndex;
 
-            lastIndex = (index + 3)%5;
+            lastIndex = (index + 3) % 5;
 
             DependencyObject lastPivotItem = ((Pivot)MonthsPivot).ItemContainerGenerator.ContainerFromIndex(lastIndex);
             return lastPivotItem;
@@ -141,8 +146,15 @@ namespace Pocal
 
         public void navigateBackToDay(DateTime dt)
         {
-            App.ViewModel.GoToDate(dt);
-            NavigationService.Navigate(new Uri("/Mainpage.xaml?GoToDate=", UriKind.Relative), dt);
+            //App.ViewModel.GoToDate(dt);
+
+            if (this.NavigationService.CanGoBack)
+            {
+
+                this.NavigationService.GoBack(dt);
+
+            }
+            //NavigationService.Navigate(new Uri("/Mainpage.xaml?GoToDate=", UriKind.Relative), dt);
         }
 
 

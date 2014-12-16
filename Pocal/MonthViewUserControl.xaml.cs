@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Windows.Media;
 using Pocal.ViewModel;
+using System.Windows.Media.Imaging;
 
 namespace Pocal
 {
@@ -49,12 +50,17 @@ namespace Pocal
                     Border brd = createBorder(x, y, (howManyRows - 1));
                     //brd.Tap += dayGrid_Tap;
                     Grid dayGrid = new Grid();
-
+                    addCurrentDayMark(dayGrid);
+                    addDeltaDayMark(dayGrid);
 
                     TextBlock txt = createTextBlock();
-
-                    addCurrentDayMark(dayGrid);
                     txt.Text = gridDateTimes[gridCounter].Day.ToString();
+                    if (dt.Month != gridDateTimes[gridCounter].Month)
+                    {
+                        txt.Foreground = new SolidColorBrush(Colors.Gray);
+                    }
+
+
                     gridCounter++;
                     dayGrid.Children.Add(txt);
                     brd.Child = dayGrid;
@@ -69,11 +75,35 @@ namespace Pocal
             if (gridDateTimes[gridCounter].Date == DateTime.Now.Date)
             {
                 Grid grid = new Grid();
-                grid.Height = 10;
-                grid.Width = 10;
+                grid.Height = 25;
+                grid.Width = 25;
                 grid.VerticalAlignment = System.Windows.VerticalAlignment.Top;
                 grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-                grid.Background = new SolidColorBrush(Colors.Red);
+
+                ImageBrush ib = new ImageBrush();
+                ib.ImageSource = new BitmapImage(new Uri(@"\Images\MonthViewDayNowMark.png", UriKind.Relative));
+                grid.Background = ib;                    
+
+
+                dayGrid.Children.Add(grid);
+            }
+        }
+
+        private void addDeltaDayMark(Grid dayGrid)
+        {
+            if (gridDateTimes[gridCounter].Date == App.ViewModel.DayAtPointer.DT.Date)
+            {
+                Grid grid = new Grid();
+                grid.Height = 25;
+                grid.Width = 25;
+                grid.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+
+                ImageBrush ib = new ImageBrush();
+                ib.ImageSource = new BitmapImage(new Uri(@"\Images\MonthViewDeltaTimeMark.png", UriKind.Relative));
+                grid.Background = ib;
+
+
                 dayGrid.Children.Add(grid);
             }
         }
