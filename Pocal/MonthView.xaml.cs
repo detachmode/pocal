@@ -37,14 +37,16 @@ namespace Pocal
 
             DateTime dt = DateTime.Now.Date;
             DateTime dt2 = dt.AddMonths(1);
-            DateTime dt3 = dt.AddMonths(-1);
+            DateTime dt3 = dt.AddMonths(2);
+            DateTime dt4 = dt.AddMonths(3);
+            DateTime dt5 = dt.AddMonths(-1);
 
 
             addPivotItem(dt);
-
             addPivotItem(dt2);
-
             addPivotItem(dt3);
+            addPivotItem(dt4);
+            addPivotItem(dt5);
 
 
         }
@@ -85,29 +87,25 @@ namespace Pocal
 
         private void forwardPan(DateTime addedDateTime)
         {
-            PivotItem nextPivotItem = (PivotItem)getNextPivotItem();
-            DateTime newDateTime = addedDateTime.AddMonths(1);
+            PivotItem lastPivotItem = (PivotItem)getLastPivotItem();
+            DateTime newDateTime = addedDateTime.AddMonths(3);
 
             MonthViewUserControl monthViewItem = new MonthViewUserControl();
             monthViewItem.loadGridSetup(newDateTime);
-            nextPivotItem.DataContext = newDateTime;
-            nextPivotItem.Content = monthViewItem;
-            nextPivotItem.Header = newDateTime.ToString("MMMM");
+            lastPivotItem.DataContext = newDateTime;
+            lastPivotItem.Content = monthViewItem;
+            lastPivotItem.Header = newDateTime.ToString("MMMM");
         }
 
-        private DependencyObject getNextPivotItem()
+        private DependencyObject getLastPivotItem()
         {
             int index = ((Pivot)MonthsPivot).SelectedIndex;
-            int nextIndex;
-            if (index == 2)
-            {
-                nextIndex = 0;
-            }
-            else
-                nextIndex = index + 1;
+            int lastIndex;
 
-            DependencyObject nextPivotItem = ((Pivot)MonthsPivot).ItemContainerGenerator.ContainerFromIndex(nextIndex);
-            return nextPivotItem;
+            lastIndex = (index + 3)%5;
+
+            DependencyObject lastPivotItem = ((Pivot)MonthsPivot).ItemContainerGenerator.ContainerFromIndex(lastIndex);
+            return lastPivotItem;
         }
 
 
@@ -131,7 +129,7 @@ namespace Pocal
             int previousIndex;
             if (index == 0)
             {
-                previousIndex = 2;
+                previousIndex = 4;
             }
             else
                 previousIndex = index - 1;
