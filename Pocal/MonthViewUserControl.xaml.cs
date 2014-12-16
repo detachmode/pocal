@@ -12,28 +12,30 @@ using Pocal.ViewModel;
 
 namespace Pocal
 {
-    public partial class MonthViewItem : UserControl
+    public partial class MonthViewUserControl : UserControl
     {
-        public MonthViewItem()
+        public MonthViewUserControl()
         {
             InitializeComponent();
         }
 
         public void loadGridSetup(DateTime dt)
         {
-            //TextBlock txt = new TextBlock();
 
-            //MonthViewModel.Counter += 1;
-            //txt.Text = ("HEllo WOrld " +MonthViewModel.Counter);
 
-            //txt.Text = dt.ToShortDateString();
             gridSetup(dt);
-            //(LayoutRoot as Grid).Children.Add(txt);
-        }   
+
+        }
+
+        void dayTap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            DateTime dt = (DateTime)((FrameworkElement)sender).DataContext;
+            MonthView.CurrentPage.navigateBackToDay(dt);
+
+        }
 
         private List<DateTime> gridDateTimes;
         int gridCounter;
-
         private void gridSetup(DateTime dt)
         {
             gridCounter = 0;
@@ -190,7 +192,7 @@ namespace Pocal
 
 
             brd.DataContext = gridDateTimes[gridCounter];
-            brd.Tap += brdTap;
+            brd.Tap += dayTap;
 
             double height = (483 / 7);
             double width = (483 / 7);
@@ -203,15 +205,6 @@ namespace Pocal
             return brd;
         }
 
-        void brdTap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            DateTime dt = (DateTime)((FrameworkElement)sender).DataContext;
-            MonthView.CurrentPage.navigateBackToDay(dt);
 
-            //DateTime dt = (DateTime)((FrameworkElement)sender).DataContext;
-            //App.ViewModel.GoToDate(dt);
-            //NavigationService.Navigate(new Uri("/Mainpage.xaml?GoToDate=", UriKind.Relative), dt);
-
-        }
     }
 }

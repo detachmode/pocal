@@ -18,7 +18,9 @@ namespace Pocal
     public partial class MonthView : PhoneApplicationPage
     {
         public static  MonthView CurrentPage;
-      
+        PivotItem pivotItem;
+        MonthViewUserControl monthViewUserControl;
+
         public MonthView()
         {
 
@@ -28,6 +30,8 @@ namespace Pocal
 
         }
 
+
+
         private void addFirstThreePivots()
         {
 
@@ -35,63 +39,36 @@ namespace Pocal
             DateTime dt2 = dt.AddMonths(1);
             DateTime dt3 = dt.AddMonths(-1);
 
-            PivotItem pi = new PivotItem();
-            pi.DataContext = dt; 
-            MonthViewItem monthViewItem =  new MonthViewItem();
-            monthViewItem.loadGridSetup(dt);
-            pi.Content = monthViewItem;
-            pi.Margin = new Thickness(0, 0, 0, 0);
-            pi.Header = dt.ToString("MMMM");
-            MonthsPivot.Items.Add(pi);
 
+            addPivotItem(dt);
 
-            pi = new PivotItem();
-            pi.DataContext = dt2;
-            monthViewItem = new MonthViewItem();
-            monthViewItem.loadGridSetup(dt2);
-            pi.Content = monthViewItem;
-            pi.Header = dt2.ToString("MMMM");
-            pi.Margin = new Thickness(0, 0, 0, 0);
-            MonthsPivot.Items.Add(pi);
+            addPivotItem(dt2);
 
-            pi = new PivotItem();
-            pi.DataContext = dt3;
-            monthViewItem = new MonthViewItem();
-            monthViewItem.loadGridSetup(dt3);
-            pi.Content = monthViewItem;
-            pi.Header = dt3.ToString("MMMM");
-            pi.Margin = new Thickness(0, 0, 0, 0);
-            MonthsPivot.Items.Add(pi);
-
+            addPivotItem(dt3);
 
 
         }
 
-
-
-
-        
-        private static DependencyObject FindMonthGrid(DependencyObject parent)
+        private void addPivotItem(DateTime dt)
         {
-            var childCount = VisualTreeHelper.GetChildrenCount(parent);
-            for (var i = 0; i < childCount; i++)
-            {
-                DependencyObject elt = VisualTreeHelper.GetChild(parent, i);
-                if (((FrameworkElement)elt).Name == "MonthViewGrid") return elt;
+            monthViewUserControl = new MonthViewUserControl();
+            monthViewUserControl.loadGridSetup(dt);
+            
+            pivotItem = new PivotItem();
+            pivotItem.Content = monthViewUserControl;
+            pivotItem.DataContext = dt;
+            pivotItem.Margin = new Thickness(0, 0, 0, 0);
+            pivotItem.Header = dt.ToString("MMMM");
 
-                var result = FindMonthGrid(elt);
-                if (result != null) return result;
-            }
-            return null;
+            MonthsPivot.Items.Add(pivotItem);
         }
+
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //MonthsPivot.Items
-           
 
-            DependencyObject pivotItem = ((Pivot)sender).ItemContainerGenerator.ContainerFromIndex(((Pivot)sender).SelectedIndex);
-            if (pivotItem == null)
+            DependencyObject selectedPivotItem = ((Pivot)sender).ItemContainerGenerator.ContainerFromIndex(((Pivot)sender).SelectedIndex);
+            if (selectedPivotItem == null)
                 return;
 
 
@@ -111,7 +88,7 @@ namespace Pocal
             PivotItem nextPivotItem = (PivotItem)getNextPivotItem();
             DateTime newDateTime = addedDateTime.AddMonths(1);
 
-            MonthViewItem monthViewItem = new MonthViewItem();
+            MonthViewUserControl monthViewItem = new MonthViewUserControl();
             monthViewItem.loadGridSetup(newDateTime);
             nextPivotItem.DataContext = newDateTime;
             nextPivotItem.Content = monthViewItem;
@@ -141,7 +118,7 @@ namespace Pocal
             PivotItem previousPivotItem = (PivotItem)getPreviousPivotItem();
             DateTime newDateTime = addedDateTime.AddMonths(-1);
 
-            MonthViewItem monthViewItem = new MonthViewItem();
+            MonthViewUserControl monthViewItem = new MonthViewUserControl();
             monthViewItem.loadGridSetup(newDateTime);
             previousPivotItem.DataContext = newDateTime;
             previousPivotItem.Content = monthViewItem;

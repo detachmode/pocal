@@ -111,8 +111,8 @@
     <Compile Include="MonthView.xaml.cs">
       <DependentUpon>MonthView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MonthViewItem.xaml.cs">
-      <DependentUpon>MonthViewItem.xaml</DependentUpon>
+    <Compile Include="MonthViewUserControl.xaml.cs">
+      <DependentUpon>MonthViewUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
@@ -140,7 +140,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MonthViewItem.xaml">
+    <Page Include="MonthViewUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
