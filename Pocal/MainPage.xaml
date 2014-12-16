@@ -221,10 +221,6 @@
         <Grid x:Name="grid" Margin="0" >
             <!--******** ********** ******** -->
             <!--******** AGENDAVIEW ******** -->
-            <!--<TextBox x:Name="Searchbox" Margin="-12" Height="75" GotFocus="TextBox_GotFocus"  LostFocus="Searchbox_LostFocus"
-                     VerticalAlignment="Bottom" Opacity="0.6" Text="Hallo"></TextBox>-->
-            <!--******** *** ******** -->
-            <!--******** SDV ******** -->
             <!--******** ********** ******** -->
             <Grid Background="Black" x:Name="AgendaView" >
                 <Grid.RowDefinitions>
@@ -632,6 +628,9 @@
 
 
             </Grid>
+
+            <!--******** *** ******** -->
+            <!--******** SDV ******** -->       
             <!--******** *** ******** -->
             <Grid x:Name="SingleDayView" 
                   
@@ -867,6 +866,17 @@
                 </Grid>
             </Grid>
 
+            <!--******** ********* ******** -->
+            <!--******** MonthView ******** -->
+            <!--******** ********* ******** -->
+            <Grid x:Name="MonthView" Background="Black" Canvas.ZIndex="-10">
+                <TextBlock x:Name="YearDisplay"  Style="{StaticResource PhoneTextTitle3Style}" VerticalAlignment="Top" Margin="24,24" FontWeight="SemiBold">2014</TextBlock>
+                <phone:Pivot x:Name="MonthsPivot" Margin="0,36,0,0" SelectionChanged="Pivot_SelectionChanged">
+                </phone:Pivot>
+            </Grid>
         </Grid>
+        
+        
+
     </Grid>
 </phone:PhoneApplicationPage>

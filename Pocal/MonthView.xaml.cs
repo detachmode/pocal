@@ -17,7 +17,7 @@ namespace Pocal
 {
     public partial class MonthView : PhoneApplicationPage
     {
-        public static MonthView CurrentPage;
+       
         PivotItem pivotItem;
         MonthViewUserControl monthViewUserControl;
 
@@ -25,7 +25,7 @@ namespace Pocal
         {
 
             InitializeComponent();
-            CurrentPage = this;
+            //CurrentPage = this;
             addFirstThreePivots();
             YearDisplay.Text = DateTime.Now.Year.ToString();
         }

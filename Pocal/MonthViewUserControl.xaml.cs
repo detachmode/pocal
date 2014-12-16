@@ -31,7 +31,8 @@ namespace Pocal
         void dayTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             DateTime dt = (DateTime)((FrameworkElement)sender).DataContext;
-            MonthView.CurrentPage.navigateBackToDay(dt);
+            ViewSwitcher.mainpage.CloseMonthView();
+            App.ViewModel.GoToDate(dt);
 
         }
 
@@ -51,7 +52,7 @@ namespace Pocal
                     //brd.Tap += dayGrid_Tap;
                     Grid dayGrid = new Grid();
                     addCurrentDayMark(dayGrid);
-                    addDeltaDayMark(dayGrid);
+                    //addDeltaDayMark(dayGrid);
 
                     TextBlock txt = createTextBlock();
                     txt.Text = gridDateTimes[gridCounter].Day.ToString();
