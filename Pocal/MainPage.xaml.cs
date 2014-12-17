@@ -427,28 +427,14 @@ namespace Pocal
 
         }
 
-        private void DayCard_ApptTap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-
-            Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
-            if (storyboard != null)
-            {
-                storyboard.Begin();
-            }
-            Thread.Sleep(1);
-            ViewSwitcher.setScrollToPa(((FrameworkElement)sender).DataContext as PocalAppointment);
-            ViewSwitcher.from = ViewSwitcher.Sender.ApptTap;
-
-        }
-
-        private void addBitmapCacheToSDV()
+        public void addBitmapCacheToSDV()
         {
             BitmapCache bmc = new BitmapCache() { RenderAtScale = 0.5 };
             SingleDayWindowBody.CacheMode = bmc;
 
         }
 
-        private void removeBitmapCacheAfterAnimation()
+        public void removeBitmapCacheAfterAnimation()
         {
             Dispatcher.BeginInvoke(delegate
             {
@@ -456,30 +442,6 @@ namespace Pocal
                 SingleDayWindowBody.CacheMode = null;
 
             });
-
-        }
-
-        private void DayCard_HeaderTap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
-            if (storyboard != null)
-            {
-                storyboard.Begin();
-            }
-            ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
-        }
-
-
-        private void OpenSdvAndSetTappedDay(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            Dispatcher.BeginInvoke(() =>
-            {
-                addBitmapCacheToSDV();
-                Thread.Sleep(150);
-                ViewSwitcher.SwitchToSDV(sender);
-                removeBitmapCacheAfterAnimation();
-            });
-
 
         }
 

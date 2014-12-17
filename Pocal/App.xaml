@@ -1,21 +1,62 @@
-﻿	<Application
+﻿<Application
     x:Class="Pocal.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:converter="clr-namespace:Pocal.Converter"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone">
 
-	<!--Application Resources-->
-	<Application.Resources>
-		<local:LocalizedStrings xmlns:local="clr-namespace:Pocal" x:Key="LocalizedStrings"/>
-	</Application.Resources>
+    <!--Application Resources-->
+    <Application.Resources>
+        <local:LocalizedStrings xmlns:local="clr-namespace:Pocal" x:Key="LocalizedStrings"/>
 
-	<Application.ApplicationLifetimeObjects>
-		<!--Required object that handles lifetime events for the application-->
-		<shell:PhoneApplicationService
+        <converter:overview_SecondLineSale x:Key="overview_SecondLineSale"/>
+
+        <converter:dayHeadersForeground x:Key="dayHeadersForeground"/>
+
+        <converter:secondLinesForeground x:Key="secondLinesForeground"/>
+        <converter:startTimeConverter x:Key="startTimeConverter"/>
+        <converter:overview_StartTimeScale x:Key="overview_StartTimeScale"/>
+        <converter:overview_StartTimeOpacity x:Key="overview_StartTimeOpacity"/>
+        <converter:overview_SecondLineOpacity x:Key="overview_SecondLineOpacity"/>
+        <converter:overview_FirstLineX x:Key="overview_FirstLineX"/>
+
+
+        <converter:pastDaysBackground x:Key="pastDaysBackground"/>
+        <converter:pastDaysBackgroundInverted x:Key="pastDaysBackgroundInverted"/>
+
+        <converter:singelDayApptRectangleMargin x:Key="singelDayApptRectangleMargin"/>
+        <converter:singelDayApptTranslate x:Key="singelDayApptTranslate"/>
+        <converter:weekendForeground x:Key="weekendForeground"/>
+        <converter:revertBoolean x:Key="revertBoolean"/>
+        <converter:DetailNotesCollapser x:Key="DetailNotesCollapser"/>
+        <converter:NullOrWhiteSpaceCollapser x:Key="NullOrWhiteSpaceCollapser"/>
+        <converter:weekNumberConverter x:Key="weekNumberConverter"/>
+        <converter:weekConverter x:Key="weekConverter"/>
+        <converter:DateConverter x:Key="DateConverter"/>
+        <converter:secondLineConverter x:Key="secondLineConverter"/>
+        <converter:hourConverter x:Key="hourConverter"/>
+        <converter:minuteConverter x:Key="minuteConverter"/>
+        <converter:DeltaTimeSecondLine x:Key="DeltaTimeSecondLine"/>
+        <converter:DeltaTimeSecondLineVisibility x:Key="DeltaTimeSecondLineVisibility"/>
+        <converter:DeltaTimeFirstLine x:Key="DeltaTimeFirstLine"/>
+
+        <converter:singelDayApptHeight x:Key="singelDayApptHeight"/>
+        <converter:singelDayApptWidth x:Key="singelDayApptWidth"/>
+        <converter:windowHeaderDateConverter x:Key="windowHeaderDateConverter"/>
+        <converter:weekNumberVisibilityConverter x:Key="weekNumberVisibilityConverter"/>
+        <Color x:Key="Color90Black">#FF0F0F0F</Color>
+        <Color x:Key="ColorBorderGrey">#FF767676</Color>
+
+        <Color x:Key="LightGray">#FF131313</Color>
+    </Application.Resources>
+
+    <Application.ApplicationLifetimeObjects>
+        <!--Required object that handles lifetime events for the application-->
+        <shell:PhoneApplicationService
             Launching="Application_Launching" Closing="Application_Closing"
             Activated="Application_Activated" Deactivated="Application_Deactivated"/>
-	</Application.ApplicationLifetimeObjects>
+    </Application.ApplicationLifetimeObjects>
 
 </Application>
 
