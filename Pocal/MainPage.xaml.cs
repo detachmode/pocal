@@ -541,7 +541,7 @@ namespace Pocal
         {
 
             App.ViewModel.InModus = MainViewModel.Modi.OverView;
-            Storyboard storyboard = AgendaViewBody.Resources["EnterOverview"] as Storyboard;
+            Storyboard storyboard = this.Resources["EnterOverview"] as Storyboard;
             if (storyboard != null)
             {
                 storyboard.Begin();
@@ -564,7 +564,7 @@ namespace Pocal
         {
             App.ViewModel.InModus = MainViewModel.Modi.AgendaView;
 
-            Storyboard storyboard = AgendaViewBody.Resources["LeaveOverview"] as Storyboard;
+            Storyboard storyboard = this.Resources["LeaveOverview"] as Storyboard;
             if (storyboard != null)
             {
                 storyboard.Begin();

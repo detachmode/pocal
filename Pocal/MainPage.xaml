@@ -16,6 +16,45 @@
     shell:SystemTray.IsVisible="False"
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainViewModel}">
 
+    <phone:PhoneApplicationPage.Resources>
+        <Storyboard x:Key="EnterOverview">
+            <DoubleAnimation Duration="0:0:0.5" To="0.55" 
+							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" 
+							Storyboard.TargetName="AgendaViewBody"/>
+            <DoubleAnimation Duration="0:0:0.5" To="0.55" 
+							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" 
+							Storyboard.TargetName="AgendaViewBody"/>
+            <ObjectAnimationUsingKeyFrames 
+							Storyboard.TargetProperty="(FrameworkElement.Margin)" 
+							Storyboard.TargetName="AgendaViewBody">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Thickness>0,150,-400,-600</Thickness>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="LeaveOverview">
+            <DoubleAnimation  Duration="0:0:0.5"     To="1" 
+							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" 
+							Storyboard.TargetName="AgendaViewBody" 
+                                        />
+            <DoubleAnimation Duration="0:0:0.5"     To="1" 
+							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" 
+							Storyboard.TargetName="AgendaViewBody"/>
+            <ObjectAnimationUsingKeyFrames 
+							Storyboard.TargetProperty="(FrameworkElement.Margin)" 
+							Storyboard.TargetName="AgendaViewBody">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Thickness>0,150,-400,0</Thickness>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+    </phone:PhoneApplicationPage.Resources>
+
+
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
             <toolkit:NavigationInTransition.Backward>
@@ -182,48 +221,11 @@
             <!--******** *************** ********-->
             <!--******** AGENDAVIEW BODY ********-->
             <!--******** *************** ********-->
-            <Grid  x:Name="AgendaViewBody" Margin="0,150,-400,0" RenderTransformOrigin="0,0.0">
-                <Grid.Resources>
-                    <Storyboard x:Key="EnterOverview">
-                        <DoubleAnimation Duration="0:0:0.5" To="0.55" 
-							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" 
-							Storyboard.TargetName="AgendaViewBody"/>
-                        <DoubleAnimation Duration="0:0:0.5" To="0.55" 
-							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" 
-							Storyboard.TargetName="AgendaViewBody"/>
-                        <ObjectAnimationUsingKeyFrames 
-							Storyboard.TargetProperty="(FrameworkElement.Margin)" 
-							Storyboard.TargetName="AgendaViewBody">
-                            <DiscreteObjectKeyFrame KeyTime="0:0:0.0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <Thickness>0,150,-400,-600</Thickness>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                    <Storyboard x:Key="LeaveOverview">
-                        <DoubleAnimation  Duration="0:0:0.5"     To="1" 
-							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" 
-							Storyboard.TargetName="AgendaViewBody" 
-                                        />
-                        <DoubleAnimation Duration="0:0:0.5"     To="1" 
-							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" 
-							Storyboard.TargetName="AgendaViewBody"/>
-                        <ObjectAnimationUsingKeyFrames 
-							Storyboard.TargetProperty="(FrameworkElement.Margin)" 
-							Storyboard.TargetName="AgendaViewBody">
-                            <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <Thickness>0,150,-400,0</Thickness>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </Grid.Resources>
+            <Grid  x:Name="AgendaViewBody" Margin="0,150,-400,0" RenderTransformOrigin="0,0.0">         
                 <Grid.RenderTransform>
                     <CompositeTransform/>
                 </Grid.RenderTransform>
-                <phone:LongListSelector   x:Name="AgendaViewLLS" ManipulationCompleted="AgendaViewLLS_ManipulationCompleted"  ManipulationDelta="AgendaViewLLS_ManipulationDelta" Loaded="LongList_Loaded"                                             
+                <phone:LongListSelector x:Name="AgendaViewLLS" ManipulationCompleted="AgendaViewLLS_ManipulationCompleted"  ManipulationDelta="AgendaViewLLS_ManipulationDelta" Loaded="LongList_Loaded"                                             
 					ItemsSource="{Binding Days}"  HorizontalContentAlignment="Stretch" Background="Transparent" Margin="-10,0,10,0" >
                     <phone:LongListSelector.ItemTemplate >
                         <DataTemplate >
