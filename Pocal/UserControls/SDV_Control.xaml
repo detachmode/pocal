@@ -34,15 +34,11 @@
                         </TextBlock.Foreground>-->
             </TextBlock>
         </Border>
-
-        <!--******** ******** ******** -->
         <ScrollViewer x:Name="SingleDayScrollViewer"  VerticalScrollBarVisibility="Hidden" ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
             <Grid>
                 <Grid.Background>
                     <SolidColorBrush Color="{StaticResource Color90Black}"/>
                 </Grid.Background>
-
-
                 <StackPanel>
                     <ItemsControl  x:Name="AllDayAppointments" Margin="24,0,0,0" ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}">
                         <ItemsControl.ItemTemplate>
@@ -66,10 +62,7 @@
                                     <Grid.CacheMode>
                                         <BitmapCache/>
                                     </Grid.CacheMode>
-
-
                                 </Grid>
-
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -95,13 +88,6 @@
                                                         <LinearColorKeyFrame Value="{StaticResource Color90Black}" KeyTime="0:0:0.4" />
                                                     </ColorAnimationUsingKeyFrames.KeyFrames>
                                                 </ColorAnimationUsingKeyFrames>
-                                                <!--<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="()"  Storyboard.TargetName="apptSDV">
-                                                            <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-                                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
-                                                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-                                                        </DoubleAnimationUsingKeyFrames>-->
-
-
                                             </Storyboard>
                                         </Grid.Resources>
                                         <Border 
@@ -221,5 +207,4 @@
             </Grid>
         </ScrollViewer>
     </Grid>
-
 </UserControl>

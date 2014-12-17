@@ -14,9 +14,9 @@ using Pocal.ViewModel;
 
 namespace Pocal
 {
-    public partial class DayCard_UserControl : UserControl
+    public partial class DayCard_Control : UserControl
     {
-        public DayCard_UserControl()
+        public DayCard_Control()
         {
             InitializeComponent();
         }

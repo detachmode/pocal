@@ -100,8 +100,8 @@
     <Compile Include="UserControls\SDV_Control.xaml.cs">
       <DependentUpon>SDV_Control.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\DayCard_UserControl.xaml.cs">
-      <DependentUpon>DayCard_UserControl.xaml</DependentUpon>
+    <Compile Include="UserControls\DayCard_Control.xaml.cs">
+      <DependentUpon>DayCard_Control.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\Cluster.cs" />
     <Compile Include="Helper\ConflictManager.cs" />
@@ -114,8 +114,8 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\MonthViewUserControl.xaml.cs">
-      <DependentUpon>MonthViewUserControl.xaml</DependentUpon>
+    <Compile Include="UserControls\MonthView_Control.xaml.cs">
+      <DependentUpon>MonthView_Control.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
@@ -139,7 +139,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\DayCard_UserControl.xaml">
+    <Page Include="UserControls\DayCard_Control.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -147,7 +147,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\MonthViewUserControl.xaml">
+    <Page Include="UserControls\MonthView_Control.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

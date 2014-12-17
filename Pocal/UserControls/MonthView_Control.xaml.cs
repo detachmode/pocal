@@ -13,9 +13,9 @@ using System.Windows.Media.Imaging;
 
 namespace Pocal
 {
-    public partial class MonthViewUserControl : UserControl
+    public partial class MonthView_Control : UserControl
     {
-        public MonthViewUserControl()
+        public MonthView_Control()
         {
             InitializeComponent();
         }

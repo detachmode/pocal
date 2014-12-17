@@ -687,7 +687,7 @@ namespace Pocal
 
 
         PivotItem pivotItem;
-        MonthViewUserControl monthViewUserControl;
+        MonthView_Control monthViewUserControl;
 
         private void openMonthView()
         {
@@ -736,7 +736,7 @@ namespace Pocal
 
         private void addPivotItem(DateTime dt)
         {
-            monthViewUserControl = new MonthViewUserControl();
+            monthViewUserControl = new MonthView_Control();
             monthViewUserControl.loadGridSetup(dt);
 
             pivotItem = new PivotItem();
@@ -783,7 +783,7 @@ namespace Pocal
             }
             DateTime newDateTime = addedDateTime.AddMonths(3);
 
-            MonthViewUserControl monthViewItem = new MonthViewUserControl();
+            MonthView_Control monthViewItem = new MonthView_Control();
             monthViewItem.loadGridSetup(newDateTime);
             lastPivotItem.DataContext = newDateTime;
             lastPivotItem.Content = monthViewItem;
@@ -813,7 +813,7 @@ namespace Pocal
             }
             DateTime newDateTime = addedDateTime.AddMonths(-1);
 
-            MonthViewUserControl monthViewItem = new MonthViewUserControl();
+            MonthView_Control monthViewItem = new MonthView_Control();
             monthViewItem.loadGridSetup(newDateTime);
             previousPivotItem.DataContext = newDateTime;
             previousPivotItem.Content = monthViewItem;
