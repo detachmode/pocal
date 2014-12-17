@@ -97,8 +97,8 @@
     <Compile Include="Converter\AgendaViewConverter.cs" />
     <Compile Include="Converter\OverViewConverter.cs" />
     <Compile Include="Converter\SingleDayViewConverter.cs" />
-    <Compile Include="SampleData\SampleDataSource\SampleDataSource.xaml.cs">
-      <DependentUpon>SampleDataSource.xaml</DependentUpon>
+    <Compile Include="UserControls\SDV_Control.xaml.cs">
+      <DependentUpon>SDV_Control.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\DayCard_UserControl.xaml.cs">
       <DependentUpon>DayCard_UserControl.xaml</DependentUpon>
@@ -135,9 +135,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="SampleData\SampleDataSource\SampleDataSource.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    <Page Include="UserControls\SDV_Control.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\DayCard_UserControl.xaml">
       <SubType>Designer</SubType>
@@ -279,9 +279,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SampleData\" />
-  </ItemGroup>
-  <ItemGroup>
-    <DesignTimeOnly Include="SampleData\SampleDataSource\SampleDataSource.xsd" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
