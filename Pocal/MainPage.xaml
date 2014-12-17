@@ -219,21 +219,50 @@
         </Grid>
 
         <Grid x:Name="grid" Margin="0" >
+
+            
             <!--******** ********** ******** -->
             <!--******** AGENDAVIEW ******** -->
             <!--******** ********** ******** -->
+
+            
             <Grid Background="Black" x:Name="AgendaView" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
 
 
+                <!--<StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" 
+								HorizontalAlignment="Center">
+                    <TextBlock x:Name="WeekCounter" Margin="16,0" 
+									Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeFirstLine}}"
+									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="left"                  />
+                    --><!--<Rectangle Height="2" Fill="Red"/>--><!--
+                    <TextBlock x:Name="DaysCounter" Margin="16,0" 
+									Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeSecondLine}}" 
+									Visibility="{Binding DayAtPointer.DT, Converter={StaticResource DeltaTimeSecondLineVisibility}}"
+									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="Left" />
+
+                </StackPanel>-->
+                
+                <StackPanel Margin="12">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" 
+                               Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeFirstLine}}"
+                               Margin="12,10,0,-18" />
+                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}" 
+                                Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeSecondLine}}" 
+                               Margin="12,10,0,-18" />
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource PhoneTextTitle1Style}" Margin="12,0"
+                                Text="{Binding DayAtPointer.DT.DayOfWeek}"
+                               />
+
+
+                </StackPanel>
+                
                 <!--******** *************** ********-->
                 <!--******** AGENDAVIEW BODY ********-->
+                <!--******** *************** ********-->
 
-
-                <Grid  x:Name="AgendaViewBody" Margin="0,0,-400,0" Grid.Row="1" RenderTransformOrigin="0,0.0">
+                <Grid  x:Name="AgendaViewBody" Margin="0,150,-400,0" RenderTransformOrigin="0,0.0">
 
 
                     <Grid.Resources>
@@ -249,7 +278,7 @@
 								Storyboard.TargetName="AgendaViewBody">
                                 <DiscreteObjectKeyFrame KeyTime="0:0:0.0">
                                     <DiscreteObjectKeyFrame.Value>
-                                        <Thickness>0,0,-400,-600</Thickness>
+                                        <Thickness>0,150,-400,-600</Thickness>
                                     </DiscreteObjectKeyFrame.Value>
                                 </DiscreteObjectKeyFrame>
                             </ObjectAnimationUsingKeyFrames>
@@ -268,7 +297,7 @@
 								Storyboard.TargetName="AgendaViewBody">
                                 <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
                                     <DiscreteObjectKeyFrame.Value>
-                                        <Thickness>0,0,-400,0</Thickness>
+                                        <Thickness>0,150,-400,0</Thickness>
                                     </DiscreteObjectKeyFrame.Value>
                                 </DiscreteObjectKeyFrame>
                             </ObjectAnimationUsingKeyFrames>
@@ -328,7 +357,7 @@
                                         <TextBlock x:Name="DayCardHeader"  Tap="DayCard_HeaderTap" 
 										Foreground ="{Binding DT, Converter={StaticResource dayHeadersForeground}}" 
 										Text="{Binding DT, Converter={StaticResource DateConverter}}" FontSize="34" 
-										FontFamily="{StaticResource PhoneFontFamilyLight}"  Margin="18,6,0,0">
+										FontFamily="{StaticResource PhoneFontFamilyLight}"  Margin="36,6,0,0">
                                             <TextBlock.Resources>
                                                 <Storyboard x:Name="tapFeedback">
                                                     <Storyboard>
@@ -498,7 +527,7 @@
 
                                                         <!--Subject and SecondLine-->
 
-                                                        <StackPanel Margin="3"  Orientation="Horizontal">
+                                                        <StackPanel Margin="6,3"  Orientation="Horizontal">
 
                                                             <Grid Width="60" Height="30" VerticalAlignment="Top">
                                                                 <TextBlock x:Name="StartTime"  Text="{Binding Converter={StaticResource startTimeConverter}}"  FontSize="18" 
@@ -628,6 +657,7 @@
 
 
             </Grid>
+
 
             <!--******** *** ******** -->
             <!--******** SDV ******** -->       
@@ -874,6 +904,7 @@
                 <phone:Pivot x:Name="MonthsPivot" Margin="0,36,0,0" SelectionChanged="Pivot_SelectionChanged">
                 </phone:Pivot>
             </Grid>
+       
         </Grid>
         
         
