@@ -9,11 +9,11 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480"
-    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:Day}"
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainViewModel}"
     >
 
 
-    <Grid x:Name="LayoutRoot"
+    <Grid x:Name="LayoutRoot" d:DataContext="{Binding Days[1]}"
         Tap="OpenSdvAndSetTappedDay" Margin="0,0,-14,0" RenderTransformOrigin="0.5,0.5">
 
             <StackPanel Margin="0,0,0,20" x:Name="DayCardStackPanel" RenderTransformOrigin="0.0,1.0">
