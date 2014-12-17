@@ -223,45 +223,25 @@
             
             <!--******** ********** ******** -->
             <!--******** AGENDAVIEW ******** -->
-            <!--******** ********** ******** -->
-
-            
-            <Grid Background="Black" x:Name="AgendaView" >
-
-
-                <!--<StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" 
-								HorizontalAlignment="Center">
-                    <TextBlock x:Name="WeekCounter" Margin="16,0" 
-									Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeFirstLine}}"
-									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="left"                  />
-                    --><!--<Rectangle Height="2" Fill="Red"/>--><!--
-                    <TextBlock x:Name="DaysCounter" Margin="16,0" 
-									Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeSecondLine}}" 
-									Visibility="{Binding DayAtPointer.DT, Converter={StaticResource DeltaTimeSecondLineVisibility}}"
-									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="Left" />
-
-                </StackPanel>-->
-                
+            <!--******** ********** ******** -->            
+            <Grid Background="Black" x:Name="AgendaView" >               
                 <StackPanel Margin="12">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" >
                         <TextBlock Style="{StaticResource PhoneTextTitle3Style}" 
                                Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeFirstLine}}"
-                               Margin="12,10,0,-18" />
+                               Margin="12,10,-6,-18" />
                         <TextBlock Style="{StaticResource PhoneTextTitle3Style}" 
-                                Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeSecondLine}}" 
+                               Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeSecondLine}}" 
                                Margin="12,10,0,-18" />
                     </StackPanel>
                     <TextBlock Style="{StaticResource PhoneTextTitle1Style}" Margin="12,0"
-                                Text="{Binding DayAtPointer.DT.DayOfWeek}"
+                                Text="Agenda"
                                />
-
-
                 </StackPanel>
                 
                 <!--******** *************** ********-->
                 <!--******** AGENDAVIEW BODY ********-->
                 <!--******** *************** ********-->
-
                 <Grid  x:Name="AgendaViewBody" Margin="0,150,-400,0" RenderTransformOrigin="0,0.0">
 
 
@@ -430,13 +410,6 @@
                                                                     <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
                                                                 </DoubleAnimationUsingKeyFrames>
 
-                                                                <!--<DoubleAnimationUsingKeyFrames 
-                                                                    Storyboard.TargetProperty="(UIElement.Opacity)" 
-                                                                    Storyboard.TargetName="StartTime">
-                                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.0" Value="1"/>
-                                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
-                                                                </DoubleAnimationUsingKeyFrames>-->
-
                                                             </Storyboard>
 
                                                             <Storyboard x:Name="tapFeedback">
@@ -604,17 +577,15 @@
                 <!--******** ***************** ********-->
                 <!--******** AGENDAVIEW POINTER ********-->
                 <!--******** *************** ********-->
-                <Grid  Height="90" Grid.Row="1" >
+                <Grid  Height="90" Grid.Row="1" VerticalAlignment="Top" Margin="0,180">
 
-                    <StackPanel x:Name="AgendaPointer" Orientation="Horizontal" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5"  >
+                    <StackPanel x:Name="AgendaPointer"  Orientation="Horizontal" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5"  >
                         <StackPanel.Resources>
                             <Storyboard x:Key="EnterOverview">
-                                <DoubleAnimation Duration="0:0:0.5" To="45" 
+                                <!--<DoubleAnimation Duration="0:0:0.5" To="45" 
 									Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
-									Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
-                                <DoubleAnimation Duration="0:0:0.5" To="-163" 
-									Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" 
-									Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
+									Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>-->
+
 
 
                             </Storyboard>
@@ -622,15 +593,12 @@
                                 <DoubleAnimation Duration="0:0:0.5" To="150" 
 									Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
 									Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
-                                <DoubleAnimation Duration="0:0:0.5" To="0" 
-									Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" 
-									Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
                             </Storyboard>
                         </StackPanel.Resources>
                         <StackPanel.RenderTransform>
                             <CompositeTransform TranslateX="150"/>
                         </StackPanel.RenderTransform>
-                        <Grid Height="90" Width="200" Margin="0,0,-7,0" HorizontalAlignment="Right" CacheMode="Bitmapcache" VerticalAlignment="Center">
+                        <Grid Height="90" Width="200" Margin="0,0,-7,0" HorizontalAlignment="Right" CacheMode="Bitmapcache" >
                             <Grid.Background>
                                 <ImageBrush Stretch="None" ImageSource="/Images/DeltaTimeArrow3.png" />
                             </Grid.Background>

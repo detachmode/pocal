@@ -27,37 +27,26 @@ namespace Pocal
         private Dictionary<object, ContentPresenter> realizedDayItems = new Dictionary<object, ContentPresenter>();
 
         private bool isPlayingOverviewAninmation = false;
-       
+
 
         public MainPage()
         {
 
-            //if (App.FirstLaunch)
-            {
-                loadStartup(); 
-                App.FirstLaunch = false;
-            }
-            //else
-            //{
-            //    DataContext = App.ViewModel;
-            //    InitializeComponent();
-            //}
-           
+            loadStartup();
+            App.FirstLaunch = false;
 
-            
-            //CalendarAPI.AddTestAppointments();
+
 
         }
 
         private void loadStartup()
         {
 
-
             DataContext = App.ViewModel;
             InitializeComponent();
 
             AgendaViewAppbar();
-            watchScrollingOfLLS();       
+            watchScrollingOfLLS();
             LiveTileManager.UpdateTileFromForeground();
             StartResourceIntensiveAgent();
 
@@ -66,13 +55,12 @@ namespace Pocal
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-               base.OnNavigatedTo(e);
-            
+            base.OnNavigatedTo(e);
 
-            //if (e.NavigationMode == System.Windows.Navigation.NavigationMode.Back)
-            //{
-            //    return;
-            //}
+            if (e.NavigationMode == System.Windows.Navigation.NavigationMode.Back)
+            {
+                return;
+            }
 
             object navigationData = NavigationService.GetNavigationData();
             if (navigationData != null)
@@ -84,6 +72,8 @@ namespace Pocal
 
         }
 
+
+        #region ScheduledTask (LiveTile)
 
         PeriodicTask periodicTask;
 
@@ -149,6 +139,7 @@ namespace Pocal
         }
 
 
+        #endregion
 
         #region AgendaView Code Behind
 
@@ -240,7 +231,7 @@ namespace Pocal
 
         private void checkDayAtTopOfScreen_Tick(object sender, EventArgs e)
         {
-            Day topDay = (Day)getItemAtTopOfScreen();
+            Day topDay = (Day)getItemAtTopOfScreen(0);
             if (topDay != null)
             {
                 int offset = 10;
@@ -256,11 +247,12 @@ namespace Pocal
             }
         }
 
-        private object getItemAtTopOfScreen()
+        private object getItemAtTopOfScreen(double offset)
         {
             if (realizedDayItems.Count > 1)
             {
                 var LLS_Offset = FindViewport(AgendaViewLLS).Viewport.Top;
+                LLS_Offset += offset;
                 IEnumerable<KeyValuePair<object, ContentPresenter>> keyValuePairs = realizedDayItems.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight >= LLS_Offset);
                 List<KeyValuePair<object, ContentPresenter>> keyValuePairsSorted = keyValuePairs.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
                 object obj = keyValuePairsSorted[0].Key;
@@ -316,8 +308,12 @@ namespace Pocal
 
         private void checkDayAtCenterOfScreen_Tick(object sender, EventArgs e)
         {
-
-            Day testday = (Day)getItemAtCenterOfScreen();
+            double offset = 85;
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            {
+                offset = offset*2; 
+            }
+            Day testday = (Day)getItemAtTopOfScreen(offset);
             if (testday != null)
             {
                 Day d = App.ViewModel.DayAtPointer;
@@ -523,10 +519,10 @@ namespace Pocal
             Dispatcher.BeginInvoke(() =>
             {
 
-                CalendarAPI.editAppointment(pocalAppointment);  
+                CalendarAPI.editAppointment(pocalAppointment);
 
             });
-            
+
 
         }
 
@@ -777,7 +773,6 @@ namespace Pocal
 
         #endregion
 
-
         #region MonthView Code Behind
 
         private void MonthViewAppbar()
@@ -794,10 +789,10 @@ namespace Pocal
             button1.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
                 CloseMonthView();
-               
+
             });
 
-            
+
         }
 
 
@@ -814,9 +809,9 @@ namespace Pocal
             YearDisplay.Text = DateTime.Now.Year.ToString();
             MonthViewAppbar();
             Dispatcher.BeginInvoke(delegate
-            {            
+            {
                 addFirstThreePivots();
-                
+
             });
         }
 
@@ -838,7 +833,7 @@ namespace Pocal
             DateTime dt5 = dt.AddMonths(-1);
 
 
-            
+
             addPivotItem(dt2);
             addPivotItem(dt3);
             addPivotItem(dt4);
@@ -966,7 +961,7 @@ namespace Pocal
         //    //NavigationService.Navigate(new Uri("/Mainpage.xaml?GoToDate=", UriKind.Relative), dt);
         //}
 
-        #endregion 
+        #endregion
 
     }
 }
