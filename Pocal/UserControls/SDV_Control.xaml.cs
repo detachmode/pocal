@@ -24,51 +24,7 @@ namespace Pocal
             this.SingleDayScrollViewer.UpdateLayout();
         }
 
-        public void SDV_AppointmentTap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            //UpdateLayout(); // Vielleicht verlangsamt das die UX! Vielleicht behebt das jedoch den TapOffset Bug.
-            PocalAppointment pocalAppointment = ((FrameworkElement)sender).DataContext as PocalAppointment;
 
-
-            Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
-            if (storyboard != null)
-            {
-                storyboard.Begin();
-            }
-
-            Dispatcher.BeginInvoke(() =>
-            {
-
-                CalendarAPI.editAppointment(pocalAppointment);
-
-            });
-
-
-        }
-
-        private void SDV_Hourline_Tap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            HourLine hourLine = ((FrameworkElement)sender).DataContext as HourLine;
-            Dispatcher.BeginInvoke(() =>
-            {
-                Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
-                if (storyboard != null)
-                {
-                    storyboard.Begin();
-                }
-            });
-            //Dispatcher.BeginInvoke(() =>
-            //{
-            //Thread.Sleep(200);
-            var starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine.Text);
-            if (starttime != null)
-            {
-                DateTime dt = (DateTime)starttime;
-                CalendarAPI.addAppointment(dt);
-            }
-            //});
-
-        }
 
         private void SingleDayScrollViewer_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
         {

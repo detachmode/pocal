@@ -162,7 +162,6 @@
             </TextBlock>
         </Grid>
 
-
         <!--******** ********** ******** -->
         <!--******** AGENDAVIEW ******** -->
         <!--******** ********** ******** -->
@@ -177,15 +176,13 @@
                             Margin="12,10,0,-18" />
                 </StackPanel>
                 <TextBlock Style="{StaticResource PhoneTextTitle1Style}" Margin="12,0"
-                            Text="Agenda"
-                            />
+                            Text="Agenda" />
             </StackPanel>
 
             <!--******** *************** ********-->
             <!--******** AGENDAVIEW BODY ********-->
             <!--******** *************** ********-->
             <Grid  x:Name="AgendaViewBody" Margin="0,150,-400,0" RenderTransformOrigin="0,0.0">
-
                 <Grid.Resources>
                     <Storyboard x:Key="EnterOverview">
                         <DoubleAnimation Duration="0:0:0.5" To="0.55" 
@@ -204,7 +201,6 @@
                             </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
-
                     <Storyboard x:Key="LeaveOverview">
                         <DoubleAnimation  Duration="0:0:0.5"     To="1" 
 							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" 
@@ -223,13 +219,10 @@
                             </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
-
-
                 </Grid.Resources>
                 <Grid.RenderTransform>
                     <CompositeTransform/>
                 </Grid.RenderTransform>
-
                 <phone:LongListSelector   x:Name="AgendaViewLLS" ManipulationCompleted="AgendaViewLLS_ManipulationCompleted"  ManipulationDelta="AgendaViewLLS_ManipulationDelta" Loaded="LongList_Loaded"                                             
 					ItemsSource="{Binding Days}"  HorizontalContentAlignment="Stretch" Background="Transparent" Margin="-10,0,10,0" >
                     <phone:LongListSelector.ItemTemplate >
@@ -241,13 +234,11 @@
                         <CompositeTransform/>
                     </phone:LongListSelector.RenderTransform>
                 </phone:LongListSelector>
-
             </Grid>
 
             <!--******** ***************** ********-->
             <!--******** AGENDAVIEW POINTER ********-->
             <!--******** *************** ********-->
-
             <Grid Height="90" Width="200" VerticalAlignment="Top" Margin="0,180"  HorizontalAlignment="Right" CacheMode="Bitmapcache" >
                 <Grid.Background>
                     <ImageBrush Stretch="None" ImageSource="/Images/DeltaTimeArrow3.png" />
@@ -257,15 +248,12 @@
                 </Grid.RenderTransform>
             </Grid>
 
-
         </Grid>
-
 
         <!--******** *** ******** -->
         <!--******** SDV ******** -->
         <!--******** *** ******** -->
-        <Grid x:Name="SingleDayView" 
-                  
+        <Grid x:Name="SingleDayView"                  
 			Background="#AD000000" RenderTransformOrigin="0.5,0.5" Canvas.ZIndex="-1" >
             <Grid.RenderTransform>
                 <CompositeTransform/>
@@ -275,23 +263,18 @@
                 <RowDefinition Height="60*"/>
                 <RowDefinition Height="20*"/>
             </Grid.RowDefinitions>
-
-            <!--GridExit-->
             <Grid x:Name="gridExitTop" 
 				Grid.Row="0" 
 				Opacity="0.0"
 				MouseMove="gridExit_MouseMove" 
 				Tap="gridExit_Tap" 
 				Background="Black" Grid.RowSpan="3"/>
-            
             <Grid  x:Name="SingleDayWindowBody"  Grid.Row="1"  Background="Black">
                 <Grid.RenderTransform>
                     <CompositeTransform/>
                 </Grid.RenderTransform>
                 <Border  BorderBrush="#FF383838" BorderThickness="0,0,0,1" Margin="0" Canvas.ZIndex="1"/>
-
                 <pocal:SDV_Control x:Name="SingleDayViewer"/>
-
             </Grid>
         </Grid>
 
@@ -303,7 +286,6 @@
             <phone:Pivot x:Name="MonthsPivot" Margin="0,36,0,0" SelectionChanged="Pivot_SelectionChanged">
             </phone:Pivot>
         </Grid>
-
 
     </Grid>
 </phone:PhoneApplicationPage>

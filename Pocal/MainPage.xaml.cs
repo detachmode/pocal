@@ -72,6 +72,21 @@ namespace Pocal
 
         }
 
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            {
+                AgendaViewAppbar();
+                leaveOverview();
+            }
+
+            else
+                scrollToToday();
+
+            e.Cancel = true;
+            base.OnBackKeyPress(e);
+        }
+
 
         #region ScheduledTask (LiveTile)
 
@@ -145,7 +160,6 @@ namespace Pocal
 
         private void AgendaViewAppbar()
         {
-
 
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
@@ -367,20 +381,6 @@ namespace Pocal
             return null;
         }
 
-        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
-        {
-            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
-            {
-                AgendaViewAppbar();
-                leaveOverview();
-            }
-
-            else
-                scrollToToday();
-
-            e.Cancel = true;
-            base.OnBackKeyPress(e);
-        }
 
         private void scrollToToday()
         {
@@ -463,10 +463,7 @@ namespace Pocal
         {
 
             VisualStateManager.GoToState(this, "Close", true);
-        }
-
-
-        
+        }     
         #endregion
 
         #region Overview Code Behind
@@ -837,19 +834,6 @@ namespace Pocal
 
 
 
-
-        //public void navigateBackToDay(DateTime dt)
-        //{
-        //    //App.ViewModel.GoToDate(dt);
-
-        //    if (this.NavigationService.CanGoBack)
-        //    {
-
-        //        this.NavigationService.GoBack(dt);
-
-        //    }
-        //    //NavigationService.Navigate(new Uri("/Mainpage.xaml?GoToDate=", UriKind.Relative), dt);
-        //}
 
         #endregion
 

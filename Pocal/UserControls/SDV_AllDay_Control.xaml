@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Pocal.SDV_AllDay_Control"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="80" d:DesignWidth="480"
+    xmlns:viewmodel="clr-namespace:Pocal.ViewModel"
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainViewModel}"
+    >
+
+    <Grid  x:Name="AllDaySDVAppt"   d:DataContext="{Binding Days[1].PocalApptsOfDay[0]}"    Tap="SDV_AppointmentTap" Visibility="{Binding AllDay, Converter={StaticResource revertBoolean}}">
+        <TextBlock Margin="4,12,0,12" Text="{Binding Subject}" Foreground="{Binding CalColor}"   FontWeight="SemiBold"/>
+        <Grid.Resources>
+            <Storyboard x:Name="tapFeedback">
+                <Storyboard>
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"  Storyboard.TargetName="AllDaySDVAppt">
+                        <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="-15"/>
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </Storyboard>
+        </Grid.Resources>
+        <Grid.RenderTransform>
+            <CompositeTransform/>
+        </Grid.RenderTransform>
+        <Grid.CacheMode>
+            <BitmapCache/>
+        </Grid.CacheMode>
+    </Grid>
+</UserControl>

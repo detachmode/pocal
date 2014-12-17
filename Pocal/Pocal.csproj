@@ -97,6 +97,15 @@
     <Compile Include="Converter\AgendaViewConverter.cs" />
     <Compile Include="Converter\OverViewConverter.cs" />
     <Compile Include="Converter\SingleDayViewConverter.cs" />
+    <Compile Include="UserControls\SDV_HourLine_Control.xaml.cs">
+      <DependentUpon>SDV_HourLine_Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SDV_AllDay_Control.xaml.cs">
+      <DependentUpon>SDV_AllDay_Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SDV_Appointment_Control.xaml.cs">
+      <DependentUpon>SDV_Appointment_Control.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\SDV_Control.xaml.cs">
       <DependentUpon>SDV_Control.xaml</DependentUpon>
     </Compile>
@@ -135,6 +144,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="UserControls\SDV_HourLine_Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SDV_AllDay_Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SDV_Appointment_Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\SDV_Control.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -277,9 +298,7 @@
       <Name>ScheduledTaskAgent1</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SampleData\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
