@@ -517,7 +517,8 @@ namespace Pocal
             ApplicationBar.Buttons.Add(button3);
             button3.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
-                NavigationService.Navigate(new Uri("/MonthView.xaml", UriKind.Relative));
+                //NavigationService.Navigate(new Uri("/MonthView.xaml", UriKind.Relative));
+                openMonthView();
 
             });
 
