@@ -17,6 +17,19 @@
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainViewModel}">
 
     <phone:PhoneApplicationPage.Resources>
+       
+            <Storyboard x:Key="AgendaPointerLong">
+            <DoubleAnimation Duration="0:0:0.5" To="65" 
+							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
+							Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
+            </Storyboard>
+        <Storyboard x:Key="AgendaPointerShort">
+            <DoubleAnimation Duration="0:0:0.5" To="150" 
+							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
+							Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
+        </Storyboard>
+ 
+
         <Storyboard x:Key="EnterOverview">
             <DoubleAnimation Duration="0:0:0.5" To="0.55" 
 							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" 
@@ -233,15 +246,14 @@
 
             <!--******** ***************** ********-->
             <!--******** AGENDAVIEW POINTER ********-->
-            <!--******** *************** ********-->
-            <Grid Height="73" Width="200" VerticalAlignment="Top" Margin="0,150"  HorizontalAlignment="Right" CacheMode="Bitmapcache" >      
+            <!--******** *************** ********-->                 
+            <Grid x:Name="AgendaPointer"  Height="73" Width="200" VerticalAlignment="Top" Margin="0,150"  HorizontalAlignment="Right" CacheMode="Bitmapcache" >      
                 <Grid.Background>
                     <ImageBrush Stretch="None" ImageSource="/Images/DeltaTimeArrow3.png" />
                 </Grid.Background>
                 <Grid.RenderTransform>
-                    <CompositeTransform TranslateX="65"/>
+                    <CompositeTransform TranslateX="150"/>
                 </Grid.RenderTransform>
-               
                     <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" 
 								HorizontalAlignment="Center">
                     <TextBlock x:Name="WeekCounter" Margin="14,0" 
@@ -251,11 +263,7 @@
 									Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeSecondLine}}" 
 									Visibility="{Binding DayAtPointer.DT, Converter={StaticResource DeltaTimeSecondLineVisibility}}"
 									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="Left" CharacterSpacing="-60" />
-
                     </StackPanel>
-      
-
-
             </Grid>
 
         </Grid>

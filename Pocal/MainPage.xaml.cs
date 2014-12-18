@@ -547,6 +547,12 @@ namespace Pocal
                 storyboard.Begin();
             }
 
+            storyboard = this.Resources["AgendaPointerLong"] as Storyboard;
+            if (storyboard != null)
+            {
+                storyboard.Begin();
+            }
+
             foundDayCards_ItemsControll = new List<ItemsControl>();
             foundStackPanels = new List<StackPanel>();
 
@@ -571,12 +577,19 @@ namespace Pocal
                 storyboard.Begin();
             }
 
+            storyboard = this.Resources["AgendaPointerShort"] as Storyboard;
+            if (storyboard != null)
+            {
+                storyboard.Begin();
+            }
+
             foundDayCards_ItemsControll = new List<ItemsControl>();
             foundStackPanels = new List<StackPanel>();
 
             findItemControll(AgendaViewLLS);
             findItemStackPanelInItemsControll("DayCard_ApptItem");
             playStoryboardOfFoundStackPanels("LeaveOverview");
+            
 
             AgendaViewAppbar();
 
