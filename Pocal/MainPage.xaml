@@ -234,23 +234,23 @@
             <!--******** ***************** ********-->
             <!--******** AGENDAVIEW POINTER ********-->
             <!--******** *************** ********-->
-            <Grid Height="90" Width="200" VerticalAlignment="Top" Margin="0,180"  HorizontalAlignment="Right" CacheMode="Bitmapcache" >      
+            <Grid Height="73" Width="200" VerticalAlignment="Top" Margin="0,150"  HorizontalAlignment="Right" CacheMode="Bitmapcache" >      
                 <Grid.Background>
                     <ImageBrush Stretch="None" ImageSource="/Images/DeltaTimeArrow3.png" />
                 </Grid.Background>
                 <Grid.RenderTransform>
-                    <CompositeTransform TranslateX="45"/>
+                    <CompositeTransform TranslateX="65"/>
                 </Grid.RenderTransform>
                
                     <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" 
 								HorizontalAlignment="Center">
                     <TextBlock x:Name="WeekCounter" Margin="14,0" 
 									Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeFirstLine}}"
-									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="left"/>
+									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="left" CharacterSpacing="-60"/>
                     <TextBlock x:Name="DaysCounter" Margin="14,0" 
 									Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeSecondLine}}" 
 									Visibility="{Binding DayAtPointer.DT, Converter={StaticResource DeltaTimeSecondLineVisibility}}"
-									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="Left" />
+									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="Left" CharacterSpacing="-60" />
 
                     </StackPanel>
       

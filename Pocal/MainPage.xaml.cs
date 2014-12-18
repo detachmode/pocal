@@ -209,7 +209,7 @@ namespace Pocal
 
 
             ApplicationBarIconButton button4 = new ApplicationBarIconButton();
-            button4.IconUri = new Uri("/Images/feature.search.png", UriKind.Relative);
+            button4.IconUri = new Uri("/Images/bird.png", UriKind.Relative);
             button4.Text = "Overview";
             ApplicationBar.Buttons.Add(button4);
             button4.Click += new EventHandler(delegate(object sender, EventArgs e)
@@ -218,7 +218,6 @@ namespace Pocal
                 {
                     toggleOverView();
                 }
-                OverviewAppbar();
             });
         }
 
@@ -322,7 +321,7 @@ namespace Pocal
 
         private void checkDayAtCenterOfScreen_Tick(object sender, EventArgs e)
         {
-            double offset = 85;
+            double offset = 35;
             if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
             {
                 offset = offset*2; 
@@ -554,6 +553,7 @@ namespace Pocal
             findItemControll(AgendaViewLLS);
             findItemStackPanelInItemsControll("DayCard_ApptItem");
             playStoryboardOfFoundStackPanels("EnterOverview");
+            OverviewAppbar();
 
 
 
@@ -577,6 +577,8 @@ namespace Pocal
             findItemControll(AgendaViewLLS);
             findItemStackPanelInItemsControll("DayCard_ApptItem");
             playStoryboardOfFoundStackPanels("LeaveOverview");
+
+            AgendaViewAppbar();
 
 
 
@@ -691,14 +693,14 @@ namespace Pocal
         {
             Canvas.SetZIndex(MonthView, 10);
 
-            DateTime dt = DateTime.Now.Date;
+            DateTime dt = App.ViewModel.DayAtPointer.DT;
             addPivotItem(dt);
 
-            YearDisplay.Text = DateTime.Now.Year.ToString();
+            YearDisplay.Text = dt.Year.ToString();
             MonthViewAppbar();
             Dispatcher.BeginInvoke(delegate
             {
-                addFirstThreePivots();
+                addFourMorePivotItems(dt);
 
             });
         }
@@ -711,15 +713,12 @@ namespace Pocal
         }
 
 
-        private void addFirstThreePivots()
+        private void addFourMorePivotItems(DateTime lastAddedDate)
         {
-
-            DateTime dt = DateTime.Now.Date;
-            DateTime dt2 = dt.AddMonths(1);
-            DateTime dt3 = dt.AddMonths(2);
-            DateTime dt4 = dt.AddMonths(3);
-            DateTime dt5 = dt.AddMonths(-1);
-
+            DateTime dt2 = lastAddedDate.AddMonths(1);
+            DateTime dt3 = lastAddedDate.AddMonths(2);
+            DateTime dt4 = lastAddedDate.AddMonths(3);
+            DateTime dt5 = lastAddedDate.AddMonths(-1);
 
 
             addPivotItem(dt2);
