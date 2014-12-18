@@ -14,32 +14,27 @@
     >
 
     <Grid x:Name="LayoutRoot">
-        <!--******** ******** ******** -->
-        <!--******** SDV BODY ******** -->
-        <!--******** ********** ******** -->
         <Border x:Name="SingleDayHeader" Canvas.ZIndex="3"  Margin="0,-41,0,0" Height="41" VerticalAlignment="Top" BorderThickness="0,1,0,1" BorderBrush="#FF5D5D5D" >
             <Border.Background>
                 <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
             </Border.Background>
-            <TextBlock  x:Name="SingleDayWindowHeader" 
-						Foreground="White"
-						Style="{StaticResource PhoneTextTitle3Style}"
+            <TextBlock  x:Name="SingleDayWindowHeader" Foreground="White" Style="{StaticResource PhoneTextTitle3Style}"
 						Text="{Binding SingleDayViewModel.TappedDay.DT, Converter={StaticResource windowHeaderDateConverter}}" 
-						Margin="148,-4,24,0" 
-						FontSize="26" VerticalAlignment="Center" 
-						HorizontalAlignment="Right">
-						<!--<TextBlock.Foreground>
-                			<SolidColorBrush Color="{StaticResource PhoneButtonBasePressedForegroundColor}"/>
-                        </TextBlock.Foreground>-->
+						Margin="148,-4,24,0"  FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Right">
             </TextBlock>
         </Border>
+        
         <ScrollViewer x:Name="SingleDayScrollViewer"  VerticalScrollBarVisibility="Hidden" ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
             <Grid>
                 <Grid.Background>
                     <SolidColorBrush Color="{StaticResource Color90Black}"/>
                 </Grid.Background>
                 <StackPanel>
-                    <ItemsControl  x:Name="AllDayAppointments" Margin="24,0,0,0" ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}">
+                    <!--******** ************ ******** -->
+                    <!--******** AllDAY APPTS ******** -->
+                    <!--******** ************ ******** -->
+                    <ItemsControl  x:Name="AllDayAppointments" Margin="24,0,0,0" 
+                                   ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <pocal:SDV_AllDay_Control/>
@@ -47,7 +42,11 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                     <Border Height="1" Background="#FF807C7C"/>
+
                     <Grid x:Name="HourLinesGridAppointments">
+                        <!--******** ********* ******** -->
+                        <!--******** HOURLINES ******** -->
+                        <!--******** ********* ******** -->
                         <ItemsControl x:Name="hourlines"
 									ScrollViewer.VerticalScrollBarVisibility="Disabled"
 									ItemsSource="{Binding SingleDayViewModel.hourLines, Mode=OneWay}" >
@@ -57,6 +56,9 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+                        <!--******** ************ ******** -->
+                        <!--******** APPOINTMENTS ******** -->
+                        <!--******** ************ ******** -->
                         <ItemsControl x:Name="AppointmentsOnGrid"  ScrollViewer.VerticalScrollBarVisibility="Disabled"   
                                       ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay, Mode=OneWay}" >
                             <!--unnötig? NEIN! Sonst fängt die YPos nicht für jedes Element bei Null an. ItemsPanel ist standardmässig ein Stackpanel-->
