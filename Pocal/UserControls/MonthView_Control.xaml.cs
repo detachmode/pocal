@@ -236,7 +236,7 @@ namespace Pocal
             else
             {
 
-                brd.Background = new SolidColorBrush((Color)App.Current.Resources["PhoneBackgroundColor"]);
+                brd.Background = new SolidColorBrush((Color)App.Current.Resources["Month_NoWeekendBG"]);
                 //brd.Background = new SolidColorBrush();
             }
 

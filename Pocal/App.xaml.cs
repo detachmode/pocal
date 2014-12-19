@@ -93,16 +93,18 @@ namespace Pocal
                 App.Current.Resources.Add("SDV_BG", Color.FromArgb(255, 240, 240, 240));
                 App.Current.Resources.Add("Month_BG", Color.FromArgb(255, 240, 240, 240));
                 App.Current.Resources.Add("Month_WeekendBG", Color.FromArgb(255, 230, 230, 230));
+                App.Current.Resources.Add("Month_NoWeekendBG", Colors.White);
                 //App.Current.Resources["SDV_BG"] = Colors.Magenta;
             }
             else
             {
                 //DARK
-                App.Current.Resources.Add("Agenda_BG", Color.FromArgb(255, 15, 15, 15));
+                App.Current.Resources.Add("Agenda_BG", Colors.Black);
 
                 App.Current.Resources.Add("SDV_BG", Color.FromArgb(255, 15, 15, 15));
                 App.Current.Resources.Add("Month_BG", Colors.Black);
-                App.Current.Resources.Add("Month_WeekendBG", Color.FromArgb(255, 40, 40, 40));
+                App.Current.Resources.Add("Month_WeekendBG", Color.FromArgb(255, 30, 30, 30));
+                App.Current.Resources.Add("Month_NoWeekendBG", Colors.Black);
             }
            
         }

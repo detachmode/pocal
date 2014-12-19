@@ -21,12 +21,17 @@
             <!--******** ****************** ********-->
             <!--******** DAYCARD WEEKNUMBER ********-->
             <!--******** ****************** ********-->
-            <Grid Background="{StaticResource PhoneBackgroundBrush}" Height="20" 
-											Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  
-											VerticalAlignment="Center"/>
+            <Grid  Height="20" 
+				Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  
+				VerticalAlignment="Center">
+                <Grid.Background>
+                    <SolidColorBrush Color="{StaticResource Agenda_BG}" ></SolidColorBrush>
+                </Grid.Background>
+            </Grid>
 
             <Grid Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" 
 											VerticalAlignment="Center" Height="60"  >
+                
 
                 <Border Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}" 
 												BorderThickness="12" Height="3" Margin="0" >
@@ -35,8 +40,10 @@
                     </Border.BorderBrush>
                 </Border>
                 <Grid  Width="467" HorizontalAlignment="Left">
-                    <Grid Background="{StaticResource PhoneBackgroundBrush}" Width="130">
-
+                    <Grid  Width="130">
+                        <Grid.Background>
+                            <SolidColorBrush Color="{StaticResource Agenda_BG}" ></SolidColorBrush>
+                        </Grid.Background>
                         <TextBlock  Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}"
                                                               
 														FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" 
@@ -47,7 +54,12 @@
 
             </Grid>
 
-            <Grid Background="{StaticResource PhoneBackgroundBrush}" Height="20" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  VerticalAlignment="Center"/>
+            <Grid Height="20" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  
+                  VerticalAlignment="Center">
+                <Grid.Background>
+                    <SolidColorBrush Color="{StaticResource Agenda_BG}" ></SolidColorBrush>
+                </Grid.Background>
+            </Grid>
 
 
             <!--******** ************ ********-->

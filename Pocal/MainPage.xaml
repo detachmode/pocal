@@ -223,7 +223,7 @@
         <!--******** ********** ******** -->
         <!--******** AGENDAVIEW ******** -->
         <!--******** ********** ******** -->
-        <Grid Background="{StaticResource PhoneBackgroundBrush}" x:Name="AgendaView" >
+        <Grid Background="{StaticResource Agenda_BG}" x:Name="AgendaView" >
             <StackPanel Grid.Row="0" Margin="12,17,0,28">
                 <TextBlock Text="POCAL" Style="{StaticResource PhoneTextNormalStyle}"/>
                 <TextBlock Text="Agenda" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
