@@ -9,6 +9,7 @@ using Pocal.Resources;
 using Pocal.ViewModel;
 using ScheduledTaskAgent1;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 
 namespace Pocal
@@ -81,20 +82,25 @@ namespace Pocal
             }
         }
 
-        public static void LoadColorRessources()
+        public static void LoadThemeRessources()
         {
             App.Current.Resources.Remove("Agenda_BG");
             App.Current.Resources.Remove("SDV_BG");
             App.Current.Resources.Remove("Month_BG");
             App.Current.Resources.Remove("Month_WeekendBG");
             App.Current.Resources.Remove("Month_NoWeekendBG");
+            App.Current.Resources.Remove("AgendaPointerImage");
 
             Visibility v = (Visibility)App.Current.Resources["PhoneLightThemeVisibility"];
             if (v == System.Windows.Visibility.Visible)
             {
                 //LIGHT
                 App.Current.Resources.Add("Agenda_BG", Colors.White);
-               
+
+                ImageBrush ib = new ImageBrush();
+                ib.ImageSource = new BitmapImage(new Uri(@"\Images\AgendaPointerBright.png", UriKind.Relative));
+                ib.Stretch = Stretch.None;
+                App.Current.Resources.Add("AgendaPointerImage", ib);           
 
 
                 App.Current.Resources.Add("SDV_BG", Color.FromArgb(255, 240, 240, 240));
@@ -107,6 +113,11 @@ namespace Pocal
             {
                 //DARK
                 App.Current.Resources.Add("Agenda_BG", Colors.Black);
+                
+                ImageBrush ib = new ImageBrush();
+                ib.ImageSource = new BitmapImage(new Uri(@"\Images\AgendaPointerDark.png", UriKind.Relative));
+                ib.Stretch = Stretch.None;
+                App.Current.Resources.Add("AgendaPointerImage", ib);    
 
                 App.Current.Resources.Add("SDV_BG", Color.FromArgb(255, 15, 15, 15));
                 App.Current.Resources.Add("Month_BG", Colors.Black);

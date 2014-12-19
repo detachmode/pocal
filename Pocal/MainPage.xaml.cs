@@ -31,7 +31,7 @@ namespace Pocal
 
         public MainPage()
         {
-            App.LoadColorRessources();
+            App.LoadThemeRessources();
             loadStartup();
 
             App.FirstLaunch = false;

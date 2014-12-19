@@ -256,11 +256,9 @@
 
             <!--******** ***************** ********-->
             <!--******** AGENDAVIEW POINTER ********-->
-            <!--******** *************** ********-->                 
-            <Grid x:Name="AgendaPointer"  Height="73" Width="200" VerticalAlignment="Top" Margin="0,150"  HorizontalAlignment="Right" CacheMode="Bitmapcache" >      
-                <Grid.Background>
-                    <ImageBrush Stretch="None" ImageSource="/Images/DeltaTimeArrow3.png" />
-                </Grid.Background>
+            <!--******** *************** ********-->
+            <Grid x:Name="AgendaPointer" Background="{StaticResource AgendaPointerImage}"  Height="73" Width="200" VerticalAlignment="Top" Margin="0,150"  HorizontalAlignment="Right" CacheMode="Bitmapcache" >      
+
                 <Grid.RenderTransform>
                     <CompositeTransform TranslateX="150"/>
                 </Grid.RenderTransform>

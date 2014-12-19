@@ -213,6 +213,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\add.png" />
+    <Content Include="Images\AgendaPointerBright.png" />
+    <Content Include="Images\AgendaPointerDark.png" />
+    <Content Include="Images\deltaTimeArrow2.png" />
     <Content Include="Images\back.png" />
     <Content Include="Images\basecircle.png" />
     <Content Include="Images\bird.png" />
@@ -220,10 +223,6 @@
     <Content Include="Images\check.png" />
     <Content Include="Images\close.png" />
     <Content Include="Images\delete.png" />
-    <Content Include="Images\deltaTimeArrow.png" />
-    <Content Include="Images\deltaTimeArrow2.png" />
-    <Content Include="Images\deltaTimeArrow3.png" />
-    <Content Include="Images\deltaTimeArrow4.png" />
     <Content Include="Images\DeltaTimeDreieck.png" />
     <Content Include="Images\DeltaTimeDreieck2.png" />
     <Content Include="Images\download.png" />

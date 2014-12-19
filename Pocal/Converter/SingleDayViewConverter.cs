@@ -160,7 +160,7 @@ namespace Pocal.Converter
 
                     if ((appt.Duration.Hours) == 0)
                         result = HourLine.Height / 2;
-                    return result + 1;
+                    return result +2;
                 }
 
                 
@@ -168,7 +168,7 @@ namespace Pocal.Converter
                 {
                     result = (HourLine.Height * 24 +1) ;
                     result -= (appt.StartTime.Hour)*HourLine.Height;
-                    return result;
+                    return result +2;
                 }
 
                 if (apptJustEndsThisDay())
@@ -176,12 +176,12 @@ namespace Pocal.Converter
                     result = (endTime.Hour * HourLine.Height);
                     if (endTime.Minute != 0)
                         result += HourLine.Height / 2;
-                    return result + 1;
+                    return result + 2;
 
                 }
 
                 var completeDayHeight = (HourLine.Height * 24);
-                return completeDayHeight + 1;
+                return completeDayHeight + 2;
 
             }
             return 0;
