@@ -236,12 +236,12 @@
 
                                 <Grid Width="60" Height="30" VerticalAlignment="Top">
                                     <TextBlock x:Name="StartTime"  Text="{Binding Converter={StaticResource startTimeConverter}}"  FontSize="18" 
-																	Opacity="{Binding AllDay, Converter={StaticResource overview_StartTimeOpacity}}"
-																	Foreground ="{Binding StartTime.DateTime, Converter={StaticResource secondLinesForeground}}" 
-																	Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+												Opacity="{Binding AllDay, Converter={StaticResource overview_StartTimeOpacity}}"
+												Foreground ="{Binding StartTime.DateTime, Converter={StaticResource secondLinesForeground}}" 
+												Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center">
                                         <TextBlock.RenderTransform>
                                             <CompositeTransform ScaleX="{Binding AllDay, Converter={StaticResource overview_StartTimeScale}}"
-																			ScaleY="{Binding AllDay, Converter={StaticResource overview_StartTimeScale}}"/>
+															    ScaleY="{Binding AllDay, Converter={StaticResource overview_StartTimeScale}}"/>
                                         </TextBlock.RenderTransform>
                                         <TextBlock.CacheMode>
                                             <BitmapCache RenderAtScale="1"/>
@@ -251,17 +251,17 @@
 
                                 <StackPanel  Margin="6,0,0,0">
                                     <TextBlock x:Name="FirstLine"  
-																	Foreground="{Binding CalColor}" 
-																	Text="{Binding Appt.Subject}"
-																	FontSize="20" RenderTransformOrigin="0,0">
+												Foreground="{Binding CalColor}" 
+												Text="{Binding Appt.Subject}"
+												FontSize="20" RenderTransformOrigin="0,0">
                                         <TextBlock.Projection>
                                             <PlaneProjection/>
                                         </TextBlock.Projection>
                                         <TextBlock.RenderTransform>
                                             <CompositeTransform 
-																			TranslateX ="{Binding AllDay, Converter={StaticResource overview_FirstLineX}}" 
-																			ScaleX="{Binding AllDay, Converter={StaticResource overview_SecondLineSale}}" 
-																			ScaleY="{Binding AllDay, Converter={StaticResource overview_SecondLineSale}}" />
+												TranslateX ="{Binding AllDay, Converter={StaticResource overview_FirstLineX}}" 
+												ScaleX="{Binding AllDay, Converter={StaticResource overview_SecondLineSale}}" 
+												ScaleY="{Binding AllDay, Converter={StaticResource overview_SecondLineSale}}" />
                                         </TextBlock.RenderTransform>
                                         <TextBlock.CacheMode>
                                             <BitmapCache RenderAtScale="1"/>
@@ -270,10 +270,10 @@
                                     </TextBlock>
 
                                     <TextBlock x:Name="SecondLine"  Text="{Binding Appt, Converter={StaticResource secondLineConverter}}" 
-																	Foreground ="{Binding StartTime.DateTime, Converter={StaticResource secondLinesForeground}}" 
-																	FontFamily="{StaticResource PhoneFontFamilyLight}" 
-																	Padding="0"  FontSize="18" Margin="0,0,0,0" 
-																	Opacity="{Binding AllDay, Converter={StaticResource overview_SecondLineOpacity}}">
+												Foreground ="{Binding StartTime.DateTime, Converter={StaticResource secondLinesForeground}}" 
+												FontFamily="{StaticResource PhoneFontFamilyLight}" 
+												Padding="0"  FontSize="18" Margin="0,0,0,0" 
+												Opacity="{Binding AllDay, Converter={StaticResource overview_SecondLineOpacity}}">
                                         <TextBlock.Projection>
                                             <PlaneProjection/>
                                         </TextBlock.Projection>
@@ -283,9 +283,9 @@
                                         <TextBlock.CacheMode>
                                             <BitmapCache RenderAtScale="1"/>
                                         </TextBlock.CacheMode>
-																	<!--<TextBlock.Foreground>
-                                                                    <SolidColorBrush Color="{StaticResource PhoneTextBoxColor}"/>
-                                                                </TextBlock.Foreground>-->
+                                            <!--<TextBlock.Foreground>
+                                            <SolidColorBrush Color="{StaticResource PhoneTextBoxColor}"/>
+                                            </TextBlock.Foreground>-->
                                     </TextBlock>
 
                                 </StackPanel>
