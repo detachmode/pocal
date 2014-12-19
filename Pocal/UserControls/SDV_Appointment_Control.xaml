@@ -68,8 +68,12 @@
 
         <StackPanel Margin="20,3,0,0">
             <TextBlock  Text="{Binding Subject}" Foreground="{Binding CalColor}" FontSize="{StaticResource DefaultSize}" FontWeight="Medium" />
-            <TextBlock  Text="{Binding Location}" FontSize="22" Visibility="{Binding Converter={StaticResource NullOrWhiteSpaceCollapser}, Mode=OneWay}" Foreground="#FFA2A2A2" Margin="0,-6,0,0" />
-            <TextBlock Text="{Binding Details}" FontSize="20.5" Foreground="#FF9C9C9C" FontWeight="ExtraLight" TextWrapping="Wrap" FontFamily="Calibri" Visibility="{Binding Converter={StaticResource DetailNotesCollapser}, Mode=OneWay}" />
+            <TextBlock  Text="{Binding Location}" FontSize="22" 
+                        Visibility="{Binding Converter={StaticResource NullOrWhiteSpaceCollapser}, Mode=OneWay}"
+                        Foreground="{StaticResource PhoneBorderBrush}" Margin="0,-3,0,0" />
+            <TextBlock Text="{Binding Details}" FontSize="20.5"  Foreground="{StaticResource PhoneBorderBrush}" 
+                       FontWeight="ExtraLight" TextWrapping="Wrap" FontFamily="Calibri" 
+                       Visibility="{Binding Converter={StaticResource DetailNotesCollapser}, Mode=OneWay}" />
         </StackPanel>
         <Rectangle Width="12" Fill="{Binding CalColor}" HorizontalAlignment="Left" >
 

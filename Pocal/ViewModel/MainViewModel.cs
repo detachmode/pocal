@@ -247,6 +247,8 @@ namespace Pocal.ViewModel
         private async Task loadFirstDay(DateTime dt, double stamp)
         {
             await loadDays(dt, 1, stamp);
+            SingleDayViewModel.TappedDay = Days.First(x => x.DT == dt);
+            ConflictManager.solveConflicts();
         }
 
         private async Task loadEnoughMoreDay(double stamp)
