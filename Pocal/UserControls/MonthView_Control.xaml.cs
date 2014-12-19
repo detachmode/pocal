@@ -225,16 +225,19 @@ namespace Pocal
             brd.BorderThickness = new Thickness(leftThinkness, topThinkness, rightThinkness, bottomThinkness);
             brd.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             brd.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-            brd.BorderBrush = new SolidColorBrush(Colors.White);
+            brd.BorderBrush = new SolidColorBrush((Color)App.Current.Resources["PhoneBorderColor"]);
 
             var testDayOfWeek = gridDateTimes[gridCounter].DayOfWeek;
             if (testDayOfWeek == DayOfWeek.Saturday || testDayOfWeek == DayOfWeek.Sunday)
             {
-                brd.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 40, 40, 40));
+                //brd.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 40, 40, 40));
+                brd.Background = new SolidColorBrush((Color)App.Current.Resources["Month_WeekendBG"]);
             }
             else
             {
-                brd.Background = new SolidColorBrush(Colors.Black);
+
+                brd.Background = new SolidColorBrush((Color)App.Current.Resources["PhoneBackgroundColor"]);
+                //brd.Background = new SolidColorBrush();
             }
 
 

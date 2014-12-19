@@ -20,6 +20,24 @@ namespace Pocal.Converter
 
 
 
+    public class SDV_Background : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+
+
+            return new SolidColorBrush((Color)App.Current.Resources["SDV_BG"]);
+
+              
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+
     public class windowHeaderDateConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

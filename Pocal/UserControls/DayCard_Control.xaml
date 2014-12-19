@@ -36,6 +36,7 @@
                 </Border>
                 <Grid  Width="467" HorizontalAlignment="Left">
                     <Grid Background="{StaticResource PhoneBackgroundBrush}" Width="130">
+
                         <TextBlock  Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}"
                                                               
 														FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" 

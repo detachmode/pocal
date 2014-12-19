@@ -15,7 +15,7 @@
     <Grid Tap="SDV_Hourline_Tap" d:DataContext="{Binding SingleDayViewModel.hourLines[1] }">
         <Grid.Background>
             <SolidColorBrush x:Name="MyAnimatedBrush"  
-                             Color="{StaticResource Color90Black}"/>
+                             Color="{StaticResource SDV_BG}"/>
         </Grid.Background>
         <Grid.Resources>
             <Storyboard x:Key="tapFeedback">
@@ -25,7 +25,7 @@
                     Duration="0:0:6" FillBehavior="HoldEnd" >
                     <ColorAnimationUsingKeyFrames.KeyFrames>
                         <LinearColorKeyFrame Value="DarkGray" KeyTime="0:0:0.1" />
-                        <LinearColorKeyFrame Value="{StaticResource Color90Black}" KeyTime="0:0:0.4" />
+                        <LinearColorKeyFrame Value="{StaticResource SDV_BG}" KeyTime="0:0:0.4" />
                     </ColorAnimationUsingKeyFrames.KeyFrames>
                 </ColorAnimationUsingKeyFrames>
             </Storyboard>

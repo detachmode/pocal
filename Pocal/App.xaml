@@ -14,7 +14,8 @@
         <converter:overview_SecondLineSale x:Key="overview_SecondLineSale"/>
 
         <converter:dayHeadersForeground x:Key="dayHeadersForeground"/>
-
+        <converter:SDV_Background x:Key="SDV_Background"/>
+        
         <converter:secondLinesForeground x:Key="secondLinesForeground"/>
         <converter:startTimeConverter x:Key="startTimeConverter"/>
         <converter:overview_StartTimeScale x:Key="overview_StartTimeScale"/>
@@ -47,6 +48,7 @@
         <converter:windowHeaderDateConverter x:Key="windowHeaderDateConverter"/>
         <converter:weekNumberVisibilityConverter x:Key="weekNumberVisibilityConverter"/>
         <Color x:Key="Color90Black">#FF0F0F0F</Color>
+        <!--<Color x:Key="SDV_BG">#FFDCDCDC</Color>-->
         <Color x:Key="ColorBorderGrey">#FF767676</Color>
         <System:Double x:Key="DefaultSize">22</System:Double>
         <Color x:Key="LightGray">#FF131313</Color>

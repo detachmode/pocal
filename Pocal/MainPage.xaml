@@ -305,7 +305,7 @@
         <!--******** ********* ******** -->
         <!--******** MonthView ******** -->
         <!--******** ********* ******** -->
-        <Grid x:Name="MonthView" Background="Black" Canvas.ZIndex="-10">
+        <Grid x:Name="MonthView" Background="{StaticResource Month_BG}" Canvas.ZIndex="-10">
             <TextBlock x:Name="YearDisplay"  Style="{StaticResource PhoneTextTitle3Style}" VerticalAlignment="Top" Margin="24,24" FontWeight="SemiBold">2014</TextBlock>
             <phone:Pivot x:Name="MonthsPivot" Margin="0,36,0,0" SelectionChanged="Pivot_SelectionChanged">
             </phone:Pivot>
