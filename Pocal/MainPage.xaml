@@ -37,12 +37,15 @@
             <DoubleAnimation Duration="0:0:0.5" To="0.55" 
 							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" 
 							Storyboard.TargetName="AgendaViewBody"/>
+            <DoubleAnimation Duration="0:0:0.5" To="15" 
+							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
+							Storyboard.TargetName="AgendaViewBody"/>
             <ObjectAnimationUsingKeyFrames 
 							Storyboard.TargetProperty="(FrameworkElement.Margin)" 
 							Storyboard.TargetName="AgendaViewBody">
                 <DiscreteObjectKeyFrame KeyTime="0:0:0.0">
                     <DiscreteObjectKeyFrame.Value>
-                        <Thickness>0,150,-400,-600</Thickness>
+                        <Thickness>0,150,-350,-600</Thickness>
                     </DiscreteObjectKeyFrame.Value>
                 </DiscreteObjectKeyFrame>
             </ObjectAnimationUsingKeyFrames>
@@ -55,12 +58,15 @@
             <DoubleAnimation Duration="0:0:0.5"     To="1" 
 							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" 
 							Storyboard.TargetName="AgendaViewBody"/>
+            <DoubleAnimation Duration="0:0:0.5" To="0" 
+							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
+							Storyboard.TargetName="AgendaViewBody"/>
             <ObjectAnimationUsingKeyFrames 
 							Storyboard.TargetProperty="(FrameworkElement.Margin)" 
 							Storyboard.TargetName="AgendaViewBody">
                 <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
                     <DiscreteObjectKeyFrame.Value>
-                        <Thickness>0,150,-400,0</Thickness>
+                        <Thickness>0,150,-350,0</Thickness>
                     </DiscreteObjectKeyFrame.Value>
                 </DiscreteObjectKeyFrame>
             </ObjectAnimationUsingKeyFrames>
@@ -217,7 +223,7 @@
         <!--******** ********** ******** -->
         <!--******** AGENDAVIEW ******** -->
         <!--******** ********** ******** -->
-        <Grid Background="Black" x:Name="AgendaView" >
+        <Grid Background="{StaticResource PhoneBackgroundBrush}" x:Name="AgendaView" >
             <StackPanel Grid.Row="0" Margin="12,17,0,28">
                 <TextBlock Text="POCAL" Style="{StaticResource PhoneTextNormalStyle}"/>
                 <TextBlock Text="Agenda" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
@@ -227,7 +233,7 @@
             <!--******** *************** ********-->
             <!--******** AGENDAVIEW BODY ********-->
             <!--******** *************** ********-->
-            <Grid  x:Name="AgendaViewBody" Margin="0,150,-400,0" RenderTransformOrigin="0,0.0">         
+            <Grid  x:Name="AgendaViewBody" Margin="0,150,-350,0" RenderTransformOrigin="0,0.0">         
                 <Grid.RenderTransform>
                     <CompositeTransform/>
                 </Grid.RenderTransform>

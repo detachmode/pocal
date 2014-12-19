@@ -12,7 +12,7 @@ namespace Pocal.Converter
 {
     public static class converterBrushes
     {
-        public static SolidColorBrush weekendHeader = new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
+        public static SolidColorBrush pastDays = new SolidColorBrush(Color.FromArgb(255, 170, 170, 170));
         public static SolidColorBrush noWeekendHeader = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
         public static SolidColorBrush DarkGray = new SolidColorBrush(Color.FromArgb(255, 20, 20, 20));
         public static SolidColorBrush Black = new SolidColorBrush(Colors.Black);
@@ -369,9 +369,9 @@ namespace Pocal.Converter
             DateTime dt = (DateTime)value;
 
             if (dt.Date < DateTime.Now.Date)
-                return converterBrushes.weekendHeader;
+                return converterBrushes.pastDays;
 
-            return converterBrushes.noWeekendHeader;
+            return (App.Current.Resources["PhoneForegroundBrush"] as SolidColorBrush);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -387,14 +387,14 @@ namespace Pocal.Converter
             DateTime dt = (DateTime)value;
 
             if (dt.Date < DateTime.Now.Date)
-                return converterBrushes.weekendHeader;
+                return converterBrushes.pastDays;
 
             //if (dt.Date == DateTime.Now.Date)
             //    return converterBrushes.Red;
 
 
 
-            return converterBrushes.noWeekendHeader;
+            return (App.Current.Resources["PhoneForegroundBrush"] as SolidColorBrush);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -411,7 +411,7 @@ namespace Pocal.Converter
 
             if ((dt.DayOfWeek == DayOfWeek.Saturday) || (dt.DayOfWeek == DayOfWeek.Sunday))
             {
-                return converterBrushes.weekendHeader;
+                return converterBrushes.pastDays;
             }
             else
                 return converterBrushes.noWeekendHeader;

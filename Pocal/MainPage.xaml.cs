@@ -588,6 +588,7 @@ namespace Pocal
 
             findItemControll(AgendaViewLLS);
             findItemStackPanelInItemsControll("DayCard_ApptItem");
+
             playStoryboardOfFoundStackPanels("LeaveOverview");
             
 
