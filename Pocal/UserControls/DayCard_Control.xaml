@@ -46,8 +46,8 @@
                         </Grid.Background>
                         <TextBlock  Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}"
                                                               
-														FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" 
-														FontWeight="SemiBold" RenderTransformOrigin="0.5,0.5" Foreground="{StaticResource PhoneAccentBrush}" />
+								FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" 
+								FontWeight="SemiBold" RenderTransformOrigin="0.5,0.5" Foreground="{StaticResource PhoneAccentBrush}" />
                     </Grid>
                 </Grid>
 
@@ -67,9 +67,9 @@
             <!--******** ************** ********-->
 
             <TextBlock x:Name="DayCardHeader"  Tap="DayCard_HeaderTap" 
-										Foreground ="{Binding DT, Converter={StaticResource dayHeadersForeground}}" 
-										Text="{Binding DT, Converter={StaticResource DateConverter}}" FontSize="34" 
-										FontFamily="{StaticResource PhoneFontFamilyLight}"  Margin="36,6,0,0">
+                        Foreground ="{Binding DT, Converter={StaticResource dayHeadersForeground}}" 
+                        Text="{Binding DT, Converter={StaticResource DateConverter}}" FontSize="35" 
+                        FontFamily="{StaticResource PhoneFontFamilyLight}"  Margin="37,6,0,0">
                 <TextBlock.Resources>
                     <Storyboard x:Name="tapFeedback">
                         <Storyboard>

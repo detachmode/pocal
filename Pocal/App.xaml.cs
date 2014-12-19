@@ -45,7 +45,7 @@ namespace Pocal
         public App()
         {
 
-            loadColorRessources();
+           
 
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
@@ -81,14 +81,21 @@ namespace Pocal
             }
         }
 
-        private static void loadColorRessources()
-        {    
-            Visibility v = (Visibility)App.Current.Resources["PhoneLightThemeVisibility"];
+        public static void LoadColorRessources()
+        {
+            App.Current.Resources.Remove("Agenda_BG");
+            App.Current.Resources.Remove("SDV_BG");
+            App.Current.Resources.Remove("Month_BG");
+            App.Current.Resources.Remove("Month_WeekendBG");
+            App.Current.Resources.Remove("Month_NoWeekendBG");
 
+            Visibility v = (Visibility)App.Current.Resources["PhoneLightThemeVisibility"];
             if (v == System.Windows.Visibility.Visible)
             {
                 //LIGHT
-                App.Current.Resources.Add("Agenda_BG", Color.FromArgb(255, 240, 240, 240));
+                App.Current.Resources.Add("Agenda_BG", Colors.White);
+               
+
 
                 App.Current.Resources.Add("SDV_BG", Color.FromArgb(255, 240, 240, 240));
                 App.Current.Resources.Add("Month_BG", Color.FromArgb(255, 240, 240, 240));

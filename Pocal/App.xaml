@@ -47,8 +47,17 @@
         <converter:singelDayApptWidth x:Key="singelDayApptWidth"/>
         <converter:windowHeaderDateConverter x:Key="windowHeaderDateConverter"/>
         <converter:weekNumberVisibilityConverter x:Key="weekNumberVisibilityConverter"/>
+        
         <Color x:Key="Color90Black">#FF0F0F0F</Color>
-        <!--<Color x:Key="SDV_BG">#FFDCDCDC</Color>-->
+        <Color x:Key="SDV_BG">#FF0f0f0f</Color>
+        <Color x:Key="Agenda_BG">#FF000000</Color>
+        <SolidColorBrush x:Key="SolidColorBrush">#FF000000</SolidColorBrush>
+        <SolidColorBrush x:Key="Month_BG">#FFDCDCDC</SolidColorBrush>
+        <SolidColorBrush x:Key="Month_WeekendBG">#FFDCDCDC</SolidColorBrush>
+        <SolidColorBrush x:Key="Month_NoWeekendBG">#FFDCDCDC</SolidColorBrush>
+
+        
+
         <Color x:Key="ColorBorderGrey">#FF767676</Color>
         <System:Double x:Key="DefaultSize">22</System:Double>
         <Color x:Key="LightGray">#FF131313</Color>

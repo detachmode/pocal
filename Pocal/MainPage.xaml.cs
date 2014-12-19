@@ -31,8 +31,9 @@ namespace Pocal
 
         public MainPage()
         {
-
+            App.LoadColorRessources();
             loadStartup();
+
             App.FirstLaunch = false;
 
 
@@ -324,7 +325,7 @@ namespace Pocal
             double offset = 35;
             if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
             {
-                offset = offset*2; 
+                offset = offset * 2;
             }
             Day testday = (Day)getItemAtTopOfScreen(offset);
             if (testday != null)
@@ -462,7 +463,7 @@ namespace Pocal
         {
 
             VisualStateManager.GoToState(this, "Close", true);
-        }     
+        }
         #endregion
 
         #region Overview Code Behind
@@ -590,7 +591,7 @@ namespace Pocal
             findItemStackPanelInItemsControll("DayCard_ApptItem");
 
             playStoryboardOfFoundStackPanels("LeaveOverview");
-            
+
 
             AgendaViewAppbar();
 
@@ -688,7 +689,7 @@ namespace Pocal
             /*********** BUTTONs ***********/
             ApplicationBarIconButton button1 = new ApplicationBarIconButton();
             button1.IconUri = new Uri("/Images/back.png", UriKind.Relative);
-            button1.Text = "Heute";
+            button1.Text = "Zurück";
             ApplicationBar.Buttons.Add(button1);
             button1.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
@@ -723,7 +724,12 @@ namespace Pocal
         {
             Canvas.SetZIndex(MonthView, -10);
             MonthsPivot.Items.Clear();
-            AgendaViewAppbar();
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            {
+                OverviewAppbar();
+            }
+            else
+                AgendaViewAppbar();
         }
 
 

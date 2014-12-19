@@ -223,17 +223,21 @@
         <!--******** ********** ******** -->
         <!--******** AGENDAVIEW ******** -->
         <!--******** ********** ******** -->
-        <Grid Background="{StaticResource Agenda_BG}" x:Name="AgendaView" >
-            <StackPanel Grid.Row="0" Margin="12,17,0,28">
+        <Grid x:Name="AgendaView" >
+           
+            <Grid.Background>
+                <SolidColorBrush Color="{StaticResource Agenda_BG}"/>
+            </Grid.Background>
+            
+                <StackPanel Grid.Row="0" Margin="12,17,0,0">
                 <TextBlock Text="POCAL" Style="{StaticResource PhoneTextNormalStyle}"/>
                 <TextBlock Text="Agenda" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
             </StackPanel>
 
-
             <!--******** *************** ********-->
             <!--******** AGENDAVIEW BODY ********-->
             <!--******** *************** ********-->
-            <Grid  x:Name="AgendaViewBody" Margin="0,150,-350,0" RenderTransformOrigin="0,0.0">         
+            <Grid  x:Name="AgendaViewBody" Margin="0,150,-350,0" RenderTransformOrigin="0,0.0">   
                 <Grid.RenderTransform>
                     <CompositeTransform/>
                 </Grid.RenderTransform>
