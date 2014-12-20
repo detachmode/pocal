@@ -32,6 +32,14 @@ namespace Pocal
             if (currentViewIsSDV())
                 return;
 
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            {
+                App.ViewModel.InModus = MainViewModel.Modi.OverViewSDV;
+            }
+            else
+            {
+                App.ViewModel.InModus = MainViewModel.Modi.AgendaViewSDV;
+            }
 
 
             setTemporaryTappedDay(sender);
@@ -53,6 +61,8 @@ namespace Pocal
                 Thread.Sleep(1);
                 setTappedDay();
             }
+
+            mainpage.SDVAppbar();
 
 
 

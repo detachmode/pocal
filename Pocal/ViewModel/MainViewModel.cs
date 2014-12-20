@@ -20,7 +20,7 @@ namespace Pocal.ViewModel
     public class MainViewModel : ViewModelBase
     {
 
-        public enum Modi { AgendaView, OverView };
+        public enum Modi { AgendaView, OverView, OverViewSDV, AgendaViewSDV };
         public Modi InModus = Modi.AgendaView;
 
         public bool IsCurrentlyLoading = false;
@@ -44,7 +44,7 @@ namespace Pocal.ViewModel
         }
 
 
-   
+
         public SingleDayViewVM SingleDayViewModel { get; private set; }
         public ConflictManager ConflictManager { get; private set; }
 
@@ -169,7 +169,7 @@ namespace Pocal.ViewModel
                 DesignDataDay3_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[6], CalColor = CalColorRed, AllDay = true });
                 DesignDataDay3_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[2], CalColor = CalColorRed, AllDay = false });
                 DesignDataDay3_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[3], CalColor = CalColorRed, AllDay = false });
-               
+
 
                 ObservableCollection<PocalAppointment> DesignDataDay4_Pocalappts = new ObservableCollection<PocalAppointment>();
                 DesignDataDay4_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[4], CalColor = CalColorRed });

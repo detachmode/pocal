@@ -316,9 +316,9 @@ namespace Pocal
         private void AgendaScrolling_WhileSingleDayViewIsOpen_Fix(object sender, EventArgs e)
         {
             if (SingleDayView.Visibility == Visibility.Visible)
-                VisualStateManager.GoToState(this, "Close", true);
+                closeSDV();
         }
-
+                                                          
 
         private void checkDayAtCenterOfScreen_Tick(object sender, EventArgs e)
         {
@@ -449,20 +449,82 @@ namespace Pocal
 
         #region SingleDayView Code Behind
 
+        public void SDVAppbar()
+        {
+
+
+            ApplicationBar = new ApplicationBar();
+            /*********** MENU ITEMS ***********/
+            ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
+            item1.Text = "Einstellungen";
+            ApplicationBar.MenuItems.Add(item1);
+            ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
+            item2.Text = "Tutorial";
+            ApplicationBar.MenuItems.Add(item2);
+
+            ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
+            item3.Text = "Info";
+            ApplicationBar.MenuItems.Add(item3);
+
+            /*********** BUTTONs ***********/
+            ApplicationBarIconButton button1 = new ApplicationBarIconButton();
+            button1.IconUri = new Uri("/Images/back.png", UriKind.Relative);
+            button1.Text = "Heute";
+            ApplicationBar.Buttons.Add(button1);
+            button1.Click += new EventHandler(delegate(object sender, EventArgs e)
+            {
+                scrollToToday();
+            });
+
+            /*********** ADD METHODE BUTTON ***********/
+            ApplicationBarIconButton button2 = new ApplicationBarIconButton();
+            button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
+            button2.Text = "add";
+            ApplicationBar.Buttons.Add(button2);
+            button2.Click += new EventHandler(delegate(object sender, EventArgs e)
+            {
+                CalendarAPI.addAllDayAppointment(App.ViewModel.SingleDayViewModel.TappedDay.DT);
+
+            });
+
+            /*********** MONTHVIEW BUTTON ***********/
+            ApplicationBarIconButton button3 = new ApplicationBarIconButton();
+            button3.IconUri = new Uri("/Images/feature.calendar.png", UriKind.Relative);
+            button3.Text = "Gehe zu";
+            ApplicationBar.Buttons.Add(button3);
+            button3.Click += new EventHandler(delegate(object sender, EventArgs e)
+            {
+                //NavigationService.Navigate(new Uri("/MonthView.xaml", UriKind.Relative));
+                openMonthView();
+
+            });
+        }
+
         private void gridExit_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            closeDayView();
+            closeSDV();
         }
 
         private void gridExit_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            closeDayView();
+            closeSDV();
         }
 
-        private void closeDayView()
+        private void closeSDV()
         {
-
             VisualStateManager.GoToState(this, "Close", true);
+
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverViewSDV ||  App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            {
+                OverviewAppbar();
+                App.ViewModel.InModus = MainViewModel.Modi.OverView;
+            }
+            else
+            {
+                AgendaViewAppbar();
+                App.ViewModel.InModus = MainViewModel.Modi.AgendaView;
+            }
+
         }
         #endregion
 
@@ -560,6 +622,8 @@ namespace Pocal
             findItemControll(AgendaViewLLS);
             findItemStackPanelInItemsControll("DayCard_ApptItem");
             playStoryboardOfFoundStackPanels("EnterOverview");
+
+            HeaderTitle.Text = "Overview";
             OverviewAppbar();
 
 
@@ -592,7 +656,7 @@ namespace Pocal
 
             playStoryboardOfFoundStackPanels("LeaveOverview");
 
-
+            HeaderTitle.Text = "Agenda";
             AgendaViewAppbar();
 
 
@@ -724,12 +788,25 @@ namespace Pocal
         {
             Canvas.SetZIndex(MonthView, -10);
             MonthsPivot.Items.Clear();
-            if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
+
+            switch (App.ViewModel.InModus)
             {
-                OverviewAppbar();
+                case MainViewModel.Modi.AgendaView:
+                    AgendaViewAppbar();
+                    break;
+                case MainViewModel.Modi.OverView:
+                    OverviewAppbar();
+                    break;
+                case MainViewModel.Modi.OverViewSDV:
+                    SDVAppbar();
+                    break;
+                case MainViewModel.Modi.AgendaViewSDV:
+                    SDVAppbar();
+                    break;
+                default:
+                    break;
             }
-            else
-                AgendaViewAppbar();
+
         }
 
 

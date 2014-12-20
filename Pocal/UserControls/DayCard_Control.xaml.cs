@@ -56,6 +56,7 @@ namespace Pocal
                 ViewSwitcher.mainpage.addBitmapCacheToSDV();
                 Thread.Sleep(150);
                 ViewSwitcher.SwitchToSDV(sender);
+                
                 ViewSwitcher.mainpage.removeBitmapCacheAfterAnimation();
             });
 
