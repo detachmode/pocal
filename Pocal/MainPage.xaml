@@ -9,6 +9,7 @@
     xmlns:viewmodel="clr-namespace:Pocal.ViewModel"
     xmlns:local="clr-namespace:Pocal.Converter"
     xmlns:pocal="clr-namespace:Pocal"
+    xmlns:screenSizeSupport="clr-namespace:ScreenSizeSupport;assembly=ScreenSizeSupport"
     xmlns:ec="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
     x:Class="Pocal.MainPage"
     mc:Ignorable="d"
@@ -17,18 +18,18 @@
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainViewModel}">
 
     <phone:PhoneApplicationPage.Resources>
-       
-            <Storyboard x:Key="AgendaPointerLong">
+
+        <Storyboard x:Key="AgendaPointerLong">
             <DoubleAnimation Duration="0:0:0.5" To="65" 
 							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
 							Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
-            </Storyboard>
+        </Storyboard>
         <Storyboard x:Key="AgendaPointerShort">
             <DoubleAnimation Duration="0:0:0.5" To="150" 
 							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
 							Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
         </Storyboard>
- 
+
 
         <Storyboard x:Key="EnterOverview">
             <DoubleAnimation Duration="0:0:0.5" To="0.55" 
@@ -223,59 +224,66 @@
         <!--******** ********** ******** -->
         <!--******** AGENDAVIEW ******** -->
         <!--******** ********** ******** -->
-        <Grid x:Name="AgendaView" >
-           
-            <Grid.Background>
-                <SolidColorBrush Color="{StaticResource Agenda_BG}"/>
-            </Grid.Background>
-            
-                <StackPanel Grid.Row="0" Margin="12,17,0,0">
-                <TextBlock Text="POCAL" Style="{StaticResource PhoneTextNormalStyle}"/>
-                <TextBlock x:Name="HeaderTitle" Text="Agenda" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-            </StackPanel>
+        <screenSizeSupport:ZoomBox  ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
 
-            <!--******** *************** ********-->
-            <!--******** AGENDAVIEW BODY ********-->
-            <!--******** *************** ********-->
-            <Grid  x:Name="AgendaViewBody" Margin="0,150,-350,0" RenderTransformOrigin="0,0.0">   
-                <Grid.RenderTransform>
-                    <CompositeTransform/>
-                </Grid.RenderTransform>
-                <phone:LongListSelector x:Name="AgendaViewLLS" ManipulationCompleted="AgendaViewLLS_ManipulationCompleted"  ManipulationDelta="AgendaViewLLS_ManipulationDelta" Loaded="LongList_Loaded"                                             
-					ItemsSource="{Binding Days}"  HorizontalContentAlignment="Stretch" Background="Transparent" Margin="-10,0,10,0" >
-                    <phone:LongListSelector.ItemTemplate >
-                        <DataTemplate >
-                            <pocal:DayCard_Control/>
-                        </DataTemplate>
-                    </phone:LongListSelector.ItemTemplate>
-                    <phone:LongListSelector.RenderTransform>
+            <Grid x:Name="AgendaView" >
+                <Grid.Background>
+                    <SolidColorBrush Color="{StaticResource Agenda_BG}"/>
+                </Grid.Background>
+
+                <StackPanel Margin="12,17,0,0" Grid.Row="0"  HorizontalAlignment="Left">
+                    <TextBlock Text="POCAL" Style="{StaticResource PhoneTextNormalStyle}"/>
+                    <!--<screenSizeSupport:ZoomBox ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" Margin="12"              
+                >-->
+                    <TextBlock x:Name="HeaderTitle" Text="Agenda" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+                    <!--</screenSizeSupport:ZoomBox>-->
+                </StackPanel>
+
+
+                <!--******** *************** ********-->
+                <!--******** AGENDAVIEW BODY ********-->
+                <!--******** *************** ********-->
+
+                <Grid  x:Name="AgendaViewBody" Margin="0,150,-350,0" RenderTransformOrigin="0,0.0">
+                    <Grid.RenderTransform>
                         <CompositeTransform/>
-                    </phone:LongListSelector.RenderTransform>
-                </phone:LongListSelector>
-            </Grid>
+                    </Grid.RenderTransform>
+                    <phone:LongListSelector x:Name="AgendaViewLLS" ManipulationCompleted="AgendaViewLLS_ManipulationCompleted"  ManipulationDelta="AgendaViewLLS_ManipulationDelta" Loaded="LongList_Loaded"                                             
+					ItemsSource="{Binding Days}"  HorizontalContentAlignment="Stretch" Background="Transparent" Margin="-10,0,10,0" >
+                        <phone:LongListSelector.ItemTemplate >
+                            <DataTemplate >
+                                <pocal:DayCard_Control/>
+                            </DataTemplate>
+                        </phone:LongListSelector.ItemTemplate>
+                        <phone:LongListSelector.RenderTransform>
+                            <CompositeTransform/>
+                        </phone:LongListSelector.RenderTransform>
+                    </phone:LongListSelector>
 
-            <!--******** ***************** ********-->
-            <!--******** AGENDAVIEW POINTER ********-->
-            <!--******** *************** ********-->
-            <Grid x:Name="AgendaPointer" Background="{StaticResource AgendaPointerImage}"  Height="73" Width="200" VerticalAlignment="Top" Margin="0,150"  HorizontalAlignment="Right" CacheMode="Bitmapcache" >      
+                </Grid>
 
-                <Grid.RenderTransform>
-                    <CompositeTransform TranslateX="150"/>
-                </Grid.RenderTransform>
+                <!--******** ***************** ********-->
+                <!--******** AGENDAVIEW POINTER ********-->
+                <!--******** *************** ********-->
+                <Grid x:Name="AgendaPointer" Background="{StaticResource AgendaPointerImage}"  Height="73" Width="200" VerticalAlignment="Top" Margin="0,150"  HorizontalAlignment="Right" CacheMode="Bitmapcache" >
+
+                    <Grid.RenderTransform>
+                        <CompositeTransform TranslateX="150"/>
+                    </Grid.RenderTransform>
                     <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" 
 								HorizontalAlignment="Center">
-                    <TextBlock x:Name="WeekCounter" Margin="14,0" 
+                        <TextBlock x:Name="WeekCounter" Margin="14,0" 
 									Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeFirstLine}}"
 									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="left" CharacterSpacing="-60"/>
-                    <TextBlock x:Name="DaysCounter" Margin="14,0" 
+                        <TextBlock x:Name="DaysCounter" Margin="14,0" 
 									Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeSecondLine}}" 
 									Visibility="{Binding DayAtPointer.DT, Converter={StaticResource DeltaTimeSecondLineVisibility}}"
 									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="Left" CharacterSpacing="-60" />
                     </StackPanel>
+                </Grid>
+
             </Grid>
-
-        </Grid>
-
+        </screenSizeSupport:ZoomBox>
         <!--******** *** ******** -->
         <!--******** SDV ******** -->
         <!--******** *** ******** -->
@@ -307,11 +315,29 @@
         <!--******** ********* ******** -->
         <!--******** MonthView ******** -->
         <!--******** ********* ******** -->
+
         <Grid x:Name="MonthView" Background="{StaticResource Month_BG}" Canvas.ZIndex="-10">
-            <TextBlock x:Name="YearDisplay"  Style="{StaticResource PhoneTextTitle3Style}" VerticalAlignment="Top" Margin="24,24" FontWeight="SemiBold">2014</TextBlock>
-            <phone:Pivot x:Name="MonthsPivot" Margin="0,36,0,0" SelectionChanged="Pivot_SelectionChanged">
-            </phone:Pivot>
+            <Grid>
+                <TextBlock x:Name="YearDisplay"  Style="{StaticResource PhoneTextTitle3Style}" VerticalAlignment="Top" Margin="24,24" FontWeight="SemiBold">2014</TextBlock>
+                <phone:Pivot x:Name="MonthsPivot" Margin="0,36,0,0" SelectionChanged="Pivot_SelectionChanged">
+                    <phone:Pivot.HeaderTemplate>
+                        <DataTemplate>
+                            <screenSizeSupport:ZoomBox 
+                                ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}"
+                                >
+                            <TextBlock Text="{Binding}"/>
+                            </screenSizeSupport:ZoomBox>
+
+
+
+
+                        </DataTemplate>
+                    </phone:Pivot.HeaderTemplate>
+                </phone:Pivot>
+            </Grid>
+
         </Grid>
+
 
     </Grid>
 </phone:PhoneApplicationPage>

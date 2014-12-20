@@ -298,6 +298,10 @@
       <Project>{9c2e89f7-2b19-4042-9d1d-b33bf517e8cb}</Project>
       <Name>ScheduledTaskAgent1</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ScreenSizeSupport\ScreenSizeSupport.csproj">
+      <Project>{949a23fd-3917-495b-80fb-2465fe68b8a8}</Project>
+      <Name>ScreenSizeSupport</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />

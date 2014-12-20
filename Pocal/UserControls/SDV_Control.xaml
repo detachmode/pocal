@@ -6,6 +6,7 @@
     xmlns:pocal="clr-namespace:Pocal"
     mc:Ignorable="d"
     xmlns:viewmodel="clr-namespace:Pocal.ViewModel"
+    xmlns:screenSizeSupport="clr-namespace:ScreenSizeSupport;assembly=ScreenSizeSupport"         
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -24,76 +25,79 @@
 						Margin="148,-4,24,0"  FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Right">
             </TextBlock>
         </Border>
-        
-        <ScrollViewer Background="{StaticResource PhoneBackgroundBrush}" x:Name="SingleDayScrollViewer"  VerticalScrollBarVisibility="Hidden" 
-                      ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
-            <Grid>
-                <Grid.Background>
-                    <SolidColorBrush Color="{StaticResource SDV_BG}"/>
-                </Grid.Background>
-                <StackPanel>
-                    <!--******** ************ ******** -->
-                    <!--******** AllDAY APPTS ******** -->
-                    <!--******** ************ ******** -->
-                    <ItemsControl  x:Name="AllDayAppointments" Margin="24,0,0,0" 
-                                   ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <pocal:SDV_AllDay_Control/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <Border Height="1" Background="#FF807C7C"/>
 
-                    <Grid x:Name="HourLinesGridAppointments">
-                        <!--******** ********* ******** -->
-                        <!--******** HOURLINES ******** -->
-                        <!--******** ********* ******** -->
-                        <ItemsControl x:Name="hourlines"
+        <screenSizeSupport:ZoomBox  ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
+
+            <ScrollViewer Background="{StaticResource PhoneBackgroundBrush}" x:Name="SingleDayScrollViewer"  VerticalScrollBarVisibility="Hidden" 
+                      ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
+                <Grid>
+                    <Grid.Background>
+                        <SolidColorBrush Color="{StaticResource SDV_BG}"/>
+                    </Grid.Background>
+                    <StackPanel>
+                        <!--******** ************ ******** -->
+                        <!--******** AllDAY APPTS ******** -->
+                        <!--******** ************ ******** -->
+                        <ItemsControl  x:Name="AllDayAppointments" Margin="24,0,0,0" 
+                                   ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <pocal:SDV_AllDay_Control/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Border Height="1" Background="#FF807C7C"/>
+
+                        <Grid x:Name="HourLinesGridAppointments">
+                            <!--******** ********* ******** -->
+                            <!--******** HOURLINES ******** -->
+                            <!--******** ********* ******** -->
+                            <ItemsControl x:Name="hourlines"
 									ScrollViewer.VerticalScrollBarVisibility="Disabled"
 									ItemsSource="{Binding SingleDayViewModel.hourLines, Mode=OneWay}" >
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <pocal:SDV_HourLine_Control/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                        <!--******** ************ ******** -->
-                        <!--******** APPOINTMENTS ******** -->
-                        <!--******** ************ ******** -->
-                        <ItemsControl x:Name="AppointmentsOnGrid"  ScrollViewer.VerticalScrollBarVisibility="Disabled"   
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <pocal:SDV_HourLine_Control/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <!--******** ************ ******** -->
+                            <!--******** APPOINTMENTS ******** -->
+                            <!--******** ************ ******** -->
+                            <ItemsControl x:Name="AppointmentsOnGrid"  ScrollViewer.VerticalScrollBarVisibility="Disabled"   
                                       ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay, Mode=OneWay}" >
-                            <!--unnötig? NEIN! Sonst fängt die YPos nicht für jedes Element bei Null an. ItemsPanel ist standardmässig ein Stackpanel-->
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <Grid VerticalAlignment="Top">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                    </Grid>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <pocal:SDV_Appointment_Control/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                        <Grid IsHitTestVisible="False">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="15*"/>
-                                <ColumnDefinition Width="82*"/>
-                            </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0" BorderThickness="0,0,2,0">
-                                <Border.BorderBrush>
-                                    <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
-                                </Border.BorderBrush>
-                            </Border>
+                                <!--unnötig? NEIN! Sonst fängt die YPos nicht für jedes Element bei Null an. ItemsPanel ist standardmässig ein Stackpanel-->
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Grid VerticalAlignment="Top">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                        </Grid>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <pocal:SDV_Appointment_Control/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Grid IsHitTestVisible="False">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="15*"/>
+                                    <ColumnDefinition Width="82*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness="0,0,2,0">
+                                    <Border.BorderBrush>
+                                        <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
+                                    </Border.BorderBrush>
+                                </Border>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    <Border Height="1" Background="#FF807C7C"/>
-                </StackPanel>
-            </Grid>
-        </ScrollViewer>
+                        <Border Height="1" Background="#FF807C7C"/>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </screenSizeSupport:ZoomBox>
     </Grid>
 </UserControl>
