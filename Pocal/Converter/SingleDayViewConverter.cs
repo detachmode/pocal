@@ -219,7 +219,8 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int fullWidth = 406;
+            double screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
+            double fullWidth = 421 * screenSizeMultiplicator;
             int columnsCount = (int)value;
             if (columnsCount > 1)
             {
@@ -330,7 +331,8 @@ namespace Pocal.Converter
 
         private static void calcX(int conflicts, int column, TranslateTransform myTranslate)
         {
-            myTranslate.X = 406 / conflicts * (column - 1);
+            double screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
+            myTranslate.X = 421*screenSizeMultiplicator / conflicts * (column - 1);
         }
 
         public override object[] ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

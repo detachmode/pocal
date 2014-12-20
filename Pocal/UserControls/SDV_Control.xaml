@@ -70,9 +70,6 @@
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <Grid VerticalAlignment="Top">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
                                         </Grid>
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
@@ -84,10 +81,10 @@
                             </ItemsControl>
                             <Grid IsHitTestVisible="False">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="15*"/>
-                                    <ColumnDefinition Width="82*"/>
+                                    <ColumnDefinition Width="73"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" BorderThickness="0,0,2,0">
+                                <Border BorderThickness="0,0,2,0">
                                     <Border.BorderBrush>
                                         <SolidColorBrush Color="{StaticResource ColorBorderGrey}"/>
                                     </Border.BorderBrush>

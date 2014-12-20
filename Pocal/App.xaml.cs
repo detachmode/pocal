@@ -10,6 +10,7 @@ using Pocal.ViewModel;
 using ScheduledTaskAgent1;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ScreenSizeSupport;
 
 
 namespace Pocal
@@ -33,6 +34,7 @@ namespace Pocal
                 return viewModel;
             }
         }
+        public static DisplayInformationEmulator DisplayInformationEmulator { get; private set; }
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
@@ -47,7 +49,6 @@ namespace Pocal
         {
 
            
-
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
 
@@ -59,6 +60,8 @@ namespace Pocal
 
             // Language display initialization
             InitializeLanguage();
+
+            DisplayInformationEmulator = Resources["DisplayInformationEmulator"] as DisplayInformationEmulator; 
 
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)
