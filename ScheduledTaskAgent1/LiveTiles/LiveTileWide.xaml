@@ -11,12 +11,12 @@
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <StackPanel Margin="12" >
-            <TextBlock FontSize="40" x:Name="tb1"></TextBlock>
-            <TextBlock FontSize="30" x:Name="tb2"></TextBlock>
+            <TextBlock FontSize="40" x:Name="tb1" Foreground="White" ></TextBlock>
+            <TextBlock FontSize="30" x:Name="tb2" Foreground="White"></TextBlock>
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-            <TextBlock x:Name="dayOfWeekTb" Text="So" VerticalAlignment="Bottom" FontWeight="Medium" Margin="12,12" FontSize="36"></TextBlock>
-            <TextBlock x:Name="dayTb" Margin="0,0,18,18" FontSize="100" FontWeight="SemiBold"  Height="110" ></TextBlock>
+            <TextBlock x:Name="dayOfWeekTb" Foreground="White" Text="So" VerticalAlignment="Bottom" FontWeight="Medium" Margin="12,12" FontSize="36"></TextBlock>
+            <TextBlock x:Name="dayTb" Foreground="White" Margin="0,0,18,18" FontSize="100" FontWeight="SemiBold"  Height="110" ></TextBlock>
 
         </StackPanel>
 
