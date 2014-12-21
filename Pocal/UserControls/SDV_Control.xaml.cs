@@ -88,5 +88,23 @@ namespace Pocal
 
         }
 
+        public void Update_PocalAppointment(PocalAppointment oldPA, PocalAppointment newPA)
+        {
+            for (int i = GridAppointments.Children.Count-1; i >= 0 ; i--)
+            {
+                FrameworkElement item = GridAppointments.Children[i] as FrameworkElement;
+                if (item.DataContext == oldPA)
+                    GridAppointments.Children.Remove(item); 
+            }
+
+            if (newPA != null && newPA.AllDay == false)
+            {
+                SDV_Appointment_Control control = new SDV_Appointment_Control();
+                control.DataContext = newPA;
+                GridAppointments.Children.Add(control);
+            }
+
+        }
+
     }
 }
