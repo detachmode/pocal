@@ -27,28 +27,20 @@
         </Border>
 
         <screenSizeSupport:ZoomBox  ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
-            <!--<screenSizeSupport:ZoomBox.CacheMode>
-                <BitmapCache RenderAtScale="1"/>
-            </screenSizeSupport:ZoomBox.CacheMode>-->
-            <ScrollViewer Background="{StaticResource PhoneBackgroundBrush}" x:Name="SingleDayScrollViewer"  VerticalScrollBarVisibility="Hidden" 
-                      ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
+
+            <ScrollViewer Background="{StaticResource PhoneBackgroundBrush}" x:Name="SingleDayScrollViewer"  
+                        VerticalScrollBarVisibility="Hidden"
+                        VirtualizingStackPanel.VirtualizationMode="Recycling"
+                        ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
                 <Grid>
                     <Grid.Background>
                         <SolidColorBrush Color="{StaticResource SDV_BG}"/>
                     </Grid.Background>
                     <StackPanel>
-                        <!--******** ************ ******** -->
-                        <!--******** AllDAY APPTS ******** -->
-                        <!--******** ************ ******** -->
-                        <!--<ItemsControl  x:Name="AllDayAppointments" Margin="24,0,0,0" 
-                                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                   ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <pocal:SDV_AllDay_Control/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>-->
+                        <!--******** ************ ******** 
+                        ******** AllDAY APPTS ******** 
+                        ******** ************ ********-->
+                        <StackPanel  x:Name="AllDayAppointments" Margin="24,0,0,0"/> 
 
                         <Border Height="1" Background="#FF807C7C"/>
 
@@ -56,20 +48,12 @@
                             <!--******** ********* ******** -->
                             <!--******** HOURLINES ******** -->
                             <!--******** ********* ******** -->
-                            <!--<ItemsControl x:Name="hourlines"
-								ScrollViewer.VerticalScrollBarVisibility="Disabled"
-								ItemsSource="{Binding SingleDayViewModel.hourLines, Mode=OneWay}" >
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <pocal:SDV_HourLine_Control>
-                                        </pocal:SDV_HourLine_Control>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>-->
+                            <StackPanel x:Name="StackpanelHourLines"/>
 
-                            <Grid x:Name="GridAppointments">
-                            </Grid>
-                            
+
+                            <Grid x:Name="GridAppointments"/>
+                           
+
                             <Grid IsHitTestVisible="False">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="73"/>

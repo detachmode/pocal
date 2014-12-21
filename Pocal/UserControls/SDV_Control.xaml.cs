@@ -14,9 +14,13 @@ namespace Pocal
 {
     public partial class SDV_Control : UserControl
     {
+        internal int FirstHour = 0;
+        private int LastHour = 24;
+
         public SDV_Control()
         {
             InitializeComponent();
+            GridSetup();
         }
 
         public void UpdateScrollviewer()
@@ -48,29 +52,37 @@ namespace Pocal
         }
 
 
+        public void GridSetup()
+        {
+            for (int i = FirstHour; i < LastHour; i++)
+            {
+                string str = i.ToString("00") + ":00";
+                SDV_HourLine_Control control = new SDV_HourLine_Control();
+                control.DataContext = new HourLine { Text = str };
+                StackpanelHourLines.Children.Add(control);
 
-    //<!--******** ************ ******** -->
-    //<!--******** APPOINTMENTS ******** -->
-    //<!--******** ************ ******** -->
-    //<ItemsControl x:Name="AppointmentsOnGrid"  ScrollViewer.VerticalScrollBarVisibility="Disabled"   
-    //          ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay, Mode=OneWay}" >
-    //    <!--unnötig? NEIN! Sonst fängt die YPos nicht für jedes Element bei Null an. ItemsPanel ist standardmässig ein Stackpanel-->
-    //    <ItemsControl.ItemsPanel>
-    //        <ItemsPanelTemplate>
-    //            <Grid VerticalAlignment="Top">
-    //            </Grid>
-    //        </ItemsPanelTemplate>
-    //    </ItemsControl.ItemsPanel>
-    //    <ItemsControl.ItemTemplate>
-    //        <DataTemplate>
-    //            <pocal:SDV_Appointment_Control>
-    //            </pocal:SDV_Appointment_Control>
-    //        </DataTemplate>
-    //    </ItemsControl.ItemTemplate>
-    //</ItemsControl>
-        public void RemoveAppointments()
+            }
+        }
+
+
+        public void PrepareForNewLoadingOfAppoinments(int offsetFromAllDays)
         {
             GridAppointments.Children.Clear();
+            AllDayAppointments.Children.Clear();
+            if (offsetFromAllDays == 0)
+            {
+                AllDayAppointments.Measure(new Size(0, 0));
+                AllDayAppointments.Arrange(new Rect(0, 0, 0, 0));
+
+            }
+            else
+            {
+                Grid grid = new Grid();
+                grid.Height = offsetFromAllDays;
+                AllDayAppointments.Children.Add(grid);
+                AllDayAppointments.UpdateLayout();
+            }
+
         }
 
 
@@ -79,11 +91,22 @@ namespace Pocal
             if (App.ViewModel.SingleDayViewModel.TappedDay == null)
                 return;
 
+            AllDayAppointments.Children.Clear();
+
             foreach (PocalAppointment pa in App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay)
             {
-                SDV_Appointment_Control control = new SDV_Appointment_Control();
-                control.DataContext = pa;
-                GridAppointments.Children.Add(control);
+                if (pa.AllDay)
+                {
+                    SDV_AllDay_Control control = new SDV_AllDay_Control();
+                    control.DataContext = pa;
+                    AllDayAppointments.Children.Add(control);
+                }
+                else
+                {
+                    SDV_Appointment_Control control = new SDV_Appointment_Control();
+                    control.DataContext = pa;
+                    GridAppointments.Children.Add(control);
+                }
             }
 
         }

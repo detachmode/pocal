@@ -12,8 +12,10 @@
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainViewModel}"
     >
 
-    <Grid  x:Name="AllDaySDVAppt"   d:DataContext="{Binding Days[1].PocalApptsOfDay[0]}"    Tap="SDV_AppointmentTap" Visibility="{Binding AllDay, Converter={StaticResource revertBoolean}}">
-        <TextBlock Margin="4,12,0,12" Text="{Binding Subject}" Foreground="{Binding CalColor}"   FontWeight="SemiBold"/>
+    <Grid  x:Name="AllDaySDVAppt"   d:DataContext="{Binding Days[1].PocalApptsOfDay[0]}"    
+           Tap="SDV_AppointmentTap" Visibility="{Binding AllDay, Converter={StaticResource revertBoolean}}">
+        <TextBlock Margin="4,12,0,12" Text="{Binding Subject}" Foreground="{Binding CalColor}"   
+                   FontWeight="SemiBold"/>
         <Grid.Resources>
             <Storyboard x:Name="tapFeedback">
                 <Storyboard>
@@ -28,8 +30,8 @@
         <Grid.RenderTransform>
             <CompositeTransform/>
         </Grid.RenderTransform>
-        <Grid.CacheMode>
+        <!--<Grid.CacheMode>
             <BitmapCache/>
-        </Grid.CacheMode>
+        </Grid.CacheMode>-->
     </Grid>
 </UserControl>

@@ -5,10 +5,6 @@ namespace Pocal.ViewModel
 {
     public class SingleDayViewVM : ViewModelBase
     {
-        internal int FirstHour = 0;
-        private int LastHour = 24;
-
-        public ObservableCollection<HourLine> hourLines { get; private set; }
 
         private Day _tappedDay;
         public Day TappedDay
@@ -27,25 +23,6 @@ namespace Pocal.ViewModel
             }
         }
 
-
-        public SingleDayViewVM()
-        {
-            gridSetup();
-        }
-
-
-        internal void gridSetup()
-        {
-            this.hourLines = new ObservableCollection<HourLine>();
-
-            for (int i = FirstHour; i < LastHour; i++)
-            {
-                string str = i.ToString("00") + ":00";
-                hourLines.Add(new HourLine { Text = str });
-            }
-           
-
-        }
 
 
         public DateTime? getStarTimeFromHourline(string hourLineText)
