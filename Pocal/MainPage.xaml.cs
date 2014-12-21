@@ -773,6 +773,7 @@ namespace Pocal
             Canvas.SetZIndex(MonthView, 10);
 
             DateTime dt = App.ViewModel.DayAtPointer.DT;
+            //addFPivotItemAndLoadAppointmentLines(dt);
             addPivotItem(dt);
 
             YearDisplay.Text = dt.Year.ToString();
@@ -841,6 +842,7 @@ namespace Pocal
 
             MonthsPivot.Items.Add(pivotItem);
         }
+
 
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)

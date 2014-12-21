@@ -97,6 +97,7 @@
     <Compile Include="Converter\AgendaViewConverter.cs" />
     <Compile Include="Converter\OverViewConverter.cs" />
     <Compile Include="Converter\SingleDayViewConverter.cs" />
+    <Compile Include="Helper\TimeFrameChecker.cs" />
     <Compile Include="UserControls\SDV_HourLine_Control.xaml.cs">
       <DependentUpon>SDV_HourLine_Control.xaml</DependentUpon>
     </Compile>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pocal.Helper;
+using System;
 using System.Windows.Media;
 using Windows.ApplicationModel.Appointments;
 
@@ -192,35 +193,18 @@ namespace Pocal.ViewModel
 
         public bool isInTimeFrameOfDate(DateTime date)
         {
-            DateTime startOfDay = date.Date;
-            DateTime endOfDay = startOfDay.Add(TimeSpan.FromMinutes(24 * 60));
-            return (isInTimeFrame(startOfDay, endOfDay));
+            return TimeFrameChecker.isInTimeFrameOfDay(this.Appt, date);
         }
 
         public bool isInTimeFrame(DateTime start, DateTime end)
         {
-            if (this.AllDay)
-            {
-                if (start.Date == this.StartTime.Date)
-                    return true;
-                else
-                    return false;
-            }
-            return isInTimeFrameOFStartEnd(start, end);
+            return TimeFrameChecker.isInTimeFrame(this.Appt, start, end);
 
         }
 
         private bool isInTimeFrameOFStartEnd(DateTimeOffset start, DateTimeOffset end)
         {
-            DateTimeOffset thisStartTime = this.StartTime;
-            DateTimeOffset thisEndTime = this.StartTime + this.Duration;
-
-            bool endsBeforeThis = (thisEndTime <= start);
-            bool beginsAfterThis = (thisStartTime > end);
-
-            bool isNotInTimeFrame = (endsBeforeThis || beginsAfterThis);
-
-            return !isNotInTimeFrame;
+            return TimeFrameChecker.isInTimeFrameOFStartEnd(this.Appt, start, end);
         }
 
         public bool isInTimeFrame_IgnoreAllDays(DateTime start, DateTime end)

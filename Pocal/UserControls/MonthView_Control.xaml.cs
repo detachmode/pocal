@@ -10,6 +10,10 @@ using Microsoft.Phone.Shell;
 using System.Windows.Media;
 using Pocal.ViewModel;
 using System.Windows.Media.Imaging;
+using Windows.ApplicationModel.Appointments;
+using Pocal.Helper;
+using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace Pocal
 {
@@ -23,9 +27,52 @@ namespace Pocal
         public void loadGridSetup(DateTime dt)
         {
 
-
             gridSetup(dt);
 
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                LoadAppointmentLinesAsync();
+            });
+            ;
+
+        }
+
+
+        public async void LoadAppointmentLinesAsync()
+        {
+
+            IReadOnlyList<Appointment> listOfAppointments = await CalendarAPI.getAppointments(gridDateTimes.FirstOrDefault(), gridDateTimes.Count);
+            foreach (DependencyObject item in (MonthViewGrid as Grid).Children)
+            {
+                Border brd = item as Border;
+                if (brd == null)
+                    continue;
+
+                DateTime dtOfBrd = (DateTime)brd.DataContext;
+                IEnumerable<Appointment> appointmentsOfThisDay = listOfAppointments.Where(x => TimeFrameChecker.isInTimeFrameOfDay(x, dtOfBrd));
+                addAppointmentLines(appointmentsOfThisDay, brd);
+            }
+        }
+
+        private void addAppointmentLines(IEnumerable<Appointment> appointmentsOfThisDay, Border item)
+        {
+            int count = 1;
+            double screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
+
+            foreach (Appointment appt in appointmentsOfThisDay)
+            {
+                PocalAppointment pa = App.ViewModel.CreatePocalAppoinment(appt);
+                Rectangle rect = new Rectangle();
+                rect.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+                rect.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                rect.Margin =  new Thickness(6 * screenSizeMultiplicator, 6* screenSizeMultiplicator * count, 6 * screenSizeMultiplicator, 6 * screenSizeMultiplicator);
+                rect.Height = 3 * screenSizeMultiplicator;
+                rect.Width = 20 * screenSizeMultiplicator;
+
+                rect.Fill = pa.CalColor;
+                (item.Child as Grid).Children.Add(rect);
+                count++;
+            }
         }
 
         void dayTap(object sender, System.Windows.Input.GestureEventArgs e)
@@ -52,7 +99,7 @@ namespace Pocal
                     Border brd = createBorder(x, y, (howManyRows - 1));
                     //brd.Tap += dayGrid_Tap;
                     Grid dayGrid = new Grid();
-                    
+
                     //addDeltaDayMark(dayGrid);
 
                     TextBlock txt = createTextBlock();
@@ -81,10 +128,11 @@ namespace Pocal
                 grid.Width = 20;
                 grid.VerticalAlignment = System.Windows.VerticalAlignment.Top;
                 grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+                Canvas.SetZIndex(grid, 10);
 
                 ImageBrush ib = new ImageBrush();
                 ib.ImageSource = new BitmapImage(new Uri(@"\Images\MonthViewDayNowMark.png", UriKind.Relative));
-                grid.Background = ib;                    
+                grid.Background = ib;
 
 
                 dayGrid.Children.Add(grid);
@@ -96,6 +144,7 @@ namespace Pocal
                 grid.Width = 20;
                 grid.VerticalAlignment = System.Windows.VerticalAlignment.Top;
                 grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+                Canvas.SetZIndex(grid, 10);
 
                 ImageBrush ib = new ImageBrush();
                 ib.ImageSource = new BitmapImage(new Uri(@"\Images\MonthViewDeltaTimeMark.png", UriKind.Relative));
