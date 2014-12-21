@@ -12,7 +12,7 @@ using System.Windows.Controls;
 namespace Pocal.Converter
 {
 
-    internal static class CultureSettings
+    public static class CultureSettings
     {
         public static CultureInfo ci = new CultureInfo("de-DE");
     }

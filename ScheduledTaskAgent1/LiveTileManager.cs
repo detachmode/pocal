@@ -1,6 +1,7 @@
 ﻿using Microsoft.Phone.Shell;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
@@ -18,13 +19,20 @@ namespace ScheduledTaskAgent1
         {
             IReadOnlyList<Appointment> appts = await CalendarAPI.getAppointments(DateTime.Now, 2);
 
+            // der nächste Termin, der nicht AllDay ist:
+            foreach (Appointment appt in appts)
+            {
+                if (appt.AllDay)
+                    continue;
+
+                if (appt.StartTime >= DateTime.Now)
+                    return appt;
+            }
+
             foreach (Appointment appt in appts)
             {
                 if (appt.StartTime >= DateTime.Now)
-                {
                     return appt;
-
-                }
             }
             return null;
         }
@@ -39,12 +47,18 @@ namespace ScheduledTaskAgent1
             {
                 str += "Morgen: ";
             }
-            if (appt.StartTime.Date != endTime.Date)
+            if (appt.AllDay)
             {
-                str += (appt.StartTime.DayOfWeek.ToString() + " bis " + endTime.DayOfWeek.ToString());
+                str += "Ganztägig";
             }
-
-            str += (appt.StartTime.Hour.ToString("00") + ":" + appt.StartTime.Minute.ToString("00") + " - " + endTime.Hour.ToString("00") + ":" + endTime.Minute.ToString("00"));
+            else if (appt.StartTime.Date != endTime.Date)
+            {
+                str += appt.StartTime.ToString("dddd", CultureSettings.ci) + " bis " + endTime.ToString("dddd", CultureSettings.ci);
+            }
+            else
+            {
+                str += (appt.StartTime.Hour.ToString("00") + ":" + appt.StartTime.Minute.ToString("00") + " - " + endTime.Hour.ToString("00") + ":" + endTime.Minute.ToString("00"));
+            }
             return str;
 
         }
@@ -59,14 +73,22 @@ namespace ScheduledTaskAgent1
             {
                 str += "Morgen: ";
             }
-            if (appt.StartTime.Date != endTime.Date)
+            if (appt.AllDay)
             {
-                str += (appt.StartTime.DayOfWeek.ToString() + " bis " + endTime.DayOfWeek.ToString());
+                str += "Ganztägig";
             }
-
-            str += (appt.StartTime.Hour.ToString("00") + ":" + appt.StartTime.Minute.ToString("00"));
+            else if (appt.StartTime.Date != endTime.Date)
+            {
+                str += appt.StartTime.ToString("dddd", CultureSettings.ci) + " bis " + endTime.ToString("dddd", CultureSettings.ci);
+            }
+            else
+            {
+                str += (appt.StartTime.Hour.ToString("00") + ":" + appt.StartTime.Minute.ToString("00"));
+            }
             return str;
         }
+
+
 
 
         public static async void UpdateTile()
@@ -83,7 +105,7 @@ namespace ScheduledTaskAgent1
             customTileWide.UpdateTextBox(AppointmentOnLiveTile);
             customTileWide.Measure(new Size(691, 336));
             customTileWide.Arrange(new Rect(0, 0, 691, 336));
-            
+
 
             var bmp = new WriteableBitmap(336, 336);
             bmp.Render(customTile, null);
@@ -100,11 +122,6 @@ namespace ScheduledTaskAgent1
 
             using (var isf = IsolatedStorageFile.GetUserStoreForApplication())
             {
-                //if (!isf.DirectoryExists("/CustomLiveTiles"))
-                //{
-                //    isf.CreateDirectory("/CustomLiveTiles");
-                //}
-
 
                 using (IsolatedStorageFileStream imageStream = new IsolatedStorageFileStream("/Shared/ShellContent/" + filename + ".png", System.IO.FileMode.OpenOrCreate, isf))
                 {
@@ -118,16 +135,6 @@ namespace ScheduledTaskAgent1
 
                 }
 
-
-                //using (var stream = isf.OpenFile(filename, System.IO.FileMode.OpenOrCreate))
-                //{
-                //    bmp.SaveJpeg(stream, 336, 336, 0, 100);
-                //}
-
-                //using (var stream = isf.OpenFile(filenameWide, System.IO.FileMode.OpenOrCreate))
-                //{
-                //    bmp2.SaveJpeg(stream, 691, 336, 0, 100);
-                //}
             }
             try
             {
