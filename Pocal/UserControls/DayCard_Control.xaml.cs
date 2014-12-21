@@ -53,11 +53,11 @@ namespace Pocal
         {
             Dispatcher.BeginInvoke(() =>
             {
-                ViewSwitcher.mainpage.addBitmapCacheToSDV();
+                //ViewSwitcher.mainpage.addBitmapCacheToSDV();
                 Thread.Sleep(150);
                 ViewSwitcher.SwitchToSDV(sender);
                 
-                ViewSwitcher.mainpage.removeBitmapCacheAfterAnimation();
+                //ViewSwitcher.mainpage.removeBitmapCacheAfterAnimation();
             });
 
 

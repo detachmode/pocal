@@ -27,7 +27,9 @@
         </Border>
 
         <screenSizeSupport:ZoomBox  ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
-
+            <!--<screenSizeSupport:ZoomBox.CacheMode>
+                <BitmapCache RenderAtScale="1"/>
+            </screenSizeSupport:ZoomBox.CacheMode>-->
             <ScrollViewer Background="{StaticResource PhoneBackgroundBrush}" x:Name="SingleDayScrollViewer"  VerticalScrollBarVisibility="Hidden" 
                       ManipulationCompleted="SingleDayScrollViewer_ManipulationCompleted">
                 <Grid>
@@ -38,14 +40,16 @@
                         <!--******** ************ ******** -->
                         <!--******** AllDAY APPTS ******** -->
                         <!--******** ************ ******** -->
-                        <ItemsControl  x:Name="AllDayAppointments" Margin="24,0,0,0" 
+                        <!--<ItemsControl  x:Name="AllDayAppointments" Margin="24,0,0,0" 
+                                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                    ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <pocal:SDV_AllDay_Control/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                        </ItemsControl>-->
+                        
                         <Border Height="1" Background="#FF807C7C"/>
 
                         <Grid x:Name="HourLinesGridAppointments">
@@ -57,7 +61,8 @@
 									ItemsSource="{Binding SingleDayViewModel.hourLines, Mode=OneWay}" >
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <pocal:SDV_HourLine_Control/>
+                                        <pocal:SDV_HourLine_Control>
+                                        </pocal:SDV_HourLine_Control>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
@@ -75,7 +80,8 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <pocal:SDV_Appointment_Control/>
+                                        <pocal:SDV_Appointment_Control>
+                                        </pocal:SDV_Appointment_Control>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
