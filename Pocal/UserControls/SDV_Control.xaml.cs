@@ -97,7 +97,7 @@ namespace Pocal
                     GridAppointments.Children.Remove(item); 
             }
 
-            if (newPA != null && newPA.AllDay == false)
+            if (newPA != null && newPA.AllDay == false && newPA.StartTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.DT.Date)
             {
                 SDV_Appointment_Control control = new SDV_Appointment_Control();
                 control.DataContext = newPA;
