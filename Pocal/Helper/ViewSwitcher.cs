@@ -36,8 +36,9 @@ namespace Pocal
             {
                 App.ViewModel.InModus = MainViewModel.Modi.AgendaViewSDV;
             }
+
             calculateOffset();
-            mainpage.SingleDayViewer.PrepareForNewLoadingOfAppoinments(offsetFromAllDays);
+            mainpage.SingleDayViewer.PrepareForNewLoadingOfAppoinments();
             
             openSDV();
             setTappedDay(sender);
@@ -81,7 +82,7 @@ namespace Pocal
         private static void calculateOffset()
         {
             int allDayCounter = countApptWithAllDay();
-            int heightOfOneAppt = 46;
+            int heightOfOneAppt = 43;
 
             offsetFromAllDays = heightOfOneAppt * allDayCounter;
         }

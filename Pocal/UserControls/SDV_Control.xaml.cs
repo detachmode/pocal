@@ -65,24 +65,9 @@ namespace Pocal
         }
 
 
-        public void PrepareForNewLoadingOfAppoinments(int offsetFromAllDays)
+        public void PrepareForNewLoadingOfAppoinments()
         {
             GridAppointments.Children.Clear();
-            AllDayAppointments.Children.Clear();
-            if (offsetFromAllDays == 0)
-            {
-                AllDayAppointments.Measure(new Size(0, 0));
-                AllDayAppointments.Arrange(new Rect(0, 0, 0, 0));
-
-            }
-            else
-            {
-                Grid grid = new Grid();
-                grid.Height = offsetFromAllDays;
-                AllDayAppointments.Children.Add(grid);
-                AllDayAppointments.UpdateLayout();
-            }
-
         }
 
 
@@ -91,17 +76,9 @@ namespace Pocal
             if (App.ViewModel.SingleDayViewModel.TappedDay == null)
                 return;
 
-            AllDayAppointments.Children.Clear();
-
             foreach (PocalAppointment pa in App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay)
             {
-                if (pa.AllDay)
-                {
-                    SDV_AllDay_Control control = new SDV_AllDay_Control();
-                    control.DataContext = pa;
-                    AllDayAppointments.Children.Add(control);
-                }
-                else
+                if (!pa.AllDay)
                 {
                     SDV_Appointment_Control control = new SDV_Appointment_Control();
                     control.DataContext = pa;

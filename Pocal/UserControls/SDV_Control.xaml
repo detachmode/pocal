@@ -37,10 +37,18 @@
                         <SolidColorBrush Color="{StaticResource SDV_BG}"/>
                     </Grid.Background>
                     <StackPanel>
-                        <!--******** ************ ******** 
-                        ******** AllDAY APPTS ******** 
-                        ******** ************ ********-->
-                        <StackPanel  x:Name="AllDayAppointments" Margin="24,0,0,0"/> 
+                        <!--******** ************ ******** -->
+                        <!--******** AllDAY APPTS ******** -->
+                        <!--******** ************ ******** -->
+                        <ItemsControl  x:Name="AllDayAppointments" Margin="24,0,0,0" 
+                                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                   ItemsSource="{Binding SingleDayViewModel.TappedDay.PocalApptsOfDay}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <pocal:SDV_AllDay_Control/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
 
                         <Border Height="1" Background="#FF807C7C"/>
 
