@@ -12,6 +12,7 @@ using Pocal.Helper;
 using System.Windows;
 using System.Threading;
 using System.Windows.Threading;
+using ScreenSizeSupport;
 
 
 namespace Pocal.ViewModel
@@ -107,6 +108,8 @@ namespace Pocal.ViewModel
             #region DESIGN TIME DATA
             if (DesignerProperties.IsInDesignTool)
             {
+                App.DisplayInformationEmulator = App.Current.Resources["DisplayInformationEmulator"] as DisplayInformationEmulator; 
+
                 //	//CREATE DESIGN TIME DATA HERE
                 DateTime start = new DateTime(2014, 11, 07);
                 DateTime dt = start - start.TimeOfDay;

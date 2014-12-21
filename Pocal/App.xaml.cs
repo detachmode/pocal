@@ -34,7 +34,7 @@ namespace Pocal
                 return viewModel;
             }
         }
-        public static DisplayInformationEmulator DisplayInformationEmulator { get; private set; }
+        public static DisplayInformationEmulator DisplayInformationEmulator { get; set; }
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
