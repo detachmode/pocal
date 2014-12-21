@@ -13,8 +13,6 @@ namespace Pocal
         public enum Sender { HeaderTap, ApptTap }
         public static Sender from;
 
-        private static bool openFirstTime = true;
-
         public static MainPage mainpage = (MainPage)App.RootFrame.Content;
         private static PocalAppointment ScrollToPA;
         public static void setScrollToPa(PocalAppointment pa)
@@ -24,8 +22,6 @@ namespace Pocal
         private static int offsetFromAllDays;
         private static int additionalOffset = 175;
 
-
-        private static Day temporaryTappedDay;
 
         public static void SwitchToSDV(object sender)
         {
@@ -41,58 +37,31 @@ namespace Pocal
                 App.ViewModel.InModus = MainViewModel.Modi.AgendaViewSDV;
             }
 
-
-            setTemporaryTappedDay(sender);
-            Thread.Sleep(1);
-            removePreviousDataContext();
-            Thread.Sleep(1);
+            mainpage.SingleDayViewer.RemoveAppointments();
 
             openSDV();
-
+            setTappedDay(sender);
             scrollToRightPosition();
-            if (openFirstTime || temporaryTappedDay.PocalApptsOfDay.Count > 3)
-            {
 
-                setTappedDayAsynchron();
-                openFirstTime = false;
-            }
-            else
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
                 Thread.Sleep(1);
-                setTappedDay();
-            }
+                mainpage.SingleDayViewer.InsertAppointments();
+            });
 
             mainpage.SDVAppbar();
 
-
-
-
         }
 
 
 
-        private static void setTemporaryTappedDay(object sender)
+        private static void setTappedDay(object sender)
         {
             var element = (FrameworkElement)sender;
-            temporaryTappedDay = element.DataContext as Day;
+            App.ViewModel.SingleDayViewModel.TappedDay = element.DataContext as Day;
+            App.ViewModel.ConflictManager.solveConflicts();
         }
 
-        private static void removePreviousDataContext()
-        {
-            Day blankDay = new Day();
-            blankDay.PocalApptsOfDay = null;
-            System.Collections.ObjectModel.ObservableCollection<PocalAppointment> tempCollection = new System.Collections.ObjectModel.ObservableCollection<PocalAppointment>();
-            foreach (PocalAppointment pa in temporaryTappedDay.PocalApptsOfDay)
-            {
-                if (pa.AllDay)
-                {
-                    tempCollection.Add(new PocalAppointment() { AllDay = true });
-                }
-            }
-            blankDay.PocalApptsOfDay = tempCollection;
-            App.ViewModel.SingleDayViewModel.TappedDay = blankDay;
-
-        }
 
         private static bool currentViewIsSDV()
         {
@@ -101,34 +70,10 @@ namespace Pocal
 
         private static void openSDV()
         {
-            //Deployment.Current.Dispatcher.BeginInvoke(() =>
-            //{
-                //Thread.Sleep(100);
-                Canvas.SetZIndex(mainpage.SingleDayView, 1);
-                //mainpage.SingleDayView.Visibility = Visibility.Visible;
-                VisualStateManager.GoToState(mainpage, "OpenDelay", true);
-            //});
-
-        }
+            Canvas.SetZIndex(mainpage.SingleDayView, 1);
+            VisualStateManager.GoToState(mainpage, "OpenDelay", true);
 
 
-
-        private static void setTappedDayAsynchron()
-        {
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                Thread.Sleep(1);
-                //Update UI in here as this part will run on the UI thread.
-                setTappedDay();
-
-            });
-
-        }
-
-        private static void setTappedDay()
-        {
-            App.ViewModel.SingleDayViewModel.TappedDay = temporaryTappedDay;
-            App.ViewModel.ConflictManager.solveConflicts();
         }
 
 
@@ -144,7 +89,7 @@ namespace Pocal
         private static int countApptWithAllDay()
         {
             int allDayCounter = 0;
-            foreach (var pa in temporaryTappedDay.PocalApptsOfDay)
+            foreach (var pa in App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay)
             {
                 if (pa.AllDay == true)
                     allDayCounter += 1;
