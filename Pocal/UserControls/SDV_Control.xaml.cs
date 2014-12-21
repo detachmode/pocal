@@ -71,7 +71,7 @@ namespace Pocal
         }
 
 
-        public void InsertAppointments()
+        public void AddTappedDayAppointments()
         {
             if (App.ViewModel.SingleDayViewModel.TappedDay == null)
                 return;

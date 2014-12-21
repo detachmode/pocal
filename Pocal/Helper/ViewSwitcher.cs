@@ -47,7 +47,7 @@ namespace Pocal
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
                 Thread.Sleep(1);
-                mainpage.SingleDayViewer.InsertAppointments();
+                mainpage.SingleDayViewer.AddTappedDayAppointments();
             });
 
             mainpage.SDVAppbar();
