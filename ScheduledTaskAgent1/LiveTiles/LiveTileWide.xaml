@@ -12,6 +12,7 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <StackPanel Margin="12" >
             <TextBlock FontSize="40" x:Name="tb1" Foreground="White" ></TextBlock>
+            <TextBlock FontSize="30" x:Name="tbOrt" Foreground="White"></TextBlock>
             <TextBlock FontSize="30" x:Name="tb2" Foreground="White"></TextBlock>
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">

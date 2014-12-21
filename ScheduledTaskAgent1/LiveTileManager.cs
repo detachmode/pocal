@@ -37,6 +37,15 @@ namespace ScheduledTaskAgent1
             return null;
         }
 
+        public static string tbOrtWide(Appointment appt)
+        {
+           string str = "";
+           if (appt.Location != "")
+               str = appt.Location;
+
+            return str;
+
+        }
 
         public static string tb2TextWide(Appointment appt)
         {

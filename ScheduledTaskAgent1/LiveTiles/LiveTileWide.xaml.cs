@@ -32,7 +32,10 @@ namespace ScheduledTaskAgent1
             else
             {
                 tb1.Text = appt.Subject;
-
+                if (appt.Location == "")
+                    tbOrt.Visibility = System.Windows.Visibility.Collapsed;
+                tbOrt.Text = LiveTileManager.tbOrtWide(appt);
+                
                 tb2.Text = LiveTileManager.tb2TextWide(appt);
                 LayoutRoot.UpdateLayout();
             }
