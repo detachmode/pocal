@@ -24,7 +24,7 @@
 						Text="{Binding SingleDayViewModel.TappedDay.DT, Converter={StaticResource windowHeaderDateConverter}}" 
 						Margin="148,-4,24,0"  FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Right">
             </TextBlock>
-        </Border>
+        </Border>                                                                      
 
         <screenSizeSupport:ZoomBox  ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
             <!--<screenSizeSupport:ZoomBox.CacheMode>
