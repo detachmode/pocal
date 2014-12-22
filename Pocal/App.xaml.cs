@@ -331,6 +331,8 @@ namespace Pocal
                     if (MessageBox.Show(message, "Probeversion", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                     {
                         App._marketPlaceDetailTask.Show();
+                        IsolatedStorageSettings.ApplicationSettings.Save();
+                        Application.Current.Terminate();
                     }
                     else
                     {
