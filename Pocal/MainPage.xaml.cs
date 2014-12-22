@@ -188,7 +188,7 @@ namespace Pocal
             /*********** ADD METHODE BUTTON ***********/
             ApplicationBarIconButton button2 = new ApplicationBarIconButton();
             button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
-            button2.Text = "add";
+            button2.Text = "Termin hinzufügen";
             ApplicationBar.Buttons.Add(button2);
             button2.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
@@ -479,7 +479,7 @@ namespace Pocal
             /*********** ADD METHODE BUTTON ***********/
             ApplicationBarIconButton button2 = new ApplicationBarIconButton();
             button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
-            button2.Text = "add";
+            button2.Text = "Termin hinzufügen";
             ApplicationBar.Buttons.Add(button2);
             button2.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
@@ -564,7 +564,7 @@ namespace Pocal
             /*********** ADD METHODE BUTTON ***********/
             ApplicationBarIconButton button2 = new ApplicationBarIconButton();
             button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
-            button2.Text = "add";
+            button2.Text = "Termin hinzufügen";
             ApplicationBar.Buttons.Add(button2);
             button2.Click += new EventHandler(delegate(object sender, EventArgs e)
             {

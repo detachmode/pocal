@@ -320,7 +320,7 @@ namespace Pocal
             bool isTrail = _licenseInformation.IsTrial();
 
             // comment out before release!!
-            isTrail = true;
+            //isTrail = true;
 
             if (isTrail)
             {
