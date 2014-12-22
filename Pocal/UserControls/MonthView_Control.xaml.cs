@@ -29,11 +29,11 @@ namespace Pocal
 
             gridSetup(dt);
 
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
+            //Deployment.Current.Dispatcher.BeginInvoke(() =>
+            //{
                 LoadAppointmentLinesAsync();
-            });
-            ;
+            //});
+            //;
 
         }
 
