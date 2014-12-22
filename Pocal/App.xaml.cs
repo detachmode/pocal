@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Markup;
@@ -11,18 +12,18 @@ using ScheduledTaskAgent1;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ScreenSizeSupport;
+using Microsoft.Phone.Tasks;
+using System.Linq;
+using System.IO.IsolatedStorage;
+using Microsoft.Phone.Marketplace;
 
 
 namespace Pocal
 {
     public partial class App : Application
     {
+
         private static MainViewModel viewModel = null;
-        public static bool FirstLaunch = true;
-        /// <summary>
-        /// A static ViewModel used by the views to bind against.
-        /// </summary>
-        /// <returns>The MainViewModel object.</returns>
         public static MainViewModel ViewModel
         {
             get
@@ -48,7 +49,7 @@ namespace Pocal
         public App()
         {
 
-           
+
             // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
 
@@ -61,7 +62,7 @@ namespace Pocal
             // Language display initialization
             InitializeLanguage();
 
-            DisplayInformationEmulator = Resources["DisplayInformationEmulator"] as DisplayInformationEmulator; 
+            DisplayInformationEmulator = Resources["DisplayInformationEmulator"] as DisplayInformationEmulator;
 
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)
@@ -103,7 +104,7 @@ namespace Pocal
                 ImageBrush ib = new ImageBrush();
                 ib.ImageSource = new BitmapImage(new Uri(@"\Images\AgendaPointerBright.png", UriKind.Relative));
                 ib.Stretch = Stretch.None;
-                App.Current.Resources.Add("AgendaPointerImage", ib);           
+                App.Current.Resources.Add("AgendaPointerImage", ib);
 
 
                 App.Current.Resources.Add("SDV_BG", Color.FromArgb(255, 240, 240, 240));
@@ -116,18 +117,18 @@ namespace Pocal
             {
                 //DARK
                 App.Current.Resources.Add("Agenda_BG", Colors.Black);
-                
+
                 ImageBrush ib = new ImageBrush();
                 ib.ImageSource = new BitmapImage(new Uri(@"\Images\AgendaPointerDark.png", UriKind.Relative));
                 ib.Stretch = Stretch.None;
-                App.Current.Resources.Add("AgendaPointerImage", ib);    
+                App.Current.Resources.Add("AgendaPointerImage", ib);
 
                 App.Current.Resources.Add("SDV_BG", Color.FromArgb(255, 15, 15, 15));
                 App.Current.Resources.Add("Month_BG", Colors.Black);
                 App.Current.Resources.Add("Month_WeekendBG", Color.FromArgb(255, 30, 30, 30));
                 App.Current.Resources.Add("Month_NoWeekendBG", Colors.Black);
             }
-           
+
         }
 
         // Code to execute when a contract activation such as a file open or save picker returns 
@@ -140,12 +141,15 @@ namespace Pocal
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            //CheckLicense();
+            //ShowBuyPopUpIfTrial();
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            //CheckLicense();
             LiveTileManager.UpdateTileFromForeground();
         }
 
@@ -303,6 +307,53 @@ namespace Pocal
 
                 throw;
             }
+        }
+
+
+        public static MarketplaceDetailTask _marketPlaceDetailTask = new MarketplaceDetailTask();
+        private static IsolatedStorageSettings userSettings = IsolatedStorageSettings.ApplicationSettings;
+        private static LicenseInformation _licenseInformation = new LicenseInformation();
+
+
+        public static void ShowTrialPopUp()
+        {
+            bool isTrail = _licenseInformation.IsTrial();
+            isTrail = true;
+            if (isTrail)
+            {
+                try
+                {
+                    int trailDaysLeft = getTrialDaysLeft();
+                    string message = String.Format("Du hast noch {0} kostenlose Probetage. Kaufe dir die App, wenn sie dir gefällt!", trailDaysLeft);
+                    if (MessageBox.Show(message, "Probeversion", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        App._marketPlaceDetailTask.Show();
+                    }
+                    else
+                    {
+                        if (trailDaysLeft == 0)
+                        {
+                            IsolatedStorageSettings.ApplicationSettings.Save();
+                            Application.Current.Terminate();
+                        }
+                    }
+
+                }
+                catch (System.Collections.Generic.KeyNotFoundException)
+                {
+                    userSettings.Add("installDate", DateTime.Now.Date);
+                    IsolatedStorageSettings.ApplicationSettings.Save();
+                }
+            }
+        }
+
+        private static int getTrialDaysLeft()
+        {
+            DateTime installDate = (DateTime)userSettings["installDate"];
+            int trailDaysLeft = (installDate.Date.AddDays(7) - DateTime.Now.Date).Days;
+            if (trailDaysLeft < 0)
+                trailDaysLeft = 0;
+            return trailDaysLeft;
         }
     }
 }

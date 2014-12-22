@@ -18,6 +18,7 @@ using Microsoft.Phone.Shell;
 using Pocal.Resources;
 using Microsoft.Phone.Scheduler;
 using ScheduledTaskAgent1;
+using Microsoft.Phone.Tasks;
 
 namespace Pocal
 {
@@ -34,11 +35,10 @@ namespace Pocal
             App.LoadThemeRessources();
             loadStartup();
 
-            App.FirstLaunch = false;
-
-
-
+            App.ShowTrialPopUp();
         }
+
+
 
         private void loadStartup()
         {
@@ -81,10 +81,10 @@ namespace Pocal
                 leaveOverview();
             }
 
-            else
-                scrollToToday();
+            //else
+            //    scrollToToday();
 
-            e.Cancel = true;
+            //e.Cancel = true;
             base.OnBackKeyPress(e);
         }
 
@@ -165,15 +165,15 @@ namespace Pocal
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
             ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
-            item1.Text = "Einstellungen";
-            ApplicationBar.MenuItems.Add(item1);
-            ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
-            item2.Text = "Tutorial";
-            ApplicationBar.MenuItems.Add(item2);
+            //item1.Text = "Einstellungen";
+            //ApplicationBar.MenuItems.Add(item1);
+            //ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
+            //item2.Text = "Tutorial";
+            //ApplicationBar.MenuItems.Add(item2);
 
-            ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
-            item3.Text = "Info";
-            ApplicationBar.MenuItems.Add(item3);
+            //ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
+            //item3.Text = "Info";
+            //ApplicationBar.MenuItems.Add(item3);
 
             /*********** BUTTONs ***********/
             ApplicationBarIconButton button1 = new ApplicationBarIconButton();
@@ -318,7 +318,7 @@ namespace Pocal
             if (SingleDayView.Visibility == Visibility.Visible)
                 closeSDV();
         }
-                                                          
+
 
         private void checkDayAtCenterOfScreen_Tick(object sender, EventArgs e)
         {
@@ -456,15 +456,15 @@ namespace Pocal
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
             ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
-            item1.Text = "Einstellungen";
-            ApplicationBar.MenuItems.Add(item1);
-            ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
-            item2.Text = "Tutorial";
-            ApplicationBar.MenuItems.Add(item2);
+            //item1.Text = "Einstellungen";
+            //ApplicationBar.MenuItems.Add(item1);
+            //ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
+            //item2.Text = "Tutorial";
+            //ApplicationBar.MenuItems.Add(item2);
 
-            ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
-            item3.Text = "Info";
-            ApplicationBar.MenuItems.Add(item3);
+            //ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
+            //item3.Text = "Info";
+            //ApplicationBar.MenuItems.Add(item3);
 
             /*********** BUTTONs ***********/
             ApplicationBarIconButton button1 = new ApplicationBarIconButton();
@@ -514,7 +514,7 @@ namespace Pocal
         {
             VisualStateManager.GoToState(this, "Close", true);
 
-            if (App.ViewModel.InModus == MainViewModel.Modi.OverViewSDV ||  App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverViewSDV || App.ViewModel.InModus == MainViewModel.Modi.OverView)
             {
                 OverviewAppbar();
                 App.ViewModel.InModus = MainViewModel.Modi.OverView;
@@ -541,15 +541,15 @@ namespace Pocal
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
             ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
-            item1.Text = "Einstellungen";
-            ApplicationBar.MenuItems.Add(item1);
-            ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
-            item2.Text = "Tutorial";
-            ApplicationBar.MenuItems.Add(item2);
+            //item1.Text = "Einstellungen";
+            //ApplicationBar.MenuItems.Add(item1);
+            //ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
+            //item2.Text = "Tutorial";
+            //ApplicationBar.MenuItems.Add(item2);
 
-            ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
-            item3.Text = "Info";
-            ApplicationBar.MenuItems.Add(item3);
+            //ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
+            //item3.Text = "Info";
+            //ApplicationBar.MenuItems.Add(item3);
 
             /*********** BUTTONs ***********/
             ApplicationBarIconButton button1 = new ApplicationBarIconButton();

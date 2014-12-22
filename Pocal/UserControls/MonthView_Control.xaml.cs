@@ -26,14 +26,8 @@ namespace Pocal
 
         public void loadGridSetup(DateTime dt)
         {
-
             gridSetup(dt);
-
-            //Deployment.Current.Dispatcher.BeginInvoke(() =>
-            //{
-                LoadAppointmentLinesAsync();
-            //});
-            //;
+            LoadAppointmentLinesAsync();
 
         }
 
