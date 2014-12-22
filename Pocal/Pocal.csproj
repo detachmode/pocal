@@ -18,7 +18,7 @@
     <SupportedCultures>de%3bde-DE%3bde-LI%3bde-LU%3bde-AT%3bde-CH</SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
-    <XapFilename>Pocal_Debug_AnyCPU.xap</XapFilename>
+    <XapFilename>Pocal.xap</XapFilename>
     <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
     <SilverlightAppEntry>Pocal.App</SilverlightAppEntry>
     <ValidateXaml>true</ValidateXaml>

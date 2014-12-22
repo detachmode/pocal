@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2014/deployment" AppPlatformVersion="8.1">
-  <DefaultLanguage xmlns="" code="en-US" />
+  <DefaultLanguage xmlns="" code="de" />
   <Languages xmlns="">
     <Language code="de" />
     <Language code="de-DE" />
@@ -9,7 +9,7 @@
     <Language code="de-AT" />
     <Language code="de-CH" />
   </Languages>
-  <App xmlns="" ProductID="{89f0defb-5da9-490c-a2f2-da273d2b5dd1}" Title="Pocal" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Detachmode" Description="Agenda View and Day View combined." SDOptOut="false" BackUpOptOut="false" Publisher="Detachmode Apps" PublisherID="{a825cd07-5d1f-418d-9919-24950c729e55}">
+  <App xmlns="" ProductID="{89f0defb-5da9-490c-a2f2-da273d2b5dd1}" Title="Pocal" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Detachmode" Description="Agenda View and Day View combined." SDOptOut="false" BackUpOptOut="false" Publisher="Detachmode" PublisherID="{37123FD0-04CF-41ED-8BE2-1D79D1B1CFF4}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_APPOINTMENTS" />
