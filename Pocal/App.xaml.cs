@@ -318,7 +318,10 @@ namespace Pocal
         public static void ShowTrialPopUp()
         {
             bool isTrail = _licenseInformation.IsTrial();
+
+            // comment out before release!!
             isTrail = true;
+
             if (isTrail)
             {
                 try
