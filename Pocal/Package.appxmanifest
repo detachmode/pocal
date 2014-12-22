@@ -19,7 +19,6 @@
       <m3:VisualElements DisplayName="Pocal" Square150x150Logo="Assets\SquareTile150x150.png" Square44x44Logo="Assets\Logo.png" Description="Pocal" ForegroundText="light" BackgroundColor="#464646">
         <m3:DefaultTile Square71x71Logo="Assets\SquareTile71x71.png">
         </m3:DefaultTile>
-        <m3:SplashScreen Image="Assets\SplashScreen.png" />
         <m3:ApplicationView MinWidth="width320" />
         <!--Used in XAML Designer. DO NOT REMOVE-->
       </m3:VisualElements>
