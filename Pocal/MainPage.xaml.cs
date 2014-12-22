@@ -587,7 +587,7 @@ namespace Pocal
 
             ApplicationBarIconButton button4 = new ApplicationBarIconButton();
             button4.IconUri = new Uri("/Images/cancel.png", UriKind.Relative);
-            button4.Text = "Close Overview";
+            button4.Text = "Beende Overview";
             ApplicationBar.Buttons.Add(button4);
             button4.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
