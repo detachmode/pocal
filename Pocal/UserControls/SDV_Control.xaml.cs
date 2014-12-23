@@ -25,7 +25,7 @@ namespace Pocal
 
         public void UpdateScrollviewer()
         {
-            this.SingleDayScrollViewer.UpdateLayout();
+            this.SDV_ScrollViewer.UpdateLayout();
         }
 
 
@@ -68,6 +68,9 @@ namespace Pocal
         public void PrepareForNewLoadingOfAppoinments()
         {
             GridAppointments.Children.Clear();
+            SDV_ScrollViewer.ClearValue(ScrollViewer.DataContextProperty);
+            SDV_ScrollViewer.Measure(new Size(0, 0));
+            SDV_ScrollViewer.Arrange(new Rect(0, 0, 0, 0));
         }
 
 

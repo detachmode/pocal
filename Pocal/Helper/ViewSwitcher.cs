@@ -136,13 +136,13 @@ namespace Pocal
         private static void ScrollToApptStartTime()
         {
             calculateOffset();
-            mainpage.SingleDayViewer.SingleDayScrollViewer.ScrollToVerticalOffset(ScrollToPA.StartTime.Hour * HourLine.Height - additionalOffset + offsetFromAllDays);
+            mainpage.SingleDayViewer.SDV_ScrollViewer.ScrollToVerticalOffset(ScrollToPA.StartTime.Hour * HourLine.Height - additionalOffset + offsetFromAllDays);
         }
 
         private static void ScrollTo1200()
         {
             calculateOffset();
-            mainpage.SingleDayViewer.SingleDayScrollViewer.ScrollToVerticalOffset(12 * HourLine.Height - additionalOffset + offsetFromAllDays);
+            mainpage.SingleDayViewer.SDV_ScrollViewer.ScrollToVerticalOffset(12 * HourLine.Height - additionalOffset + offsetFromAllDays);
         }
 
 
