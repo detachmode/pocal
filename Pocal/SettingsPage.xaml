@@ -1,0 +1,31 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Pocal.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:screenSizeSupport="clr-namespace:ScreenSizeSupport;assembly=ScreenSizeSupport"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot ist das Stammraster, in dem alle anderen Seiteninhalte platziert werden-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--TitlePanel enthält den Namen der Anwendung und den Seitentitel-->
+        <screenSizeSupport:ZoomBox ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
+            <StackPanel>
+                <StackPanel Grid.Row="0" Margin="12,17,0,28">
+                    <TextBlock Text="Pocal" Style="{StaticResource PhoneTextNormalStyle}"/>
+                    <TextBlock Text="Einstellungen" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+                </StackPanel>
+    
+            </StackPanel>
+        </screenSizeSupport:ZoomBox>
+    </Grid>
+
+</phone:PhoneApplicationPage>

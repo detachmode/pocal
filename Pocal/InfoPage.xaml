@@ -27,7 +27,7 @@
                 <!--ContentPanel - zusätzliche Inhalte hier platzieren-->
                 <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="24,18">
                     <TextBlock TextWrapping="Wrap" >Danke für die Verwendung von Pocal!</TextBlock>
-                    <TextBlock TextWrapping="Wrap"  Margin="0,18">Wenn dir die App gefällt, und du sie kaufen möchtest,
+                    <TextBlock TextWrapping="Wrap"  Margin="0,18">Wenn dir die App gefällt und du sie kaufen, oder bewerten möchtest,
                 gelangst du hier zum Store:</TextBlock>
                     <Button Click="Store_OnClick">Link zum Store</Button>
 
@@ -38,9 +38,20 @@
                             <Hyperlink Click="Email_OnClick" FontSize="24"  >
                                 <Hyperlink.Foreground>
                                     <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-                                </Hyperlink.Foreground> dennis.briefkasten@gmail.com
+                                </Hyperlink.Foreground>apps@detachmode.com
                             </Hyperlink>
                         </Paragraph>
+                    </RichTextBox>
+                    <TextBlock TextWrapping="Wrap" Margin="0,18">Für Neuigkeiten bezüglich dieser App folge mir auf Twitter.</TextBlock>
+
+                    <RichTextBox TextWrapping="Wrap" HorizontalAlignment="Center">
+                    <Paragraph>
+                        <Hyperlink Click="Twitter_OnClick" FontSize="24"  >
+                                <Hyperlink.Foreground>
+                                    <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                                </Hyperlink.Foreground>Twitter
+                            </Hyperlink>
+                    </Paragraph>
                     </RichTextBox>
                 </StackPanel>
             </StackPanel>

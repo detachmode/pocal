@@ -23,13 +23,23 @@ namespace Pocal
             EmailComposeTask emailComposeTask = new EmailComposeTask();
             emailComposeTask.Subject = "Pocal Feedback";
             emailComposeTask.Body = "";
-            emailComposeTask.To = "dennis.briefkasten@gmail.com";
+            emailComposeTask.To = "apps@detachmode.com";
             emailComposeTask.Show();
         }
 
         private void Store_OnClick(object sender, RoutedEventArgs e)
         {
-            App._marketPlaceDetailTask.Show();
+            App.MarketPlaceDetailTask.Show();
+        }
+
+        private void Twitter_OnClick(object sender, RoutedEventArgs e)
+        {
+
+            WebBrowserTask webBrowserTask = new WebBrowserTask();
+
+            webBrowserTask.Uri = new Uri("https://twitter.com/Detachmode", UriKind.Absolute);
+
+            webBrowserTask.Show();
         }
 
     }

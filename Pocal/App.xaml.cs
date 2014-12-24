@@ -310,8 +310,8 @@ namespace Pocal
         }
 
 
-        public static MarketplaceDetailTask _marketPlaceDetailTask = new MarketplaceDetailTask();
-        private static IsolatedStorageSettings userSettings = IsolatedStorageSettings.ApplicationSettings;
+        public static MarketplaceDetailTask MarketPlaceDetailTask = new MarketplaceDetailTask();
+        public static IsolatedStorageSettings UserSettings = IsolatedStorageSettings.ApplicationSettings;
         private static LicenseInformation _licenseInformation = new LicenseInformation();
 
 
@@ -330,7 +330,7 @@ namespace Pocal
                     string message = String.Format("Du hast noch {0} kostenlose Probetage. Kaufe dir die App, wenn sie dir gefällt!", trailDaysLeft);
                     if (MessageBox.Show(message, "Probeversion", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                     {
-                        App._marketPlaceDetailTask.Show();
+                        App.MarketPlaceDetailTask.Show();
                         IsolatedStorageSettings.ApplicationSettings.Save();
                         Application.Current.Terminate();
                     }
@@ -346,7 +346,7 @@ namespace Pocal
                 }
                 catch (System.Collections.Generic.KeyNotFoundException)
                 {
-                    userSettings.Add("installDate", DateTime.Now.Date);
+                    UserSettings.Add("installDate", DateTime.Now.Date);
                     IsolatedStorageSettings.ApplicationSettings.Save();
                 }
             }
@@ -354,7 +354,7 @@ namespace Pocal
 
         private static int getTrialDaysLeft()
         {
-            DateTime installDate = (DateTime)userSettings["installDate"];
+            DateTime installDate = (DateTime)UserSettings["installDate"];
             int trailDaysLeft = (installDate.Date.AddDays(7) - DateTime.Now.Date).Days;
             if (trailDaysLeft < 0)
                 trailDaysLeft = 0;

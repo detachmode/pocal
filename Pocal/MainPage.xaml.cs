@@ -1,4 +1,4 @@
-﻿//#define DEBUG_AGENT
+﻿#define DEBUG_AGENT
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,12 +79,13 @@ namespace Pocal
             {
                 AgendaViewAppbar();
                 leaveOverview();
+                e.Cancel = true;
             }
 
             //else
             //    scrollToToday();
 
-            //e.Cancel = true;
+           
             base.OnBackKeyPress(e);
         }
 
