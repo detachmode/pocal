@@ -1,0 +1,50 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Pocal.InfoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    xmlns:screenSizeSupport="clr-namespace:ScreenSizeSupport;assembly=ScreenSizeSupport"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="False">
+
+    <!--LayoutRoot ist das Stammraster, in dem alle anderen Seiteninhalte platziert werden-->
+    <Grid x:Name="LayoutRoot" Background="Transparent" VerticalAlignment="Top">
+       
+        <!--TitlePanel enthält den Namen der Anwendung und den Seitentitel-->
+        <screenSizeSupport:ZoomBox ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
+            <StackPanel>
+                <StackPanel Grid.Row="0" Margin="12,17,0,28">
+                    <TextBlock Text="Pocal" Style="{StaticResource PhoneTextNormalStyle}"/>
+                    <TextBlock Text="Infos" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+                </StackPanel>
+
+                <!--ContentPanel - zusätzliche Inhalte hier platzieren-->
+                <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="24,18">
+                    <TextBlock TextWrapping="Wrap" >Danke für die Verwendung von Pocal!</TextBlock>
+                    <TextBlock TextWrapping="Wrap"  Margin="0,18">Wenn dir die App gefällt, und du sie kaufen möchtest,
+                gelangst du hier zum Store:</TextBlock>
+                    <Button Click="Store_OnClick">Link zum Store</Button>
+
+                    <TextBlock TextWrapping="Wrap" Margin="0,18">Falls dir ein Fehler auffällt, oder du Verbesserungsvorschläge hast, bitte sende mir eine Email an:</TextBlock>
+
+                    <RichTextBox TextWrapping="Wrap" HorizontalAlignment="Center">
+                        <Paragraph>
+                            <Hyperlink Click="Email_OnClick" FontSize="24"  >
+                                <Hyperlink.Foreground>
+                                    <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                                </Hyperlink.Foreground> dennis.briefkasten@gmail.com
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+                </StackPanel>
+            </StackPanel>
+        </screenSizeSupport:ZoomBox>
+    </Grid>
+
+</phone:PhoneApplicationPage>

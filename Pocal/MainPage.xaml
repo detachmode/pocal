@@ -335,7 +335,6 @@
                     </phone:Pivot.HeaderTemplate>
                 </phone:Pivot>
             </Grid>
-
         </Grid>
 
 

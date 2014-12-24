@@ -160,7 +160,7 @@ namespace ScheduledTaskAgent1
                 currentTile.Update(tileData);
                 //ShellTile.Create(new Uri(tileUri, UriKind.Relative), tileData, true);
             }
-            catch (Exception e)
+            catch
             {
                 //MessageBox.Show(e.Message);
             }

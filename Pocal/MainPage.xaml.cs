@@ -171,9 +171,11 @@ namespace Pocal
             //item2.Text = "Tutorial";
             //ApplicationBar.MenuItems.Add(item2);
 
-            //ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
-            //item3.Text = "Info";
-            //ApplicationBar.MenuItems.Add(item3);
+            ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
+            item3.Text = "Info";
+            item3.Click += item3_Click;
+            ApplicationBar.MenuItems.Add(item3);
+
 
             /*********** BUTTONs ***********/
             ApplicationBarIconButton button1 = new ApplicationBarIconButton();
@@ -220,6 +222,11 @@ namespace Pocal
                     toggleOverView();
                 }
             });
+        }
+
+        void item3_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/InfoPage.xaml", UriKind.Relative));
         }
 
         private void watchScrollingOfLLS()
