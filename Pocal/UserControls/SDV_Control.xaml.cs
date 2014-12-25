@@ -118,8 +118,7 @@ namespace Pocal
 
         public void Update_PocalAppointment(PocalAppointment oldPA, PocalAppointment newPA)
         {
-            //fixme
-            newPA = App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay.FirstOrDefault(x => x.Appt.LocalId == newPA.Appt.LocalId);
+            
             for (int i = GridAppointments.Children.Count-1; i >= 0 ; i--)
             {
                 FrameworkElement item = GridAppointments.Children[i] as FrameworkElement;
@@ -129,6 +128,8 @@ namespace Pocal
 
             if (newPA != null && newPA.AllDay == false && newPA.StartTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.DT.Date)
             {
+                //fixme
+                newPA = App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay.FirstOrDefault(x => x.Appt.LocalId == newPA.Appt.LocalId);
                 SDV_Appointment_Control control = new SDV_Appointment_Control();
                 control.DataContext = newPA;
                 GridAppointments.Children.Add(control);
