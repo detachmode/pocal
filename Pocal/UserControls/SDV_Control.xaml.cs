@@ -118,6 +118,7 @@ namespace Pocal
 
         public void Update_PocalAppointment(PocalAppointment oldPA, PocalAppointment newPA)
         {
+            //fixme
             newPA = App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay.FirstOrDefault(x => x.Appt.LocalId == newPA.Appt.LocalId);
             for (int i = GridAppointments.Children.Count-1; i >= 0 ; i--)
             {
