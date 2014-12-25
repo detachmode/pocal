@@ -15,7 +15,7 @@
     <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <SilverlightApplication>true</SilverlightApplication>
-    <SupportedCultures>de%3bde-DE%3bde-LI%3bde-LU%3bde-AT%3bde-CH</SupportedCultures>
+    <SupportedCultures>de</SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
     <XapFilename>Pocal.xap</XapFilename>
@@ -275,11 +275,6 @@
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\AppResources.de-AT.resx" />
-    <EmbeddedResource Include="Resources\AppResources.de-CH.resx" />
-    <EmbeddedResource Include="Resources\AppResources.de-DE.resx" />
-    <EmbeddedResource Include="Resources\AppResources.de-LI.resx" />
-    <EmbeddedResource Include="Resources\AppResources.de-LU.resx" />
     <EmbeddedResource Include="Resources\AppResources.de.resx" />
     <EmbeddedResource Include="Resources\AppResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

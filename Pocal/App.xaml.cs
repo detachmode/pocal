@@ -16,6 +16,7 @@ using Microsoft.Phone.Tasks;
 using System.Linq;
 using System.IO.IsolatedStorage;
 using Microsoft.Phone.Marketplace;
+using System.Globalization;
 
 
 namespace Pocal
@@ -86,7 +87,7 @@ namespace Pocal
             }
         }
 
-        public static void LoadThemeRessources()
+        public static void LoadMyRessources()
         {
             App.Current.Resources.Remove("Agenda_BG");
             App.Current.Resources.Remove("SDV_BG");
@@ -127,6 +128,15 @@ namespace Pocal
                 App.Current.Resources.Add("Month_BG", Colors.Black);
                 App.Current.Resources.Add("Month_WeekendBG", Color.FromArgb(255, 30, 30, 30));
                 App.Current.Resources.Add("Month_NoWeekendBG", Colors.Black);
+            }
+
+            if (CultureSettings.ci != new CultureInfo("de-DE"))
+            {
+                App.Current.Resources.Remove("Overview_StartTime_X");
+                App.Current.Resources.Add("Overview_StartTime_X", 40);
+                App.Current.Resources.Remove("Overview_StartTime_Width");
+                App.Current.Resources.Add("Overview_StartTime_Width", 90);
+                
             }
 
         }
@@ -310,7 +320,7 @@ namespace Pocal
         }
 
 
-        public static MarketplaceDetailTask MarketPlaceDetailTask = new MarketplaceDetailTask();
+        public static MarketplaceDetailTask _marketPlaceDetailTask = new MarketplaceDetailTask();
         public static IsolatedStorageSettings UserSettings = IsolatedStorageSettings.ApplicationSettings;
         private static LicenseInformation _licenseInformation = new LicenseInformation();
 
@@ -330,7 +340,7 @@ namespace Pocal
                     string message = String.Format("Du hast noch {0} kostenlose Probetage. Kaufe dir die App, wenn sie dir gefällt!", trailDaysLeft);
                     if (MessageBox.Show(message, "Probeversion", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                     {
-                        App.MarketPlaceDetailTask.Show();
+                        App._marketPlaceDetailTask.Show();
                         IsolatedStorageSettings.ApplicationSettings.Save();
                         Application.Current.Terminate();
                     }

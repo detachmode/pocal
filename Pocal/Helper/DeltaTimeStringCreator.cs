@@ -1,4 +1,5 @@
-﻿using Pocal.ViewModel;
+﻿using Pocal.Resources;
+using Pocal.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -46,13 +47,13 @@ namespace Pocal.Helper
         {
 
             if (dt.Date == DateTime.Now.Date)
-                return "heute";
+                return AppResources.today;
 
             if (dt.Date == DateTime.Now.Date.AddDays(1))
-                return "morgen";
+                return AppResources.tomorrow;
 
             if (dt.Date == DateTime.Now.Date.AddDays(-1))
-                return "gestern";
+                return AppResources.yesterday;
             TimeSpan ts = dt.Date - DateTime.Now.Date;
             string str = "";
 
@@ -62,16 +63,38 @@ namespace Pocal.Helper
                 return "";
             }
 
-            if ((-7) < ts.Days && ts.Days < 0)
-                str += "vor ";
-            if (ts.Days > 0 && ts.Days <= 7)
-                str += "in ";
-            if (ts.Days > 7 || ts.Days < -7)
-                str += "und ";
+            if (CultureInfo.CurrentUICulture.Name.Contains("de"))
+            {
+                if ((-7) < ts.Days && ts.Days < 0)
+                    str += (AppResources.pastTime + " ");
+                if (ts.Days > 0 && ts.Days <= 7)
+                    str += (AppResources.futureTime + " ");
+                if (ts.Days > 7 || ts.Days < -7)
+                    str += (AppResources.and + " ");
 
-            str += Math.Abs(delta).ToString() + " Tag";
-            if (Math.Abs(delta) > 1)
-                str += "en";
+                str += (Math.Abs(delta).ToString() + " "); 
+                if (Math.Abs(delta) > 1)
+                    str += AppResources.DayPlural;
+                else
+                    str += AppResources.DaySingular;
+
+            }
+            if (CultureInfo.CurrentUICulture.Name.Contains("en"))
+            {
+                if (ts.Days > 0 && ts.Days <= 7)
+                    str += (AppResources.futureTime + " ");
+                if (ts.Days > 7 || ts.Days < -7)
+                    str += (AppResources.and + " ");
+
+                str += (Math.Abs(delta).ToString() + " "); 
+                if (Math.Abs(delta) > 1)
+                    str += AppResources.DayPlural;
+                else
+                    str += AppResources.DaySingular;
+
+                if ((-1) > ts.Days)
+                    str += (" "+ AppResources.pastTime);
+            }
 
             return str;
         }
@@ -91,15 +114,30 @@ namespace Pocal.Helper
                 int delta = Math.Abs((int)ts.Days / 7);
                 string str = "";
 
-                if (ts.Days <= (-7))
-                    str += "vor ";
-                else
-                    str += "in ";
-
-                str += delta.ToString() + " Woche";
-                if (delta>1)
+                if (CultureInfo.CurrentUICulture.Name.Contains("de"))
                 {
-                    str += "n";
+                    if (ts.Days <= (-7))
+                        str += (AppResources.pastTime + " ");
+                    else
+                        str += (AppResources.futureTime + " ");
+
+                    str += delta.ToString() + " ";
+                    if (delta > 1)
+                        str += AppResources.WeekPlural;
+                    else
+                        str += AppResources.WeekSingular;
+                }
+
+                if (CultureInfo.CurrentUICulture.Name.Contains("en"))
+                {
+                    if (ts.Days > 0)
+                        str += (AppResources.futureTime + " ");
+
+                    str += delta.ToString() + " ";
+                    if (delta > 1)
+                        str += AppResources.WeekPlural;
+                    else
+                        str += AppResources.WeekSingular;
                 }
 
                 return str;

@@ -32,7 +32,7 @@ namespace Pocal
 
         public MainPage()
         {
-            App.LoadThemeRessources();
+            App.LoadMyRessources();
             loadStartup();
 
             App.ShowTrialPopUp();
@@ -166,8 +166,8 @@ namespace Pocal
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
             ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
-            //item1.Text = "Einstellungen";
-            //ApplicationBar.MenuItems.Add(item1);
+            item1.Text = AppResources.SettingsPageTitle;
+            ApplicationBar.MenuItems.Add(item1);
             //ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
             //item2.Text = "Tutorial";
             //ApplicationBar.MenuItems.Add(item2);
@@ -181,7 +181,7 @@ namespace Pocal
             /*********** BUTTONs ***********/
             ApplicationBarIconButton button1 = new ApplicationBarIconButton();
             button1.IconUri = new Uri("/Images/back.png", UriKind.Relative);
-            button1.Text = "Heute";
+            button1.Text = AppResources.AppBarButtonToday;
             ApplicationBar.Buttons.Add(button1);
             button1.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
@@ -191,7 +191,7 @@ namespace Pocal
             /*********** ADD METHODE BUTTON ***********/
             ApplicationBarIconButton button2 = new ApplicationBarIconButton();
             button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
-            button2.Text = "Termin hinzufügen";
+            button2.Text = AppResources.AppBarAdd;
             ApplicationBar.Buttons.Add(button2);
             button2.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
@@ -202,7 +202,7 @@ namespace Pocal
             /*********** MONTHVIEW BUTTON ***********/
             ApplicationBarIconButton button3 = new ApplicationBarIconButton();
             button3.IconUri = new Uri("/Images/feature.calendar.png", UriKind.Relative);
-            button3.Text = "Gehe zu";
+            button3.Text = AppResources.AppBarGoTo;
             ApplicationBar.Buttons.Add(button3);
             button3.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
@@ -464,20 +464,21 @@ namespace Pocal
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
             ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
-            //item1.Text = "Einstellungen";
-            //ApplicationBar.MenuItems.Add(item1);
+            item1.Text = AppResources.SettingsPageTitle;
+            ApplicationBar.MenuItems.Add(item1);
             //ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
             //item2.Text = "Tutorial";
             //ApplicationBar.MenuItems.Add(item2);
 
-            //ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
-            //item3.Text = "Info";
-            //ApplicationBar.MenuItems.Add(item3);
+            ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
+            item3.Text = "Info";
+            item3.Click += item3_Click;
+            ApplicationBar.MenuItems.Add(item3);
 
             /*********** BUTTONs ***********/
             ApplicationBarIconButton button1 = new ApplicationBarIconButton();
             button1.IconUri = new Uri("/Images/back.png", UriKind.Relative);
-            button1.Text = "Heute";
+            button1.Text = AppResources.AppBarButtonToday;
             ApplicationBar.Buttons.Add(button1);
             button1.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
@@ -487,7 +488,7 @@ namespace Pocal
             /*********** ADD METHODE BUTTON ***********/
             ApplicationBarIconButton button2 = new ApplicationBarIconButton();
             button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
-            button2.Text = "Termin hinzufügen";
+            button2.Text = AppResources.AppBarAdd;
             ApplicationBar.Buttons.Add(button2);
             button2.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
@@ -498,7 +499,7 @@ namespace Pocal
             /*********** MONTHVIEW BUTTON ***********/
             ApplicationBarIconButton button3 = new ApplicationBarIconButton();
             button3.IconUri = new Uri("/Images/feature.calendar.png", UriKind.Relative);
-            button3.Text = "Gehe zu";
+            button3.Text = AppResources.AppBarGoTo;
             ApplicationBar.Buttons.Add(button3);
             button3.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
@@ -549,20 +550,21 @@ namespace Pocal
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
             ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
-            //item1.Text = "Einstellungen";
-            //ApplicationBar.MenuItems.Add(item1);
+            item1.Text = AppResources.SettingsPageTitle;
+            ApplicationBar.MenuItems.Add(item1);
             //ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
             //item2.Text = "Tutorial";
             //ApplicationBar.MenuItems.Add(item2);
 
-            //ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
-            //item3.Text = "Info";
-            //ApplicationBar.MenuItems.Add(item3);
+            ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
+            item3.Text = "Info";
+            item3.Click += item3_Click;
+            ApplicationBar.MenuItems.Add(item3);
 
             /*********** BUTTONs ***********/
             ApplicationBarIconButton button1 = new ApplicationBarIconButton();
             button1.IconUri = new Uri("/Images/back.png", UriKind.Relative);
-            button1.Text = "Heute";
+            button1.Text = AppResources.AppBarButtonToday;
             ApplicationBar.Buttons.Add(button1);
             button1.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
@@ -572,7 +574,7 @@ namespace Pocal
             /*********** ADD METHODE BUTTON ***********/
             ApplicationBarIconButton button2 = new ApplicationBarIconButton();
             button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
-            button2.Text = "Termin hinzufügen";
+            button2.Text = AppResources.AppBarAdd;
             ApplicationBar.Buttons.Add(button2);
             button2.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
@@ -583,7 +585,7 @@ namespace Pocal
             /*********** MONTHVIEW BUTTON ***********/
             ApplicationBarIconButton button3 = new ApplicationBarIconButton();
             button3.IconUri = new Uri("/Images/feature.calendar.png", UriKind.Relative);
-            button3.Text = "Gehe zu";
+            button3.Text = AppResources.AppBarGoTo;
             ApplicationBar.Buttons.Add(button3);
             button3.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
@@ -595,7 +597,7 @@ namespace Pocal
 
             ApplicationBarIconButton button4 = new ApplicationBarIconButton();
             button4.IconUri = new Uri("/Images/cancel.png", UriKind.Relative);
-            button4.Text = "Beende Overview";
+            button4.Text = AppResources.AppBarCloseOverview;
             ApplicationBar.Buttons.Add(button4);
             button4.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
@@ -761,7 +763,7 @@ namespace Pocal
             /*********** BUTTONs ***********/
             ApplicationBarIconButton button1 = new ApplicationBarIconButton();
             button1.IconUri = new Uri("/Images/back.png", UriKind.Relative);
-            button1.Text = "Zurück";
+            button1.Text = AppResources.AppBarBack;
             ApplicationBar.Buttons.Add(button1);
             button1.Click += new EventHandler(delegate(object sender, EventArgs e)
             {

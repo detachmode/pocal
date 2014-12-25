@@ -60,11 +60,12 @@
 
         <ImageBrush x:Key="AgendaPointerImage" Stretch="None" ImageSource="/Images/AgendaPointerDark.png" />
 
-        
-
         <Color x:Key="ColorBorderGrey">#FF767676</Color>
         <System:Double x:Key="DefaultSize">22</System:Double>
+        <System:Double x:Key="Overview_StartTime_X">20</System:Double>
+        <System:Double x:Key="Overview_StartTime_Width">60</System:Double>
         <Color x:Key="LightGray">#FF131313</Color>
+        
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

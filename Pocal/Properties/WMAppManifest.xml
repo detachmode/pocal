@@ -1,15 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2014/deployment" AppPlatformVersion="8.1">
-  <DefaultLanguage xmlns="" code="de" />
+  <DefaultLanguage xmlns="" code="en" />
   <Languages xmlns="">
     <Language code="de" />
-    <Language code="de-DE" />
-    <Language code="de-LI" />
-    <Language code="de-LU" />
-    <Language code="de-AT" />
-    <Language code="de-CH" />
+    <Language code="en" />
   </Languages>
-  <App xmlns="" ProductID="{89f0defb-5da9-490c-a2f2-da273d2b5dd1}" Title="Pocal" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Detachmode" Description="Agenda View and Day View combined." SDOptOut="false" BackUpOptOut="false" Publisher="Detachmode" PublisherID="{37123FD0-04CF-41ED-8BE2-1D79D1B1CFF4}">
+  <App xmlns="" ProductID="{89f0defb-5da9-490c-a2f2-da273d2b5dd1}" Title="Pocal" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Detachmode" Description="Agenda View and Day View combined." SDOptOut="false" BackUpOptOut="true" Publisher="Detachmode" PublisherID="{37123FD0-04CF-41ED-8BE2-1D79D1B1CFF4}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_APPOINTMENTS" />
@@ -26,20 +22,14 @@
           <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
           <Count>0</Count>
           <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
-          <Title>
-          </Title>
-          <BackContent>
-          </BackContent>
-          <BackBackgroundImageURI IsRelative="true" IsResource="false">
-          </BackBackgroundImageURI>
-          <BackTitle>
-          </BackTitle>
+          <Title></Title>
+          <BackContent></BackContent>
+          <BackBackgroundImageURI IsRelative="true" IsResource="false"></BackBackgroundImageURI>
+          <BackTitle></BackTitle>
           <LargeBackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileLarge.png</LargeBackgroundImageURI>
           <LargeBackContent />
-          <LargeBackBackgroundImageURI IsRelative="true" IsResource="false">
-          </LargeBackBackgroundImageURI>
-          <DeviceLockImageURI IsRelative="true" IsResource="false">
-          </DeviceLockImageURI>
+          <LargeBackBackgroundImageURI IsRelative="true" IsResource="false"></LargeBackBackgroundImageURI>
+          <DeviceLockImageURI IsRelative="true" IsResource="false"></DeviceLockImageURI>
           <HasLarge>True</HasLarge>
         </TemplateFlip>
       </PrimaryToken>

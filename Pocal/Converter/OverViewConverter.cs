@@ -17,7 +17,7 @@ namespace Pocal.Converter
         {
             if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
             {
-                return 20;
+                return (int)App.Current.Resources["Overview_StartTime_X"];
             }
             else
                 return 0;

@@ -108,7 +108,7 @@
                                         <DoubleAnimation Duration="0:0:0.5" To="1.6" 
 																		Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)"
 																		Storyboard.TargetName="FirstLine" d:IsOptimized="True"/>
-                                        <DoubleAnimation Duration="0:0:0.5" To="20" 
+                                        <DoubleAnimation Duration="0:0:0.5" To="{StaticResource Overview_StartTime_X}" 
 																		Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
 																		Storyboard.TargetName="FirstLine" d:IsOptimized="True"/>
                                         <DoubleAnimation Duration="0:0:0.5" To="0" 
@@ -234,7 +234,7 @@
 
                             <StackPanel x:Name="AppointmentStackPanel" Margin="6,3"  Orientation="Horizontal">
 
-                                <Grid Width="60" Height="30" VerticalAlignment="Top">
+                                <Grid Width="{StaticResource Overview_StartTime_Width}" Height="30" VerticalAlignment="Top">
                                     <TextBlock x:Name="StartTime"  Text="{Binding Converter={StaticResource startTimeConverter}}"  FontSize="18" 
 												Opacity="{Binding AllDay, Converter={StaticResource overview_StartTimeOpacity}}"
 												Foreground ="{Binding StartTime.DateTime, Converter={StaticResource secondLinesForeground}}" 

@@ -14,7 +14,7 @@ namespace Pocal.Converter
 
     public static class CultureSettings
     {
-        public static CultureInfo ci = new CultureInfo("de-DE");
+        public static CultureInfo ci = CultureInfo.CurrentUICulture;
     }
 
 

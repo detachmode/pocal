@@ -218,22 +218,36 @@ namespace Pocal.Converter
 
             if (appt != null)
             {
-
-                //System.Diagnostics.Debug.WriteLine(" " + appt.Subject + " " + appt.Duration.Days.ToString()+ "\n AllDay: "+appt.AllDay.ToString());
-                //Zeit
-                if (appt.AllDay || appt.Duration == TimeSpan.FromDays(1))
-                {
-                    return "";
-
-                }
                 string str = "";
-                str += appt.StartTime.Hour.ToString("00");
-                str += ":";
-                str += appt.StartTime.Minute.ToString("00");
+
+                if (appt.AllDay || appt.Duration == TimeSpan.FromDays(1))
+                    return str;
+
+                if (CultureSettings.ci == new CultureInfo("de-DE"))
+                     str = convert24(appt);
+                else
+                    str = convert12(appt);
+
                 return str;
             }
             return "";
         }
+
+        private string convert12(PocalAppointment appt)
+        {
+            return string.Format("{0:h:mm tt}", appt.StartTime);
+        }
+
+        private static string convert24(PocalAppointment appt)
+        {
+            string str = "";
+            str += appt.StartTime.Hour.ToString("00");
+            str += ":";
+            str += appt.StartTime.Minute.ToString("00");
+            return str;
+        }
+
+
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -256,7 +270,7 @@ namespace Pocal.Converter
             {
                 string str = "";
 
-                
+
                 //Zeit
                 if (appt.AllDay || appt.Duration >= TimeSpan.FromDays(1))
                 {

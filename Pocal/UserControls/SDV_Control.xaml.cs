@@ -9,6 +9,8 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Windows.Media.Animation;
 using Pocal.ViewModel;
+using Pocal.Converter;
+using System.Globalization;
 
 namespace Pocal
 {
@@ -56,12 +58,34 @@ namespace Pocal
         {
             for (int i = FirstHour; i < LastHour; i++)
             {
-                string str = i.ToString("00") + ":00";
+                string str = "";
+                if (CultureSettings.ci == new CultureInfo("de-DE"))
+                    str =  i.ToString("00") + ":00";
+                else
+                    str = convert12(i);
+
                 SDV_HourLine_Control control = new SDV_HourLine_Control();
                 control.DataContext = new HourLine { Text = str };
                 StackpanelHourLines.Children.Add(control);
 
             }
+        }
+
+        private string convert12(int i)
+        {
+            if (i == 0 )
+            {
+                return "12 AM";
+            }
+            if (i <= 11)
+            {
+                return (i).ToString() + " AM"; 
+            }
+            if (i == 12)
+            {
+                return "12 PM"; 
+            }
+            return (i%12).ToString() + " PM";
         }
 
 

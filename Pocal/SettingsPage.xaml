@@ -21,7 +21,8 @@
             <StackPanel>
                 <StackPanel Grid.Row="0" Margin="12,17,0,28">
                     <TextBlock Text="Pocal" Style="{StaticResource PhoneTextNormalStyle}"/>
-                    <TextBlock Text="Einstellungen" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.SettingsPageTitle, Source={StaticResource LocalizedStrings} }" 
+                               Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
                 </StackPanel>
     
             </StackPanel>
