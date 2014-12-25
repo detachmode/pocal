@@ -39,13 +39,12 @@
                         <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                     </Border.BorderBrush>
                 </Border>
-                <Grid  Width="467" HorizontalAlignment="Left">
-                    <Grid  Width="130">
+                <Grid  Width="480" HorizontalAlignment="Left">
+                    <Grid  MinWidth="130" HorizontalAlignment="Center" >
                         <Grid.Background>
                             <SolidColorBrush Color="{StaticResource Agenda_BG}" ></SolidColorBrush>
                         </Grid.Background>
-                        <TextBlock  Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}"
-                                                              
+                        <TextBlock  Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}"                          
 								FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" 
 								FontWeight="SemiBold" RenderTransformOrigin="0.5,0.5" Foreground="{StaticResource PhoneAccentBrush}" />
                     </Grid>

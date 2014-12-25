@@ -11,31 +11,10 @@ namespace Pocal.Helper
 {
     public static class DeltaTimeStringCreator
     {
-        public static string getFirstLine(DateTime dt)
+
+
+        public static string getDeltaTime(DateTime dt)
         {
-            return getDeltaTime(dt);
-
-        }
-
-        public static string getSecondLine(DateTime dt)
-        {
-            //string str ="";
-            if (Math.Abs((dt.Date - DateTime.Now.Date).Days) < 7)
-            {
-                return "";
-            }
-            else
-            {
-                return getDeltaTime(dt);
-            }
-
-            //return str;
-
-        }
-
-        private static string getDeltaTime(DateTime dt)
-        {
-
 
             if (dt.Date == DateTime.Now.Date)
                 return AppResources.today;
@@ -47,28 +26,79 @@ namespace Pocal.Helper
                 return AppResources.yesterday;
 
             string str = "";
+            TimeSpan ts = dt.Date - DateTime.Now.Date;
 
-            str = getDeltaWeeks(dt);
-            str += addAndBeforeLineBreak(dt);
-            str += Environment.NewLine;
-            str += getDeltaDays(dt);
+            if (ts.Days < 0)
+            {
+                str = getPastDeltaTime(dt);
+            }
+            else
+            {
+                str = getFutureDeltaTime(dt);
+            }
+
 
             return str;
         }
 
-        private static string addAndBeforeLineBreak(DateTime dt)
+        private static string getPastDeltaTime(DateTime dt)
+        {
+            if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
+            {
+                string str = "";
+                str += AppResources.pastTime;
+                str += getDeltaWeeks(dt);
+                str += addLineBreakAnd(dt);
+                str += getDeltaDays(dt);
+                return str;
+            }
+            else
+            {
+                string str = "";
+                str += getDeltaWeeks(dt);
+                str += addAndLineBreak(dt);
+                str += getDeltaDays(dt);
+                str += " "+AppResources.pastTime;
+                return str;
+
+            }
+        }
+
+        private static string getFutureDeltaTime(DateTime dt)
+        {
+            string str = "";
+            str += AppResources.futureTime +" ";
+            str += getDeltaWeeks(dt);
+            str += addLineBreakAnd(dt);
+            str += getDeltaDays(dt);
+            return str;
+
+
+        }
+
+        private static string addLineBreakAnd(DateTime dt)
         {
             TimeSpan ts = dt.Date - DateTime.Now.Date;
             if (AndBeforeLineBreak(ts))
             {
-                  return (" "+AppResources.and);
+                return (Environment.NewLine + AppResources.and +" ");
+            }
+            return "";
+        }
+
+        private static string addAndLineBreak(DateTime dt)
+        {
+            TimeSpan ts = dt.Date - DateTime.Now.Date;
+            if (AndBeforeLineBreak(ts))
+            {
+                return (" " + AppResources.and + Environment.NewLine);
             }
             return "";
         }
 
         private static bool AndBeforeLineBreak(TimeSpan ts)
         {
-            return CultureInfo.CurrentUICulture.Name.Contains("en-") && ts.Days < -7 && ts.Days % 7 != 0;
+            return ts.Days % 7 != 0 && (ts.Days < -7 || ts.Days > 7);
         }
 
         private static string getDeltaDays(DateTime dt)
@@ -78,46 +108,14 @@ namespace Pocal.Helper
 
             int delta = ts.Days % 7;
             if (delta == 0)
-            {
                 return str;
-            }
 
-            if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
-            {
-                if ((-7) < ts.Days && ts.Days < 0)
-                    str += (AppResources.pastTime + " ");
-                if (ts.Days > 0 && ts.Days <= 7)
-                    str += (AppResources.futureTime + " ");
-                if (ts.Days > 7 || ts.Days < -7)
-                    str += (AppResources.and + " ");
+            str += (Math.Abs(delta).ToString() + " ");
+            if (Math.Abs(delta) > 1)
+                str += AppResources.DayPlural;
+            else
+                str += AppResources.DaySingular;
 
-                str += (Math.Abs(delta).ToString() + " ");
-                if (Math.Abs(delta) > 1)
-                    str += AppResources.DayPlural;
-                else
-                    str += AppResources.DaySingular;
-
-            }
-            if (CultureInfo.CurrentUICulture.Name.Contains("en-"))
-            {
-                if (ts.Days > 0 && ts.Days <= 7)
-                    str += (AppResources.futureTime + " ");
-                if (ts.Days > 7 || ts.Days < -7)
-                {
-                    if (!AndBeforeLineBreak(ts))
-                        str += (AppResources.and + " ");
-                }
-                    
-
-                str += (Math.Abs(delta).ToString() + " ");
-                if (Math.Abs(delta) > 1)
-                    str += AppResources.DayPlural;
-                else
-                    str += AppResources.DaySingular;
-
-                if ((-1) > ts.Days)
-                    str += (" " + AppResources.pastTime);
-            }
 
             return str;
         }
@@ -132,22 +130,6 @@ namespace Pocal.Helper
 
             if (ts.Days < 7 && ts.Days > -7)
                 return str;
- 
-            
-            if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
-            {
-                if (ts.Days <= (-7))
-                    str += (AppResources.pastTime + " ");
-                else
-                    str += (AppResources.futureTime + " ");
-            }
-
-            if (CultureInfo.CurrentUICulture.Name.Contains("en-"))
-            {
-                if (ts.Days > 0)
-                    str += (AppResources.futureTime + " ");
-
-            }
 
             str += delta.ToString() + " ";
             if (delta > 1)

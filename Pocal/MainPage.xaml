@@ -275,7 +275,7 @@
                         <TextBlock x:Name="WeekCounter" Margin="14,0"  Width="80"
                                    TextWrapping="Wrap"
 									Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeFirstLine}}"
-									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="left" CharacterSpacing="-60"/>
+									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="16" HorizontalAlignment="left" CharacterSpacing="-60"/>
                    </StackPanel>
                 </Grid>
 

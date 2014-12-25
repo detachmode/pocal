@@ -7,6 +7,7 @@ using Windows.ApplicationModel.Appointments;
 using System.Linq;
 using System.Windows;
 using Pocal.Helper;
+using Pocal.Resources;
 
 namespace Pocal.Converter
 {
@@ -20,36 +21,6 @@ namespace Pocal.Converter
 
     }
 
-
-    public class weekConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is DateTime)
-            {
-                DateTime time = (DateTime)value;
-                DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(time);
-                if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
-                {
-                    time = time.AddDays(3);
-                }
-
-                // Return the week of our adjusted day
-                int str = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(time, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-                return "Woche " + str;
-
-            }
-            else return "";
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-
-            return null;
-        }
-
-
-    }
 
     public class DateConverter : IValueConverter
     {
@@ -80,7 +51,7 @@ namespace Pocal.Converter
             if (value is Day)
             {
                 DateTime dt = ((Day)value).DT;
-                return DeltaTimeStringCreator.getFirstLine(dt);
+                return DeltaTimeStringCreator.getDeltaTime(dt);
 
             }
             else return "";
@@ -121,31 +92,6 @@ namespace Pocal.Converter
 
     }
 
-    public class DeltaTimeSecondLine : IValueConverter
-    {
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-
-            if (value is Day)
-            {
-                DateTime dt = ((Day)value).DT;
-                return DeltaTimeStringCreator.getSecondLine(dt);
-
-            }
-            else return "";
-        }
-
-
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-
-            return null;
-        }
-
-
-    }
 
     public class hourConverter : IValueConverter
     {
@@ -221,10 +167,15 @@ namespace Pocal.Converter
                 string str = "";
 
                 if (appt.AllDay || appt.Duration == TimeSpan.FromDays(1))
-                    return str;
+                {
+                    if (CultureSettings.ci.Name.Contains("de-"))
+                        return str;
+                    else
+                        return AppResources.allDay;
+                }
 
                 if (CultureSettings.ci.Name.Contains("de-"))
-                     str = convert24(appt);
+                    str = convert24(appt);
                 else
                     str = convert12(appt);
 
@@ -277,11 +228,11 @@ namespace Pocal.Converter
                     int d = ((appt.StartTime + appt.Duration).Date - appt.StartTime.Date).Days;
                     if (d == 1)
                     {
-                        str += d + " Tag";
+                        str += d + " "+AppResources.DaySingular;
                     }
                     else
                     {
-                        str += d + " Tage";
+                        str += d + " " + AppResources.DayPlural;
                     }
 
                 }
@@ -289,17 +240,22 @@ namespace Pocal.Converter
                 {
                     if (appt.Duration.Hours != 0)
                     {
-                        str = appt.Duration.Hours + " Stunde";
+                        
                         if (appt.Duration.Hours > 1)
-                            str += "n";
+                            str = appt.Duration.Hours + " " + AppResources.HourPlural;
+                        else
+                            str = appt.Duration.Hours + " " + AppResources.HourSingular;
                         str += " ";
                     }
 
                     if (appt.Duration.Minutes != 0)
                     {
-                        str += "" + appt.Duration.Minutes + " Minute";
+                       
                         if (appt.Duration.Minutes > 1)
-                            str += "n";
+                            str += "" + appt.Duration.Minutes + " " + AppResources.MinutePlural;
+                        else
+                            str += "" + appt.Duration.Minutes + " " + AppResources.MinuteSingular;
+
                     }
 
 
@@ -466,7 +422,7 @@ namespace Pocal.Converter
             {
                 int weeknumber = day.DT.DayOfYear / 7 + 2;
 
-                return "  KW " + weeknumber + "  ";
+                return "  "+AppResources.KW+" " + weeknumber + "  ";
             }
             else
                 return "";

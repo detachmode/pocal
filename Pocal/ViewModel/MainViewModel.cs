@@ -99,7 +99,11 @@ namespace Pocal.ViewModel
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             DateTime currentTime = DateTime.Now;
-            Time = currentTime.Hour + ":" + currentTime.Minute.ToString("00");
+            if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
+            {
+                Time = string.Format("{0:H:mm}", currentTime);
+            }
+            Time = string.Format("{0:h:mm}", currentTime);
 
 
 
@@ -120,7 +124,7 @@ namespace Pocal.ViewModel
             #region DESIGN TIME DATA
             if (DesignerProperties.IsInDesignTool)
             {
-                App.DisplayInformationEmulator = App.Current.Resources["DisplayInformationEmulator"] as DisplayInformationEmulator; 
+                App.DisplayInformationEmulator = App.Current.Resources["DisplayInformationEmulator"] as DisplayInformationEmulator;
 
                 //	//CREATE DESIGN TIME DATA HERE
                 DateTime start = new DateTime(2014, 11, 07);

@@ -61,6 +61,15 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die All day ähnelt.
+        /// </summary>
+        public static string allDay {
+            get {
+                return ResourceManager.GetString("allDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die and ähnelt.
         /// </summary>
         public static string and {
@@ -142,6 +151,24 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die hours ähnelt.
+        /// </summary>
+        public static string HourPlural {
+            get {
+                return ResourceManager.GetString("HourPlural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die hour ähnelt.
+        /// </summary>
+        public static string HourSingular {
+            get {
+                return ResourceManager.GetString("HourSingular", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die If you like this app and you want to buy it, please visit the store:  ähnelt.
         /// </summary>
         public static string InfoBuyRate {
@@ -183,6 +210,33 @@ namespace Pocal.Resources {
         public static string InfoTwitter {
             get {
                 return ResourceManager.GetString("InfoTwitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Week ähnelt.
+        /// </summary>
+        public static string KW {
+            get {
+                return ResourceManager.GetString("KW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die minutes ähnelt.
+        /// </summary>
+        public static string MinutePlural {
+            get {
+                return ResourceManager.GetString("MinutePlural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die minute ähnelt.
+        /// </summary>
+        public static string MinuteSingular {
+            get {
+                return ResourceManager.GetString("MinuteSingular", resourceCulture);
             }
         }
         

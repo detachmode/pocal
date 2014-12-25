@@ -209,4 +209,22 @@
   <data name="InfoTwitter" xml:space="preserve">
     <value>You can also follow me on Twitter.</value>
   </data>
+  <data name="allDay" xml:space="preserve">
+    <value>All day</value>
+  </data>
+  <data name="HourPlural" xml:space="preserve">
+    <value>hours</value>
+  </data>
+  <data name="HourSingular" xml:space="preserve">
+    <value>hour</value>
+  </data>
+  <data name="KW" xml:space="preserve">
+    <value>Week</value>
+  </data>
+  <data name="MinutePlural" xml:space="preserve">
+    <value>minutes</value>
+  </data>
+  <data name="MinuteSingular" xml:space="preserve">
+    <value>minute</value>
+  </data>
 </root>

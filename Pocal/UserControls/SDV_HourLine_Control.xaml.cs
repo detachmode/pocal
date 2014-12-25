@@ -32,16 +32,14 @@ namespace Pocal
                     storyboard.Begin();
                 }
             });
-            //Dispatcher.BeginInvoke(() =>
-            //{
-            //Thread.Sleep(200);
+
             var starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine);
             if (starttime != null)
             {
                 DateTime dt = (DateTime)starttime;
                 CalendarAPI.addAppointment(dt);
             }
-            //});
+ 
 
         }
     }

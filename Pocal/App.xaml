@@ -36,12 +36,10 @@
         <converter:DetailNotesCollapser x:Key="DetailNotesCollapser"/>
         <converter:NullOrWhiteSpaceCollapser x:Key="NullOrWhiteSpaceCollapser"/>
         <converter:weekNumberConverter x:Key="weekNumberConverter"/>
-        <converter:weekConverter x:Key="weekConverter"/>
         <converter:DateConverter x:Key="DateConverter"/>
         <converter:secondLineConverter x:Key="secondLineConverter"/>
         <converter:hourConverter x:Key="hourConverter"/>
         <converter:minuteConverter x:Key="minuteConverter"/>
-        <converter:DeltaTimeSecondLine x:Key="DeltaTimeSecondLine"/>
         <converter:DeltaTimeSecondLineVisibility x:Key="DeltaTimeSecondLineVisibility"/>
         <converter:DeltaTimeFirstLine x:Key="DeltaTimeFirstLine"/>
 

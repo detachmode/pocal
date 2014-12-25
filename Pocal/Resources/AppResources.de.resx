@@ -223,4 +223,19 @@
   <data name="InfoTwitter" xml:space="preserve">
     <value>Für Neuigkeiten bezüglich dieser App folge mir auf Twitter.</value>
   </data>
+  <data name="HourPlural" xml:space="preserve">
+    <value>Stunden</value>
+  </data>
+  <data name="HourSingular" xml:space="preserve">
+    <value>Stunde</value>
+  </data>
+  <data name="KW" xml:space="preserve">
+    <value>KW</value>
+  </data>
+  <data name="MinutePlural" xml:space="preserve">
+    <value>Minuten</value>
+  </data>
+  <data name="MinuteSingular" xml:space="preserve">
+    <value>Minute</value>
+  </data>
 </root>
