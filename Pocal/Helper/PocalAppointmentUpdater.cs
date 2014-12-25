@@ -20,14 +20,15 @@ namespace Pocal.Helper
             if (oldPA != null && newPA != null)
                 if (arePocaAppointmentsEqual(oldPA, newPA))
                     return;
+            
+
             updateIfSingle(oldPA, newPA);
             await updateIfRecurrent(oldPA, newPA);
-            
             App.ViewModel.ConflictManager.solveConflicts();
 
             ViewSwitcher.mainpage.SingleDayViewer.Update_PocalAppointment(oldPA,newPA);
-            ViewSwitcher.setScrollToPa(newPA);
-            ViewSwitcher.ScrollToAfterUpdate();
+            //ViewSwitcher.setScrollToPa(newPA);
+            //ViewSwitcher.ScrollToAfterUpdate();
             
         }
 
