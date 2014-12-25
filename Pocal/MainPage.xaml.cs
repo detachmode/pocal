@@ -165,9 +165,9 @@ namespace Pocal
 
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
-            ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
-            item1.Text = AppResources.SettingsPageTitle;
-            ApplicationBar.MenuItems.Add(item1);
+            //ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
+            //item1.Text = AppResources.SettingsPageTitle;
+            //ApplicationBar.MenuItems.Add(item1);
             //ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
             //item2.Text = "Tutorial";
             //ApplicationBar.MenuItems.Add(item2);
@@ -463,9 +463,9 @@ namespace Pocal
 
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
-            ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
-            item1.Text = AppResources.SettingsPageTitle;
-            ApplicationBar.MenuItems.Add(item1);
+            //ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
+            //item1.Text = AppResources.SettingsPageTitle;
+            //ApplicationBar.MenuItems.Add(item1);
             //ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
             //item2.Text = "Tutorial";
             //ApplicationBar.MenuItems.Add(item2);
@@ -549,9 +549,9 @@ namespace Pocal
 
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
-            ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
-            item1.Text = AppResources.SettingsPageTitle;
-            ApplicationBar.MenuItems.Add(item1);
+            //ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
+            //item1.Text = AppResources.SettingsPageTitle;
+            //ApplicationBar.MenuItems.Add(item1);
             //ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
             //item2.Text = "Tutorial";
             //ApplicationBar.MenuItems.Add(item2);
