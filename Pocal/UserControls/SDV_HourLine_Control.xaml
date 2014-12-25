@@ -33,7 +33,7 @@
         <Border 
 			BorderThickness="0,0.2" Height="{Binding Height}" 
 			BorderBrush="#FF767676">
-            <TextBlock  Text="{Binding Text, Mode=OneWay}" Margin="7,6" FontSize="20"/>
+            <TextBlock Name="textbox" Margin="7,6" FontSize="20"/>
         </Border>
     </Grid>
 </UserControl>

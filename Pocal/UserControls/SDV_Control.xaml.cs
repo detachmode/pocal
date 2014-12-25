@@ -64,8 +64,9 @@ namespace Pocal
                 else
                     str = convert12(i);
 
-                SDV_HourLine_Control control = new SDV_HourLine_Control();
-                control.DataContext = new HourLine { Text = str };
+                SDV_HourLine_Control control = new SDV_HourLine_Control(str);
+                DateTime dt = new DateTime(1, 1, 1, i, 0, 0);
+                control.DataContext = new HourLine { DT = dt};
                 StackpanelHourLines.Children.Add(control);
 
             }

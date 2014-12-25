@@ -13,9 +13,10 @@ namespace Pocal
 {
     public partial class SDV_HourLine_Control : UserControl
     {
-        public SDV_HourLine_Control()
+        public SDV_HourLine_Control(string hourLineText)
         {
             InitializeComponent();
+            textbox.Text = hourLineText;
         }
 
 
@@ -34,7 +35,7 @@ namespace Pocal
             //Dispatcher.BeginInvoke(() =>
             //{
             //Thread.Sleep(200);
-            var starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine.Text);
+            var starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine);
             if (starttime != null)
             {
                 DateTime dt = (DateTime)starttime;
