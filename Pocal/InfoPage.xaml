@@ -21,17 +21,20 @@
             <StackPanel>
                 <StackPanel Grid.Row="0" Margin="12,17,0,28">
                     <TextBlock Text="Pocal" Style="{StaticResource PhoneTextNormalStyle}"/>
-                    <TextBlock Text="Infos" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+                    <TextBlock Text="Info" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
                 </StackPanel>
 
                 <!--ContentPanel - zusätzliche Inhalte hier platzieren-->
                 <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="24,18">
-                    <TextBlock TextWrapping="Wrap" >Danke für die Verwendung von Pocal!</TextBlock>
-                    <TextBlock TextWrapping="Wrap"  Margin="0,18">Wenn dir die App gefällt und du sie kaufen, oder bewerten möchtest,
-                gelangst du hier zum Store:</TextBlock>
-                    <Button Click="Store_OnClick">Link zum Store</Button>
+                    <TextBlock TextWrapping="Wrap" 
+                               Text="{Binding Path=LocalizedResources.InfoThanks, Source={StaticResource LocalizedStrings} }"/>
+                    <TextBlock TextWrapping="Wrap"  Margin="0,18"
+                                Text="{Binding Path=LocalizedResources.InfoBuyRate, Source={StaticResource LocalizedStrings} }"/>
+                    <Button Click="Store_OnClick" Content="{Binding Path=LocalizedResources.InfoLinkStore, Source={StaticResource LocalizedStrings} }"/>
 
-                    <TextBlock TextWrapping="Wrap" Margin="0,18">Falls dir ein Fehler auffällt, oder du Verbesserungsvorschläge hast, bitte sende mir eine Email an:</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Margin="0,18"
+                                Text="{Binding Path=LocalizedResources.InfoFeedback, Source={StaticResource LocalizedStrings} }"/>
+
 
                     <RichTextBox TextWrapping="Wrap" HorizontalAlignment="Center">
                         <Paragraph>
@@ -42,7 +45,9 @@
                             </Hyperlink>
                         </Paragraph>
                     </RichTextBox>
-                    <TextBlock TextWrapping="Wrap" Margin="0,18">Für Neuigkeiten bezüglich dieser App folge mir auf Twitter.</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Margin="0,18"
+                                Text="{Binding Path=LocalizedResources.InfoTwitter, Source={StaticResource LocalizedStrings} }"/>
+
 
                     <RichTextBox TextWrapping="Wrap" HorizontalAlignment="Center">
                     <Paragraph>

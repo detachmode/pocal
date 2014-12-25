@@ -194,4 +194,19 @@
   <data name="yesterday" xml:space="preserve">
     <value>yesterday</value>
   </data>
+  <data name="InfoBuyRate" xml:space="preserve">
+    <value>If you like this app and you want to buy it, please visit the store: </value>
+  </data>
+  <data name="InfoFeedback" xml:space="preserve">
+    <value>If you find a bug or missing a feature, please send me an email so that I can look into it.</value>
+  </data>
+  <data name="InfoLinkStore" xml:space="preserve">
+    <value>link to store</value>
+  </data>
+  <data name="InfoThanks" xml:space="preserve">
+    <value>Thanks for using Pocal!</value>
+  </data>
+  <data name="InfoTwitter" xml:space="preserve">
+    <value>You can also follow me on Twitter.</value>
+  </data>
 </root>

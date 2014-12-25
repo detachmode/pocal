@@ -130,12 +130,12 @@ namespace Pocal
                 App.Current.Resources.Add("Month_NoWeekendBG", Colors.Black);
             }
 
-            if (CultureSettings.ci != new CultureInfo("de-DE"))
+            if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
             {
                 App.Current.Resources.Remove("Overview_StartTime_X");
-                App.Current.Resources.Add("Overview_StartTime_X", 40);
+                App.Current.Resources.Add("Overview_StartTime_X", 20);
                 App.Current.Resources.Remove("Overview_StartTime_Width");
-                App.Current.Resources.Add("Overview_StartTime_Width", 90);
+                App.Current.Resources.Add("Overview_StartTime_Width", 60);
                 
             }
 

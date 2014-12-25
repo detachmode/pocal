@@ -223,7 +223,7 @@ namespace Pocal.Converter
                 if (appt.AllDay || appt.Duration == TimeSpan.FromDays(1))
                     return str;
 
-                if (CultureSettings.ci == new CultureInfo("de-DE"))
+                if (CultureSettings.ci.Name.Contains("de-"))
                      str = convert24(appt);
                 else
                     str = convert12(appt);

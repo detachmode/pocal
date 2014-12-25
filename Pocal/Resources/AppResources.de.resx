@@ -134,4 +134,93 @@
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
+  <data name="and" xml:space="preserve">
+    <value>und</value>
+  </data>
+  <data name="AppBarBack" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="AppBarButtonToday" xml:space="preserve">
+    <value>Heute</value>
+  </data>
+  <data name="AppBarCloseOverview" xml:space="preserve">
+    <value>Beende Overview</value>
+  </data>
+  <data name="AppBarGoTo" xml:space="preserve">
+    <value>Gehe zu</value>
+  </data>
+  <data name="DayPlural" xml:space="preserve">
+    <value>Tagen</value>
+  </data>
+  <data name="DaySingular" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="futureTime" xml:space="preserve">
+    <value>in</value>
+  </data>
+  <data name="MonthViewFri" xml:space="preserve">
+    <value>Fr</value>
+  </data>
+  <data name="MonthViewMon" xml:space="preserve">
+    <value>Mo</value>
+  </data>
+  <data name="MonthViewSat" xml:space="preserve">
+    <value>Sa</value>
+  </data>
+  <data name="MonthViewSun" xml:space="preserve">
+    <value>So</value>
+  </data>
+  <data name="MonthViewThu" xml:space="preserve">
+    <value>Do</value>
+  </data>
+  <data name="MonthViewTue" xml:space="preserve">
+    <value>Di</value>
+  </data>
+  <data name="MonthViewWed" xml:space="preserve">
+    <value>Mi</value>
+  </data>
+  <data name="pastTime" xml:space="preserve">
+    <value>vor</value>
+  </data>
+  <data name="ResourceFlowDirection1" xml:space="preserve">
+    <value>LeftToRight</value>
+    <comment>Controls the FlowDirection for all elements in the RootFrame. Set to the traditional direction of this resource file's language</comment>
+  </data>
+  <data name="ResourceLanguage1" xml:space="preserve">
+    <value>en-US</value>
+    <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
+  </data>
+  <data name="SettingsPageTitle1" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="today" xml:space="preserve">
+    <value>heute</value>
+  </data>
+  <data name="tomorrow" xml:space="preserve">
+    <value>morgen</value>
+  </data>
+  <data name="WeekPlural" xml:space="preserve">
+    <value>Wochen</value>
+  </data>
+  <data name="WeekSingular" xml:space="preserve">
+    <value>Woche</value>
+  </data>
+  <data name="yesterday" xml:space="preserve">
+    <value>gestern</value>
+  </data>
+  <data name="InfoBuyRate" xml:space="preserve">
+    <value>Wenn dir die App gefällt und du sie kaufen, oder bewerten möchtest, gelangst du hier zum Store:</value>
+  </data>
+  <data name="InfoFeedback" xml:space="preserve">
+    <value>Falls dir ein Fehler auffällt, oder du Verbesserungsvorschläge hast, bitte sende mir eine Email an:</value>
+  </data>
+  <data name="InfoLinkStore" xml:space="preserve">
+    <value>Link zum Store</value>
+  </data>
+  <data name="InfoThanks" xml:space="preserve">
+    <value>Danke für die Verwendung von Pocal!</value>
+  </data>
+  <data name="InfoTwitter" xml:space="preserve">
+    <value>Für Neuigkeiten bezüglich dieser App folge mir auf Twitter.</value>
+  </data>
 </root>

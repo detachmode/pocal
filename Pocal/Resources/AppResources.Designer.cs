@@ -142,6 +142,51 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If you like this app and you want to buy it, please visit the store:  ähnelt.
+        /// </summary>
+        public static string InfoBuyRate {
+            get {
+                return ResourceManager.GetString("InfoBuyRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If you find a bug or missing a feature, please send me an email so that I can look into it. ähnelt.
+        /// </summary>
+        public static string InfoFeedback {
+            get {
+                return ResourceManager.GetString("InfoFeedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die link to store ähnelt.
+        /// </summary>
+        public static string InfoLinkStore {
+            get {
+                return ResourceManager.GetString("InfoLinkStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Thanks for using Pocal! ähnelt.
+        /// </summary>
+        public static string InfoThanks {
+            get {
+                return ResourceManager.GetString("InfoThanks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die You can also follow me on Twitter. ähnelt.
+        /// </summary>
+        public static string InfoTwitter {
+            get {
+                return ResourceManager.GetString("InfoTwitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Fri ähnelt.
         /// </summary>
         public static string MonthViewFri {

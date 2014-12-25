@@ -59,7 +59,7 @@ namespace Pocal
             for (int i = FirstHour; i < LastHour; i++)
             {
                 string str = "";
-                if (CultureSettings.ci == new CultureInfo("de-DE"))
+                if (CultureSettings.ci.Name.Contains("de-"))
                     str =  i.ToString("00") + ":00";
                 else
                     str = convert12(i);

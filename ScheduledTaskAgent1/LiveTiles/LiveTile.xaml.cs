@@ -19,7 +19,11 @@ namespace ScheduledTaskAgent1
         public void UpdateTextBox(Appointment appt)
         {
 
-            dayOfWeekTb.Text = DateTime.Now.ToString("dddd", CultureSettings.ci).Substring(0, 2);
+            if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
+                dayOfWeekTb.Text = DateTime.Now.ToString("dddd", CultureInfo.CurrentUICulture).Substring(0, 2);
+            else
+                dayOfWeekTb.Text = DateTime.Now.ToString("dddd", CultureInfo.CurrentUICulture).Substring(0, 3);
+
             dayTb.Text = DateTime.Now.Day.ToString();
             if (appt == null)
             {

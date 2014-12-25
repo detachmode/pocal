@@ -20,7 +20,7 @@
     <phone:PhoneApplicationPage.Resources>
 
         <Storyboard x:Key="AgendaPointerLong">
-            <DoubleAnimation Duration="0:0:0.5" To="65" 
+            <DoubleAnimation Duration="0:0:0.5" To="55" 
 							Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
 							Storyboard.TargetName="AgendaPointer" d:IsOptimized="True"/>
         </Storyboard>
@@ -272,14 +272,11 @@
                     </Grid.RenderTransform>
                     <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" 
 								HorizontalAlignment="Center">
-                        <TextBlock x:Name="WeekCounter" Margin="14,0" 
+                        <TextBlock x:Name="WeekCounter" Margin="14,0"  Width="80"
+                                   TextWrapping="Wrap"
 									Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeFirstLine}}"
 									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="left" CharacterSpacing="-60"/>
-                        <TextBlock x:Name="DaysCounter" Margin="14,0" 
-									Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeSecondLine}}" 
-									Visibility="{Binding DayAtPointer.DT, Converter={StaticResource DeltaTimeSecondLineVisibility}}"
-									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="15" HorizontalAlignment="Left" CharacterSpacing="-60" />
-                    </StackPanel>
+                   </StackPanel>
                 </Grid>
 
             </Grid>

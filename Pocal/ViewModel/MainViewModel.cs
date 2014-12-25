@@ -23,7 +23,19 @@ namespace Pocal.ViewModel
 
         public enum Modi { AgendaView, OverView, OverViewSDV, AgendaViewSDV };
         public Modi InModus = Modi.AgendaView;
+        internal bool isInOverviewModus()
+        {
+            switch (InModus)
+            {
+                case Modi.OverView:
+                    return true;
+                case Modi.OverViewSDV:
+                    return true;
+                default:
+                    return false;
+            }
 
+        }
         public bool IsCurrentlyLoading = false;
 
 
@@ -481,6 +493,8 @@ namespace Pocal.ViewModel
         }
 
         #endregion
+
+
 
 
 

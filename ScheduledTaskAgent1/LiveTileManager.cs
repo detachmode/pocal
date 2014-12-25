@@ -39,9 +39,9 @@ namespace ScheduledTaskAgent1
 
         public static string tbOrtWide(Appointment appt)
         {
-           string str = "";
-           if (appt.Location != "")
-               str = appt.Location;
+            string str = "";
+            if (appt.Location != "")
+                str = appt.Location;
 
             return str;
 
@@ -54,19 +54,43 @@ namespace ScheduledTaskAgent1
 
             if (appt.StartTime.DayOfYear != DateTime.Now.DayOfYear)
             {
-                str += "Morgen: ";
+                if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
+                {
+                    str += "Morgen: ";
+                }
+                else
+                    str += "Tomorrow: ";
             }
             if (appt.AllDay)
             {
-                str += "Ganztägig";
+                if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
+                {
+                    str += "Ganztägig";
+                }
+                else
+                    str += "All day";
+
             }
             else if (appt.StartTime.Date != endTime.Date)
             {
-                str += appt.StartTime.ToString("dddd", CultureSettings.ci) + " bis " + endTime.ToString("dddd", CultureSettings.ci);
+                str += appt.StartTime.ToString("dddd", CultureSettings.ci);
+                str += " - ";
+                str += endTime.ToString("dddd", CultureSettings.ci);
             }
             else
             {
-                str += (appt.StartTime.Hour.ToString("00") + ":" + appt.StartTime.Minute.ToString("00") + " - " + endTime.Hour.ToString("00") + ":" + endTime.Minute.ToString("00"));
+                if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
+                {
+                    str += string.Format("{0:H:mm}", appt.StartTime);
+                    str += " - ";
+                    str += string.Format("{0:H:mm}", endTime);
+                }
+                else
+                {
+                    str += string.Format("{0:h:mm tt}", appt.StartTime);
+                    str += " - ";
+                    str += string.Format("{0:h:mm tt}", endTime);
+                }
             }
             return str;
 
@@ -80,19 +104,39 @@ namespace ScheduledTaskAgent1
 
             if (appt.StartTime.DayOfYear != DateTime.Now.DayOfYear)
             {
-                str += "Morgen: ";
+                if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
+                {
+                    str += "Morgen: ";
+                }
+                else
+                    str += "Tomorrow: ";
             }
             if (appt.AllDay)
             {
-                str += "Ganztägig";
+                if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
+                {
+                    str += "Ganztägig";
+                }
+                else
+                    str += "All day";
+
             }
             else if (appt.StartTime.Date != endTime.Date)
             {
-                str += appt.StartTime.ToString("dddd", CultureSettings.ci) + " bis " + endTime.ToString("dddd", CultureSettings.ci);
+                str += appt.StartTime.ToString("dddd", CultureSettings.ci);
+                str += " - ";
+                str += endTime.ToString("dddd", CultureSettings.ci);
             }
             else
             {
-                str += (appt.StartTime.Hour.ToString("00") + ":" + appt.StartTime.Minute.ToString("00"));
+                if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
+                {
+                    str += string.Format("{0:H:mm}", appt.StartTime);
+                }
+                else
+                {
+                    str += string.Format("{0:h:mm tt}", appt.StartTime);
+                }
             }
             return str;
         }
