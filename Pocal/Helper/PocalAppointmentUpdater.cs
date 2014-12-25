@@ -14,15 +14,16 @@ namespace Pocal.Helper
 
 
 
-        public static void Update(PocalAppointment oldPA, PocalAppointment newPA)
+        public static async void Update(PocalAppointment oldPA, PocalAppointment newPA)
         {
             // soll Aufflackern des Termins verhindern, wenn keine Änderungen gemacht wurden.
             if (oldPA != null && newPA != null)
                 if (arePocaAppointmentsEqual(oldPA, newPA))
                     return;
-
             updateIfSingle(oldPA, newPA);
-            updateIfRecurrent(oldPA, newPA);
+            await updateIfRecurrent(oldPA, newPA);
+            
+            App.ViewModel.ConflictManager.solveConflicts();
 
             ViewSwitcher.mainpage.SingleDayViewer.Update_PocalAppointment(oldPA,newPA);
             ViewSwitcher.setScrollToPa(newPA);
@@ -61,7 +62,7 @@ namespace Pocal.Helper
             return true;
         }
 
-        private static async void updateIfRecurrent(PocalAppointment oldPA, PocalAppointment newPA)
+        private static async Task updateIfRecurrent(PocalAppointment oldPA, PocalAppointment newPA)
         {
             if (oldPA != null && oldPA.Appt.Recurrence != null)
             {
@@ -71,7 +72,7 @@ namespace Pocal.Helper
             else if (newPA != null && newPA.Appt.Recurrence != null)
                 await addRecurrent(newPA.Appt);
 
-            App.ViewModel.ConflictManager.solveConflicts();
+            
         }
 
         private static void updateIfSingle(PocalAppointment oldPA, PocalAppointment newPA)

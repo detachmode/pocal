@@ -131,6 +131,7 @@ namespace Pocal
                 control.DataContext = newPA;
                 GridAppointments.Children.Add(control);
             }
+            
 
         }
 
