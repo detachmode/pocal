@@ -196,7 +196,7 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Thank you for using Pocal! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Thanks for using Pocal! ähnelt.
         /// </summary>
         public static string InfoThanks {
             get {
@@ -354,6 +354,15 @@ namespace Pocal.Resources {
         public static string tomorrow {
             get {
                 return ResourceManager.GetString("tomorrow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die You have {0} days of your trial left. If you like this app, you can buy it at the store. ähnelt.
+        /// </summary>
+        public static string trialPopup {
+            get {
+                return ResourceManager.GetString("trialPopup", resourceCulture);
             }
         }
         

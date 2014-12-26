@@ -238,4 +238,7 @@
   <data name="MinuteSingular" xml:space="preserve">
     <value>Minute</value>
   </data>
+  <data name="trialPopup" xml:space="preserve">
+    <value>Du hast noch {0} kostenlose Probetage. Wenn dir Pocal gefällt, dann kannst du die app im Store kaufen.</value>
+  </data>
 </root>

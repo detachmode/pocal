@@ -93,6 +93,11 @@ namespace Pocal
         public void PrepareForNewLoadingOfAppoinments()
         {
             GridAppointments.Children.Clear();
+            cleanScrollviewer();
+        }
+
+        private void cleanScrollviewer()
+        {
             SDV_ScrollViewer.ClearValue(ScrollViewer.DataContextProperty);
             SDV_ScrollViewer.Measure(new Size(0, 0));
             SDV_ScrollViewer.Arrange(new Rect(0, 0, 0, 0));
@@ -103,7 +108,7 @@ namespace Pocal
         {
             if (App.ViewModel.SingleDayViewModel.TappedDay == null)
                 return;
-
+            cleanScrollviewer();
             foreach (PocalAppointment pa in App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay)
             {
                 if (!pa.AllDay)
@@ -118,7 +123,7 @@ namespace Pocal
 
         public void Update_PocalAppointment(PocalAppointment oldPA, PocalAppointment newPA)
         {
-            
+            cleanScrollviewer();
             for (int i = GridAppointments.Children.Count-1; i >= 0 ; i--)
             {
                 FrameworkElement item = GridAppointments.Children[i] as FrameworkElement;

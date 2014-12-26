@@ -337,8 +337,8 @@ namespace Pocal
                 try
                 {
                     int trailDaysLeft = getTrialDaysLeft();
-                    string message = String.Format("Du hast noch {0} kostenlose Probetage. Kaufe dir die App, wenn sie dir gefällt!", trailDaysLeft);
-                    if (MessageBox.Show(message, "Probeversion", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    string message = String.Format(AppResources.trialPopup, trailDaysLeft);
+                    if (MessageBox.Show(message, "Trial", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                     {
                         App._marketPlaceDetailTask.Show();
                         IsolatedStorageSettings.ApplicationSettings.Save();
