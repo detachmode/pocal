@@ -102,7 +102,7 @@ namespace Pocal
 
         private static void scrollToRightPosition()
         {
-            mainpage.SingleDayViewer.UpdateScrollviewer();
+            mainpage.SingleDayViewer.SDV_ScrollViewer.UpdateLayout();
             switch (from)
             {
                 case Sender.HeaderTap:
@@ -136,13 +136,17 @@ namespace Pocal
         private static void ScrollToApptStartTime()
         {
             calculateOffset();
-            mainpage.SingleDayViewer.SDV_ScrollViewer.ScrollToVerticalOffset(ScrollToPA.StartTime.Hour * HourLine.Height - additionalOffset + offsetFromAllDays);
+            double y = ScrollToPA.StartTime.Hour * HourLine.Height - additionalOffset + offsetFromAllDays;
+            mainpage.SingleDayViewer.SDV_ScrollViewer.SetViewportOrigin(new Point(0,y));
+            //mainpage.SingleDayViewer.SDV_ScrollViewer.ScrollToVerticalOffset(ScrollToPA.StartTime.Hour * HourLine.Height - additionalOffset + offsetFromAllDays);
         }
 
         private static void ScrollTo1200()
         {
             calculateOffset();
-            mainpage.SingleDayViewer.SDV_ScrollViewer.ScrollToVerticalOffset(12 * HourLine.Height - additionalOffset + offsetFromAllDays);
+            //mainpage.SingleDayViewer.SDV_ScrollViewer.ScrollToVerticalOffset(12 * HourLine.Height - additionalOffset + offsetFromAllDays);
+            double y = 12 * HourLine.Height - additionalOffset + offsetFromAllDays;
+            mainpage.SingleDayViewer.SDV_ScrollViewer.SetViewportOrigin(new Point(0, y));
         }
 
 

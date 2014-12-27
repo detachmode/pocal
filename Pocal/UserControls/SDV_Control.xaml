@@ -14,7 +14,7 @@
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainViewModel}"
     >
 
-    <Grid x:Name="LayoutRoot">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}" Margin="0">
         <Border x:Name="SingleDayHeader" Canvas.ZIndex="3"  Margin="0,-41,0,0" Height="41" VerticalAlignment="Top" 
                 BorderThickness="0,1,0,1" BorderBrush="#FF5D5D5D" >
             <Border.Background>
@@ -27,10 +27,10 @@
         </Border>
 
         <screenSizeSupport:ZoomBox  ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
-
-            <ScrollViewer Background="{StaticResource PhoneBackgroundBrush}" 
+            <ViewportControl Bounds="0,0,500,1800"
+                         Width="500"
+                        Height="500"
                         x:Name="SDV_ScrollViewer"  
-                        VerticalScrollBarVisibility="Visible"
                         >
                 <StackPanel>
                     <StackPanel.Background>
@@ -46,10 +46,10 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                     <Border Height="1" Background="#FF807C7C"/>
-                    <Grid x:Name="HourLinesGridAppointments">
-                        <StackPanel x:Name="StackpanelHourLines"/>
-                        <Grid x:Name="GridAppointments"/>
-                        <Grid IsHitTestVisible="False">
+                <Grid x:Name="HourLinesGridAppointments" Width="500" >
+                    <StackPanel x:Name="StackpanelHourLines"/>
+                    <Canvas x:Name="GridAppointments"/>
+                    <Grid IsHitTestVisible="False">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="73"/>
                                 <ColumnDefinition Width="*"/>
@@ -60,11 +60,10 @@
                                 </Border.BorderBrush>
                             </Border>
                         </Grid>
-                    </Grid>
-                    <Border Height="1" Background="#FF807C7C"/>
+                </Grid>
+                <Border Height="1" Background="#FF807C7C"/>
                 </StackPanel>
-
-            </ScrollViewer>
+            </ViewportControl>
         </screenSizeSupport:ZoomBox>
     </Grid>
 </UserControl>

@@ -266,7 +266,14 @@ namespace Pocal.ViewModel
         private async Task loadFirstDay(DateTime dt, double stamp)
         {
             await loadDays(dt, 1, stamp);
+
             SingleDayViewModel.TappedDay = Days.First(x => x.DT == dt);
+            if (App.ViewModel.InModus == Modi.AgendaViewSDV || InModus == Modi.OverViewSDV)
+            {
+                ViewSwitcher.mainpage.SingleDayViewer.PrepareForNewLoadingOfAppoinments();
+                ViewSwitcher.mainpage.SingleDayViewer.AddTappedDayAppointments();
+            }
+
             ConflictManager.solveConflicts();
         }
 

@@ -25,34 +25,6 @@ namespace Pocal
             GridSetup();
         }
 
-        public void UpdateScrollviewer()
-        {
-            this.SDV_ScrollViewer.UpdateLayout();
-        }
-
-
-
-        private void SingleDayScrollViewer_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
-        {
-            if (e.FinalVelocities.LinearVelocity.X > 0)
-            {
-                changeTappedDay(-1);
-            }
-            if (e.FinalVelocities.LinearVelocity.X < 0)
-            {
-                changeTappedDay(+1);
-            }
-        }
-
-        private static void changeTappedDay(int add)
-        {
-            DateTime nextDate = App.ViewModel.SingleDayViewModel.TappedDay.DT.AddDays(add);
-            Day newTappedDay = App.ViewModel.Days.FirstOrDefault(x => x.DT.Date == nextDate.Date);
-            if (newTappedDay != null)
-                App.ViewModel.SingleDayViewModel.TappedDay = newTappedDay;
-            App.ViewModel.ConflictManager.solveConflicts();
-        }
-
 
         public void GridSetup()
         {
@@ -93,7 +65,7 @@ namespace Pocal
         public void PrepareForNewLoadingOfAppoinments()
         {
             GridAppointments.Children.Clear();
-            cleanScrollviewer();
+            //cleanScrollviewer();
         }
 
         private void cleanScrollviewer()
@@ -108,7 +80,7 @@ namespace Pocal
         {
             if (App.ViewModel.SingleDayViewModel.TappedDay == null)
                 return;
-            cleanScrollviewer();
+
             foreach (PocalAppointment pa in App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay)
             {
                 if (!pa.AllDay)
@@ -123,7 +95,6 @@ namespace Pocal
 
         public void Update_PocalAppointment(PocalAppointment oldPA, PocalAppointment newPA)
         {
-            cleanScrollviewer();
             for (int i = GridAppointments.Children.Count-1; i >= 0 ; i--)
             {
                 FrameworkElement item = GridAppointments.Children[i] as FrameworkElement;
