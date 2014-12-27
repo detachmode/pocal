@@ -27,7 +27,7 @@
         </Border>
 
         <screenSizeSupport:ZoomBox  ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
-            <ViewportControl Bounds="0,0,500,1800"
+            <ViewportControl Bounds="0,0,500,2400"
                          Width="500"
                         Height="500"
                         x:Name="SDV_ScrollViewer"  

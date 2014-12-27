@@ -72,6 +72,7 @@ namespace Pocal
         private static void openSDV()
         {
             Canvas.SetZIndex(mainpage.SingleDayView, 1);
+            
             VisualStateManager.GoToState(mainpage, "OpenDelay", true);
 
 
@@ -82,7 +83,7 @@ namespace Pocal
         private static void calculateOffset()
         {
             int allDayCounter = countApptWithAllDay();
-            int heightOfOneAppt = 43;
+            int heightOfOneAppt = 48;
 
             offsetFromAllDays = heightOfOneAppt * allDayCounter;
         }
@@ -136,7 +137,8 @@ namespace Pocal
         private static void ScrollToApptStartTime()
         {
             calculateOffset();
-            double y = ScrollToPA.StartTime.Hour * HourLine.Height - additionalOffset + offsetFromAllDays;
+            setSdvHeight();
+            double y = ScrollToPA.StartTime.Hour * (HourLine.Height + 2) - additionalOffset + offsetFromAllDays;
             mainpage.SingleDayViewer.SDV_ScrollViewer.SetViewportOrigin(new Point(0,y));
             //mainpage.SingleDayViewer.SDV_ScrollViewer.ScrollToVerticalOffset(ScrollToPA.StartTime.Hour * HourLine.Height - additionalOffset + offsetFromAllDays);
         }
@@ -144,9 +146,16 @@ namespace Pocal
         private static void ScrollTo1200()
         {
             calculateOffset();
-            //mainpage.SingleDayViewer.SDV_ScrollViewer.ScrollToVerticalOffset(12 * HourLine.Height - additionalOffset + offsetFromAllDays);
-            double y = 12 * HourLine.Height - additionalOffset + offsetFromAllDays;
+            setSdvHeight();
+
+            double y = 12 * (HourLine.Height + 2) - additionalOffset + offsetFromAllDays; 
             mainpage.SingleDayViewer.SDV_ScrollViewer.SetViewportOrigin(new Point(0, y));
+        }
+
+        private static void setSdvHeight()
+        {
+            double height = 24 * (HourLine.Height + 2) + offsetFromAllDays +4;
+            mainpage.SingleDayViewer.SDV_ScrollViewer.Bounds = new Rect(0, 0, 500, height);
         }
 
 
