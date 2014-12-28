@@ -159,6 +159,8 @@ namespace Pocal
             double height = 24 * (HourLine.Height + 2) + offsetFromAllDays +4;
             mainpage.SingleDayViewer.HourLinesGridAppointments.Width = width;
             mainpage.SingleDayViewer.SDV_ScrollViewer.Bounds = new Rect(0, 0, width, height);
+            //mainpage.SingleDayViewer.SDV_ScrollViewer.Width = width;
+            //mainpage.SingleDayViewer.SDV_ScrollViewer.Height = 800*0.6;
         }
 
 
