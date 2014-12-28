@@ -154,8 +154,11 @@ namespace Pocal
 
         private static void setSdvHeight()
         {
+            double screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
+            double width = 480 * screenSizeMultiplicator;
             double height = 24 * (HourLine.Height + 2) + offsetFromAllDays +4;
-            mainpage.SingleDayViewer.SDV_ScrollViewer.Bounds = new Rect(0, 0, 500, height);
+            mainpage.SingleDayViewer.HourLinesGridAppointments.Width = width;
+            mainpage.SingleDayViewer.SDV_ScrollViewer.Bounds = new Rect(0, 0, width, height);
         }
 
 

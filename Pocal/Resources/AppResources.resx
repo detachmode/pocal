@@ -138,7 +138,7 @@
     <value>Today</value>
   </data>
   <data name="AppBarCloseOverview" xml:space="preserve">
-    <value>Close Overview</value>
+    <value>overview</value>
   </data>
   <data name="AppBarGoTo" xml:space="preserve">
     <value>Go to</value>

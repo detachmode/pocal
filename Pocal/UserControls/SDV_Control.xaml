@@ -13,23 +13,23 @@
     d:DesignHeight="500" d:DesignWidth="480"
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainViewModel}"
     >
+    <screenSizeSupport:ZoomBox  ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
 
-    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}" Margin="0">
-        <Border x:Name="SingleDayHeader" Canvas.ZIndex="3"  Margin="0,-41,0,0" Height="41" VerticalAlignment="Top" 
+        <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}" Margin="0">
+
+            <Border x:Name="SingleDayHeader" Canvas.ZIndex="3"  Margin="0,-41,0,0" Height="41" VerticalAlignment="Top" 
                 BorderThickness="0,1,0,1" BorderBrush="#FF5D5D5D" >
-            <Border.Background>
-                <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-            </Border.Background>
-            <TextBlock  x:Name="SingleDayWindowHeader" Foreground="White" Style="{StaticResource PhoneTextTitle3Style}"
+                <Border.Background>
+                    <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                </Border.Background>
+                <TextBlock  x:Name="SingleDayWindowHeader" Foreground="White" Style="{StaticResource PhoneTextTitle3Style}"
 						Text="{Binding SingleDayViewModel.TappedDay.DT, Converter={StaticResource windowHeaderDateConverter}}" 
 						Margin="148,-4,24,0"  FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Right">
-            </TextBlock>
-        </Border>
+                </TextBlock>
+            </Border>
 
-        <screenSizeSupport:ZoomBox  ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
-            <ViewportControl Bounds="0,0,500,2400"
-                         Width="500"
-                        Height="500"
+            <ViewportControl Bounds="0,0,700,2400"
+                           ManipulationLockMode="Vertical"
                         x:Name="SDV_ScrollViewer"  
                         >
                 <StackPanel>
@@ -46,10 +46,10 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                     <Border Height="1" Background="#FF807C7C"/>
-                <Grid x:Name="HourLinesGridAppointments" Width="500" >
-                    <StackPanel x:Name="StackpanelHourLines"/>
-                    <Canvas x:Name="GridAppointments"/>
-                    <Grid IsHitTestVisible="False">
+                    <Grid x:Name="HourLinesGridAppointments" Width="1000" >
+                        <StackPanel x:Name="StackpanelHourLines"/>
+                        <Canvas x:Name="GridAppointments"/>
+                        <Grid IsHitTestVisible="False">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="73"/>
                                 <ColumnDefinition Width="*"/>
@@ -60,10 +60,10 @@
                                 </Border.BorderBrush>
                             </Border>
                         </Grid>
-                </Grid>
-                <Border Height="1" Background="#FF807C7C"/>
+                    </Grid>
+                    <Border Height="1" Background="#FF807C7C"/>
                 </StackPanel>
             </ViewportControl>
-        </screenSizeSupport:ZoomBox>
-    </Grid>
+        </Grid>
+    </screenSizeSupport:ZoomBox>
 </UserControl>

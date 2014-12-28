@@ -8,6 +8,7 @@ using Windows.ApplicationModel.Appointments;
 using Cimbalino.Toolkit.Converters;
 using System.Windows.Media;
 using System.Windows.Controls;
+using Pocal.Resources;
 
 namespace Pocal.Converter
 {
@@ -53,7 +54,7 @@ namespace Pocal.Converter
                 //DateTime dt = day.DT;
                 if (dt.Date == DateTime.Now.Date)
                 {
-                    return "Heute";
+                    return AppResources.today;
 
                 }
                 return dt.ToString("dddd", CultureSettings.ci) + ", " + dt.ToString("M", CultureSettings.ci);
