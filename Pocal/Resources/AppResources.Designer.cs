@@ -196,7 +196,7 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Thanks for using Pocal! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Thank you for using Pocal! ähnelt.
         /// </summary>
         public static string InfoThanks {
             get {

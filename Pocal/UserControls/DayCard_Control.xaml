@@ -214,7 +214,7 @@
                                                                 </DoubleAnimationUsingKeyFrames>-->
                                 </Storyboard>
 
-                                <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
+                                <!--<EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">
                                     <BeginStoryboard>
                                         <Storyboard x:Name="StoryboardOnDataTemplate">
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="DayCard_ApptItem">
@@ -223,7 +223,7 @@
                                             </DoubleAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </BeginStoryboard>
-                                </EventTrigger>
+                                </EventTrigger>-->
                             </StackPanel.Resources>
                             <StackPanel.RenderTransform>
                                 <CompositeTransform/>

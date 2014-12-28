@@ -231,6 +231,7 @@ namespace Pocal.ViewModel
             try
             {
                 double stamp;
+                loadEnoughCounter = 0;
                 newestGoToDateStamp = DateTime.Now.Ticks;
                 stamp = DateTime.Now.Ticks;
                 IsCurrentlyLoading = true;
@@ -277,13 +278,24 @@ namespace Pocal.ViewModel
             ConflictManager.solveConflicts();
         }
 
+        private int loadEnoughCounter;
+
         private async Task loadEnoughMoreDay(double stamp)
         {
+
+            if (loadEnoughCounter > 5)
+            {
+                IsCurrentlyLoading = false;
+                return;
+            }
+            loadEnoughCounter++;
             await LoadMoreDays(3, stamp);
             if (countLoadedAppointments() < 18)
             {
-                await LoadMoreDays(3, stamp);
+                await loadEnoughMoreDay(stamp);
             }
+            else
+                IsCurrentlyLoading = false;
         }
 
         private int countLoadedAppointments()

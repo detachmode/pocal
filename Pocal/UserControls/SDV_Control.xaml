@@ -30,10 +30,9 @@
 
             <ViewportControl Bounds="0,0,700,2400"
                         ManipulationLockMode="Vertical"
-                        
-                        x:Name="SDV_ScrollViewer"  
+                        x:Name="SDV_ViewportControl"  
                         >
-                <StackPanel>
+                <StackPanel x:Name="ViewportControlContainer">
                     <StackPanel.Background>
                         <SolidColorBrush Color="{StaticResource SDV_BG}"/>
                     </StackPanel.Background>

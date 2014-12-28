@@ -103,7 +103,7 @@ namespace Pocal
 
         private static void scrollToRightPosition()
         {
-            mainpage.SingleDayViewer.SDV_ScrollViewer.UpdateLayout();
+            mainpage.SingleDayViewer.SDV_ViewportControl.UpdateLayout();
             switch (from)
             {
                 case Sender.HeaderTap:
@@ -139,7 +139,7 @@ namespace Pocal
             calculateOffset();
             setSdvHeight();
             double y = ScrollToPA.StartTime.Hour * (HourLine.Height + 2) - additionalOffset + offsetFromAllDays;
-            mainpage.SingleDayViewer.SDV_ScrollViewer.SetViewportOrigin(new Point(0,y));
+            mainpage.SingleDayViewer.SDV_ViewportControl.SetViewportOrigin(new Point(0,y));
             //mainpage.SingleDayViewer.SDV_ScrollViewer.ScrollToVerticalOffset(ScrollToPA.StartTime.Hour * HourLine.Height - additionalOffset + offsetFromAllDays);
         }
 
@@ -149,18 +149,17 @@ namespace Pocal
             setSdvHeight();
 
             double y = 12 * (HourLine.Height + 2) - additionalOffset + offsetFromAllDays; 
-            mainpage.SingleDayViewer.SDV_ScrollViewer.SetViewportOrigin(new Point(0, y));
+            mainpage.SingleDayViewer.SDV_ViewportControl.SetViewportOrigin(new Point(0, y));
         }
 
         private static void setSdvHeight()
         {
             double screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
             double width = 480 * screenSizeMultiplicator;
-            double height = 24 * (HourLine.Height + 2) + offsetFromAllDays +4;
+            double height = mainpage.SingleDayViewer.ViewportControlContainer.ActualHeight;
             mainpage.SingleDayViewer.HourLinesGridAppointments.Width = width;
-            mainpage.SingleDayViewer.SDV_ScrollViewer.Bounds = new Rect(0, 0, width, height);
-            //mainpage.SingleDayViewer.SDV_ScrollViewer.Width = width;
-            //mainpage.SingleDayViewer.SDV_ScrollViewer.Height = 800*0.6;
+            mainpage.SingleDayViewer.SDV_ViewportControl.Bounds = new Rect(0, 0, width, height);
+
         }
 
 

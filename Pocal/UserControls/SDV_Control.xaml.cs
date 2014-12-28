@@ -70,9 +70,9 @@ namespace Pocal
 
         private void cleanScrollviewer()
         {
-            SDV_ScrollViewer.ClearValue(ScrollViewer.DataContextProperty);
-            SDV_ScrollViewer.Measure(new Size(0, 0));
-            SDV_ScrollViewer.Arrange(new Rect(0, 0, 0, 0));
+            SDV_ViewportControl.ClearValue(ScrollViewer.DataContextProperty);
+            SDV_ViewportControl.Measure(new Size(0, 0));
+            SDV_ViewportControl.Arrange(new Rect(0, 0, 0, 0));
         }
 
 
