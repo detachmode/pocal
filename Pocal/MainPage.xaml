@@ -273,7 +273,7 @@
                     <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" 
 								HorizontalAlignment="Center">
                         <TextBlock x:Name="WeekCounter" Margin="14,0"  Width="80"
-                                   TextWrapping="Wrap"
+                                   TextWrapping="NoWrap"
 									Text="{Binding DayAtPointer, Converter={StaticResource DeltaTimeFirstLine}}"
 									FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="16" HorizontalAlignment="left" CharacterSpacing="-60"/>
                    </StackPanel>

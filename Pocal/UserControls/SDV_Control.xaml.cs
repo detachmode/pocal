@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using Pocal.ViewModel;
 using Pocal.Converter;
 using System.Globalization;
+using Pocal.Resources;
 
 namespace Pocal
 {
@@ -31,10 +32,10 @@ namespace Pocal
             for (int i = FirstHour; i < LastHour; i++)
             {
                 string str = "";
-                if (CultureSettings.ci.Name.Contains("de-"))
-                    str =  i.ToString("00") + ":00";
-                else
+                if (AppResources.ResourceLanguage.Contains("en"))
                     str = convert12(i);
+                else
+                    str = i.ToString("00") + ":00"; 
 
                 SDV_HourLine_Control control = new SDV_HourLine_Control(str);
                 DateTime dt = new DateTime(1, 1, 1, i, 0, 0);

@@ -99,11 +99,11 @@ namespace Pocal.ViewModel
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             DateTime currentTime = DateTime.Now;
-            if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
-            {
-                Time = string.Format("{0:H:mm}", currentTime);
-            }
-            Time = string.Format("{0:h:mm}", currentTime);
+
+            if (CultureInfo.CurrentUICulture.Name.Contains("en-"))
+                Time = string.Format("{0:hh:mm}", currentTime);
+            else
+                Time = string.Format("{0:HH:mm}", currentTime);
 
 
 

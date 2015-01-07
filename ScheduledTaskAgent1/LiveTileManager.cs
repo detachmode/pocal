@@ -58,6 +58,10 @@ namespace ScheduledTaskAgent1
                 {
                     str += "Morgen: ";
                 }
+                else if (CultureInfo.CurrentUICulture.Name.Contains("it-"))
+                {
+                    str += "Domani: ";
+                }
                 else
                     str += "Tomorrow: ";
             }
@@ -66,6 +70,10 @@ namespace ScheduledTaskAgent1
                 if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
                 {
                     str += "Ganztägig";
+                }
+                else if (CultureInfo.CurrentUICulture.Name.Contains("it-"))
+                {
+                    str += "Giornata intera"; 
                 }
                 else
                     str += "All day";
@@ -79,17 +87,17 @@ namespace ScheduledTaskAgent1
             }
             else
             {
-                if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
-                {
-                    str += string.Format("{0:H:mm}", appt.StartTime);
-                    str += " - ";
-                    str += string.Format("{0:H:mm}", endTime);
-                }
-                else
+                if (CultureInfo.CurrentUICulture.Name.Contains("en-"))
                 {
                     str += string.Format("{0:h:mm tt}", appt.StartTime);
                     str += " - ";
                     str += string.Format("{0:h:mm tt}", endTime);
+                }
+                else
+                {
+                    str += string.Format("{0:H:mm}", appt.StartTime);
+                    str += " - ";
+                    str += string.Format("{0:H:mm}", endTime);
                 }
             }
             return str;
