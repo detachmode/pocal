@@ -47,6 +47,7 @@ namespace Pocal.Helper
             {
                 string str = "";
                 str += AppResources.pastTime;
+                str += " ";
                 str += getDeltaWeeks(dt);
                 str += addLineBreakAnd(dt);
                 str += getDeltaDays(dt);
