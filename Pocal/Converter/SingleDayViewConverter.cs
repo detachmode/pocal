@@ -150,22 +150,17 @@ namespace Pocal.Converter
 
                 if (apptBeginsAndEndsThisDay())
                 {
-
-                    DateTimeOffset startTimeSnappedToGrid = appt.StartTime.AddMinutes(-appt.StartTime.Minute % 30);
-
-                    DateTimeOffset endTimeSnappedToGrid;
-                   
+                    DateTimeOffset startTimeSnappedToGrid = appt.StartTime.AddMinutes(-appt.StartTime.Minute % 30);                   
+                    DateTimeOffset endTimeSnappedToGrid;                 
                     if (endTime.Minute != 0)
                         endTimeSnappedToGrid = endTime.AddMinutes(+(30 - endTime.Minute % 30));
                     else
                         endTimeSnappedToGrid = endTime;
 
                     TimeSpan DurationSnappedToGrid = endTimeSnappedToGrid - startTimeSnappedToGrid;
-
                     double duration = (DurationSnappedToGrid.TotalMinutes / 30);
 
                     result = duration * HourLine.Height / 2;
-
                     return result + 2;
                 }
 
