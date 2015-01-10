@@ -9,6 +9,7 @@ using Cimbalino.Toolkit.Converters;
 using System.Windows.Media;
 using System.Windows.Controls;
 using Pocal.Resources;
+using System.Diagnostics;
 
 namespace Pocal.Converter
 {
@@ -134,6 +135,7 @@ namespace Pocal.Converter
     {
         private Appointment appt;
         private DateTimeOffset endTime;
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var apptTest = (value as Appointment);
@@ -143,25 +145,28 @@ namespace Pocal.Converter
 
                 appt = apptTest;
                 double result;
+
                 endTime = (DateTimeOffset)appt.StartTime + appt.Duration;
 
                 if (apptBeginsAndEndsThisDay())
                 {
-                    result = (appt.Duration.Hours) * HourLine.Height;
-                    if (appt.StartTime.Minute > 0 && endTime.Minute > 30)
-                    {
-                        result += HourLine.Height;
-                        return result;
-                    }
-                    if (appt.Duration.Minutes != 0)
-                        result += HourLine.Height / 2;
 
-                    if (appt.StartTime.Minute != 0)
-                        result += HourLine.Height / 2;
+                    DateTimeOffset startTimeSnappedToGrid = appt.StartTime.AddMinutes(-appt.StartTime.Minute % 30);
 
-                    if ((appt.Duration.Hours) == 0)
-                        result = HourLine.Height / 2;
-                    return result +2;
+                    DateTimeOffset endTimeSnappedToGrid;
+                   
+                    if (endTime.Minute != 0)
+                        endTimeSnappedToGrid = endTime.AddMinutes(+(30 - endTime.Minute % 30));
+                    else
+                        endTimeSnappedToGrid = endTime;
+
+                    TimeSpan DurationSnappedToGrid = endTimeSnappedToGrid - startTimeSnappedToGrid;
+
+                    double duration = (DurationSnappedToGrid.TotalMinutes / 30);
+
+                    result = duration * HourLine.Height / 2;
+
+                    return result + 2;
                 }
 
                 
@@ -169,13 +174,17 @@ namespace Pocal.Converter
                 {
                     result = (HourLine.Height * 24 +1) ;
                     result -= (appt.StartTime.Hour)*HourLine.Height;
+                    if (appt.StartTime.Minute>=30)
+                        result -= HourLine.Height / 2;
                     return result +2;
                 }
 
                 if (apptJustEndsThisDay())
                 {
                     result = (endTime.Hour * HourLine.Height);
-                    if (endTime.Minute != 0)
+                    if (endTime.Minute > 0)
+                        result += HourLine.Height / 2;
+                    if (endTime.Minute > 29)
                         result += HourLine.Height / 2;
                     return result + 2;
 
