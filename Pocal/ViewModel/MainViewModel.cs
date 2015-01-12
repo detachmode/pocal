@@ -101,7 +101,7 @@ namespace Pocal.ViewModel
             DateTime currentTime = DateTime.Now;
 
             if (CultureInfo.CurrentUICulture.Name.Contains("en-"))
-                Time = string.Format("{0:hh:mm}", currentTime);
+                Time = string.Format("{0:h:mm}", currentTime);
             else
                 Time = string.Format("{0:HH:mm}", currentTime);
 

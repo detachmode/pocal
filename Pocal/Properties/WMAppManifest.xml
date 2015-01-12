@@ -6,7 +6,7 @@
     <Language code="en" />
     <Language code="it" />
   </Languages>
-  <App xmlns="" ProductID="{89f0defb-5da9-490c-a2f2-da273d2b5dd1}" Title="Pocal" RuntimeType="Silverlight" Version="1.0.3.2" Genre="apps.normal" Author="Detachmode" Description="Agenda View and Day View combined." SDOptOut="false" BackUpOptOut="true" Publisher="Detachmode" PublisherID="{37123FD0-04CF-41ED-8BE2-1D79D1B1CFF4}">
+  <App xmlns="" ProductID="{89f0defb-5da9-490c-a2f2-da273d2b5dd1}" Title="Pocal" RuntimeType="Silverlight" Version="1.0.3.3" Genre="apps.normal" Author="Detachmode" Description="Agenda View and Day View combined." SDOptOut="false" BackUpOptOut="true" Publisher="Detachmode" PublisherID="{37123FD0-04CF-41ED-8BE2-1D79D1B1CFF4}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_APPOINTMENTS" />
