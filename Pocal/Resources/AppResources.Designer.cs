@@ -322,11 +322,20 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die en-US ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die en ähnelt.
         /// </summary>
         public static string ResourceLanguage {
             get {
                 return ResourceManager.GetString("ResourceLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die en-US ähnelt.
+        /// </summary>
+        public static string ResourceLanguage1 {
+            get {
+                return ResourceManager.GetString("ResourceLanguage1", resourceCulture);
             }
         }
         

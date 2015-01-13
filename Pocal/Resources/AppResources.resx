@@ -121,7 +121,7 @@
     <value>LeftToRight</value>
     <comment>Controls the FlowDirection for all elements in the RootFrame. Set to the traditional direction of this resource file's language</comment>
   </data>
-  <data name="ResourceLanguage" xml:space="preserve">
+  <data name="ResourceLanguage1" xml:space="preserve">
     <value>en-US</value>
     <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
   </data>
@@ -229,5 +229,8 @@
   </data>
   <data name="trialPopup" xml:space="preserve">
     <value>You have {0} days of your trial left. If you like this app, you can buy it at the store.</value>
+  </data>
+  <data name="ResourceLanguage" xml:space="preserve">
+    <value>en</value>
   </data>
 </root>

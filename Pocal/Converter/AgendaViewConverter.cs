@@ -168,16 +168,16 @@ namespace Pocal.Converter
 
                 if (appt.AllDay || appt.Duration == TimeSpan.FromDays(1))
                 {
-                    if (CultureSettings.ci.Name.Contains("de-"))
+                    if (!AppResources.ResourceLanguage.Contains("en"))
                         return str;
                     else
                         return AppResources.allDay;
                 }
 
-                if (CultureSettings.ci.Name.Contains("de-"))
-                    str = convert24(appt);
-                else
+                if (AppResources.ResourceLanguage.Contains("en"))
                     str = convert12(appt);
+                else
+                    str = convert24(appt);
 
                 return str;
             }
@@ -191,11 +191,7 @@ namespace Pocal.Converter
 
         private static string convert24(PocalAppointment appt)
         {
-            string str = "";
-            str += appt.StartTime.Hour.ToString("00");
-            str += ":";
-            str += appt.StartTime.Minute.ToString("00");
-            return str;
+            return string.Format("{0:HH:mm}", appt.StartTime);
         }
 
 

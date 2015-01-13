@@ -30,8 +30,8 @@
         <Grid.RenderTransform>
             <CompositeTransform/>
         </Grid.RenderTransform>
-        <!--<Grid.CacheMode>
+        <Grid.CacheMode>
             <BitmapCache/>
-        </Grid.CacheMode>-->
+        </Grid.CacheMode>
     </Grid>
 </UserControl>
