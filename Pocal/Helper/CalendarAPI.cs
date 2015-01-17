@@ -12,10 +12,15 @@ namespace Pocal
     {
         //MEMBER VARIABLES
         public static IReadOnlyList<AppointmentCalendar> calendars;
-        public static async Task setCalendars()
+        public static async Task setCalendars(bool force)
         {
-            if (calendars == null)
-                calendars = await appointmentStore.FindAppointmentCalendarsAsync();
+            if (force)
+            {
+              calendars = await appointmentStore.FindAppointmentCalendarsAsync();  
+            }
+            else
+                if (calendars == null)
+                    calendars = await appointmentStore.FindAppointmentCalendarsAsync();
         }
 
         public static AppointmentStore appointmentStore;
@@ -114,7 +119,7 @@ namespace Pocal
             string localID = localIDs[0];
 
             Appointment newAppointment = await appointmentStore.GetAppointmentAsync(localID);
-            PocalAppointment newPa = App.ViewModel.CreatePocalAppoinment(newAppointment);
+            PocalAppointment newPa = await App.ViewModel.CreatePocalAppoinment(newAppointment);
 
             PocalAppointmentUpdater.Update(null, newPa);
         }
@@ -190,7 +195,7 @@ namespace Pocal
             PocalAppointment newPA = null;
             if (newAppt != null)
             {
-                newPA = App.ViewModel.CreatePocalAppoinment(newAppt);
+                newPA = await App.ViewModel.CreatePocalAppoinment(newAppt);
             }
             PocalAppointmentUpdater.Update(pA, newPA);
                                                                                                       

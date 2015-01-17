@@ -48,14 +48,14 @@ namespace Pocal
             }
         }
 
-        private void addAppointmentLines(IEnumerable<Appointment> appointmentsOfThisDay, Border item)
+        private async void addAppointmentLines(IEnumerable<Appointment> appointmentsOfThisDay, Border item)
         {
             int count = 1;
             double screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
 
             foreach (Appointment appt in appointmentsOfThisDay)
             {
-                PocalAppointment pa = App.ViewModel.CreatePocalAppoinment(appt);
+                PocalAppointment pa = await App.ViewModel.CreatePocalAppoinment(appt);
                 Rectangle rect = new Rectangle();
                 rect.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
                 rect.VerticalAlignment = System.Windows.VerticalAlignment.Top;

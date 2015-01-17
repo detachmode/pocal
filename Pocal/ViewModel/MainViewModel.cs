@@ -346,11 +346,11 @@ namespace Pocal.ViewModel
         private async Task convertAppointmentBuffer()
         {
             pocalAppointmentsBuffer.Clear();
-            await CalendarAPI.setCalendars();
+            await CalendarAPI.setCalendars(false);
 
             foreach (var appt in appoinmentBuffer)
             {
-                PocalAppointment pocalAppt = CreatePocalAppoinment(appt);
+                PocalAppointment pocalAppt = await CreatePocalAppoinment(appt);
                 pocalAppointmentsBuffer.Add(pocalAppt);
             }
         }
@@ -454,9 +454,15 @@ namespace Pocal.ViewModel
         #region PocalAppointments
         private Dictionary<AppointmentCalendar, SolidColorBrush> calColors = new Dictionary<AppointmentCalendar, SolidColorBrush>();
 
-        public PocalAppointment CreatePocalAppoinment(Appointment appt)
+        public async Task<PocalAppointment> CreatePocalAppoinment(Appointment appt)
         {
-            var cal = CalendarAPI.calendars.First(c => c.LocalId == appt.CalendarId);
+            
+            var cal = CalendarAPI.calendars.FirstOrDefault(c => c.LocalId == appt.CalendarId);
+            if (cal == null)
+            {
+                await CalendarAPI.setCalendars(true);
+                cal = CalendarAPI.calendars.First(c => c.LocalId == appt.CalendarId);
+            }
 
             PocalAppointment pocalAppt = new PocalAppointment { Appt = appt, CalColor = getAppointmentColorBrush(appt, cal) };
             return pocalAppt;

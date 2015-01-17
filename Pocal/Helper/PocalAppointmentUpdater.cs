@@ -123,7 +123,7 @@ namespace Pocal.Helper
 
             foreach (var a in appts)
             {
-                PocalAppointment pa = App.ViewModel.CreatePocalAppoinment(a);
+                PocalAppointment pa = await App.ViewModel.CreatePocalAppoinment(a);
                 add(pa);
             }
 
