@@ -21,7 +21,8 @@ namespace Pocal.ViewModel
     public class MainViewModel : ViewModelBase
     {
 
-        public enum Modi { AgendaView, OverView, OverViewSDV, AgendaViewSDV };
+        public enum Modi { AgendaView, OverView, OverViewSDV, AgendaViewSDV, MonthView };
+        public Modi ModusBeforeMonthView;
         public Modi InModus = Modi.AgendaView;
         internal bool isInOverviewModus()
         {

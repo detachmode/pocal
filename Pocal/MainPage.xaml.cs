@@ -81,6 +81,11 @@ namespace Pocal
                 leaveOverview();
                 e.Cancel = true;
             }
+            if (App.ViewModel.InModus == MainViewModel.Modi.MonthView)
+            {
+                CloseMonthView();
+                e.Cancel = true;
+            }
 
             //else
             //    scrollToToday();
@@ -780,6 +785,8 @@ namespace Pocal
 
         private void openMonthView()
         {
+            App.ViewModel.ModusBeforeMonthView = App.ViewModel.InModus;
+            App.ViewModel.InModus = MainViewModel.Modi.MonthView;
             Canvas.SetZIndex(MonthView, 10);
 
             DateTime dt = App.ViewModel.DayAtPointer.DT;
@@ -797,6 +804,7 @@ namespace Pocal
 
         public void CloseMonthView()
         {
+            App.ViewModel.InModus = App.ViewModel.ModusBeforeMonthView;
             Canvas.SetZIndex(MonthView, -10);
             MonthsPivot.Items.Clear();
 

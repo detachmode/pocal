@@ -30,6 +30,12 @@ namespace Pocal.Converter
             {
 
                 DateTime dt = (DateTime)value;
+                if (dt.Date == DateTime.Now.Date)
+                {
+                    string str = AppResources.today;
+                    return str.First().ToString().ToUpper() + str.Substring(1);
+
+                }
                 return dt.ToString("dddd", CultureSettings.ci) + ", " + dt.ToString("M", CultureSettings.ci);
 
             }
