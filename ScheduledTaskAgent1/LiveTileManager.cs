@@ -31,7 +31,7 @@ namespace ScheduledTaskAgent1
 
             foreach (Appointment appt in appts)
             {
-                if (appt.StartTime >= DateTime.Now)
+                if (appt.StartTime.Date >= DateTime.Now.Date)
                     return appt;
             }
             return null;
