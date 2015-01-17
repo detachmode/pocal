@@ -265,11 +265,14 @@
                 <!--******** ***************** ********-->
                 <!--******** AGENDAVIEW POINTER ********-->
                 <!--******** *************** ********-->
+                <!--<Rectangle Canvas.ZIndex="-1" Height="12" Margin="-200,180,0,0" Fill="#19FFFFFF" VerticalAlignment="Top"></Rectangle>-->
+
                 <Grid x:Name="AgendaPointer" Background="{StaticResource AgendaPointerImage}"  Height="73" Width="200" VerticalAlignment="Top" Margin="0,150"  HorizontalAlignment="Right" CacheMode="Bitmapcache" >
 
                     <Grid.RenderTransform>
                         <CompositeTransform TranslateX="150"/>
                     </Grid.RenderTransform>
+                    
                     <StackPanel  Width="120"  x:Name="HeaderStackPanel" Orientation="Vertical" VerticalAlignment="Center" 
 								HorizontalAlignment="Center">
                         <TextBlock x:Name="WeekCounter" Margin="14,0"  Width="80"
