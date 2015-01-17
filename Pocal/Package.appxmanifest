@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="33227Detachmode.Pocal" Publisher="CN=37123FD0-04CF-41ED-8BE2-1D79D1B1CFF4" Version="1.0.3.4" />
+  <Identity Name="33227Detachmode.Pocal" Publisher="CN=37123FD0-04CF-41ED-8BE2-1D79D1B1CFF4" Version="1.0.3.5" />
   <mp:PhoneIdentity PhoneProductId="89f0defb-5da9-490c-a2f2-da273d2b5dd1" PhonePublisherId="a825cd07-5d1f-418d-9919-24950c729e55" />
   <Properties>
     <DisplayName>Pocal</DisplayName>
