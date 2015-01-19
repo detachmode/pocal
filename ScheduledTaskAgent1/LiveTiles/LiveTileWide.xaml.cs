@@ -19,7 +19,7 @@ namespace ScheduledTaskAgent1
             InitializeComponent();
         }
 
-        public void UpdateTextBox(Appointment appt)
+        public void UpdateTextBox(List<Appointment> appts)
         {
             if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
                 dayOfWeekTb.Text = DateTime.Now.ToString("dddd", CultureInfo.CurrentUICulture).Substring(0, 2);
@@ -27,7 +27,7 @@ namespace ScheduledTaskAgent1
                 dayOfWeekTb.Text = DateTime.Now.ToString("dddd", CultureInfo.CurrentUICulture).Substring(0, 3);
 
             dayTb.Text = DateTime.Now.Day.ToString();
-            if (appt == null)
+            if (appts.Count == 0)
             {
                 tb1.Text = "";
                 tb2.Text = "";
@@ -35,12 +35,34 @@ namespace ScheduledTaskAgent1
             }
             else
             {
-                tb1.Text = appt.Subject;
-                if (appt.Location == "")
-                    tbOrt.Visibility = System.Windows.Visibility.Collapsed;
-                tbOrt.Text = LiveTileManager.tbOrtWide(appt);
+                tb1.Text = appts[0].Subject;
 
-                tb2.Text = LiveTileManager.tb2TextWide(appt);
+                if (appts[0].Location == "")
+                    tbOrt.Visibility = System.Windows.Visibility.Collapsed;
+                tbOrt.Text = LiveTileManager.tbOrtWide(appts[0]);
+
+                tb2.Text = LiveTileManager.tb2TextWide(appts[0]);
+
+
+                if (LiveTileManager.IsSingleLiveTileEnabled())
+                    return;
+
+                for (int i = 1; i < Math.Min(appts.Count, 3); i++)
+                {
+                    TextBlock tb = new TextBlock();
+                    tb.Text = appts[i].Subject;
+                    tb.FontSize = 30;
+
+                    TextBlock tbTime = new TextBlock();
+                    tbTime.Text = LiveTileManager.tb2TextWide(appts[i]); ;
+
+                    tbTime.FontSize = 30;
+                    tbTime.Margin = new Thickness(0, -6, 0, 12);
+
+                    otherAppointments.Items.Add(tb);
+                    otherAppointments.Items.Add(tbTime);
+
+                }
                 LayoutRoot.UpdateLayout();
             }
 

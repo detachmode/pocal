@@ -170,9 +170,16 @@ namespace Pocal
 
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
-            //ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
-            //item1.Text = AppResources.SettingsPageTitle;
-            //ApplicationBar.MenuItems.Add(item1);
+            ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
+            item1.Text = AppResources.SettingsPageTitle;
+            item1.Click += new EventHandler(delegate(object sender, EventArgs e)
+            {
+                NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+            });
+
+
+            ApplicationBar.MenuItems.Add(item1);
+
             //ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
             //item2.Text = "Tutorial";
             //ApplicationBar.MenuItems.Add(item2);

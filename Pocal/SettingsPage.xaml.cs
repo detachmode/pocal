@@ -15,6 +15,7 @@ namespace Pocal
         public SettingsPage()
         {
             InitializeComponent();
+            this.DataContext = App.ViewModel.SettingsViewModel;
         }
     }
 }

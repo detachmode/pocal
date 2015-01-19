@@ -31,7 +31,7 @@ namespace ScheduledTaskAgent1
 
         protected async override void OnInvoke(ScheduledTask task)
         {
-            LiveTileManager.AppointmentOnLiveTile = await LiveTileManager.getNextAppointment();
+            LiveTileManager.AppointmentsOnLiveTile = await LiveTileManager.getNextAppointments();
             Deployment.Current.Dispatcher.BeginInvoke(delegate
             {
 

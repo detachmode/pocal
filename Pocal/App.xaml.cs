@@ -97,6 +97,7 @@ namespace Pocal
             App.Current.Resources.Remove("AgendaPointerImage");
 
             Visibility v = (Visibility)App.Current.Resources["PhoneLightThemeVisibility"];
+
             if (v == System.Windows.Visibility.Visible)
             {
                 //LIGHT
@@ -136,7 +137,7 @@ namespace Pocal
                 App.Current.Resources.Add("Overview_StartTime_X", 20);
                 App.Current.Resources.Remove("Overview_StartTime_Width");
                 App.Current.Resources.Add("Overview_StartTime_Width", 60);
-                
+
             }
 
         }

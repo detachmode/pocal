@@ -9,22 +9,47 @@
     xmlns:screenSizeSupport="clr-namespace:ScreenSizeSupport;assembly=ScreenSizeSupport"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
+    Foreground="{StaticResource PhoneAccentBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
+    
+     xmlns:local="clr-namespace:Pocal"
+    
     shell:SystemTray.IsVisible="True">
 
-    <!--LayoutRoot ist das Stammraster, in dem alle anderen Seiteninhalte platziert werden-->
+    <!--<phone:PhoneApplicationPage.Resources>
+        <local:SettingsViewModel x:Key="appSettings"></local:SettingsViewModel>
+    </phone:PhoneApplicationPage.Resources>-->
+
+
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <!--TitlePanel enthält den Namen der Anwendung und den Seitentitel-->
+
         <screenSizeSupport:ZoomBox ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
             <StackPanel>
                 <StackPanel Grid.Row="0" Margin="12,17,0,28">
-                    <TextBlock Text="Pocal" Style="{StaticResource PhoneTextNormalStyle}"/>
-                    <TextBlock Text="{Binding Path=LocalizedResources.SettingsPageTitle, Source={StaticResource LocalizedStrings} }" 
+                        <TextBlock Text="Pocal" Style="{StaticResource PhoneTextNormalStyle}"/>
+                        <TextBlock Text="{Binding Path=LocalizedResources.SettingsPageTitle, Source={StaticResource LocalizedStrings} }" 
                                Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+
+
+                    <ScrollViewer>
+                        <StackPanel x:Name="ContentGrid" Margin="12,24">
+                            
+                            <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Margin="0">Livetile style:</TextBlock>
+                            <RadioButton Content="One appointment" Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="radioButton1" VerticalAlignment="Bottom" GroupName="GroupLivetile" 
+                                    IsChecked="{Binding  Path=LiveTileSingleSettings, Mode=TwoWay}" />
+                            <RadioButton Content="More appointments" Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="radioButton2" VerticalAlignment="Top" GroupName="GroupLivetile" 
+                                    IsChecked="{Binding  Path=LiveTileMulitSettings, Mode=TwoWay}"/>
+
+                            <!--<TextBlock Style="{StaticResource PhoneTextTitle2Style}" Margin="0,24,0,0">Default view:</TextBlock>
+                            <RadioButton Content="Agenda view" Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="radioButton3" VerticalAlignment="Bottom" GroupName="GroupDefaultView" 
+                                    IsChecked="{Binding  Path=DefaultViewSettingsAgenda, Mode=TwoWay}" />
+                            <RadioButton Content="Overview" Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="radioButton4" VerticalAlignment="Top" GroupName="GroupDefaultView" 
+                                    IsChecked="{Binding  Path=DefaultViewSettingsOverview, Mode=TwoWay}"/>-->
+
+                        </StackPanel>
+                    </ScrollViewer>
                 </StackPanel>
-    
             </StackPanel>
         </screenSizeSupport:ZoomBox>
     </Grid>

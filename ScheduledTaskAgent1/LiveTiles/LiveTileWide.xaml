@@ -10,10 +10,12 @@
     d:DesignHeight="336" d:DesignWidth="691">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <StackPanel Margin="12" >
+        <StackPanel Margin="20,12" >
             <TextBlock FontSize="40" x:Name="tb1" Foreground="White" ></TextBlock>
             <TextBlock FontSize="30" x:Name="tbOrt" Foreground="White"></TextBlock>
             <TextBlock FontSize="30" x:Name="tb2" Foreground="White"></TextBlock>
+            <ListBox x:Name="otherAppointments" Margin="0,50" HorizontalAlignment="Left" Width="500">
+            </ListBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
             <TextBlock x:Name="dayOfWeekTb" Foreground="White" Text="So" VerticalAlignment="Bottom" FontWeight="Medium" Margin="12,12" FontSize="36"></TextBlock>

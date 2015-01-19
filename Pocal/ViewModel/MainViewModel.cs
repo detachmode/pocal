@@ -61,6 +61,9 @@ namespace Pocal.ViewModel
 
         public SingleDayViewVM SingleDayViewModel { get; private set; }
         public ConflictManager ConflictManager { get; private set; }
+        public SettingsViewModel SettingsViewModel { get; private set; }
+       
+
 
         private Day _dayAtPointer;
         public Day DayAtPointer
@@ -116,6 +119,7 @@ namespace Pocal.ViewModel
             this.Days = new ObservableCollection<Day>();
             SingleDayViewModel = new SingleDayViewVM();
             ConflictManager = new ConflictManager();
+            SettingsViewModel = new SettingsViewModel();
 
             DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);

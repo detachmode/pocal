@@ -14,9 +14,10 @@ namespace ScheduledTaskAgent1
 {
     public static class LiveTileManager
     {
-        public static Appointment AppointmentOnLiveTile;
-        public static async Task<Appointment> getNextAppointment()
+        public static List<Appointment> AppointmentsOnLiveTile;
+        public static async Task<List<Appointment>> getNextAppointments()
         {
+            List<Appointment> nextAppointments = new List<Appointment>();
             IReadOnlyList<Appointment> appts = await CalendarAPI.getAppointments(DateTime.Now, 2);
 
             // der nächste Termin, der nicht AllDay ist:
@@ -26,15 +27,33 @@ namespace ScheduledTaskAgent1
                     continue;
 
                 if (appt.StartTime >= DateTime.Now)
-                    return appt;
+                {
+                    nextAppointments.Add(appt);
+                    break;
+                }
+
             }
+
 
             foreach (Appointment appt in appts)
             {
-                if (appt.StartTime.Date >= DateTime.Now.Date)
-                    return appt;
+                if (nextAppointments.Count == 0 || appt != nextAppointments[0])
+                {
+                    nextAppointments.Add(appt);
+                }
             }
-            return null;
+
+            return nextAppointments;
+        }
+
+        public static bool IsSingleLiveTileEnabled()
+        {
+            bool isSingleLiveTileEnabled = false;
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("LiveTileSettingsSingle"))
+            {
+                isSingleLiveTileEnabled = (bool)IsolatedStorageSettings.ApplicationSettings["LiveTileSettingsSingle"];
+            }
+            return isSingleLiveTileEnabled;
         }
 
         public static string tbOrtWide(Appointment appt)
@@ -73,7 +92,7 @@ namespace ScheduledTaskAgent1
                 }
                 else if (CultureInfo.CurrentUICulture.Name.Contains("it-"))
                 {
-                    str += "Giornata intera"; 
+                    str += "Giornata intera";
                 }
                 else
                     str += "All day";
@@ -154,16 +173,15 @@ namespace ScheduledTaskAgent1
 
         public static async void UpdateTile()
         {
-
             var customTile = new LiveTile();
-            customTile.UpdateTextBox(AppointmentOnLiveTile);
+            customTile.UpdateTextBox(AppointmentsOnLiveTile);
             customTile.Measure(new Size(336, 336));
             customTile.Arrange(new Rect(0, 0, 336, 336));
 
 
 
             var customTileWide = new LiveTileWide();
-            customTileWide.UpdateTextBox(AppointmentOnLiveTile);
+            customTileWide.UpdateTextBox(AppointmentsOnLiveTile);
             customTileWide.Measure(new Size(691, 336));
             customTileWide.Arrange(new Rect(0, 0, 691, 336));
 
@@ -197,7 +215,7 @@ namespace ScheduledTaskAgent1
 
                     }
                 }
-                catch {}
+                catch { }
 
             }
             try
@@ -223,7 +241,7 @@ namespace ScheduledTaskAgent1
 
         public async static void UpdateTileFromForeground()
         {
-            AppointmentOnLiveTile = await getNextAppointment();
+            AppointmentsOnLiveTile = await getNextAppointments();
             UpdateTile();
 
         }
