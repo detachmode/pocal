@@ -39,7 +39,11 @@ namespace ScheduledTaskAgent1
             {
                 if (nextAppointments.Count == 0 || appt != nextAppointments[0])
                 {
-                    nextAppointments.Add(appt);
+                    if (appt.StartTime >= DateTime.Now)
+                    {
+                        nextAppointments.Add(appt);  
+                    }
+                    
                 }
             }
 

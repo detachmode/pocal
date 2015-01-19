@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Windows.ApplicationModel.Appointments;
 using System.Globalization;
+using System.Windows.Media;
 
 namespace ScheduledTaskAgent1
 {
@@ -45,19 +46,27 @@ namespace ScheduledTaskAgent1
 
 
                 if (LiveTileManager.IsSingleLiveTileEnabled())
+                {
+                    LayoutRoot.UpdateLayout();
                     return;
+                }
+                    
 
                 for (int i = 1; i < Math.Min(appts.Count, 3); i++)
                 {
+                    byte grayColor = 255;
+                    SolidColorBrush brush = new SolidColorBrush(Color.FromArgb(200,grayColor, grayColor, grayColor));
                     TextBlock tb = new TextBlock();
                     tb.Text = appts[i].Subject;
+                    tb.Foreground = brush;
                     tb.FontSize = 30;
 
                     TextBlock tbTime = new TextBlock();
                     tbTime.Text = LiveTileManager.tb2TextWide(appts[i]); ;
 
                     tbTime.FontSize = 30;
-                    tbTime.Margin = new Thickness(0, -6, 0, 12);
+                    tbTime.Foreground = brush;
+                    tbTime.Margin = new Thickness(0, -6, 0, 24);
 
                     otherAppointments.Items.Add(tb);
                     otherAppointments.Items.Add(tbTime);
