@@ -31,7 +31,7 @@ namespace Pocal
         public async void LoadAppointmentLinesAsync()
         {
 
-            IReadOnlyList<Appointment> listOfAppointments = await CalendarAPI.getAppointments(gridDateTimes.FirstOrDefault(), gridDateTimes.Count);
+            IReadOnlyList<Appointment> listOfAppointments = await CalendarAPI.GetAppointments(gridDateTimes.FirstOrDefault(), gridDateTimes.Count);
             foreach (DependencyObject item in (MonthViewGrid as Grid).Children)
             {
                 Border brd = item as Border;

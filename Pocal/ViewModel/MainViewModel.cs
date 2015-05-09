@@ -345,14 +345,14 @@ namespace Pocal.ViewModel
         private async Task getPocalAppointments(int howManyDays, DateTime startDay)
         {
            
-            appoinmentBuffer = await CalendarAPI.getAppointments(startDay, howManyDays);
+            appoinmentBuffer = await CalendarAPI.GetAppointments(startDay, howManyDays);
             await convertAppointmentBuffer();
         }
 
         private async Task convertAppointmentBuffer()
         {
             pocalAppointmentsBuffer.Clear();
-            await CalendarAPI.setCalendars(false);
+            await CalendarAPI.SetCalendars(false);
 
             foreach (var appt in appoinmentBuffer)
             {
@@ -466,7 +466,7 @@ namespace Pocal.ViewModel
             var cal = CalendarAPI.calendars.FirstOrDefault(c => c.LocalId == appt.CalendarId);
             if (cal == null)
             {
-                await CalendarAPI.setCalendars(true);
+                await CalendarAPI.SetCalendars(true);
                 cal = CalendarAPI.calendars.First(c => c.LocalId == appt.CalendarId);
             }
 

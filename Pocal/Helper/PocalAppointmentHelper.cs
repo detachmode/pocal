@@ -72,7 +72,7 @@ namespace Pocal.Helper
                         localID,
                         DateTime.Today,
                         TimeSpan.FromDays(App.ViewModel.Days.Count),
-                        CalendarAPI.getFindOptions());
+                        CalendarAPI.GetFindOptions());
 
                 foreach (var appt in appointmentInstances)
                 {
