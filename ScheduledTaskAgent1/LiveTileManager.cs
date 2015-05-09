@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Windows.ApplicationModel.Appointments;
+using Shared.Helper;
 
 namespace ScheduledTaskAgent1
 {
@@ -18,7 +19,7 @@ namespace ScheduledTaskAgent1
         public static async Task<List<Appointment>> getNextAppointments()
         {
             List<Appointment> nextAppointments = new List<Appointment>();
-            IReadOnlyList<Appointment> appts = await CalendarAPI.getAppointments(DateTime.Now, 2);
+            IReadOnlyList<Appointment> appts = await CalendarAPI.GetAppointments(DateTime.Now, 2);
 
             // der nächste Termin, der nicht AllDay ist:
             foreach (Appointment appt in appts)
@@ -104,9 +105,9 @@ namespace ScheduledTaskAgent1
             }
             else if (appt.StartTime.Date != endTime.Date)
             {
-                str += appt.StartTime.ToString("dddd", CultureSettings.ci);
+                str += appt.StartTime.ToString("dddd", CultureInfo.CurrentUICulture);
                 str += " - ";
-                str += endTime.ToString("dddd", CultureSettings.ci);
+                str += endTime.ToString("dddd", CultureInfo.CurrentUICulture);
             }
             else
             {
@@ -154,9 +155,9 @@ namespace ScheduledTaskAgent1
             }
             else if (appt.StartTime.Date != endTime.Date)
             {
-                str += appt.StartTime.ToString("dddd", CultureSettings.ci);
+                str += appt.StartTime.ToString("dddd", CultureInfo.CurrentUICulture);
                 str += " - ";
-                str += endTime.ToString("dddd", CultureSettings.ci);
+                str += endTime.ToString("dddd", CultureInfo.CurrentUICulture);
             }
             else
             {

@@ -393,7 +393,6 @@ namespace Pocal.ViewModel
         private void createAndAddDays(DateTime startDay, int howManyDays, double stamp)
         {
             DateTime dt = startDay;
-            CultureInfo ci = new CultureInfo("de-DE");
 
             //Days.Clear();
             for (int i = 0; i < howManyDays; i++)
@@ -430,7 +429,6 @@ namespace Pocal.ViewModel
         private void createAndInsertPastDays(DateTime startDay, int howManyDays, double stamp)
         {
             DateTime dt = startDay;
-            CultureInfo ci = new CultureInfo("de-DE");
 
             //Days.Clear();
             for (int i = 0; i < howManyDays; i++)
