@@ -8,7 +8,7 @@ using Windows.ApplicationModel.Appointments;
 using Cimbalino.Toolkit.Converters;
 using System.Windows.Media;
 using System.Windows.Controls;
-using Shared.Resources;
+using Pocal.Resources;
 using System.Diagnostics;
 
 namespace Pocal.Converter

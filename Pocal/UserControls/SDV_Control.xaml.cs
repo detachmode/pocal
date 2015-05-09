@@ -11,7 +11,7 @@ using System.Windows.Media.Animation;
 using Pocal.ViewModel;
 using Pocal.Converter;
 using System.Globalization;
-using Shared.Resources;
+using Pocal.Resources;
 
 namespace Pocal
 {

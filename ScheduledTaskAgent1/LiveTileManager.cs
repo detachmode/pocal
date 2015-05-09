@@ -42,9 +42,9 @@ namespace ScheduledTaskAgent1
                 {
                     if (appt.StartTime >= DateTime.Now)
                     {
-                        nextAppointments.Add(appt);  
+                        nextAppointments.Add(appt);
                     }
-                    
+
                 }
             }
 
@@ -176,7 +176,7 @@ namespace ScheduledTaskAgent1
 
 
 
-        public static async void UpdateTile()
+        public static void UpdateTile()
         {
             var customTile = new LiveTile();
             customTile.UpdateTextBox(AppointmentsOnLiveTile);
@@ -206,48 +206,43 @@ namespace ScheduledTaskAgent1
 
             using (var isf = IsolatedStorageFile.GetUserStoreForApplication())
             {
-                try
+
+                using (IsolatedStorageFileStream imageStream = new IsolatedStorageFileStream("/Shared/ShellContent/" + filename + ".png", System.IO.FileMode.OpenOrCreate, isf))
                 {
-                    using (IsolatedStorageFileStream imageStream = new IsolatedStorageFileStream("/Shared/ShellContent/" + filename + ".png", System.IO.FileMode.OpenOrCreate, isf))
-                    {
-                        Cimbalino.Phone.Toolkit.Extensions.WriteableBitmapExtensions.SavePng(bmp, imageStream);
+                    Cimbalino.Phone.Toolkit.Extensions.WriteableBitmapExtensions.SavePng(bmp, imageStream);
 
-                    }
-
-                    using (IsolatedStorageFileStream imageStream = new IsolatedStorageFileStream("/Shared/ShellContent/" + filenameWide + ".png", System.IO.FileMode.OpenOrCreate, isf))
-                    {
-                        Cimbalino.Phone.Toolkit.Extensions.WriteableBitmapExtensions.SavePng(bmp2, imageStream);
-
-                    }
                 }
-                catch { }
 
-            }
-            try
-            {
-
-                FlipTileData tileData = new FlipTileData
+                using (IsolatedStorageFileStream imageStream = new IsolatedStorageFileStream("/Shared/ShellContent/" + filenameWide + ".png", System.IO.FileMode.OpenOrCreate, isf))
                 {
-                    //Title = "CustomSecondaryTile", 
-                    WideBackgroundImage = new Uri("isostore:" + filenameWidefull, UriKind.Absolute),
-                    BackgroundImage = new Uri("isostore:" + filenamefull, UriKind.Absolute),
-                };
+                    Cimbalino.Phone.Toolkit.Extensions.WriteableBitmapExtensions.SavePng(bmp2, imageStream);
 
-                //string tileUri = string.Concat("/MainPage.xaml?", "");
-                ShellTile currentTile = ShellTile.ActiveTiles.FirstOrDefault();
-                currentTile.Update(tileData);
-                //ShellTile.Create(new Uri(tileUri, UriKind.Relative), tileData, true);
+                }
+
             }
-            catch
+
+
+            FlipTileData tileData = new FlipTileData
             {
-                //MessageBox.Show(e.Message);
-            }
+                WideBackgroundImage = new Uri("isostore:" + filenameWidefull, UriKind.Absolute),
+                BackgroundImage = new Uri("isostore:" + filenamefull, UriKind.Absolute),
+            };
+
+            ShellTile currentTile = ShellTile.ActiveTiles.FirstOrDefault();
+            currentTile.Update(tileData);
+
+            
+
         }
 
         public async static void UpdateTileFromForeground()
         {
-            AppointmentsOnLiveTile = await getNextAppointments();
-            UpdateTile();
+            try
+            {
+                AppointmentsOnLiveTile = await getNextAppointments();
+                UpdateTile();
+            }
+            catch { }
 
         }
     }

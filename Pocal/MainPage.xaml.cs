@@ -15,7 +15,7 @@ using Pocal.Helper;
 using System.Windows.Data;
 using System.Windows.Media.Animation;
 using Microsoft.Phone.Shell;
-using Shared.Resources;
+using Pocal.Resources;
 using Microsoft.Phone.Scheduler;
 using ScheduledTaskAgent1;
 using Microsoft.Phone.Tasks;
