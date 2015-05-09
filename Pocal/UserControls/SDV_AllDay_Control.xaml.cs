@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Pocal.ViewModel;
 using System.Windows.Media.Animation;
+using Pocal.Helper;
 
 namespace Pocal
 {
@@ -34,7 +35,7 @@ namespace Pocal
             Dispatcher.BeginInvoke(() =>
             {
 
-                CalendarAPI.editAppointment(pocalAppointment);
+                PocalAppointmentHelper.editAppointment(pocalAppointment);
 
             });
 

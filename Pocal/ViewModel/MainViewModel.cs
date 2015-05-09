@@ -13,6 +13,7 @@ using System.Windows;
 using System.Threading;
 using System.Windows.Threading;
 using ScreenSizeSupport;
+using Shared.Helper;
 
 
 namespace Pocal.ViewModel
@@ -343,6 +344,7 @@ namespace Pocal.ViewModel
 
         private async Task getPocalAppointments(int howManyDays, DateTime startDay)
         {
+           
             appoinmentBuffer = await CalendarAPI.getAppointments(startDay, howManyDays);
             await convertAppointmentBuffer();
         }

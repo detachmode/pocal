@@ -15,7 +15,7 @@ using Pocal.Helper;
 using System.Windows.Data;
 using System.Windows.Media.Animation;
 using Microsoft.Phone.Shell;
-using Pocal.Resources;
+using Shared.Resources;
 using Microsoft.Phone.Scheduler;
 using ScheduledTaskAgent1;
 using Microsoft.Phone.Tasks;
@@ -207,7 +207,7 @@ namespace Pocal
             ApplicationBar.Buttons.Add(button2);
             button2.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
-                CalendarAPI.addAllDayAppointment(App.ViewModel.DayAtPointer.DT);
+                PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.DayAtPointer.DT);
 
             });
 
@@ -504,7 +504,7 @@ namespace Pocal
             ApplicationBar.Buttons.Add(button2);
             button2.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
-                CalendarAPI.addAllDayAppointment(App.ViewModel.SingleDayViewModel.TappedDay.DT);
+                PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.SingleDayViewModel.TappedDay.DT);
 
             });
 
@@ -590,7 +590,7 @@ namespace Pocal
             ApplicationBar.Buttons.Add(button2);
             button2.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
-                CalendarAPI.addAllDayAppointment(App.ViewModel.DayAtPointer.DT);
+                PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.DayAtPointer.DT);
 
             });
 

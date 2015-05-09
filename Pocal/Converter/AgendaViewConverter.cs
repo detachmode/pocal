@@ -7,7 +7,7 @@ using Windows.ApplicationModel.Appointments;
 using System.Linq;
 using System.Windows;
 using Pocal.Helper;
-using Pocal.Resources;
+using Shared.Resources;
 
 namespace Pocal.Converter
 {

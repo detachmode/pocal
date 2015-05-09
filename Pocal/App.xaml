@@ -11,7 +11,7 @@
     <!--Application Resources-->
     <Application.Resources>
         <screenSizeSupport:DisplayInformationEmulator x:Key="DisplayInformationEmulator"/>
-        <local:LocalizedStrings xmlns:local="clr-namespace:Pocal" x:Key="LocalizedStrings"/>
+        <local:LocalizedStrings xmlns:local="clr-namespace:Shared;assembly=Shared" x:Key="LocalizedStrings"/>
 
         <converter:overview_SecondLineSale x:Key="overview_SecondLineSale"/>
 

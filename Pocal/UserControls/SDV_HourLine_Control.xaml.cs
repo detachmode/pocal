@@ -8,6 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Windows.Media.Animation;
+using Pocal.Helper;
 
 namespace Pocal
 {
@@ -40,7 +41,7 @@ namespace Pocal
             if (starttime != null)
             {
                 DateTime dt = (DateTime)starttime;
-                CalendarAPI.addAppointment(dt);
+                PocalAppointmentHelper.addAppointment(dt);
             }
  
 

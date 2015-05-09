@@ -1,86 +1,17 @@
-﻿using Pocal.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Appointments;
-using Pocal.Helper;
+using Shared.Helper;
+using Pocal.ViewModel;
 using System.Threading;
 
-namespace Pocal
+namespace Pocal.Helper
 {
-    public static class CalendarAPI
+    public class PocalAppointmentHelper
     {
-        //MEMBER VARIABLES
-        public static IReadOnlyList<AppointmentCalendar> calendars;
-        public static async Task setCalendars(bool force)
-        {
-            if (force)
-            {
-              calendars = await appointmentStore.FindAppointmentCalendarsAsync();  
-            }
-            else
-                if (calendars == null)
-                    calendars = await appointmentStore.FindAppointmentCalendarsAsync();
-        }
-
-        public static AppointmentStore appointmentStore;
-        public static async Task setAppointmentStore()
-        {
-            if (appointmentStore == null)
-                appointmentStore = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
-        }
-
-        #region GET DAYS
-
-
-        public static async Task<IReadOnlyList<Appointment>> getAppointments(DateTime startDay, int howManyDays)
-        {
-            await setAppointmentStore();
-            FindAppointmentsOptions findOptions = getFindOptions();
-
-            return await appointmentStore.FindAppointmentsAsync(startDay.Date, TimeSpan.FromDays(howManyDays), findOptions);
-
-        }
-
-        public static async Task<Appointment> getAppointmentfromSubject(string subject)
-        {
-            await setAppointmentStore();
-            FindAppointmentsOptions findOptions = new FindAppointmentsOptions();
-            //findOptions.MaxCount = 100;
-            findOptions.FetchProperties.Add(AppointmentProperties.Subject);
-            findOptions.FetchProperties.Add(AppointmentProperties.Location);
-            findOptions.FetchProperties.Add(AppointmentProperties.Details);
-            findOptions.FetchProperties.Add(AppointmentProperties.StartTime);
-            findOptions.FetchProperties.Add(AppointmentProperties.AllDay);
-            findOptions.FetchProperties.Add(AppointmentProperties.Duration);
-
-            IReadOnlyList<Appointment> appts = await appointmentStore.FindAppointmentsAsync(DateTime.Now.Date, TimeSpan.FromDays(App.ViewModel.Days.Count), findOptions);
-            foreach (var appt in appts)
-            {
-                if (appt.Subject.Contains(subject))
-                {
-                    return appt;
-                }
-            }
-            return appts[0];
-
-        }
-
-        private static FindAppointmentsOptions getFindOptions()
-        {
-            FindAppointmentsOptions findOptions = new FindAppointmentsOptions();
-            //findOptions.MaxCount = 100;
-            findOptions.FetchProperties.Add(AppointmentProperties.Subject);
-            findOptions.FetchProperties.Add(AppointmentProperties.Location);
-            findOptions.FetchProperties.Add(AppointmentProperties.Details);
-            findOptions.FetchProperties.Add(AppointmentProperties.StartTime);
-            findOptions.FetchProperties.Add(AppointmentProperties.AllDay);
-            findOptions.FetchProperties.Add(AppointmentProperties.Duration);
-            return findOptions;
-        }
-        #endregion
-
-
 
         #region NEW
         // ******** *********************** *********//
@@ -106,19 +37,7 @@ namespace Pocal
 
         private static async Task addAppointment(Appointment appointment)
         {
-            await setAppointmentStore();
-            String roamingId = await AppointmentManager.ShowEditNewAppointmentAsync(appointment);
-            if (roamingId == null)
-                return;
-
-            IReadOnlyList<string> localIDs = await appointmentStore.FindLocalIdsFromRoamingIdAsync(roamingId);
-
-            if (localIDs.Count == 0)
-                return;
-
-            string localID = localIDs[0];
-
-            Appointment newAppointment = await appointmentStore.GetAppointmentAsync(localID);
+            Appointment newAppointment = await CalendarAPI.Add(appointment);
             PocalAppointment newPa = await App.ViewModel.CreatePocalAppoinment(newAppointment);
 
             PocalAppointmentUpdater.Update(null, newPa);
@@ -153,7 +72,7 @@ namespace Pocal
                         localID,
                         DateTime.Today,
                         TimeSpan.FromDays(App.ViewModel.Days.Count),
-                        getFindOptions());
+                        CalendarAPI.getFindOptions());
 
                 foreach (var appt in appointmentInstances)
                 {
@@ -168,8 +87,6 @@ namespace Pocal
         #endregion
 
 
-
-        #region EDIT
         // ******** *************************** *********//
         // ******** Edits exisiting Appointment *********//
         // ******** *************************** *********//
@@ -177,33 +94,19 @@ namespace Pocal
 
         public static async void editAppointment(PocalAppointment pA)
         {
-            await setAppointmentStore();
-            Thread.Sleep(150);
-
-            Appointment newAppt;
-            if (pA.Appt.OriginalStartTime == null)
-            {
-                await appointmentStore.ShowAppointmentDetailsAsync(pA.Appt.LocalId);
-                newAppt = await appointmentStore.GetAppointmentAsync(pA.Appt.LocalId);
-            }
-            else
-            {
-                await appointmentStore.ShowAppointmentDetailsAsync(pA.Appt.LocalId, pA.Appt.OriginalStartTime.Value);
-                newAppt = await appointmentStore.GetAppointmentInstanceAsync(pA.Appt.LocalId, pA.Appt.OriginalStartTime.Value);
-            }
+            Appointment appt =  await CalendarAPI.Edit(pA.Appt);
 
             PocalAppointment newPA = null;
-            if (newAppt != null)
+            if (appt != null)
             {
-                newPA = await App.ViewModel.CreatePocalAppoinment(newAppt);
+                newPA = await App.ViewModel.CreatePocalAppoinment(appt);
             }
             PocalAppointmentUpdater.Update(pA, newPA);
-                                                                                                      
+
         }
 
 
 
-        #endregion
 
         #region TestAppointments
 
@@ -219,7 +122,7 @@ namespace Pocal
             {
                 await addAppointment(appointment);
             }
-            
+
 
             appointment = newTestAppointment
                 (
@@ -249,7 +152,7 @@ namespace Pocal
                 (
                     DateTime.Now.Date.AddHours(5.10),
                     "Bus Fährt los",
-                    TimeSpan.FromHours(0.4)    
+                    TimeSpan.FromHours(0.4)
                 );
             await addAppointment(appointment);
 
@@ -273,5 +176,4 @@ namespace Pocal
         }
         #endregion
     }
-
 }

@@ -6,7 +6,7 @@ using System.Windows.Markup;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using Pocal.Resources;
+using Shared.Resources;
 using Pocal.ViewModel;
 using ScheduledTaskAgent1;
 using System.Windows.Media;

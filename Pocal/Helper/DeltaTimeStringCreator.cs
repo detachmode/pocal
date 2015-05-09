@@ -1,4 +1,4 @@
-﻿using Pocal.Resources;
+﻿using Shared.Resources;
 using Pocal.ViewModel;
 using System;
 using System.Collections.Generic;

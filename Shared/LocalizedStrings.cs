@@ -1,6 +1,6 @@
-﻿using Pocal.Resources;
+﻿using Shared.Resources;
 
-namespace Pocal
+namespace Shared
 {
 	/// <summary>
 	/// Provides access to string resources.

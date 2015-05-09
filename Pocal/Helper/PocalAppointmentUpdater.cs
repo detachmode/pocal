@@ -122,7 +122,7 @@ namespace Pocal.Helper
 
         private static async Task addRecurrent(Appointment appt)
         {
-            List<Appointment> appts = await CalendarAPI.getReccurantAppointments(appt, appt.LocalId);
+            List<Appointment> appts = await PocalAppointmentHelper.getReccurantAppointments(appt, appt.LocalId);
 
             foreach (var a in appts)
             {

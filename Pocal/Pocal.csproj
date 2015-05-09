@@ -96,6 +96,7 @@
     <Compile Include="Converter\AgendaViewConverter.cs" />
     <Compile Include="Converter\OverViewConverter.cs" />
     <Compile Include="Converter\SingleDayViewConverter.cs" />
+    <Compile Include="Helper\PocalAppointmentHelper.cs" />
     <Compile Include="Helper\TimeFrameChecker.cs" />
     <Compile Include="InfoPage.xaml.cs">
       <DependentUpon>InfoPage.xaml</DependentUpon>
@@ -124,7 +125,6 @@
     <Compile Include="Helper\Hourline.cs" />
     <Compile Include="Helper\PocalAppointmentUpdater.cs" />
     <Compile Include="Helper\ViewSwitcher.cs" />
-    <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -132,13 +132,7 @@
       <DependentUpon>MonthView_Control.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\AppResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AppResources.resx</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\Day.cs" />
-    <Compile Include="Helper\CalendarAPI.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PocalAppointment.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
@@ -275,15 +269,6 @@
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\AppResources.de.resx" />
-    <EmbeddedResource Include="Resources\AppResources.it.resx" />
-    <EmbeddedResource Include="Resources\AppResources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Cimbalino.Phone.Toolkit">
       <HintPath>..\packages\Cimbalino.Phone.Toolkit.3.2.3\lib\wp8\Cimbalino.Phone.Toolkit.dll</HintPath>
     </Reference>
@@ -313,6 +298,10 @@
     <ProjectReference Include="..\ScreenSizeSupport\ScreenSizeSupport.csproj">
       <Project>{949a23fd-3917-495b-80fb-2465fe68b8a8}</Project>
       <Name>ScreenSizeSupport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{f32bc6e3-3d41-49b4-92cc-4f3e2e71e7cf}</Project>
+      <Name>Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
