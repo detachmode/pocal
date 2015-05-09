@@ -24,6 +24,8 @@ namespace Pocal
         private void SDV_Hourline_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             HourLine hourLine = ((FrameworkElement)sender).DataContext as HourLine;
+            
+            // Starte Animation
             Dispatcher.BeginInvoke(() =>
             {
                 Storyboard storyboard = ((FrameworkElement)sender).Resources["tapFeedback"] as Storyboard;
@@ -33,6 +35,7 @@ namespace Pocal
                 }
             });
 
+            // Finde die Uhrzeit der angetippten Stelle heraus und übergebe diese Uhrzeit der API
             var starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine);
             if (starttime != null)
             {

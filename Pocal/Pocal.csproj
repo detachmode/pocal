@@ -118,7 +118,6 @@
     <Compile Include="UserControls\DayCard_Control.xaml.cs">
       <DependentUpon>DayCard_Control.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helper\Cluster.cs" />
     <Compile Include="Helper\ConflictManager.cs" />
     <Compile Include="Helper\DeltaTimeStringCreator.cs" />
     <Compile Include="Helper\Extensions.cs" />
