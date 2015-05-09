@@ -300,7 +300,7 @@
       <Name>ScreenSizeSupport</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
-      <Project>{f32bc6e3-3d41-49b4-92cc-4f3e2e71e7cf}</Project>
+      <Project>{e2efae07-1247-47e1-8b67-7486bcfe7c23}</Project>
       <Name>Shared</Name>
     </ProjectReference>
   </ItemGroup>
