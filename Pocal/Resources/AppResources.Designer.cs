@@ -340,6 +340,15 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Calendar Visibility on Live tile ähnelt.
+        /// </summary>
+        public static string SettingsCalendarVisibility {
+            get {
+                return ResourceManager.GetString("SettingsCalendarVisibility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Settings ähnelt.
         /// </summary>
         public static string SettingsPageTitle {

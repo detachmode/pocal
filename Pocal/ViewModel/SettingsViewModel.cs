@@ -20,6 +20,8 @@ namespace Pocal
 
         const string SundayRedKeyName = "SundayRed";
 
+        const string HiddenCalendarsKeyName = "HiddenCalendars";
+
        
 
 
@@ -30,6 +32,8 @@ namespace Pocal
         const bool DefaultViewSettingsOverviewDefault = false;
 
         const bool SundayRedDefault = false;
+
+        List<string> HiddenCalendarsDefault = new List<string>();
 
 
         public SettingsViewModel()
@@ -159,6 +163,21 @@ namespace Pocal
             set
             {
                 if (AddOrUpdateValue(SundayRedKeyName, value))
+                {
+                    Save();
+                }
+            }
+        }
+
+        public List<string> HiddenCalendars
+        {
+            get
+            {
+                return GetValueOrDefault<List<string>>(HiddenCalendarsKeyName, HiddenCalendarsDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(HiddenCalendarsKeyName, value))
                 {
                     Save();
                 }

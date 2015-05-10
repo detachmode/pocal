@@ -9,7 +9,7 @@
     xmlns:screenSizeSupport="clr-namespace:ScreenSizeSupport;assembly=ScreenSizeSupport"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneAccentBrush}"
+    Foreground="Gray"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     
@@ -46,6 +46,10 @@
                                     IsChecked="{Binding  Path=DefaultViewSettingsAgenda, Mode=TwoWay}" />
                             <RadioButton Content="Overview" Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="radioButton4" VerticalAlignment="Top" GroupName="GroupDefaultView" 
                                     IsChecked="{Binding  Path=DefaultViewSettingsOverview, Mode=TwoWay}"/>-->
+
+                            <TextBlock Text="{Binding Path=LocalizedResources.SettingsCalendarVisibility, Source={StaticResource LocalizedStrings} }"/>
+                            
+                            <ListBox Name="ListCalendarVisibility"/>
 
 
                             <TextBlock Margin="0,24,0,0" Style="{StaticResource PhoneTextTitle2Style}" >Agenda Options:</TextBlock>

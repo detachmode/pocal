@@ -244,4 +244,7 @@
   <data name="SettingsSundayRed" xml:space="preserve">
     <value>Sonntag rot</value>
   </data>
+  <data name="SettingsCalendarVisibility" xml:space="preserve">
+    <value>Kalender-Sichtbarkeit auf Livetile</value>
+  </data>
 </root>

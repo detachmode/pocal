@@ -236,4 +236,7 @@
   <data name="SettingsSundayRed" xml:space="preserve">
     <value>Sunday red</value>
   </data>
+  <data name="SettingsCalendarVisibility" xml:space="preserve">
+    <value>Calendar Visibility on Live tile</value>
+  </data>
 </root>

@@ -19,7 +19,19 @@ namespace ScheduledTaskAgent1
         public static async Task<List<Appointment>> getNextAppointments()
         {
             List<Appointment> nextAppointments = new List<Appointment>();
-            IReadOnlyList<Appointment> appts = await CalendarAPI.GetAppointments(DateTime.Now, 2);
+            List<Appointment> appts = (await CalendarAPI.GetAppointments(DateTime.Now.Date, 2)).ToList<Appointment>();
+
+            // Options: Sortiere Termine aus, die von hidden Kalender sind.
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("HiddenCalendars"))
+            {
+                List<string> hiddenCalendars = (List<string>)IsolatedStorageSettings.ApplicationSettings["HiddenCalendars"];
+                foreach (string id in hiddenCalendars)
+                {
+                    appts.RemoveAll(x => x.CalendarId == id);
+                }
+               
+            }
+
 
             // der nächste Termin, der nicht AllDay ist:
             foreach (Appointment appt in appts)
@@ -44,6 +56,8 @@ namespace ScheduledTaskAgent1
                     {
                         nextAppointments.Add(appt);
                     }
+                    else if (appt.AllDay)
+                        nextAppointments.Add(appt);
 
                 }
             }

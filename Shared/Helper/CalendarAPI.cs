@@ -9,16 +9,16 @@ namespace Shared.Helper
     public static class CalendarAPI
     {
         //MEMBER VARIABLES
-        public static IReadOnlyList<AppointmentCalendar> calendars;
+        public static IReadOnlyList<AppointmentCalendar> Calendars;
         public static async Task SetCalendars(bool force)
         {
             if (force)
             {
-                calendars = await appointmentStore.FindAppointmentCalendarsAsync();
+                Calendars = await appointmentStore.FindAppointmentCalendarsAsync();
             }
             else
-                if (calendars == null)
-                    calendars = await appointmentStore.FindAppointmentCalendarsAsync();
+                if (Calendars == null)
+                    Calendars = await appointmentStore.FindAppointmentCalendarsAsync();
         }
 
         private static AppointmentStore appointmentStore;

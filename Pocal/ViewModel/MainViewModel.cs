@@ -461,11 +461,11 @@ namespace Pocal.ViewModel
         public async Task<PocalAppointment> CreatePocalAppoinment(Appointment appt)
         {
             
-            var cal = CalendarAPI.calendars.FirstOrDefault(c => c.LocalId == appt.CalendarId);
+            var cal = CalendarAPI.Calendars.FirstOrDefault(c => c.LocalId == appt.CalendarId);
             if (cal == null)
             {
                 await CalendarAPI.SetCalendars(true);
-                cal = CalendarAPI.calendars.First(c => c.LocalId == appt.CalendarId);
+                cal = CalendarAPI.Calendars.First(c => c.LocalId == appt.CalendarId);
             }
 
             PocalAppointment pocalAppt = new PocalAppointment { Appt = appt, CalColor = getAppointmentColorBrush(appt, cal) };
