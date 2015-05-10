@@ -87,9 +87,6 @@ namespace Pocal
                 e.Cancel = true;
             }
 
-            //else
-            //    scrollToToday();
-
            
             base.OnBackKeyPress(e);
         }

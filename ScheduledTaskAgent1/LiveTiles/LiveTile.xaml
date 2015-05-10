@@ -11,10 +11,10 @@
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <StackPanel Margin="12" >
-            <TextBlock  x:Name="tb1"  Foreground="White" FontWeight="SemiBold" TextTrimming="WordEllipsis" TextWrapping="Wrap" 
+            <TextBlock  x:Name="tbSubject"  Foreground="White" FontWeight="SemiBold" TextTrimming="WordEllipsis" TextWrapping="Wrap" 
                        FontSize="32" LineHeight="28"  MaxHeight="90">
             </TextBlock>
-            <TextBlock x:Name="tb2" Foreground="White" FontSize="30"></TextBlock>
+            <TextBlock x:Name="tbTime" Foreground="White" FontSize="30"></TextBlock>
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
             <TextBlock x:Name="dayOfWeekTb"  Foreground="White" Text="So" VerticalAlignment="Bottom" FontWeight="Medium" Margin="12,12" FontSize="36"></TextBlock>

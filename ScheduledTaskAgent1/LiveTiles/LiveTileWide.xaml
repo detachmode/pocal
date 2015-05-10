@@ -11,9 +11,9 @@
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <StackPanel Margin="20,12" >
-            <TextBlock FontSize="45" x:Name="tb1" Foreground="White" ></TextBlock>
+            <TextBlock FontSize="45" x:Name="tbSubject" Foreground="White" ></TextBlock>
             <TextBlock FontSize="30" x:Name="tbOrt" Foreground="White"></TextBlock>
-            <TextBlock FontSize="30" x:Name="tb2" Foreground="White"></TextBlock>
+            <TextBlock FontSize="30" x:Name="tbTime" Foreground="White"></TextBlock>
             <ListBox x:Name="otherAppointments" Margin="0,20" HorizontalAlignment="Left" Width="500">
             </ListBox>
         </StackPanel>

@@ -61,7 +61,7 @@ namespace ScheduledTaskAgent1
             return isSingleLiveTileEnabled;
         }
 
-        public static string tbOrtWide(Appointment appt)
+        public static string getLocationStringWide(Appointment appt)
         {
             string str = "";
             if (appt.Location != "")
@@ -71,46 +71,30 @@ namespace ScheduledTaskAgent1
 
         }
 
-        public static string tb2TextWide(Appointment appt)
+        public static string getTimeStringWide(Appointment appt)
         {
             DateTimeOffset endTime = appt.StartTime + appt.Duration;
             string str = "";
 
-            if (appt.StartTime.DayOfYear != DateTime.Now.DayOfYear)
-            {
-                if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
-                {
-                    str += "Morgen: ";
-                }
-                else if (CultureInfo.CurrentUICulture.Name.Contains("it-"))
-                {
-                    str += "Domani: ";
-                }
-                else
-                    str += "Tomorrow: ";
-            }
+            str = strTomorrow(appt, str);
+
             if (appt.AllDay)
             {
-                if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
-                {
-                    str += "Ganztägig";
-                }
-                else if (CultureInfo.CurrentUICulture.Name.Contains("it-"))
-                {
-                    str += "Giornata intera";
-                }
-                else
-                    str += "All day";
+                str = strAllday(str);
 
             }
+
             else if (appt.StartTime.Date != endTime.Date)
             {
+                // Wochentag - Wochentag
                 str += appt.StartTime.ToString("dddd", CultureInfo.CurrentUICulture);
                 str += " - ";
                 str += endTime.ToString("dddd", CultureInfo.CurrentUICulture);
             }
+
             else
             {
+                // Uhrzeit - Uhrzeit
                 if (CultureInfo.CurrentUICulture.Name.Contains("en-"))
                 {
                     str += string.Format("{0:h:mm tt}", appt.StartTime);
@@ -128,46 +112,69 @@ namespace ScheduledTaskAgent1
 
         }
 
-
-        public static string tb2TextNormal(Appointment appt)
+        private static string strAllday(string str)
         {
-            DateTimeOffset endTime = appt.StartTime + appt.Duration;
-            string str = "";
+            if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
+            {
+                str += "Ganztägig";
+            }
+            else if (CultureInfo.CurrentUICulture.Name.Contains("it-"))
+            {
+                str += "Giornata intera";
+            }
+            else
+                str += "All day";
+            return str;
+        }
 
+        private static string strTomorrow(Appointment appt, string str)
+        {
             if (appt.StartTime.DayOfYear != DateTime.Now.DayOfYear)
             {
                 if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
                 {
                     str += "Morgen: ";
                 }
+                else if (CultureInfo.CurrentUICulture.Name.Contains("it-"))
+                {
+                    str += "Domani: ";
+                }
                 else
                     str += "Tomorrow: ";
             }
+            return str;
+        }
+
+
+        public static string getTimeStringNormal(Appointment appt)
+        {
+            DateTimeOffset endTime = appt.StartTime + appt.Duration;
+            string str = "";
+
+            str = strTomorrow(appt, str);
+
             if (appt.AllDay)
             {
-                if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
-                {
-                    str += "Ganztägig";
-                }
-                else
-                    str += "All day";
-
+                // Ganztägig
+                str = strAllday(str);
             }
             else if (appt.StartTime.Date != endTime.Date)
             {
+                // Wochentag - Wochentag
                 str += appt.StartTime.ToString("dddd", CultureInfo.CurrentUICulture);
                 str += " - ";
                 str += endTime.ToString("dddd", CultureInfo.CurrentUICulture);
             }
             else
             {
-                if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
+                // Start Uhrzeit 
+                if (CultureInfo.CurrentUICulture.Name.Contains("en-"))
                 {
-                    str += string.Format("{0:H:mm}", appt.StartTime);
+                    str += string.Format("{0:h:mm tt}", appt.StartTime);  // AM PM
                 }
                 else
                 {
-                    str += string.Format("{0:h:mm tt}", appt.StartTime);
+                    str += string.Format("{0:H:mm}", appt.StartTime); // 24:00
                 }
             }
             return str;
@@ -223,14 +230,17 @@ namespace ScheduledTaskAgent1
 
 
             FlipTileData tileData = new FlipTileData
-            {
-                WideBackgroundImage = new Uri("isostore:" + filenameWidefull, UriKind.Absolute),
-                BackgroundImage = new Uri("isostore:" + filenamefull, UriKind.Absolute),
-            };
+                {
+                    WideBackgroundImage = new Uri("isostore:" + filenameWidefull, UriKind.Absolute),
+                    BackgroundImage = new Uri("isostore:" + filenamefull, UriKind.Absolute),
+                };
+
 
             ShellTile currentTile = ShellTile.ActiveTiles.FirstOrDefault();
-            currentTile.Update(tileData);
-
+            if (currentTile != null)
+            {
+                currentTile.Update(tileData);
+            }
             
 
         }

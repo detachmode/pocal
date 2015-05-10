@@ -20,27 +20,28 @@ namespace ScheduledTaskAgent1
 
         public void UpdateTextBox(List<Appointment> appts)
         {
-
+            // Wochentag Kürzel
             if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
                 dayOfWeekTb.Text = DateTime.Now.ToString("dddd", CultureInfo.CurrentUICulture).Substring(0, 2);
             else
                 dayOfWeekTb.Text = DateTime.Now.ToString("dddd", CultureInfo.CurrentUICulture).Substring(0, 3);
 
+            // Tageszahl
             dayTb.Text = DateTime.Now.Day.ToString();
 
-
+            // anstehender Termin
             if (appts.Count == 0)
             {
-                tb1.Text = "";
-                tb2.Text = "";
-                LayoutRoot.UpdateLayout();
+                tbSubject.Text = "";
+                tbTime.Text = "";
             }
             else 
             {
-                tb1.Text = appts[0].Subject;   
-                tb2.Text = LiveTileManager.tb2TextNormal(appts[0]);
-                LayoutRoot.UpdateLayout();
+                tbSubject.Text = appts[0].Subject;   
+                tbTime.Text = LiveTileManager.getTimeStringNormal(appts[0]);
+                
             }
+            LayoutRoot.UpdateLayout();
            
         }
 
