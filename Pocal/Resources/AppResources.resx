@@ -233,4 +233,7 @@
   <data name="ResourceLanguage" xml:space="preserve">
     <value>en</value>
   </data>
+  <data name="SettingsSundayRed" xml:space="preserve">
+    <value>Sunday red</value>
+  </data>
 </root>

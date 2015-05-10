@@ -230,4 +230,7 @@
   <data name="trialPopup" xml:space="preserve">
     <value>You have {0} days of your trial left. If you like this app, you can buy it at the store.</value>
   </data>
+  <data name="SettingsSundayRed" xml:space="preserve">
+    <value>Domenica rosso</value>
+  </data>
 </root>

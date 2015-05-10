@@ -17,6 +17,9 @@ namespace Pocal
         const string LiveTileSettingsMultiKeyname = "LiveTileSettingsMulti";
         const string DefaultViewSettingsAgendaKeyName = "DefaultViewSettingsAgenda";
         const string DefaultViewSettingsOverviewKeyName = "DefaultViewSettingsOverview";
+
+        const string SundayRedKeyName = "SundayRed";
+
        
 
 
@@ -25,6 +28,8 @@ namespace Pocal
 
         const bool DefaultViewSettingsAgendaDefault = true;
         const bool DefaultViewSettingsOverviewDefault = false;
+
+        const bool SundayRedDefault = false;
 
 
         public SettingsViewModel()
@@ -129,6 +134,7 @@ namespace Pocal
                 }
             }
         }
+
         public bool DefaultViewSettingsOverview
         {
             get
@@ -138,6 +144,21 @@ namespace Pocal
             set
             {
                 if (AddOrUpdateValue(DefaultViewSettingsOverviewKeyName, value))
+                {
+                    Save();
+                }
+            }
+        }
+
+        public bool SundayRed
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(SundayRedKeyName, SundayRedDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(SundayRedKeyName, value))
                 {
                     Save();
                 }

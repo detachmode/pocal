@@ -361,10 +361,9 @@ namespace Pocal.Converter
             if (dt.Date < DateTime.Now.Date)
                 return converterBrushes.pastDays;
 
-            //if (dt.Date == DateTime.Now.Date)
-            //    return converterBrushes.Red;
-
-
+            if(App.ViewModel.SettingsViewModel.SundayRed)
+                if (dt.Date.DayOfWeek == DayOfWeek.Sunday)
+                    return converterBrushes.Red;
 
             return (App.Current.Resources["PhoneForegroundBrush"] as SolidColorBrush);
         }

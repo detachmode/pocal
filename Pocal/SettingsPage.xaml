@@ -27,15 +27,15 @@
         <screenSizeSupport:ZoomBox ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
             <StackPanel>
                 <StackPanel Grid.Row="0" Margin="12,17,0,28">
-                        <TextBlock Text="Pocal" Style="{StaticResource PhoneTextNormalStyle}"/>
-                        <TextBlock Text="{Binding Path=LocalizedResources.SettingsPageTitle, Source={StaticResource LocalizedStrings} }" 
+                    <TextBlock Text="Pocal" Style="{StaticResource PhoneTextNormalStyle}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.SettingsPageTitle, Source={StaticResource LocalizedStrings} }" 
                                Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
 
 
                     <ScrollViewer>
                         <StackPanel x:Name="ContentGrid" Margin="12,24">
-                            
-                            <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Margin="0">Livetile style:</TextBlock>
+
+                            <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Margin="0">Livetile Options:</TextBlock>
                             <RadioButton Content="One appointment" Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="radioButton1" VerticalAlignment="Bottom" GroupName="GroupLivetile" 
                                     IsChecked="{Binding  Path=LiveTileSingleSettings, Mode=TwoWay}" />
                             <RadioButton Content="More appointments" Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="radioButton2" VerticalAlignment="Top" GroupName="GroupLivetile" 
@@ -46,6 +46,12 @@
                                     IsChecked="{Binding  Path=DefaultViewSettingsAgenda, Mode=TwoWay}" />
                             <RadioButton Content="Overview" Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="radioButton4" VerticalAlignment="Top" GroupName="GroupDefaultView" 
                                     IsChecked="{Binding  Path=DefaultViewSettingsOverview, Mode=TwoWay}"/>-->
+
+
+                            <TextBlock Margin="0,24,0,0" Style="{StaticResource PhoneTextTitle2Style}" >Agenda Options:</TextBlock>
+                            <CheckBox Content="{Binding Path=LocalizedResources.SettingsSundayRed, Source={StaticResource LocalizedStrings} }"
+                                      IsChecked="{Binding  Path=SundayRed, Mode=TwoWay}"/>
+
 
                         </StackPanel>
                     </ScrollViewer>

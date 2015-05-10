@@ -349,6 +349,15 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sunday red ähnelt.
+        /// </summary>
+        public static string SettingsSundayRed {
+            get {
+                return ResourceManager.GetString("SettingsSundayRed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die today ähnelt.
         /// </summary>
         public static string today {
