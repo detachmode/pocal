@@ -50,7 +50,7 @@ namespace Pocal
                 mainpage.SingleDayViewer.AddTappedDayAppointments();
             });
 
-            mainpage.SDVAppbar();
+            mainpage.SdvAppbar();
 
         }
 

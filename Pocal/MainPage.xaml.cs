@@ -1,84 +1,81 @@
 ﻿//#define DEBUG_AGENT
+
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Phone.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
-using Pocal.ViewModel;
-using System.Diagnostics;
-using System.Threading;
-using Pocal.Helper;
-using System.Windows.Data;
 using System.Windows.Media.Animation;
-using Microsoft.Phone.Shell;
-using Pocal.Resources;
+using System.Windows.Navigation;
+using System.Windows.Threading;
+using Microsoft.Phone.Controls;
 using Microsoft.Phone.Scheduler;
+using Microsoft.Phone.Shell;
+using Pocal.Helper;
+using Pocal.Resources;
+using Pocal.ViewModel;
 using ScheduledTaskAgent1;
-using Microsoft.Phone.Tasks;
+using GestureEventArgs = System.Windows.Input.GestureEventArgs;
+
+#pragma warning disable 4014
 
 namespace Pocal
 {
-
-    public partial class MainPage : PhoneApplicationPage
+    public partial class MainPage
     {
-        private Dictionary<object, ContentPresenter> realizedDayItems = new Dictionary<object, ContentPresenter>();
+        private readonly Dictionary<object, ContentPresenter> _realizedDayItems =
+            new Dictionary<object, ContentPresenter>();
 
-        private bool isPlayingOverviewAninmation = false;
-
+        private bool _isPlayingOverviewAninmation;
 
         public MainPage()
         {
             App.LoadMyRessources();
-            loadStartup();
+            LoadStartup();
 
             App.ShowTrialPopUp();
         }
 
-
-
-        private void loadStartup()
+        private void LoadStartup()
         {
-
             DataContext = App.ViewModel;
             InitializeComponent();
 
             AgendaViewAppbar();
-            watchScrollingOfLLS();
+            WatchScrollingOfLls();
             LiveTileManager.UpdateTileFromForeground();
             StartResourceIntensiveAgent();
-
-
         }
 
-        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            if (e.NavigationMode == System.Windows.Navigation.NavigationMode.Back)
+            if (e.NavigationMode == NavigationMode.Back)
             {
                 return;
             }
 
-            object navigationData = NavigationService.GetNavigationData();
+            var navigationData = NavigationService.GetNavigationData();
             if (navigationData != null)
             {
-                App.ViewModel.GoToDate((DateTime)navigationData);
+                App.ViewModel.GoToDate((DateTime) navigationData);
             }
             else
                 App.ViewModel.GoToDate(DateTime.Now);
-
         }
 
-        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        protected override void OnBackKeyPress(CancelEventArgs e)
         {
             if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
             {
                 AgendaViewAppbar();
-                leaveOverview();
+                LeaveOverview();
                 e.Cancel = true;
             }
             if (App.ViewModel.InModus == MainViewModel.Modi.MonthView)
@@ -87,41 +84,39 @@ namespace Pocal
                 e.Cancel = true;
             }
 
-           
+
             base.OnBackKeyPress(e);
         }
 
-
         #region ScheduledTask (LiveTile)
 
-        PeriodicTask periodicTask;
+        private PeriodicTask _periodicTask;
 
 
-        string periodicTaskName = "ResourceIntensiveAgent";
+        private readonly string _periodicTaskName = "ResourceIntensiveAgent";
 
         private void StartResourceIntensiveAgent()
         {
-
-            periodicTask = ScheduledActionService.Find(periodicTaskName) as PeriodicTask;
+            _periodicTask = ScheduledActionService.Find(_periodicTaskName) as PeriodicTask;
 
             // If the task already exists and background agents are enabled for the
             // application, you must remove the task and then add it again to update 
             // the schedule.
-            if (periodicTask != null)
+            if (_periodicTask != null)
             {
-                RemoveAgent(periodicTaskName);
+                RemoveAgent(_periodicTaskName);
             }
 
-            periodicTask = new PeriodicTask(periodicTaskName);
+            _periodicTask = new PeriodicTask(_periodicTaskName);
 
             // The description is required for periodic agents. This is the string that the user
             // will see in the background services Settings page on the device.
-            periodicTask.Description = "Updates Pocal LiveTile";
+            _periodicTask.Description = "Updates Pocal LiveTile";
 
             // Place the call to Add in a try block in case the user has disabled agents.
             try
             {
-                ScheduledActionService.Add(periodicTask);
+                ScheduledActionService.Add(_periodicTask);
 
 
                 // If debugging is enabled, use LaunchForTest to launch the agent in one minute.
@@ -135,18 +130,14 @@ namespace Pocal
                 {
                     //MessageBox.Show("Background agents for this application have been disabled by the user.");
                 }
-
             }
             catch (SchedulerServiceException)
             {
                 // No user action required.
-
             }
-
-
         }
 
-        private void RemoveAgent(string name)
+        private static void RemoveAgent(string name)
         {
             try
             {
@@ -154,9 +145,9 @@ namespace Pocal
             }
             catch (Exception)
             {
+                // ignored
             }
         }
-
 
         #endregion
 
@@ -164,96 +155,80 @@ namespace Pocal
 
         private void AgendaViewAppbar()
         {
-
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
-            ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
+            var item1 = new ApplicationBarMenuItem();
             item1.Text = AppResources.SettingsPageTitle;
-            item1.Click += new EventHandler(delegate(object sender, EventArgs e)
-            {
-                NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
-            });
+            item1.Click += delegate { NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative)); };
 
 
             ApplicationBar.MenuItems.Add(item1);
 
-            //ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
-            //item2.Text = "Tutorial";
-            //ApplicationBar.MenuItems.Add(item2);
-
-            ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
+            var item3 = new ApplicationBarMenuItem();
             item3.Text = "Info";
             item3.Click += item3_Click;
             ApplicationBar.MenuItems.Add(item3);
 
 
             /*********** BUTTONs ***********/
-            ApplicationBarIconButton button1 = new ApplicationBarIconButton();
+            var button1 = new ApplicationBarIconButton();
             button1.IconUri = new Uri("/Images/back.png", UriKind.Relative);
             button1.Text = AppResources.AppBarButtonToday;
             ApplicationBar.Buttons.Add(button1);
-            button1.Click += new EventHandler(delegate(object sender, EventArgs e)
-            {
-                scrollToToday();
-            });
+            button1.Click += delegate { ScrollToToday(); };
 
             /*********** ADD METHODE BUTTON ***********/
-            ApplicationBarIconButton button2 = new ApplicationBarIconButton();
+            var button2 = new ApplicationBarIconButton();
             button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
             button2.Text = AppResources.AppBarAdd;
             ApplicationBar.Buttons.Add(button2);
-            button2.Click += new EventHandler(delegate(object sender, EventArgs e)
-            {
-                PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.DayAtPointer.Dt);
-
-            });
+            button2.Click += delegate { PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.DayAtPointer.Dt); };
 
             /*********** MONTHVIEW BUTTON ***********/
-            ApplicationBarIconButton button3 = new ApplicationBarIconButton();
+            var button3 = new ApplicationBarIconButton();
             button3.IconUri = new Uri("/Images/feature.calendar.png", UriKind.Relative);
             button3.Text = AppResources.AppBarGoTo;
             ApplicationBar.Buttons.Add(button3);
-            button3.Click += new EventHandler(delegate(object sender, EventArgs e)
+            button3.Click += delegate
             {
                 //NavigationService.Navigate(new Uri("/MonthView.xaml", UriKind.Relative));
-                openMonthView();
+                OpenMonthView();
+            };
 
-            });
 
-
-            ApplicationBarIconButton button4 = new ApplicationBarIconButton();
+            var button4 = new ApplicationBarIconButton();
             button4.IconUri = new Uri("/Images/bird.png", UriKind.Relative);
             button4.Text = "Overview";
             ApplicationBar.Buttons.Add(button4);
-            button4.Click += new EventHandler(delegate(object sender, EventArgs e)
+            button4.Click += delegate
             {
                 if (App.ViewModel.InModus == MainViewModel.Modi.AgendaView)
                 {
-                    toggleOverView();
+                    ToggleOverView();
                 }
-            });
+            };
         }
 
-        void item3_Click(object sender, EventArgs e)
+        private void item3_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/InfoPage.xaml", UriKind.Relative));
         }
 
-        private void watchScrollingOfLLS()
+        private void WatchScrollingOfLls()
         {
             AgendaViewLLS.ItemRealized += LLS_EndOfList;
             AgendaViewLLS.ItemRealized += LLS_AddRealizedPocalAppointmentItem;
             AgendaViewLLS.ItemUnrealized += LLS_RemoveRealizedPocalAppointmentItem;
 
 
-            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(checkDayAtCenterOfScreen_Tick);
+            var dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += checkDayAtCenterOfScreen_Tick;
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 40);
             dispatcherTimer.Start();
 
 
-            DispatcherTimer dispatcherTimer2 = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer2.Tick += new EventHandler(checkDayAtTopOfScreen_Tick);
+            var dispatcherTimer2 = new DispatcherTimer();
+            dispatcherTimer2.Tick += checkDayAtTopOfScreen_Tick;
             dispatcherTimer2.Interval = new TimeSpan(0, 0, 0, 0, 40);
             dispatcherTimer2.Start();
 
@@ -262,78 +237,70 @@ namespace Pocal
 
         private void checkDayAtTopOfScreen_Tick(object sender, EventArgs e)
         {
-            Day topDay = (Day)getItemAtTopOfScreen(0);
-            if (topDay != null)
+            var topDay = (Day) GetItemAtTopOfScreen(0);          
+            if (topDay == null) return;
+
+            const int offset = 10;
+            var daysLoadedBeforeTopDay = App.ViewModel.Days.Where(x => x.Dt < topDay.Dt);
+
+            var count = daysLoadedBeforeTopDay.Count();
+            if (!App.ViewModel.IsCurrentlyLoading && count < offset)
             {
-                int offset = 10;
-                IEnumerable<Day> daysLoadedBeforeTopDay = App.ViewModel.Days.Where(x => x.Dt < topDay.Dt);
-
-                int count = daysLoadedBeforeTopDay.Count();
-                if (!App.ViewModel.IsCurrentlyLoading && count < offset)
-                {
-                    App.ViewModel.LoadIncrementalBackwards(7, DateTime.Now.Ticks);
-                }
-
-
+                App.ViewModel.LoadIncrementalBackwards(7, DateTime.Now.Ticks);
             }
         }
 
-        private object getItemAtTopOfScreen(double offset)
+        private object GetItemAtTopOfScreen(double offset)
         {
-            if (realizedDayItems.Count > 1)
-            {
-                var LLS_Offset = FindViewport(AgendaViewLLS).Viewport.Top;
-                LLS_Offset += offset;
-                IEnumerable<KeyValuePair<object, ContentPresenter>> keyValuePairs = realizedDayItems.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight >= LLS_Offset);
-                List<KeyValuePair<object, ContentPresenter>> keyValuePairsSorted = keyValuePairs.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
-                object obj = keyValuePairsSorted[0].Key;
+            if (_realizedDayItems.Count <= 1) return null;
 
-                return obj;
-            }
-            else
-                return null;
+            double llsOffset;
+            llsOffset = FindViewport(AgendaViewLLS).Viewport.Top;
+            llsOffset += offset;
+
+            var keyValuePairs = _realizedDayItems.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight >= llsOffset);
+            var keyValuePairsSorted = keyValuePairs.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
+            var obj = keyValuePairsSorted[0].Key;
+
+            return obj;
         }
 
 
         private void LLS_EndOfList(object sender, ItemRealizationEventArgs e)
         {
-            if (e.ItemKind == LongListSelectorItemKind.Item)
+            if (e.ItemKind != LongListSelectorItemKind.Item) return;
+           
+            var day = e.Container.Content as Day;
+            if (day == null) return;    
+    
+            if (App.ViewModel.IsCurrentlyLoading) return;
+           
+            const int offset = 10;
+            if (App.ViewModel.Days.Count - App.ViewModel.Days.IndexOf(day) <= offset)
             {
-                Day day = e.Container.Content as Day;
-                if (day != null)
-                {
-                    int offset = 10;
-                    if (!App.ViewModel.IsCurrentlyLoading && App.ViewModel.Days.Count - App.ViewModel.Days.IndexOf(day) <= offset)
-                    {
-                        App.ViewModel.LoadIncrementalForward(7, DateTime.Now.Ticks);
-                    }
-                }
+                App.ViewModel.LoadIncrementalForward(7, DateTime.Now.Ticks);
             }
         }
 
 
         private void LLS_AddRealizedPocalAppointmentItem(object sender, ItemRealizationEventArgs e)
         {
-            if (e.ItemKind == LongListSelectorItemKind.Item)
-            {
-                object o = e.Container.DataContext;
-                realizedDayItems[o] = e.Container;
-            }
+            if (e.ItemKind != LongListSelectorItemKind.Item) return;
+            var o = e.Container.DataContext;
+            _realizedDayItems[o] = e.Container;
         }
 
         private void LLS_RemoveRealizedPocalAppointmentItem(object sender, ItemRealizationEventArgs e)
         {
-            if (e.ItemKind == LongListSelectorItemKind.Item)
-            {
-                object o = e.Container.DataContext;
-                realizedDayItems.Remove(o);
-            }
+            if (e.ItemKind != LongListSelectorItemKind.Item) return;
+            var o = e.Container.DataContext;
+            _realizedDayItems.Remove(o);
         }
 
         private void AgendaScrolling_WhileSingleDayViewIsOpen_Fix(object sender, EventArgs e)
         {
             if (SingleDayView.Visibility == Visibility.Visible)
-                closeSDV();
+                CloseSdv();
         }
 
 
@@ -342,46 +309,19 @@ namespace Pocal
             double offset = 35;
             if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
             {
-                offset = offset * 2;
+                offset = offset*2;
             }
-            Day testday = (Day)getItemAtTopOfScreen(offset);
-            if (testday != null)
+            var testday = (Day) GetItemAtTopOfScreen(offset);
+            if (testday == null) return;
+
+            var d = App.ViewModel.DayAtPointer;
+            if (d != null)
             {
-                Day d = App.ViewModel.DayAtPointer;
-                if (d != null)
-                {
-                    d.IsHighlighted = false;
-                }
-                App.ViewModel.DayAtPointer = testday;
-                testday.IsHighlighted = true;
+                d.IsHighlighted = false;
             }
 
-        }
-
-        private object getItemAtCenterOfScreen()
-        {
-            if (realizedDayItems.Count > 1)
-            {
-                var LLS_Offset = getLLS_OffsetAtCenterOfScreen();
-
-                IEnumerable<KeyValuePair<object, ContentPresenter>> keyValuePairs = realizedDayItems.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight >= LLS_Offset);
-                List<KeyValuePair<object, ContentPresenter>> keyValuePairsSorted = keyValuePairs.OrderBy(x => Canvas.GetTop(x.Value)).ToList();
-                if (keyValuePairsSorted.Count == 0)
-                    return null;
-
-                object obj = keyValuePairsSorted[0].Key;
-                return obj;
-            }
-            else
-                return null;
-
-        }
-
-        private double getLLS_OffsetAtCenterOfScreen()
-        {
-            var offset = FindViewport(AgendaViewLLS).Viewport.Top;
-            offset += (730 / 2);
-            return offset;
+            App.ViewModel.DayAtPointer = testday;
+            testday.IsHighlighted = true;
         }
 
 
@@ -391,7 +331,10 @@ namespace Pocal
             for (var i = 0; i < childCount; i++)
             {
                 var elt = VisualTreeHelper.GetChild(parent, i);
-                if (elt is ViewportControl) return (ViewportControl)elt;
+                
+                var control = elt as ViewportControl;
+                if (control != null) return control;
+               
                 var result = FindViewport(elt);
                 if (result != null) return result;
             }
@@ -399,77 +342,70 @@ namespace Pocal
         }
 
 
-        private void scrollToToday()
+        private static void ScrollToToday()
         {
             App.ViewModel.GoToDate(DateTime.Now);
-
         }
 
 
-        private void AgendaViewLLS_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
+        private void AgendaViewLLS_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
         {
-            isPlayingOverviewAninmation = false;
+            _isPlayingOverviewAninmation = false;
         }
 
 
-        private void AgendaViewLLS_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
+        private void AgendaViewLLS_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
         {
-            if (isPlayingOverviewAninmation)
+            if (_isPlayingOverviewAninmation)
                 return;
 
             if (Math.Abs(e.DeltaManipulation.Translation.X) > 10)
             {
-                isPlayingOverviewAninmation = true;
-                toggleOverView();
-
+                _isPlayingOverviewAninmation = true;
+                ToggleOverView();
             }
-
         }
 
 
-        private void toggleOverView()
+        private void ToggleOverView()
         {
             if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
-                leaveOverview();
+                LeaveOverview();
             else
-                enterOverview();
-
+                EnterOverview();
         }
 
         private void LongList_Loaded(object sender, RoutedEventArgs e)
         {
-            var sb = ((FrameworkElement)VisualTreeHelper.GetChild(AgendaViewLLS, 0)).FindName("VerticalScrollBar") as ScrollBar;
+            var sb =
+                ((FrameworkElement) VisualTreeHelper.GetChild(AgendaViewLLS, 0)).FindName("VerticalScrollBar") as
+                    ScrollBar;
+            if (sb == null) return;
             sb.Margin = new Thickness(-10, 0, 0, 0);
             sb.Width = 0;
-
         }
 
-        public void addBitmapCacheToSDV()
+        public void AddBitmapCacheToSdv()
         {
-            BitmapCache bmc = new BitmapCache() { RenderAtScale = 0.5 };
+            var bmc = new BitmapCache {RenderAtScale = 0.5};
             SingleDayWindowBody.CacheMode = bmc;
-
         }
 
-        public void removeBitmapCacheAfterAnimation()
+        public void RemoveBitmapCacheAfterAnimation()
         {
             Dispatcher.BeginInvoke(delegate
             {
                 Thread.Sleep(200);
                 SingleDayWindowBody.CacheMode = null;
-
             });
-
         }
 
         #endregion
 
         #region SingleDayView Code Behind
 
-        public void SDVAppbar()
+        public void SdvAppbar()
         {
-
-
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
             //ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
@@ -479,60 +415,54 @@ namespace Pocal
             //item2.Text = "Tutorial";
             //ApplicationBar.MenuItems.Add(item2);
 
-            ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
+            var item3 = new ApplicationBarMenuItem();
             item3.Text = "Info";
             item3.Click += item3_Click;
             ApplicationBar.MenuItems.Add(item3);
 
             /*********** BUTTONs ***********/
-            ApplicationBarIconButton button1 = new ApplicationBarIconButton();
+            var button1 = new ApplicationBarIconButton();
             button1.IconUri = new Uri("/Images/back.png", UriKind.Relative);
             button1.Text = AppResources.AppBarButtonToday;
             ApplicationBar.Buttons.Add(button1);
-            button1.Click += new EventHandler(delegate(object sender, EventArgs e)
-            {
-                scrollToToday();
-            });
+            button1.Click += delegate { ScrollToToday(); };
 
             /*********** ADD METHODE BUTTON ***********/
-            ApplicationBarIconButton button2 = new ApplicationBarIconButton();
+            var button2 = new ApplicationBarIconButton();
             button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
             button2.Text = AppResources.AppBarAdd;
             ApplicationBar.Buttons.Add(button2);
-            button2.Click += new EventHandler(delegate(object sender, EventArgs e)
-            {
-                PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.SingleDayViewModel.TappedDay.Dt);
-
-            });
+            button2.Click +=
+                delegate { PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.SingleDayViewModel.TappedDay.Dt); };
 
             /*********** MONTHVIEW BUTTON ***********/
-            ApplicationBarIconButton button3 = new ApplicationBarIconButton();
+            var button3 = new ApplicationBarIconButton();
             button3.IconUri = new Uri("/Images/feature.calendar.png", UriKind.Relative);
             button3.Text = AppResources.AppBarGoTo;
             ApplicationBar.Buttons.Add(button3);
-            button3.Click += new EventHandler(delegate(object sender, EventArgs e)
+            button3.Click += delegate
             {
                 //NavigationService.Navigate(new Uri("/MonthView.xaml", UriKind.Relative));
-                openMonthView();
-
-            });
+                OpenMonthView();
+            };
         }
 
-        private void gridExit_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void gridExit_MouseMove(object sender, MouseEventArgs e)
         {
-            closeSDV();
+            CloseSdv();
         }
 
-        private void gridExit_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        private void gridExit_Tap(object sender, GestureEventArgs e)
         {
-            closeSDV();
+            CloseSdv();
         }
 
-        private void closeSDV()
+        private void CloseSdv()
         {
             VisualStateManager.GoToState(this, "Close", true);
 
-            if (App.ViewModel.InModus == MainViewModel.Modi.OverViewSdv || App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverViewSdv ||
+                App.ViewModel.InModus == MainViewModel.Modi.OverView)
             {
                 OverviewAppbar();
                 App.ViewModel.InModus = MainViewModel.Modi.OverView;
@@ -542,221 +472,191 @@ namespace Pocal
                 AgendaViewAppbar();
                 App.ViewModel.InModus = MainViewModel.Modi.AgendaView;
             }
-
         }
+
         #endregion
 
         #region Overview Code Behind
 
-        private List<ItemsControl> foundDayCards_ItemsControll;
-        private List<StackPanel> foundStackPanels;
+        private List<ItemsControl> _foundDayCardsItemsControll;
+        private List<StackPanel> _foundStackPanels;
 
 
         private void OverviewAppbar()
         {
-
-
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
-            //ApplicationBarMenuItem item1 = new ApplicationBarMenuItem();
-            //item1.Text = AppResources.SettingsPageTitle;
-            //ApplicationBar.MenuItems.Add(item1);
-            //ApplicationBarMenuItem item2 = new ApplicationBarMenuItem();
-            //item2.Text = "Tutorial";
-            //ApplicationBar.MenuItems.Add(item2);
 
-            ApplicationBarMenuItem item3 = new ApplicationBarMenuItem();
+
+            var item3 = new ApplicationBarMenuItem();
             item3.Text = "Info";
             item3.Click += item3_Click;
             ApplicationBar.MenuItems.Add(item3);
 
             /*********** BUTTONs ***********/
-            ApplicationBarIconButton button1 = new ApplicationBarIconButton();
+            var button1 = new ApplicationBarIconButton();
             button1.IconUri = new Uri("/Images/back.png", UriKind.Relative);
             button1.Text = AppResources.AppBarButtonToday;
             ApplicationBar.Buttons.Add(button1);
-            button1.Click += new EventHandler(delegate(object sender, EventArgs e)
-            {
-                scrollToToday();
-            });
+            button1.Click += delegate { ScrollToToday(); };
 
             /*********** ADD METHODE BUTTON ***********/
-            ApplicationBarIconButton button2 = new ApplicationBarIconButton();
+            var button2 = new ApplicationBarIconButton();
             button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
             button2.Text = AppResources.AppBarAdd;
             ApplicationBar.Buttons.Add(button2);
-            button2.Click += new EventHandler(delegate(object sender, EventArgs e)
-            {
-                PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.DayAtPointer.Dt);
-
-            });
+            button2.Click += delegate { PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.DayAtPointer.Dt); };
 
             /*********** MONTHVIEW BUTTON ***********/
-            ApplicationBarIconButton button3 = new ApplicationBarIconButton();
+            var button3 = new ApplicationBarIconButton();
             button3.IconUri = new Uri("/Images/feature.calendar.png", UriKind.Relative);
             button3.Text = AppResources.AppBarGoTo;
             ApplicationBar.Buttons.Add(button3);
-            button3.Click += new EventHandler(delegate(object sender, EventArgs e)
+            button3.Click += delegate
             {
                 //NavigationService.Navigate(new Uri("/MonthView.xaml", UriKind.Relative));
-                openMonthView();
+                OpenMonthView();
+            };
 
-            });
 
-
-            ApplicationBarIconButton button4 = new ApplicationBarIconButton();
+            var button4 = new ApplicationBarIconButton();
             button4.IconUri = new Uri("/Images/cancel.png", UriKind.Relative);
             button4.Text = AppResources.AppBarCloseOverview;
             ApplicationBar.Buttons.Add(button4);
-            button4.Click += new EventHandler(delegate(object sender, EventArgs e)
+            button4.Click += delegate
             {
                 if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
                 {
-                    toggleOverView();
+                    ToggleOverView();
                 }
 
                 AgendaViewAppbar();
-            });
+            };
         }
 
-        private void enterOverview()
+        private void EnterOverview()
         {
-
             App.ViewModel.InModus = MainViewModel.Modi.OverView;
-            Storyboard storyboard = this.Resources["EnterOverview"] as Storyboard;
+            var storyboard = Resources["EnterOverview"] as Storyboard;
             if (storyboard != null)
             {
                 storyboard.Begin();
             }
 
-            storyboard = this.Resources["AgendaPointerLong"] as Storyboard;
+            storyboard = Resources["AgendaPointerLong"] as Storyboard;
             if (storyboard != null)
             {
                 storyboard.Begin();
             }
 
-            foundDayCards_ItemsControll = new List<ItemsControl>();
-            foundStackPanels = new List<StackPanel>();
+            _foundDayCardsItemsControll = new List<ItemsControl>();
+            _foundStackPanels = new List<StackPanel>();
 
-            findItemControll(AgendaViewLLS);
-            findItemStackPanelInItemsControll("DayCard_ApptItem");
-            playStoryboardOfFoundStackPanels("EnterOverview");
+            FindItemControll(AgendaViewLLS);
+            FindItemStackPanelInItemsControll("DayCard_ApptItem");
+            PlayStoryboardOfFoundStackPanels("EnterOverview");
 
             HeaderTitle.Text = "Overview";
             OverviewAppbar();
-
-
-
         }
 
 
-
-        private void leaveOverview()
+        private void LeaveOverview()
         {
             App.ViewModel.InModus = MainViewModel.Modi.AgendaView;
 
-            Storyboard storyboard = this.Resources["LeaveOverview"] as Storyboard;
+            var storyboard = Resources["LeaveOverview"] as Storyboard;
             if (storyboard != null)
             {
                 storyboard.Begin();
             }
 
-            storyboard = this.Resources["AgendaPointerShort"] as Storyboard;
+            storyboard = Resources["AgendaPointerShort"] as Storyboard;
             if (storyboard != null)
             {
                 storyboard.Begin();
             }
 
-            foundDayCards_ItemsControll = new List<ItemsControl>();
-            foundStackPanels = new List<StackPanel>();
+            _foundDayCardsItemsControll = new List<ItemsControl>();
+            _foundStackPanels = new List<StackPanel>();
 
-            findItemControll(AgendaViewLLS);
-            findItemStackPanelInItemsControll("DayCard_ApptItem");
+            FindItemControll(AgendaViewLLS);
+            FindItemStackPanelInItemsControll("DayCard_ApptItem");
 
-            playStoryboardOfFoundStackPanels("LeaveOverview");
+            PlayStoryboardOfFoundStackPanels("LeaveOverview");
 
             HeaderTitle.Text = "Agenda";
             AgendaViewAppbar();
-
-
-
         }
 
 
-        private void findItemControll(DependencyObject targeted_control)
+        private void FindItemControll(DependencyObject targetedControl)
         {
-            var count = VisualTreeHelper.GetChildrenCount(targeted_control);
-            if (count > 0)
+            var count = VisualTreeHelper.GetChildrenCount(targetedControl);
+            if (count <= 0) return;
+
+            for (var i = 0; i < count; i++)
             {
-                for (int i = 0; i < count; i++)
+                var child = VisualTreeHelper.GetChild(targetedControl, i);
+                var item = child as ItemsControl;
+                if (item != null)
                 {
-                    var child = VisualTreeHelper.GetChild(targeted_control, i);
-                    var test = child.GetType();
-                    if (child is ItemsControl)
-                    {
-                        foundDayCards_ItemsControll.Add((ItemsControl)child);
-                    }
-                    else
-                    {
-                        findItemControll(child);
-                    }
+                    _foundDayCardsItemsControll.Add(item);
+                }
+                else
+                {
+                    FindItemControll(child);
                 }
             }
-            return;
         }
 
-        private void findItemStackPanelInItemsControll(string stackPanelName)
+        private void FindItemStackPanelInItemsControll(string stackPanelName)
         {
-            for (int j = 0; j < foundDayCards_ItemsControll.Count; j++)
+            foreach (var itemsControl in _foundDayCardsItemsControll)
             {
-                for (int i = 0; i < foundDayCards_ItemsControll[j].Items.Count; i++)
+                for (var i = 0; i < itemsControl.Items.Count; i++)
                 {
-                    DependencyObject d = foundDayCards_ItemsControll[j].ItemContainerGenerator.ContainerFromIndex(i);
-                    findStackPanels(d, stackPanelName);
+                    var d = itemsControl.ItemContainerGenerator.ContainerFromIndex(i);
+                    FindStackPanels(d, stackPanelName);
                 }
             }
         }
 
 
-        private void findStackPanels(DependencyObject targeted_control, string stackPanelName)
+        private void FindStackPanels(DependencyObject targetedControl, string stackPanelName)
         {
-            var count = VisualTreeHelper.GetChildrenCount(targeted_control);
-            if (count > 0)
+            var count = VisualTreeHelper.GetChildrenCount(targetedControl);
+            if (count <= 0) return;
+
+            for (var i = 0; i < count; i++)
             {
-                for (int i = 0; i < count; i++)
+                var child = VisualTreeHelper.GetChild(targetedControl, i);
+                var stackPanel = child as StackPanel;
+                if (stackPanel != null)
                 {
-                    var child = VisualTreeHelper.GetChild(targeted_control, i);
-                    if (child is StackPanel)
+                    var stackpanel = stackPanel;
+                    if (stackpanel.Name == stackPanelName)
                     {
-                        StackPanel stackpanel = (StackPanel)child;
-                        if (stackpanel.Name == stackPanelName)
-                        {
-                            foundStackPanels.Add(stackpanel);
-                        }
-                    }
-                    else
-                    {
-                        findStackPanels(child, stackPanelName);
+                        _foundStackPanels.Add(stackpanel);
                     }
                 }
-            }
-            else
-            {
-                return;
+                else
+                {
+                    FindStackPanels(child, stackPanelName);
+                }
             }
         }
 
-        private void playStoryboardOfFoundStackPanels(string storyBoardKey)
+        private void PlayStoryboardOfFoundStackPanels(string storyBoardKey)
         {
-            foreach (var stackpanel in foundStackPanels)
+            foreach (var stackpanel in _foundStackPanels)
             {
-                Storyboard storyboard = stackpanel.Resources[storyBoardKey] as Storyboard;
+                var storyboard = stackpanel.Resources[storyBoardKey] as Storyboard;
                 if (storyboard != null)
                 {
                     storyboard.Begin();
                 }
             }
-
         }
 
         #endregion
@@ -765,45 +665,33 @@ namespace Pocal
 
         private void MonthViewAppbar()
         {
-
-
             ApplicationBar = new ApplicationBar();
 
             /*********** BUTTONs ***********/
-            ApplicationBarIconButton button1 = new ApplicationBarIconButton();
+            var button1 = new ApplicationBarIconButton();
             button1.IconUri = new Uri("/Images/back.png", UriKind.Relative);
             button1.Text = AppResources.AppBarBack;
             ApplicationBar.Buttons.Add(button1);
-            button1.Click += new EventHandler(delegate(object sender, EventArgs e)
-            {
-                CloseMonthView();
-
-            });
-
-
+            button1.Click += delegate { CloseMonthView(); };
         }
 
 
-        PivotItem pivotItem;
-        MonthView_Control monthViewUserControl;
+        private PivotItem _pivotItem;
+        private MonthView_Control _monthViewUserControl;
 
-        private void openMonthView()
+        private void OpenMonthView()
         {
             App.ViewModel.ModusBeforeMonthView = App.ViewModel.InModus;
             App.ViewModel.InModus = MainViewModel.Modi.MonthView;
             Canvas.SetZIndex(MonthView, 10);
 
-            DateTime dt = App.ViewModel.DayAtPointer.Dt;
+            var dt = App.ViewModel.DayAtPointer.Dt;
             //addFPivotItemAndLoadAppointmentLines(dt);
-            addPivotItem(dt);
+            AddPivotItem(dt);
 
             YearDisplay.Text = dt.Year.ToString();
             MonthViewAppbar();
-            Dispatcher.BeginInvoke(delegate
-            {
-                addFourMorePivotItems(dt);
-
-            });
+            Dispatcher.BeginInvoke(delegate { AddFourMorePivotItems(dt); });
         }
 
         public void CloseMonthView()
@@ -821,126 +709,116 @@ namespace Pocal
                     OverviewAppbar();
                     break;
                 case MainViewModel.Modi.OverViewSdv:
-                    SDVAppbar();
+                    SdvAppbar();
                     break;
                 case MainViewModel.Modi.AgendaViewSdv:
-                    SDVAppbar();
-                    break;
-                default:
+                    SdvAppbar();
                     break;
             }
-
         }
 
 
-        private void addFourMorePivotItems(DateTime lastAddedDate)
+        private void AddFourMorePivotItems(DateTime lastAddedDate)
         {
-            DateTime dt2 = lastAddedDate.AddMonths(1);
-            DateTime dt3 = lastAddedDate.AddMonths(2);
-            DateTime dt4 = lastAddedDate.AddMonths(3);
-            DateTime dt5 = lastAddedDate.AddMonths(-1);
+            var dt2 = lastAddedDate.AddMonths(1);
+            var dt3 = lastAddedDate.AddMonths(2);
+            var dt4 = lastAddedDate.AddMonths(3);
+            var dt5 = lastAddedDate.AddMonths(-1);
 
 
-            addPivotItem(dt2);
-            addPivotItem(dt3);
-            addPivotItem(dt4);
-            addPivotItem(dt5);
-
-
-
-
+            AddPivotItem(dt2);
+            AddPivotItem(dt3);
+            AddPivotItem(dt4);
+            AddPivotItem(dt5);
         }
 
-        private void addPivotItem(DateTime dt)
+        private void AddPivotItem(DateTime dt)
         {
-            monthViewUserControl = new MonthView_Control();
-            monthViewUserControl.loadGridSetup(dt);
+            _monthViewUserControl = new MonthView_Control();
+            _monthViewUserControl.loadGridSetup(dt);
 
-            pivotItem = new PivotItem();
-            pivotItem.Content = monthViewUserControl;
-            pivotItem.DataContext = dt;
-            pivotItem.Margin = new Thickness(0, 0, 0, 0);
-            pivotItem.Header = dt.ToString("MMMM");
+            _pivotItem = new PivotItem();
+            _pivotItem.Content = _monthViewUserControl;
+            _pivotItem.DataContext = dt;
+            _pivotItem.Margin = new Thickness(0, 0, 0, 0);
+            _pivotItem.Header = dt.ToString("MMMM");
 
-            MonthsPivot.Items.Add(pivotItem);
+            MonthsPivot.Items.Add(_pivotItem);
         }
-
 
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            DependencyObject selectedPivotItem = ((Pivot)sender).ItemContainerGenerator.ContainerFromIndex(((Pivot)sender).SelectedIndex);
+            var selectedPivotItem =
+                ((Pivot) sender).ItemContainerGenerator.ContainerFromIndex(((Pivot) sender).SelectedIndex);
             if (selectedPivotItem == null)
                 return;
 
-            if (e.RemovedItems[0] == null)
-            {
-                return;
-            }
-            DateTime removedDateTime = (DateTime)(e.RemovedItems[0] as PivotItem).DataContext;
-            DateTime addedDateTime = (DateTime)(e.AddedItems[0] as PivotItem).DataContext;
+            var pivotItem = e.RemovedItems[0] as PivotItem;
+            if (pivotItem == null) return;
+            var removedDateTime = (DateTime) pivotItem.DataContext;
+
+            var item = e.AddedItems[0] as PivotItem;
+            if (item == null) return;
+            var addedDateTime = (DateTime) item.DataContext;
 
             if (removedDateTime < addedDateTime)
             {
-                forwardPan(addedDateTime);
+                ForwardPan(addedDateTime);
             }
             else
-                backwardPan(addedDateTime);
+                BackwardPan(addedDateTime);
 
             YearDisplay.Text = addedDateTime.Year.ToString();
-
         }
 
-        private void forwardPan(DateTime addedDateTime)
+        private void ForwardPan(DateTime addedDateTime)
         {
-            PivotItem lastPivotItem = (PivotItem)getLastPivotItem();
+            var lastPivotItem = (PivotItem) GetLastPivotItem();
             if (lastPivotItem == null)
             {
                 return;
             }
-            DateTime newDateTime = addedDateTime.AddMonths(3);
+            var newDateTime = addedDateTime.AddMonths(3);
 
-            MonthView_Control monthViewItem = new MonthView_Control();
+            var monthViewItem = new MonthView_Control();
             monthViewItem.loadGridSetup(newDateTime);
             lastPivotItem.DataContext = newDateTime;
             lastPivotItem.Content = monthViewItem;
             lastPivotItem.Header = newDateTime.ToString("MMMM");
         }
 
-        private DependencyObject getLastPivotItem()
+        private DependencyObject GetLastPivotItem()
         {
-            int index = ((Pivot)MonthsPivot).SelectedIndex;
+            var index = MonthsPivot.SelectedIndex;
             int lastIndex;
 
-            lastIndex = (index + 3) % 5;
+            lastIndex = (index + 3)%5;
 
-            DependencyObject lastPivotItem = ((Pivot)MonthsPivot).ItemContainerGenerator.ContainerFromIndex(lastIndex);
+            var lastPivotItem = MonthsPivot.ItemContainerGenerator.ContainerFromIndex(lastIndex);
             return lastPivotItem;
         }
 
 
-
-        private void backwardPan(DateTime addedDateTime)
+        private void BackwardPan(DateTime addedDateTime)
         {
-
-            PivotItem previousPivotItem = (PivotItem)getPreviousPivotItem();
+            var previousPivotItem = (PivotItem) GetPreviousPivotItem();
             if (previousPivotItem == null)
             {
                 return;
             }
-            DateTime newDateTime = addedDateTime.AddMonths(-1);
+            var newDateTime = addedDateTime.AddMonths(-1);
 
-            MonthView_Control monthViewItem = new MonthView_Control();
+            var monthViewItem = new MonthView_Control();
             monthViewItem.loadGridSetup(newDateTime);
             previousPivotItem.DataContext = newDateTime;
             previousPivotItem.Content = monthViewItem;
             previousPivotItem.Header = newDateTime.ToString("MMMM");
         }
 
-        private DependencyObject getPreviousPivotItem()
+        private DependencyObject GetPreviousPivotItem()
         {
-            int index = ((Pivot)MonthsPivot).SelectedIndex;
+            var index = MonthsPivot.SelectedIndex;
             int previousIndex;
             if (index == 0)
             {
@@ -949,14 +827,10 @@ namespace Pocal
             else
                 previousIndex = index - 1;
 
-            DependencyObject previousPivotItem = ((Pivot)MonthsPivot).ItemContainerGenerator.ContainerFromIndex(previousIndex);
+            var previousPivotItem = MonthsPivot.ItemContainerGenerator.ContainerFromIndex(previousIndex);
             return previousPivotItem;
         }
 
-
-
-
         #endregion
-
     }
 }

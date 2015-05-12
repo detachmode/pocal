@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 
 namespace Pocal
 {
-    public partial class InfoPage : PhoneApplicationPage
+    public partial class InfoPage
     {
         public InfoPage()
         {
@@ -20,10 +13,12 @@ namespace Pocal
 
         private void Email_OnClick(object sender, RoutedEventArgs e)
         {
-            EmailComposeTask emailComposeTask = new EmailComposeTask();
-            emailComposeTask.Subject = "Pocal Feedback";
-            emailComposeTask.Body = "";
-            emailComposeTask.To = "dennis.briefkasten@gmail.com";
+            var emailComposeTask = new EmailComposeTask
+            {
+                Subject = "Pocal Feedback",
+                Body = "",
+                To = "dennis.briefkasten@gmail.com"
+            };
             emailComposeTask.Show();
         }
 
@@ -34,11 +29,9 @@ namespace Pocal
 
         private void Twitter_OnClick(object sender, RoutedEventArgs e)
         {
-            WebBrowserTask webBrowserTask = new WebBrowserTask();
+            var webBrowserTask = new WebBrowserTask {Uri = new Uri("https://twitter.com/Detachmode", UriKind.Absolute)};
 
-            webBrowserTask.Uri = new Uri("https://twitter.com/Detachmode", UriKind.Absolute);
             webBrowserTask.Show();
         }
-
     }
 }
