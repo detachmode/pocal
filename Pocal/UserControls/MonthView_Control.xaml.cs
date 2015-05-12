@@ -39,7 +39,7 @@ namespace Pocal
                     continue;
 
                 DateTime dtOfBrd = (DateTime)brd.DataContext;
-                IEnumerable<Appointment> appointmentsOfThisDay = listOfAppointments.Where(x => TimeFrameChecker.isInTimeFrameOfDay(x, dtOfBrd));
+                IEnumerable<Appointment> appointmentsOfThisDay = listOfAppointments.Where(x => TimeFrameChecker.IsInTimeFrameOfDay(x, dtOfBrd));
                 addAppointmentLines(appointmentsOfThisDay, brd);
             }
         }
@@ -68,7 +68,7 @@ namespace Pocal
         void dayTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             DateTime dt = (DateTime)((FrameworkElement)sender).DataContext;
-            ViewSwitcher.mainpage.CloseMonthView();
+            ViewSwitcher.Mainpage.CloseMonthView();
             App.ViewModel.GoToDate(dt);
 
         }

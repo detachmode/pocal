@@ -1,246 +1,210 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Pocal.ViewModel;
-using Windows.ApplicationModel.Appointments;
-using System.Windows.Media;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows.Data;
-using System.Windows;
-using System.Diagnostics;
+using System.Linq;
+using Pocal.ViewModel;
 
 namespace Pocal.Helper
 {
     public class ConflictManager : INotifyPropertyChanged
     {
-        private Dictionary<PocalAppointment, int> Column;
-        private Dictionary<PocalAppointment, int> ClusterID;
-        private Dictionary<int, int> MaxConflictsPerCluster;
-        private int entriesInDictionary;
+        private Dictionary<PocalAppointment, int> _clusterId;
+        private Dictionary<PocalAppointment, int> _column;
+        private Day _day;
+        private int _entriesInDictionary;
+        private Dictionary<int, int> _maxConflictsPerCluster;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        private Day day;
-        public void solveConflicts()
+        public void SolveConflicts()
         {
-           
-            this.day = App.ViewModel.SingleDayViewModel.TappedDay;
-            if (day == null)
-                return;
-            
-            if (day.PocalApptsOfDay.Count == 0)
+            _day = App.ViewModel.SingleDayViewModel.TappedDay;
+            if (_day == null)
                 return;
 
-            Column = new Dictionary<PocalAppointment, int>();
-            ClusterID = new Dictionary<PocalAppointment, int>();
-            MaxConflictsPerCluster = new Dictionary<int, int>();
-            
-                      
-            calcColumnsAndClusterID();
-            calcMaxConflictsPerCluster();
-            calcPropsForBinding();
+            if (_day.PocalApptsOfDay.Count == 0)
+                return;
+
+            _column = new Dictionary<PocalAppointment, int>();
+            _clusterId = new Dictionary<PocalAppointment, int>();
+            _maxConflictsPerCluster = new Dictionary<int, int>();
+
+
+            CalcColumnsAndClusterId();
+            CalcMaxConflictsPerCluster();
+            CalcPropsForBinding();
 
 
             //toString();
-
         }
 
+/*
         private void toString()
         {
             Debug.WriteLine("\nColumn:");
-            foreach (var item in Column)
+            foreach (var item in _column)
             {
                 Debug.WriteLine(item.Key.Subject + " " + item.Value);
             }
 
             Debug.WriteLine("\nClusterID:");
-            foreach (var item in ClusterID)
+            foreach (var item in _clusterId)
             {
                 Debug.WriteLine(item.Key.Subject + " " + item.Value);
             }
             Debug.WriteLine("\nMaxConflictsPerCluster:");
-            foreach (var item in MaxConflictsPerCluster)
+            foreach (var item in _maxConflictsPerCluster)
             {
                 Debug.WriteLine(item.Key + " " + item.Value);
             }
 
         }
+*/
 
-        private void calcPropsForBinding()
+        private void CalcPropsForBinding()
         {
-            foreach (PocalAppointment pa in day.PocalApptsOfDay)
+            foreach (var pa in _day.PocalApptsOfDay)
             {
-                int clusterid = ClusterID.First(x => x.Key == pa).Value;
-                int foundMaxConflicts = MaxConflictsPerCluster.First(x => x.Key == clusterid).Value;
+                var clusterid = _clusterId.First(x => x.Key == pa).Value;
+                var foundMaxConflicts = _maxConflictsPerCluster.First(x => x.Key == clusterid).Value;
                 pa.MaxConflicts = foundMaxConflicts;
 
-                int column = Column.First(x => x.Key == pa).Value;
+                var column = _column.First(x => x.Key == pa).Value;
                 pa.Column = column;
             }
         }
 
-        private void calcColumnsAndClusterID()
+        private void CalcColumnsAndClusterId()
         {
-            entriesInDictionary = 0;
-            foreach (var currentAppt in day.PocalApptsOfDay)
+            _entriesInDictionary = 0;
+            foreach (var currentAppt in _day.PocalApptsOfDay)
             {
-                if (entriesInDictionary == 0)
+                if (_entriesInDictionary == 0)
                 {
-                    insertColumn(currentAppt, 1);
-                    insertClusterID(currentAppt, 1);
+                    InsertColumn(currentAppt, 1);
+                    InsertClusterId(currentAppt, 1);
                 }
                 else
                 {
-                    calcColumns(currentAppt);
-                    calcClusterIDs(currentAppt);
-
+                    CalcColumns(currentAppt);
+                    CalcClusterIDs(currentAppt);
                 }
-                entriesInDictionary++;
+                _entriesInDictionary++;
             }
-
         }
 
-        private void insertClusterID(PocalAppointment currentAppt, int id)
+        private void InsertClusterId(PocalAppointment currentAppt, int id)
         {
-            ClusterID.Add(currentAppt, id);
+            _clusterId.Add(currentAppt, id);
         }
 
-        private void insertColumn(PocalAppointment currentAppt, int column_n)
+        private void InsertColumn(PocalAppointment currentAppt, int columnN)
         {
-            Column.Add(currentAppt, column_n);
+            _column.Add(currentAppt, columnN);
         }
 
-        private void calcColumns (PocalAppointment currentAppt)
+        private void CalcColumns(PocalAppointment currentAppt)
         {
-            for (int column_n = 1; column_n < 5; column_n++)
+            for (var columnN = 1; columnN < 5; columnN++)
             {
-                if (isCurrentConflictingWithColumn(currentAppt, column_n))
+                if (IsCurrentConflictingWithColumn(currentAppt, columnN))
                 {
-                    if (column_n == 4)
-                        insertColumn(currentAppt, 4);
-                    continue;
+                    if (columnN == 4)
+                        InsertColumn(currentAppt, 4);
                 }
                 else
                 {
-                    insertColumn(currentAppt, column_n);
+                    InsertColumn(currentAppt, columnN);
                     break;
                 }
             }
         }
 
-        private bool isCurrentConflictingWithColumn(PocalAppointment currentAppt, int column_n)
+        private bool IsCurrentConflictingWithColumn(PocalAppointment currentAppt, int columnN)
         {
-            Dictionary<PocalAppointment, int> allInColumn = getFromColumnDicitonaryAllWith(column_n);
-            foreach (var entry in allInColumn)
-            {
-                if (entry.Key != currentAppt)
-                {
-                    if (isconfliciting(currentAppt, entry.Key))
-                        return true;
-                }
-            }
-            return false;
-
+            var allInColumn = GetFromColumnDicitonaryAllWith(columnN);
+            return
+                allInColumn.Where(entry => entry.Key != currentAppt)
+                    .Any(entry => Isconfliciting(currentAppt, entry.Key));
         }
 
-
-
-        private void calcClusterIDs(PocalAppointment currentAppt)
+        private void CalcClusterIDs(PocalAppointment currentPocalAppointment)
         {
-            for (int indexInDictionary = entriesInDictionary - 1; indexInDictionary >= 0; indexInDictionary--)
+            for (var indexInDictionary = _entriesInDictionary - 1; indexInDictionary >= 0; indexInDictionary--)
             {
-
-                PocalAppointment previousAppt = day.PocalApptsOfDay[indexInDictionary];
+                var pocalAppointment = _day.PocalApptsOfDay[indexInDictionary];
 
                 // Beim letzten Eintrag angekommen
                 if (indexInDictionary == 0)
                 {
-                    if (isconfliciting(currentAppt, previousAppt))
+                    if (Isconfliciting(currentPocalAppointment, pocalAppointment))
                     {
-                        addToClusterAccordingToOtherEntry(currentAppt, previousAppt, 0);
+                        AddToClusterAccordingToOtherEntry(currentPocalAppointment, pocalAppointment, 0);
                         break;
                     }
-                    else
-                    {
-                        PocalAppointment lastApptInDictionary = day.PocalApptsOfDay[entriesInDictionary - 1];                     
-                        addToClusterAccordingToOtherEntry(currentAppt, lastApptInDictionary, +1);
-                        break;
-                    }
-                }
-
-                if (isconfliciting(currentAppt, previousAppt))
-                {          
-                    addToClusterAccordingToOtherEntry(currentAppt, previousAppt, 0);
+                    var lastApptInDictionary = _day.PocalApptsOfDay[_entriesInDictionary - 1];
+                    AddToClusterAccordingToOtherEntry(currentPocalAppointment, lastApptInDictionary, +1);
                     break;
                 }
+
+                if (!Isconfliciting(currentPocalAppointment, pocalAppointment)) continue;
+
+                AddToClusterAccordingToOtherEntry(currentPocalAppointment, pocalAppointment, 0);
+                break;
             }
         }
 
-        private void addToClusterAccordingToOtherEntry(PocalAppointment currentAppt, PocalAppointment previousAppt, int add)
+        private void AddToClusterAccordingToOtherEntry(PocalAppointment currentAppt, PocalAppointment previousAppt,
+            int add)
         {
-            int clusterOfPreviousAppt = 0;
-            ClusterID.TryGetValue(previousAppt, out clusterOfPreviousAppt);
-            ClusterID.Add(currentAppt, clusterOfPreviousAppt + add);
-
+            int clusterOfPreviousAppt;
+            _clusterId.TryGetValue(previousAppt, out clusterOfPreviousAppt);
+            _clusterId.Add(currentAppt, clusterOfPreviousAppt + add);
         }
 
-       
-        private bool isconfliciting(PocalAppointment currentAppt, PocalAppointment previousAppt)
+        private static bool Isconfliciting(PocalAppointment currentAppt, PocalAppointment previousAppt)
         {
-
-            DateTime currentStart = currentAppt.StartTime.DateTime;
-            DateTime currentEnd = currentStart + currentAppt.Duration;
+            var currentStart = currentAppt.StartTime.DateTime;
+            var currentEnd = currentStart + currentAppt.Duration;
 
             // Wenn zwei PAs sich überschneiden, 
-            if (currentAppt != previousAppt && previousAppt.isInTimeFrame_IgnoreAllDays(currentStart, currentEnd))
-                return true;
-
-            return false;
-
+            return currentAppt != previousAppt && previousAppt.isInTimeFrame_IgnoreAllDays(currentStart, currentEnd);
         }
 
-
-        private void calcMaxConflictsPerCluster()
+        private void CalcMaxConflictsPerCluster()
         {
             // ermittle für jeden Eintrag in einem Cluster, was der MaxConflictCount ist
-            int maxClusterID = ClusterID.Aggregate((l, r) => l.Value > r.Value ? l : r).Value;
-            for (int clusterID = 1; clusterID <= maxClusterID; clusterID++)
+            var maxClusterId = _clusterId.Aggregate((l, r) => l.Value > r.Value ? l : r).Value;
+            for (var clusterId = 1; clusterId <= maxClusterId; clusterId++)
             {
-                var subsetClusterID = getFromClusterDicitonaryAllWith(clusterID);
+                var subsetClusterId = GetFromClusterDicitonaryAllWith(clusterId);
 
-                List<int> allColumnsWithSameClusterID = new List<int>();
-                foreach (var entry in subsetClusterID)
+                var allColumnsWithSameClusterId = new List<int>();
+                foreach (var entry in subsetClusterId)
                 {
                     int columnOfAppt;
-                    Column.TryGetValue(entry.Key, out columnOfAppt);
-                    allColumnsWithSameClusterID.Add(columnOfAppt);
-
+                    _column.TryGetValue(entry.Key, out columnOfAppt);
+                    allColumnsWithSameClusterId.Add(columnOfAppt);
                 }
-                int maxColumnValue = allColumnsWithSameClusterID.Max();
-              
-                MaxConflictsPerCluster.Add(clusterID, maxColumnValue);
+                var maxColumnValue = allColumnsWithSameClusterId.Max();
+
+                _maxConflictsPerCluster.Add(clusterId, maxColumnValue);
             }
         }
 
-
-        private Dictionary<PocalAppointment, int> getFromClusterDicitonaryAllWith(int clusterID)
+        private Dictionary<PocalAppointment, int> GetFromClusterDicitonaryAllWith(int clusterId)
         {
-            Dictionary<PocalAppointment, int> result = ClusterID.Where(pair => pair.Value == clusterID).ToDictionary(r => r.Key, r => r.Value);
-            return result;
-        }
-        private Dictionary<PocalAppointment, int> getFromColumnDicitonaryAllWith(int column_n)
-        {
-            Dictionary<PocalAppointment, int> result = Column.Where(pair => pair.Value == column_n).ToDictionary(r => r.Key, r => r.Value);
+            var result = _clusterId.Where(pair => pair.Value == clusterId).ToDictionary(r => r.Key, r => r.Value);
             return result;
         }
 
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        internal void NotifyPropertyChanged(String propertyName)
+        private Dictionary<PocalAppointment, int> GetFromColumnDicitonaryAllWith(int columnN)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
+            var result = _column.Where(pair => pair.Value == columnN).ToDictionary(r => r.Key, r => r.Value);
+            return result;
+        }
+
+        internal void NotifyPropertyChanged(string propertyName)
+        {
+            var handler = PropertyChanged;
             if (null != handler)
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));

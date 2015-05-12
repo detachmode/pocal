@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 using System.Threading;
 using System.Windows.Media.Animation;
 using System.Windows.Media;
+using Pocal.Helper;
 using Pocal.ViewModel;
 
 namespace Pocal
@@ -31,8 +32,8 @@ namespace Pocal
                 storyboard.Begin();
             }
             Thread.Sleep(1);
-            ViewSwitcher.setScrollToPa(((FrameworkElement)sender).DataContext as PocalAppointment);
-            ViewSwitcher.from = ViewSwitcher.Sender.ApptTap;
+            ViewSwitcher.SetScrollToPa(((FrameworkElement)sender).DataContext as PocalAppointment);
+            ViewSwitcher.From = ViewSwitcher.Sender.ApptTap;
 
         }
 
@@ -45,7 +46,7 @@ namespace Pocal
             {
                 storyboard.Begin();
             }
-            ViewSwitcher.from = ViewSwitcher.Sender.HeaderTap;
+            ViewSwitcher.From = ViewSwitcher.Sender.HeaderTap;
         }
 
 
@@ -55,7 +56,7 @@ namespace Pocal
             {
                 //ViewSwitcher.mainpage.addBitmapCacheToSDV();
                 Thread.Sleep(150);
-                ViewSwitcher.SwitchToSDV(sender);
+                ViewSwitcher.SwitchToSdv(sender);
                 
                 //ViewSwitcher.mainpage.removeBitmapCacheAfterAnimation();
             });

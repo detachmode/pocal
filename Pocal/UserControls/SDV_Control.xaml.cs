@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using Pocal.ViewModel;
 using Pocal.Converter;
 using System.Globalization;
+using Pocal.Helper;
 using Pocal.Resources;
 
 namespace Pocal
@@ -39,7 +40,7 @@ namespace Pocal
 
                 SDV_HourLine_Control control = new SDV_HourLine_Control(str);
                 DateTime dt = new DateTime(1, 1, 1, i, 0, 0);
-                control.DataContext = new HourLine { DT = dt};
+                control.DataContext = new HourLine { Dt = dt};
                 StackpanelHourLines.Children.Add(control);
 
             }

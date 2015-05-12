@@ -1,31 +1,32 @@
-﻿using Pocal.Helper;
-using Pocal.ViewModel;
-using System.ComponentModel;
-using System.Threading;
+﻿using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
+using Pocal.ViewModel;
 
-namespace Pocal
+namespace Pocal.Helper
 {
     public static class ViewSwitcher
     {
-        public enum Sender { HeaderTap, ApptTap }
-        public static Sender from;
-
-        public static MainPage mainpage = (MainPage)App.RootFrame.Content;
-        private static PocalAppointment ScrollToPA;
-        public static void setScrollToPa(PocalAppointment pa)
+        public enum Sender
         {
-            ScrollToPA = pa;
+            HeaderTap,
+            ApptTap
         }
-        private static int offsetFromAllDays;
-        private static int additionalOffset = 175;
 
+        public static Sender From;
+        public static MainPage Mainpage = (MainPage) App.RootFrame.Content;
+        private static PocalAppointment _scrollToPa;
+        private static int _offsetFromAllDays;
+        private const int AdditionalOffset = 175;
 
-        public static void SwitchToSDV(object sender)
+        public static void SetScrollToPa(PocalAppointment pa)
         {
-            if (currentViewIsSDV())
+            _scrollToPa = pa;
+        }
+
+        public static void SwitchToSdv(object sender)
+        {
+            if (CurrentViewIsSdv())
                 return;
 
             if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
@@ -37,134 +38,113 @@ namespace Pocal
                 App.ViewModel.InModus = MainViewModel.Modi.AgendaViewSdv;
             }
 
-            calculateOffset();
-            mainpage.SingleDayViewer.PrepareForNewLoadingOfAppoinments();
-            
-            openSDV();
-            setTappedDay(sender);
-            scrollToRightPosition();
+            CalculateOffset();
+            Mainpage.SingleDayViewer.PrepareForNewLoadingOfAppoinments();
+
+            OpenSdv();
+            SetTappedDay(sender);
+            ScrollToRightPosition();
 
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
                 Thread.Sleep(1);
-                mainpage.SingleDayViewer.AddTappedDayAppointments();
+                Mainpage.SingleDayViewer.AddTappedDayAppointments();
             });
 
-            mainpage.SdvAppbar();
-
+            Mainpage.SdvAppbar();
         }
 
-
-
-        private static void setTappedDay(object sender)
+        private static void SetTappedDay(object sender)
         {
-            var element = (FrameworkElement)sender;
+            var element = (FrameworkElement) sender;
             App.ViewModel.SingleDayViewModel.TappedDay = element.DataContext as Day;
-            App.ViewModel.ConflictManager.solveConflicts();
+            App.ViewModel.ConflictManager.SolveConflicts();
         }
 
-
-        private static bool currentViewIsSDV()
+        private static bool CurrentViewIsSdv()
         {
-            return mainpage.SingleDayView.Opacity == 100;
+            return Mainpage.SingleDayView.Opacity == 100;
         }
 
-        private static void openSDV()
+        private static void OpenSdv()
         {
-            Canvas.SetZIndex(mainpage.SingleDayView, 1);
-            
-            VisualStateManager.GoToState(mainpage, "OpenDelay", true);
+            Canvas.SetZIndex(Mainpage.SingleDayView, 1);
 
-
+            VisualStateManager.GoToState(Mainpage, "OpenDelay", true);
         }
 
-
-
-        private static void calculateOffset()
+        private static void CalculateOffset()
         {
-            int allDayCounter = countApptWithAllDay();
-            int heightOfOneAppt = 48;
+            var allDayCounter = CountApptWithAllDay();
+            var heightOfOneAppt = 48;
 
-            offsetFromAllDays = heightOfOneAppt * allDayCounter;
+            _offsetFromAllDays = heightOfOneAppt*allDayCounter;
         }
 
-        private static int countApptWithAllDay()
+        private static int CountApptWithAllDay()
         {
-            int allDayCounter = 0;
+            var allDayCounter = 0;
             foreach (var pa in App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay)
             {
-                if (pa.AllDay == true)
+                if (pa.AllDay)
                     allDayCounter += 1;
             }
             return allDayCounter;
         }
 
-
-
-        private static void scrollToRightPosition()
+        private static void ScrollToRightPosition()
         {
-            mainpage.SingleDayViewer.SDV_ViewportControl.UpdateLayout();
-            switch (from)
+            Mainpage.SingleDayViewer.SDV_ViewportControl.UpdateLayout();
+            switch (From)
             {
                 case Sender.HeaderTap:
-                    {
-                        ScrollTo1200();
-                        break;
-                    }
+                {
+                    ScrollTo1200();
+                    break;
+                }
 
                 case Sender.ApptTap:
-                    {
-                        ScrollToApptStartTime();
-                        break;
-                    }
-
-                default:
+                {
+                    ScrollToApptStartTime();
                     break;
+                }
             }
-
         }
 
         public static void ScrollToAfterUpdate()
         {
-            if (App.ViewModel.SingleDayViewModel.TappedDay == null || ScrollToPA == null)
+            if (App.ViewModel.SingleDayViewModel.TappedDay == null || _scrollToPa == null)
                 return;
 
-            if (App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date == ScrollToPA.StartTime.Date)
+            if (App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date == _scrollToPa.StartTime.Date)
                 ScrollToApptStartTime();
         }
 
-
         private static void ScrollToApptStartTime()
         {
-            calculateOffset();
-            setSdvHeight();
-            double y = ScrollToPA.StartTime.Hour * (HourLine.Height + 2) - additionalOffset + offsetFromAllDays;
-            mainpage.SingleDayViewer.SDV_ViewportControl.SetViewportOrigin(new Point(0,y));
+            CalculateOffset();
+            SetSdvHeight();
+            double y = _scrollToPa.StartTime.Hour*(HourLine.Height + 2) - AdditionalOffset + _offsetFromAllDays;
+            Mainpage.SingleDayViewer.SDV_ViewportControl.SetViewportOrigin(new Point(0, y));
             //mainpage.SingleDayViewer.SDV_ScrollViewer.ScrollToVerticalOffset(ScrollToPA.StartTime.Hour * HourLine.Height - additionalOffset + offsetFromAllDays);
         }
 
         private static void ScrollTo1200()
         {
-            calculateOffset();
-            setSdvHeight();
+            CalculateOffset();
+            SetSdvHeight();
 
-            double y = 12 * (HourLine.Height + 2) - additionalOffset + offsetFromAllDays; 
-            mainpage.SingleDayViewer.SDV_ViewportControl.SetViewportOrigin(new Point(0, y));
+            double y = 12*(HourLine.Height + 2) - AdditionalOffset + _offsetFromAllDays;
+            Mainpage.SingleDayViewer.SDV_ViewportControl.SetViewportOrigin(new Point(0, y));
         }
 
-        private static void setSdvHeight()
+        private static void SetSdvHeight()
         {
-            double screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
-            double width = 480 * screenSizeMultiplicator;
-            double height = mainpage.SingleDayViewer.ViewportControlContainer.ActualHeight;
-            mainpage.SingleDayViewer.HourLinesGridAppointments.Width = width;
-            mainpage.SingleDayViewer.SDV_ViewportControl.Bounds = new Rect(0, 0, width, height);
-
+            var screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
+            var width = 480*screenSizeMultiplicator;
+            var height = Mainpage.SingleDayViewer.ViewportControlContainer.ActualHeight;
+            Mainpage.SingleDayViewer.HourLinesGridAppointments.Width = width;
+            Mainpage.SingleDayViewer.SDV_ViewportControl.Bounds = new Rect(0, 0, width, height);
         }
-
-
-
-
-
     }
 }

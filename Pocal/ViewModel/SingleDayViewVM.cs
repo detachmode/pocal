@@ -1,4 +1,5 @@
 ﻿using System;
+using Pocal.Helper;
 
 namespace Pocal.ViewModel
 {
@@ -25,7 +26,7 @@ namespace Pocal.ViewModel
         public DateTime? GetStarTimeFromHourline(HourLine hourLine)
         {
 
-            return TappedDay.Dt.Date.AddHours(hourLine.DT.Hour);
+            return TappedDay.Dt.Date.AddHours(hourLine.Dt.Hour);
 
         }
 

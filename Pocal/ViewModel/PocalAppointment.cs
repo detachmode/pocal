@@ -183,18 +183,18 @@ namespace Pocal.ViewModel
 
         public bool IsInTimeFrameOfDate(DateTime date)
         {
-            return TimeFrameChecker.isInTimeFrameOfDay(Appt, date);
+            return TimeFrameChecker.IsInTimeFrameOfDay(Appt, date);
         }
 
         public bool IsInTimeFrame(DateTime start, DateTime end)
         {
-            return TimeFrameChecker.isInTimeFrame(Appt, start, end);
+            return TimeFrameChecker.IsInTimeFrame(Appt, start, end);
 
         }
 
         private bool IsInTimeFrameOfStartEnd(DateTimeOffset start, DateTimeOffset end)
         {
-            return TimeFrameChecker.isInTimeFrameOFStartEnd(Appt, start, end);
+            return TimeFrameChecker.IsInTimeFrameOfStartEnd(Appt, start, end);
         }
 
         public bool isInTimeFrame_IgnoreAllDays(DateTime start, DateTime end)

@@ -5,6 +5,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using Windows.ApplicationModel.Appointments;
 using Cimbalino.Toolkit.Converters;
+using Pocal.Helper;
 using Pocal.Resources;
 using Pocal.ViewModel;
 

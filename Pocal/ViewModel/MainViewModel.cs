@@ -294,11 +294,11 @@ namespace Pocal.ViewModel
             SingleDayViewModel.TappedDay = Days.First(x => x.Dt == dt);
             if (App.ViewModel.InModus == Modi.AgendaViewSdv || InModus == Modi.OverViewSdv)
             {
-                ViewSwitcher.mainpage.SingleDayViewer.PrepareForNewLoadingOfAppoinments();
-                ViewSwitcher.mainpage.SingleDayViewer.AddTappedDayAppointments();
+                ViewSwitcher.Mainpage.SingleDayViewer.PrepareForNewLoadingOfAppoinments();
+                ViewSwitcher.Mainpage.SingleDayViewer.AddTappedDayAppointments();
             }
 
-            ConflictManager.solveConflicts();
+            ConflictManager.SolveConflicts();
         }
 
         private async Task LoadEnoughMoreDay(double stamp)

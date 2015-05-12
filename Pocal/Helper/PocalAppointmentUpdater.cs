@@ -1,50 +1,43 @@
-﻿using Pocal.ViewModel;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Appointments;
+using Pocal.ViewModel;
 
 namespace Pocal.Helper
 {
     public static class PocalAppointmentUpdater
     {
+        private static List<Day> _responsibleDaysOfPa;
 
-        private static List<Day> responsibleDaysOfPA;
-
-
-
-        public static async void Update(PocalAppointment oldPA, PocalAppointment newPA)
+        public static async void Update(PocalAppointment oldPa, PocalAppointment newPa)
         {
             // soll Aufflackern des Termins verhindern, wenn keine Änderungen gemacht wurden.
-            if (oldPA != null && newPA != null)
-                if (arePocaAppointmentsEqual(oldPA, newPA))
+            if (oldPa != null && newPa != null)
+                if (ArePocaAppointmentsEqual(oldPa, newPa))
                     return;
 
-            updateIfSingle(oldPA, newPA);
-            await updateIfRecurrent(oldPA, newPA);
+            UpdateIfSingle(oldPa, newPa);
+            await UpdateIfRecurrent(oldPa, newPa);
 
-            App.ViewModel.ConflictManager.solveConflicts();
+            App.ViewModel.ConflictManager.SolveConflicts();
 
-            ViewSwitcher.mainpage.SingleDayViewer.Update_PocalAppointment(oldPA,newPA);
-
-            
+            ViewSwitcher.Mainpage.SingleDayViewer.Update_PocalAppointment(oldPa, newPa);
         }
 
-        private static bool arePocaAppointmentsEqual(PocalAppointment a, PocalAppointment b)
+        private static bool ArePocaAppointmentsEqual(PocalAppointment a, PocalAppointment b)
         {
-
             if (a.AllDay != b.AllDay) return false;
-            if (a.Subject != b.Subject) return false;  
+            if (a.Subject != b.Subject) return false;
             if (a.Location != b.Location) return false;
             if (a.StartTime != b.StartTime) return false;
             if (a.Duration != b.Duration) return false;
             if (a.Details != b.Details) return false;
-            if (!isRecurrenceEqual(a, b)) return false;
+            if (!IsRecurrenceEqual(a, b)) return false;
             return true;
         }
 
-        private static bool isRecurrenceEqual(PocalAppointment a, PocalAppointment b)
+        private static bool IsRecurrenceEqual(PocalAppointment a, PocalAppointment b)
         {
             if (a.Appt.Recurrence == null && b.Appt.Recurrence == null)
                 return true;
@@ -62,33 +55,32 @@ namespace Pocal.Helper
             return true;
         }
 
-        private static void updateIfSingle(PocalAppointment oldPA, PocalAppointment newPA)
+        private static void UpdateIfSingle(PocalAppointment oldPa, PocalAppointment newPa)
         {
-            if (oldPA != null && oldPA.Appt.Recurrence == null)
-                removeAllWith(oldPA.Appt.LocalId);
+            if (oldPa != null && oldPa.Appt.Recurrence == null)
+                RemoveAllWith(oldPa.Appt.LocalId);
 
-            if (newPA != null && newPA.Appt.Recurrence == null)
-                add(newPA);
+            if (newPa != null && newPa.Appt.Recurrence == null)
+                Add(newPa);
         }
 
-
-        private static async Task updateIfRecurrent(PocalAppointment oldPA, PocalAppointment newPA)
+        private static async Task UpdateIfRecurrent(PocalAppointment oldPa, PocalAppointment newPa)
         {
-            
-            if (oldPA != null && oldPA.Appt.Recurrence != null)
-                removeRecurrent(oldPA.Appt);           
-            
-            if (newPA != null && newPA.Appt.Recurrence != null)
-                await addRecurrent(newPA.Appt);
+            if (oldPa != null && oldPa.Appt.Recurrence != null)
+            {
+                RemoveRecurrent(oldPa.Appt);
+                await AddRecurrent(oldPa.Appt);
+            }
+
+            if (newPa != null && newPa.Appt.Recurrence != null)
+                await AddRecurrent(newPa.Appt);
         }
 
-
-        private static void removeRecurrent(Appointment appt)
+        private static void RemoveRecurrent(Appointment appt)
         {
             foreach (var day in App.ViewModel.Days)
             {
-
-                for (int i = day.PocalApptsOfDay.Count - 1; i >= 0; i--)
+                for (var i = day.PocalApptsOfDay.Count - 1; i >= 0; i--)
                 {
                     if (day.PocalApptsOfDay[i].Appt.LocalId == appt.LocalId)
                         day.PocalApptsOfDay.RemoveAt(i);
@@ -96,71 +88,61 @@ namespace Pocal.Helper
             }
         }
 
-        private static void removeAllWith(string localId)
+        private static void RemoveAllWith(string localId)
         {
             // Bruteforce - All Days in Cache will be searched for the PocalAppointment with the Appt.LocalID
             foreach (var day in App.ViewModel.Days)
-            {              
-                PocalAppointment pa = day.PocalApptsOfDay.FirstOrDefault(x => x.Appt.LocalId == localId);
+            {
+                var pa = day.PocalApptsOfDay.FirstOrDefault(x => x.Appt.LocalId == localId);
 
                 // Remove pa, if LocalID was found in an PocalAppointment in this Day
                 if (pa != null)
                     day.PocalApptsOfDay.Remove(pa);
-
             }
         }
 
-        private static void add(PocalAppointment pA)
+        private static void Add(PocalAppointment pA)
         {
-            setResponsibleDays(pA);
-            foreach (var day in responsibleDaysOfPA)
+            SetResponsibleDays(pA);
+            foreach (var day in _responsibleDaysOfPa)
             {
                 InsertInto_PocalApptsOfDay(day, pA);
             }
         }
 
-
-        private static async Task addRecurrent(Appointment appt)
+        private static async Task AddRecurrent(Appointment appt)
         {
-            List<Appointment> appts = await PocalAppointmentHelper.GetReccurantAppointments(appt, appt.LocalId);
+            var appts = await PocalAppointmentHelper.GetReccurantAppointments(appt, appt.LocalId);
 
             foreach (var a in appts)
             {
-                PocalAppointment pa = await App.ViewModel.CreatePocalAppoinment(a);
-                add(pa);
+                var pa = await App.ViewModel.CreatePocalAppoinment(a);
+                Add(pa);
             }
-
-
         }
-
-
-
 
         private static void InsertInto_PocalApptsOfDay(Day day, PocalAppointment pA)
         {
-            PocalAppointment nextDay = day.PocalApptsOfDay.FirstOrDefault(x => x.Appt.StartTime > pA.Appt.StartTime);
+            var nextDay = day.PocalApptsOfDay.FirstOrDefault(x => x.Appt.StartTime > pA.Appt.StartTime);
             if (nextDay != null)
             {
-                int index = day.PocalApptsOfDay.IndexOf(nextDay);
+                var index = day.PocalApptsOfDay.IndexOf(nextDay);
                 day.PocalApptsOfDay.Insert(index, pA);
             }
             else
                 day.PocalApptsOfDay.Insert(day.PocalApptsOfDay.Count(), pA);
-
-
         }
 
-        private static void setResponsibleDays(PocalAppointment pA)
+        private static void SetResponsibleDays(PocalAppointment pA)
         {
-            responsibleDaysOfPA = new List<Day>();
-            foreach (Day day in App.ViewModel.Days)
+            _responsibleDaysOfPa = new List<Day>();
+            foreach (var day in App.ViewModel.Days)
             {
                 if (pA.IsInTimeFrameOfDate(day.Dt))
                 {
-                    responsibleDaysOfPA.Add(day);
+                    _responsibleDaysOfPa.Add(day);
                 }
             }
         }
-
     }
 }

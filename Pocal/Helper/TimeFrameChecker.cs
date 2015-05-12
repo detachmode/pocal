@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Appointments;
 
 namespace Pocal.Helper
@@ -10,35 +6,32 @@ namespace Pocal.Helper
     public static class TimeFrameChecker
     {
 
-        public static bool isInTimeFrameOfDay(Appointment appt, DateTime date)
+        public static bool IsInTimeFrameOfDay(Appointment appt, DateTime date)
         {
-            DateTime startOfDay = date.Date;
-            DateTime endOfDay = startOfDay.Add(TimeSpan.FromMinutes(24 * 60));
-            return (isInTimeFrame(appt, startOfDay, endOfDay));
+            var startOfDay = date.Date;
+            var endOfDay = startOfDay.Add(TimeSpan.FromMinutes(24 * 60));
+            return (IsInTimeFrame(appt, startOfDay, endOfDay));
         }
 
-        public static bool isInTimeFrame(Appointment appt, DateTime start, DateTime end)
+        public static bool IsInTimeFrame(Appointment appt, DateTime start, DateTime end)
         {
             if (appt.AllDay)
             {
-                if (start.Date == appt.StartTime.Date)
-                    return true;
-                else
-                    return false;
+                return start.Date == appt.StartTime.Date;
             }
-            return isInTimeFrameOFStartEnd(appt, start, end);
+            return IsInTimeFrameOfStartEnd(appt, start, end);
 
         }
 
-        public static bool isInTimeFrameOFStartEnd(Appointment appt, DateTimeOffset start, DateTimeOffset end)
+        public static bool IsInTimeFrameOfStartEnd(Appointment appt, DateTimeOffset start, DateTimeOffset end)
         {
-            DateTimeOffset thisStartTime = appt.StartTime;
-            DateTimeOffset thisEndTime = appt.StartTime + appt.Duration;
+            var thisStartTime = appt.StartTime;
+            var thisEndTime = appt.StartTime + appt.Duration;
 
-            bool endsBeforeThis = (thisEndTime <= start);
-            bool beginsAfterThis = (thisStartTime > end);
+            var endsBeforeThis = (thisEndTime <= start);
+            var beginsAfterThis = (thisStartTime > end);
 
-            bool isNotInTimeFrame = (endsBeforeThis || beginsAfterThis);
+            var isNotInTimeFrame = (endsBeforeThis || beginsAfterThis);
 
             return !isNotInTimeFrame;
         }

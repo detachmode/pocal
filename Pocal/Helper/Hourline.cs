@@ -1,7 +1,11 @@
 ﻿using System;
-public class HourLine
-{
-    public DateTime DT { get; set; }
-    public static int Height { get { return 70; } }
 
+namespace Pocal.Helper
+{
+    public class HourLine
+    {
+        public DateTime Dt { get; set; }
+        public static int Height { get { return 70; } }
+
+    }
 }

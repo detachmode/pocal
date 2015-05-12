@@ -48,7 +48,7 @@ namespace Pocal.Converter
         {
             if (!(value is Day)) return "";
             var dt = ((Day) value).Dt;
-            return DeltaTimeStringCreator.getDeltaTime(dt);
+            return DeltaTimeStringCreator.GetDeltaTime(dt);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
