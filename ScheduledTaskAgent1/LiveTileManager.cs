@@ -16,7 +16,7 @@ namespace ScheduledTaskAgent1
     public static class LiveTileManager
     {
         public static List<Appointment> AppointmentsOnLiveTile;
-        public static async Task<List<Appointment>> getNextAppointments()
+        public static async Task<List<Appointment>> GetNextAppointments()
         {
             List<Appointment> nextAppointments = new List<Appointment>();
             List<Appointment> appts = (await CalendarAPI.GetAppointments(DateTime.Now.Date, 2)).ToList<Appointment>();
@@ -263,7 +263,7 @@ namespace ScheduledTaskAgent1
         {
             try
             {
-                AppointmentsOnLiveTile = await getNextAppointments();
+                AppointmentsOnLiveTile = await GetNextAppointments();
                 UpdateTile();
             }
             catch { }

@@ -29,34 +29,39 @@ namespace ScheduledTaskAgent1
         }
 
 
-        protected async override void OnInvoke(ScheduledTask task)
+        protected override void OnInvoke(ScheduledTask task)
         {
-            try
+            Deployment.Current.Dispatcher.BeginInvoke(async delegate
             {
-
-                LiveTileManager.AppointmentsOnLiveTile = await LiveTileManager.getNextAppointments();
-                Deployment.Current.Dispatcher.BeginInvoke(delegate
+                string msg = "Undefined";
+                try
                 {
 
-                    //string toastMessage = "";
-                    //toastMessage = "LiveTile geupdatet.";
-                    //ShellToast toast = new ShellToast();
-                    //toast.Title = "Pocal";
-                    //toast.Content = toastMessage;
-                    //toast.Show();
-
+                    LiveTileManager.AppointmentsOnLiveTile = await LiveTileManager.GetNextAppointments();
                     LiveTileManager.UpdateTile();
+
+                    msg = "LiveTile geupdatet";
+
+                }
+                catch
+                {
+                    msg = "NOT UPDATED";
+                }
+
+                string toastMessage = "";
+                toastMessage = msg;
+                ShellToast toast = new ShellToast();
+                toast.Title = "Pocal";
+                toast.Content = toastMessage;
+                toast.Show();
 
 #if DEBUG_AGENT
                 ScheduledActionService.LaunchForTest(task.Name, TimeSpan.FromSeconds(60));
 #endif
 
+                NotifyComplete();
+            });
 
-                    NotifyComplete();
-                });
-            }
-            catch { }
-                 
         }
       
 
