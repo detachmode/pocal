@@ -1,14 +1,15 @@
-﻿using Microsoft.Phone.Shell;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Windows.ApplicationModel.Appointments;
+using Cimbalino.Phone.Toolkit.Extensions;
+using Microsoft.Phone.Shell;
 using Shared.Helper;
 
 namespace ScheduledTaskAgent1
@@ -16,25 +17,25 @@ namespace ScheduledTaskAgent1
     public static class LiveTileManager
     {
         public static List<Appointment> AppointmentsOnLiveTile;
+
         public static async Task<List<Appointment>> GetNextAppointments()
         {
-            List<Appointment> nextAppointments = new List<Appointment>();
-            List<Appointment> appts = (await CalendarAPI.GetAppointments(DateTime.Now.Date, 2)).ToList<Appointment>();
+            var nextAppointments = new List<Appointment>();
+            var appts = (await CalendarAPI.GetAppointments(DateTime.Now.Date, 2)).ToList<Appointment>();
 
             // Options: Sortiere Termine aus, die von hidden Kalender sind.
             if (IsolatedStorageSettings.ApplicationSettings.Contains("HiddenCalendars"))
             {
-                List<string> hiddenCalendars = (List<string>)IsolatedStorageSettings.ApplicationSettings["HiddenCalendars"];
-                foreach (string id in hiddenCalendars)
+                var hiddenCalendars = (List<string>) IsolatedStorageSettings.ApplicationSettings["HiddenCalendars"];
+                foreach (var id in hiddenCalendars)
                 {
                     appts.RemoveAll(x => x.CalendarId == id);
                 }
-               
             }
 
 
             // der nächste Termin, der nicht AllDay ist:
-            foreach (Appointment appt in appts)
+            foreach (var appt in appts)
             {
                 if (appt.AllDay)
                     continue;
@@ -44,11 +45,10 @@ namespace ScheduledTaskAgent1
                     nextAppointments.Add(appt);
                     break;
                 }
-
             }
 
 
-            foreach (Appointment appt in appts)
+            foreach (var appt in appts)
             {
                 if (nextAppointments.Count == 0 || appt != nextAppointments[0])
                 {
@@ -58,7 +58,6 @@ namespace ScheduledTaskAgent1
                     }
                     else if (appt.AllDay)
                         nextAppointments.Add(appt);
-
                 }
             }
 
@@ -67,35 +66,33 @@ namespace ScheduledTaskAgent1
 
         public static bool IsSingleLiveTileEnabled()
         {
-            bool isSingleLiveTileEnabled = false;
+            var isSingleLiveTileEnabled = false;
             if (IsolatedStorageSettings.ApplicationSettings.Contains("LiveTileSettingsSingle"))
             {
-                isSingleLiveTileEnabled = (bool)IsolatedStorageSettings.ApplicationSettings["LiveTileSettingsSingle"];
+                isSingleLiveTileEnabled = (bool) IsolatedStorageSettings.ApplicationSettings["LiveTileSettingsSingle"];
             }
             return isSingleLiveTileEnabled;
         }
 
-        public static string getLocationStringWide(Appointment appt)
+        public static string GetLocationStringWide(Appointment appt)
         {
-            string str = "";
+            var str = "";
             if (appt.Location != "")
                 str = appt.Location;
 
             return str;
-
         }
 
-        public static string getTimeStringWide(Appointment appt)
+        public static string GetTimeStringWide(Appointment appt)
         {
-            DateTimeOffset endTime = appt.StartTime + appt.Duration;
-            string str = "";
+            var endTime = appt.StartTime + appt.Duration;
+            var str = "";
 
-            str = strTomorrow(appt, str);
+            str = StrTomorrow(appt, str);
 
             if (appt.AllDay)
             {
-                str = strAllday(str);
-
+                str = StrAllday(str);
             }
 
             else if (appt.StartTime.Date != endTime.Date)
@@ -123,10 +120,9 @@ namespace ScheduledTaskAgent1
                 }
             }
             return str;
-
         }
 
-        private static string strAllday(string str)
+        private static string StrAllday(string str)
         {
             if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
             {
@@ -141,7 +137,7 @@ namespace ScheduledTaskAgent1
             return str;
         }
 
-        private static string strTomorrow(Appointment appt, string str)
+        private static string StrTomorrow(Appointment appt, string str)
         {
             if (appt.StartTime.DayOfYear != DateTime.Now.DayOfYear)
             {
@@ -159,18 +155,17 @@ namespace ScheduledTaskAgent1
             return str;
         }
 
-
-        public static string getTimeStringNormal(Appointment appt)
+        public static string GetTimeStringNormal(Appointment appt)
         {
-            DateTimeOffset endTime = appt.StartTime + appt.Duration;
-            string str = "";
+            var endTime = appt.StartTime + appt.Duration;
+            var str = "";
 
-            str = strTomorrow(appt, str);
+            str = StrTomorrow(appt, str);
 
             if (appt.AllDay)
             {
                 // Ganztägig
-                str = strAllday(str);
+                str = StrAllday(str);
             }
             else if (appt.StartTime.Date != endTime.Date)
             {
@@ -184,7 +179,7 @@ namespace ScheduledTaskAgent1
                 // Start Uhrzeit 
                 if (CultureInfo.CurrentUICulture.Name.Contains("en-"))
                 {
-                    str += string.Format("{0:h:mm tt}", appt.StartTime);  // AM PM
+                    str += string.Format("{0:h:mm tt}", appt.StartTime); // AM PM
                 }
                 else
                 {
@@ -194,16 +189,12 @@ namespace ScheduledTaskAgent1
             return str;
         }
 
-
-
-
         public static void UpdateTile()
         {
             var customTile = new LiveTile();
             customTile.UpdateTextBox(AppointmentsOnLiveTile);
             customTile.Measure(new Size(336, 336));
             customTile.Arrange(new Rect(0, 0, 336, 336));
-
 
 
             var customTileWide = new LiveTileWide();
@@ -227,47 +218,47 @@ namespace ScheduledTaskAgent1
 
             using (var isf = IsolatedStorageFile.GetUserStoreForApplication())
             {
-
-                using (IsolatedStorageFileStream imageStream = new IsolatedStorageFileStream("/Shared/ShellContent/" + filename + ".png", System.IO.FileMode.OpenOrCreate, isf))
+                using (
+                    var imageStream = new IsolatedStorageFileStream("/Shared/ShellContent/" + filename + ".png",
+                        FileMode.OpenOrCreate, isf))
                 {
-                    Cimbalino.Phone.Toolkit.Extensions.WriteableBitmapExtensions.SavePng(bmp, imageStream);
-
+                    WriteableBitmapExtensions.SavePng(bmp, imageStream);
                 }
 
-                using (IsolatedStorageFileStream imageStream = new IsolatedStorageFileStream("/Shared/ShellContent/" + filenameWide + ".png", System.IO.FileMode.OpenOrCreate, isf))
+                using (
+                    var imageStream = new IsolatedStorageFileStream("/Shared/ShellContent/" + filenameWide + ".png",
+                        FileMode.OpenOrCreate, isf))
                 {
-                    Cimbalino.Phone.Toolkit.Extensions.WriteableBitmapExtensions.SavePng(bmp2, imageStream);
-
+                    WriteableBitmapExtensions.SavePng(bmp2, imageStream);
                 }
-
             }
 
 
-            FlipTileData tileData = new FlipTileData
-                {
-                    WideBackgroundImage = new Uri("isostore:" + filenameWidefull, UriKind.Absolute),
-                    BackgroundImage = new Uri("isostore:" + filenamefull, UriKind.Absolute),
-                };
+            var tileData = new FlipTileData
+            {
+                WideBackgroundImage = new Uri("isostore:" + filenameWidefull, UriKind.Absolute),
+                BackgroundImage = new Uri("isostore:" + filenamefull, UriKind.Absolute)
+            };
 
 
-            ShellTile currentTile = ShellTile.ActiveTiles.FirstOrDefault();
+            var currentTile = ShellTile.ActiveTiles.FirstOrDefault();
             if (currentTile != null)
             {
                 currentTile.Update(tileData);
             }
-            
-
         }
 
-        public async static void UpdateTileFromForeground()
+        public static async void UpdateTileFromForeground()
         {
             try
             {
                 AppointmentsOnLiveTile = await GetNextAppointments();
                 UpdateTile();
             }
-            catch { }
-
+            catch
+            {
+                // ignored
+            }
         }
     }
 }

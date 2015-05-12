@@ -85,10 +85,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="LiveTileManager.cs" />
-    <Compile Include="LiveTiles\LiveTile.xaml.cs">
+    <Compile Include="LiveTile.xaml.cs">
       <DependentUpon>LiveTile.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LiveTiles\LiveTileWide.xaml.cs">
+    <Compile Include="LiveTileWide.xaml.cs">
       <DependentUpon>LiveTileWide.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScheduledAgent.cs" />
@@ -107,11 +107,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="LiveTiles\LiveTile.xaml">
+    <Page Include="LiveTile.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="LiveTiles\LiveTileWide.xaml">
+    <Page Include="LiveTileWide.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

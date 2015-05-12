@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO.IsolatedStorage;
-using System.Windows.Controls;
 using Windows.ApplicationModel.Appointments;
-
 
 namespace ScheduledTaskAgent1
 {
 
     
-    public partial class LiveTile : UserControl
+    public partial class LiveTile
     {
         public LiveTile()
         {
@@ -38,7 +35,7 @@ namespace ScheduledTaskAgent1
             else 
             {
                 tbSubject.Text = appts[0].Subject;   
-                tbTime.Text = LiveTileManager.getTimeStringNormal(appts[0]);
+                tbTime.Text = LiveTileManager.GetTimeStringNormal(appts[0]);
                 
             }
             LayoutRoot.UpdateLayout();

@@ -4,8 +4,6 @@ using System.Diagnostics;
 using System.Windows;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
-using System;
-using Windows.ApplicationModel.Appointments;
 
 namespace ScheduledTaskAgent1
 {
@@ -33,26 +31,24 @@ namespace ScheduledTaskAgent1
         {
             Deployment.Current.Dispatcher.BeginInvoke(async delegate
             {
-                string msg = "Undefined";
+                string msg;
                 try
                 {
-
                     LiveTileManager.AppointmentsOnLiveTile = await LiveTileManager.GetNextAppointments();
                     LiveTileManager.UpdateTile();
 
                     msg = "LiveTile geupdatet";
-
                 }
                 catch
                 {
                     msg = "NOT UPDATED";
                 }
 
-                string toastMessage = "";
-                toastMessage = msg;
-                ShellToast toast = new ShellToast();
-                toast.Title = "Pocal";
-                toast.Content = toastMessage;
+                var toast = new ShellToast
+                {
+                    Title = "Pocal",
+                    Content = msg
+                };
                 toast.Show();
 
 #if DEBUG_AGENT
@@ -61,9 +57,6 @@ namespace ScheduledTaskAgent1
 
                 NotifyComplete();
             });
-
         }
-      
-
     }
 }

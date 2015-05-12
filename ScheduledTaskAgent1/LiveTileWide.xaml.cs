@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using Windows.ApplicationModel.Appointments;
-using System.Globalization;
 using System.Windows.Media;
+using Windows.ApplicationModel.Appointments;
 
 namespace ScheduledTaskAgent1
 {
-    public partial class LiveTileWide : UserControl
+    public partial class LiveTileWide
     {
         public LiveTileWide()
         {
@@ -50,12 +45,12 @@ namespace ScheduledTaskAgent1
 
             // setzte Location
             if (appts[0].Location == "")
-                tbOrt.Visibility = System.Windows.Visibility.Collapsed;
+                tbOrt.Visibility = Visibility.Collapsed;
 
-            tbOrt.Text = LiveTileManager.getLocationStringWide(appts[0]);
+            tbOrt.Text = LiveTileManager.GetLocationStringWide(appts[0]);
 
             // setzte Uhrzeit 
-            tbTime.Text = LiveTileManager.getTimeStringWide(appts[0]);
+            tbTime.Text = LiveTileManager.GetTimeStringWide(appts[0]);
 
 
             if (LiveTileManager.IsSingleLiveTileEnabled())
@@ -68,24 +63,25 @@ namespace ScheduledTaskAgent1
 
             // Option: mehrere Tage auf Livetile anzeigen 
 
-            for (int i = 1; i < Math.Min(appts.Count, 3); i++)
+            var subjectTextblock = new TextBlock();          
+            var timeTextBlock = new TextBlock();
+            const byte alpha = 200;
+
+            for (var i = 1; i < Math.Min(appts.Count, 3); i++)
             {
-                byte alpha = 200;
-                SolidColorBrush fontcolor = new SolidColorBrush(Color.FromArgb(alpha, 255, 255, 255));
+                var fontcolor = new SolidColorBrush(Color.FromArgb(alpha, 255, 255, 255));
 
-                TextBlock _tbSubject = new TextBlock();
-                _tbSubject.Text = appts[i].Subject;
-                _tbSubject.Foreground = fontcolor;
-                _tbSubject.FontSize = 30;
+                subjectTextblock.Text = appts[i].Subject;
+                subjectTextblock.Foreground = fontcolor;
+                subjectTextblock.FontSize = 30;
 
-                TextBlock _tbTime = new TextBlock();
-                _tbTime.Text = LiveTileManager.getTimeStringWide(appts[i]); ;
-                _tbTime.FontSize = 30;
-                _tbTime.Foreground = fontcolor;
-                _tbTime.Margin = new Thickness(0, -6, 0, 24);
+                timeTextBlock.Text = LiveTileManager.GetTimeStringWide(appts[i]); 
+                timeTextBlock.FontSize = 30;
+                timeTextBlock.Foreground = fontcolor;
+                timeTextBlock.Margin = new Thickness(0, -6, 0, 24);
 
-                otherAppointments.Items.Add(_tbSubject);
-                otherAppointments.Items.Add(_tbTime);
+                otherAppointments.Items.Add(subjectTextblock);
+                otherAppointments.Items.Add(timeTextBlock);
 
             }
             LayoutRoot.UpdateLayout();
