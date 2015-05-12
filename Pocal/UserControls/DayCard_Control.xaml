@@ -22,18 +22,18 @@
             <!--******** DAYCARD WEEKNUMBER ********-->
             <!--******** ****************** ********-->
             <Grid  Height="20" 
-				Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  
+				Visibility="{Binding Converter={StaticResource WeekNumberVisibilityConverter}, Mode=OneWay}"  
 				VerticalAlignment="Center">
                 <Grid.Background>
-                    <SolidColorBrush Color="{StaticResource Agenda_BG}" ></SolidColorBrush>
+                    <SolidColorBrush Color="{StaticResource AgendaBg}" ></SolidColorBrush>
                 </Grid.Background>
             </Grid>
 
-            <Grid Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}" 
+            <Grid Visibility="{Binding Converter={StaticResource WeekNumberVisibilityConverter}, Mode=OneWay}" 
 											VerticalAlignment="Center" Height="60"  >
                 
 
-                <Border Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}}" 
+                <Border Visibility="{Binding Converter={StaticResource WeekNumberVisibilityConverter}}" 
 												BorderThickness="12" Height="3" Margin="0" >
                     <Border.BorderBrush>
                         <SolidColorBrush Color="Gray"/>
@@ -42,9 +42,9 @@
                 <Grid  Width="480" HorizontalAlignment="Left">
                     <Grid  MinWidth="130" HorizontalAlignment="Center" >
                         <Grid.Background>
-                            <SolidColorBrush Color="{StaticResource Agenda_BG}" ></SolidColorBrush>
+                            <SolidColorBrush Color="{StaticResource AgendaBg}" ></SolidColorBrush>
                         </Grid.Background>
-                        <TextBlock  Text="{Binding Converter={StaticResource weekNumberConverter}, Mode=OneWay}"                          
+                        <TextBlock  Text="{Binding Converter={StaticResource WeekNumberConverter}, Mode=OneWay}"                          
 								FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" 
 								FontWeight="SemiBold" RenderTransformOrigin="0.5,0.5" Foreground="Gray" />
                     </Grid>
@@ -53,10 +53,10 @@
 
             </Grid>
 
-            <Grid Height="20" Visibility="{Binding Converter={StaticResource weekNumberVisibilityConverter}, Mode=OneWay}"  
+            <Grid Height="20" Visibility="{Binding Converter={StaticResource WeekNumberVisibilityConverter}, Mode=OneWay}"  
                   VerticalAlignment="Center">
                 <Grid.Background>
-                    <SolidColorBrush Color="{StaticResource Agenda_BG}" ></SolidColorBrush>
+                    <SolidColorBrush Color="{StaticResource AgendaBg}" ></SolidColorBrush>
                 </Grid.Background>
             </Grid>
 
@@ -66,7 +66,7 @@
             <!--******** ************** ********-->
 
             <TextBlock x:Name="DayCardHeader"  Tap="DayCard_HeaderTap" 
-                        Foreground ="{Binding Dt, Converter={StaticResource dayHeadersForeground}}" 
+                        Foreground ="{Binding Dt, Converter={StaticResource DayHeadersForeground}}" 
                         Text="{Binding Dt, Converter={StaticResource DateConverter}}" FontSize="35" 
                         FontFamily="{StaticResource PhoneFontFamilyLight}"  Margin="37,6,0,0">
                 <TextBlock.Resources>
@@ -107,7 +107,7 @@
                                         <DoubleAnimation Duration="0:0:0.5" To="1.6" 
 																		Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)"
 																		Storyboard.TargetName="FirstLine" d:IsOptimized="True"/>
-                                        <DoubleAnimation Duration="0:0:0.5" To="{StaticResource Overview_StartTime_X}" 
+                                        <DoubleAnimation Duration="0:0:0.5" To="{StaticResource OverviewStartTimeX}" 
 																		Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" 
 																		Storyboard.TargetName="FirstLine" d:IsOptimized="True"/>
                                         <DoubleAnimation Duration="0:0:0.5" To="0" 
@@ -233,14 +233,14 @@
 
                             <StackPanel x:Name="AppointmentStackPanel" Margin="6,3"  Orientation="Horizontal">
 
-                                <Grid Width="{StaticResource Overview_StartTime_Width}" Height="30" VerticalAlignment="Top">
-                                    <TextBlock x:Name="StartTime"  Text="{Binding Converter={StaticResource startTimeConverter}}"  FontSize="18" 
-												Opacity="{Binding AllDay, Converter={StaticResource overview_StartTimeOpacity}}"
-												Foreground ="{Binding StartTime.DateTime, Converter={StaticResource secondLinesForeground}}" 
+                                <Grid Width="{StaticResource OverviewStartTimeWidth}" Height="30" VerticalAlignment="Top">
+                                    <TextBlock x:Name="StartTime"  Text="{Binding Converter={StaticResource StartTimeConverter}}"  FontSize="18" 
+												Opacity="{Binding AllDay, Converter={StaticResource OverviewStartTimeOpacity}}"
+												Foreground ="{Binding StartTime.DateTime, Converter={StaticResource SecondLinesForeground}}" 
 												Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center">
                                         <TextBlock.RenderTransform>
-                                            <CompositeTransform ScaleX="{Binding AllDay, Converter={StaticResource overview_StartTimeScale}}"
-															    ScaleY="{Binding AllDay, Converter={StaticResource overview_StartTimeScale}}"/>
+                                            <CompositeTransform ScaleX="{Binding AllDay, Converter={StaticResource OverviewStartTimeScale}}"
+															    ScaleY="{Binding AllDay, Converter={StaticResource OverviewStartTimeScale}}"/>
                                         </TextBlock.RenderTransform>
                                         <TextBlock.CacheMode>
                                             <BitmapCache RenderAtScale="1"/>
@@ -258,9 +258,9 @@
                                         </TextBlock.Projection>
                                         <TextBlock.RenderTransform>
                                             <CompositeTransform 
-												TranslateX ="{Binding AllDay, Converter={StaticResource overview_FirstLineX}}" 
-												ScaleX="{Binding AllDay, Converter={StaticResource overview_SecondLineSale}}" 
-												ScaleY="{Binding AllDay, Converter={StaticResource overview_SecondLineSale}}" />
+												TranslateX ="{Binding AllDay, Converter={StaticResource OverviewFirstLineX}}" 
+												ScaleX="{Binding AllDay, Converter={StaticResource OverviewSecondLineSale}}" 
+												ScaleY="{Binding AllDay, Converter={StaticResource OverviewSecondLineSale}}" />
                                         </TextBlock.RenderTransform>
                                         <TextBlock.CacheMode>
                                             <BitmapCache RenderAtScale="1"/>
@@ -268,11 +268,11 @@
 
                                     </TextBlock>
 
-                                    <TextBlock x:Name="SecondLine"  Text="{Binding Appt, Converter={StaticResource secondLineConverter}}" 
-												Foreground ="{Binding StartTime.DateTime, Converter={StaticResource secondLinesForeground}}" 
+                                    <TextBlock x:Name="SecondLine"  Text="{Binding Appt, Converter={StaticResource SecondLineConverter}}" 
+												Foreground ="{Binding StartTime.DateTime, Converter={StaticResource SecondLinesForeground}}" 
 												FontFamily="{StaticResource PhoneFontFamilyLight}" 
 												Padding="0"  FontSize="18" Margin="0,0,0,0" 
-												Opacity="{Binding AllDay, Converter={StaticResource overview_SecondLineOpacity}}">
+												Opacity="{Binding AllDay, Converter={StaticResource OverviewSecondLineOpacity}}">
                                         <TextBlock.Projection>
                                             <PlaneProjection/>
                                         </TextBlock.Projection>

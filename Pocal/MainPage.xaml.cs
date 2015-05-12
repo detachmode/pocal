@@ -182,7 +182,7 @@ namespace Pocal
             button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
             button2.Text = AppResources.AppBarAdd;
             ApplicationBar.Buttons.Add(button2);
-            button2.Click += delegate { PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.DayAtPointer.Dt); };
+            button2.Click += delegate { PocalAppointmentHelper.AddAllDayAppointment(App.ViewModel.DayAtPointer.Dt); };
 
             /*********** MONTHVIEW BUTTON ***********/
             var button3 = new ApplicationBarIconButton();
@@ -216,9 +216,9 @@ namespace Pocal
 
         private void WatchScrollingOfLls()
         {
-            AgendaViewLLS.ItemRealized += LLS_EndOfList;
-            AgendaViewLLS.ItemRealized += LLS_AddRealizedPocalAppointmentItem;
-            AgendaViewLLS.ItemUnrealized += LLS_RemoveRealizedPocalAppointmentItem;
+            AgendaViewLls.ItemRealized += LLS_EndOfList;
+            AgendaViewLls.ItemRealized += LLS_AddRealizedPocalAppointmentItem;
+            AgendaViewLls.ItemUnrealized += LLS_RemoveRealizedPocalAppointmentItem;
 
 
             var dispatcherTimer = new DispatcherTimer();
@@ -232,7 +232,7 @@ namespace Pocal
             dispatcherTimer2.Interval = new TimeSpan(0, 0, 0, 0, 40);
             dispatcherTimer2.Start();
 
-            AgendaViewLLS.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
+            AgendaViewLls.ManipulationStateChanged += AgendaScrolling_WhileSingleDayViewIsOpen_Fix;
         }
 
         private void checkDayAtTopOfScreen_Tick(object sender, EventArgs e)
@@ -255,7 +255,7 @@ namespace Pocal
             if (_realizedDayItems.Count <= 1) return null;
 
             double llsOffset;
-            llsOffset = FindViewport(AgendaViewLLS).Viewport.Top;
+            llsOffset = FindViewport(AgendaViewLls).Viewport.Top;
             llsOffset += offset;
 
             var keyValuePairs = _realizedDayItems.Where(x => Canvas.GetTop(x.Value) + x.Value.ActualHeight >= llsOffset);
@@ -378,7 +378,7 @@ namespace Pocal
         private void LongList_Loaded(object sender, RoutedEventArgs e)
         {
             var sb =
-                ((FrameworkElement) VisualTreeHelper.GetChild(AgendaViewLLS, 0)).FindName("VerticalScrollBar") as
+                ((FrameworkElement) VisualTreeHelper.GetChild(AgendaViewLls, 0)).FindName("VerticalScrollBar") as
                     ScrollBar;
             if (sb == null) return;
             sb.Margin = new Thickness(-10, 0, 0, 0);
@@ -433,7 +433,7 @@ namespace Pocal
             button2.Text = AppResources.AppBarAdd;
             ApplicationBar.Buttons.Add(button2);
             button2.Click +=
-                delegate { PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.SingleDayViewModel.TappedDay.Dt); };
+                delegate { PocalAppointmentHelper.AddAllDayAppointment(App.ViewModel.SingleDayViewModel.TappedDay.Dt); };
 
             /*********** MONTHVIEW BUTTON ***********/
             var button3 = new ApplicationBarIconButton();
@@ -505,7 +505,7 @@ namespace Pocal
             button2.IconUri = new Uri("/Images/add.png", UriKind.Relative);
             button2.Text = AppResources.AppBarAdd;
             ApplicationBar.Buttons.Add(button2);
-            button2.Click += delegate { PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.DayAtPointer.Dt); };
+            button2.Click += delegate { PocalAppointmentHelper.AddAllDayAppointment(App.ViewModel.DayAtPointer.Dt); };
 
             /*********** MONTHVIEW BUTTON ***********/
             var button3 = new ApplicationBarIconButton();
@@ -552,7 +552,7 @@ namespace Pocal
             _foundDayCardsItemsControll = new List<ItemsControl>();
             _foundStackPanels = new List<StackPanel>();
 
-            FindItemControll(AgendaViewLLS);
+            FindItemControll(AgendaViewLls);
             FindItemStackPanelInItemsControll("DayCard_ApptItem");
             PlayStoryboardOfFoundStackPanels("EnterOverview");
 
@@ -580,7 +580,7 @@ namespace Pocal
             _foundDayCardsItemsControll = new List<ItemsControl>();
             _foundStackPanels = new List<StackPanel>();
 
-            FindItemControll(AgendaViewLLS);
+            FindItemControll(AgendaViewLls);
             FindItemStackPanelInItemsControll("DayCard_ApptItem");
 
             PlayStoryboardOfFoundStackPanels("LeaveOverview");

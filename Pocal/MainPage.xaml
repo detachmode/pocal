@@ -7,10 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodel="clr-namespace:Pocal.ViewModel"
-    xmlns:local="clr-namespace:Pocal.Converter"
     xmlns:pocal="clr-namespace:Pocal"
     xmlns:screenSizeSupport="clr-namespace:ScreenSizeSupport;assembly=ScreenSizeSupport"
-    xmlns:ec="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
     x:Class="Pocal.MainPage"
     mc:Ignorable="d"
     SupportedOrientations="Portrait" Orientation="Portrait"
@@ -228,7 +226,7 @@
 
             <Grid x:Name="AgendaView" >
                 <Grid.Background>
-                    <SolidColorBrush Color="{StaticResource Agenda_BG}"/>
+                    <SolidColorBrush Color="{StaticResource AgendaBg}"/>
                 </Grid.Background>
 
                 <StackPanel Margin="12,17,0,0" Grid.Row="0"  HorizontalAlignment="Left">
@@ -248,7 +246,7 @@
                     <Grid.RenderTransform>
                         <CompositeTransform/>
                     </Grid.RenderTransform>
-                    <phone:LongListSelector x:Name="AgendaViewLLS" ManipulationCompleted="AgendaViewLLS_ManipulationCompleted"  ManipulationDelta="AgendaViewLLS_ManipulationDelta" Loaded="LongList_Loaded"                                             
+                    <phone:LongListSelector x:Name="AgendaViewLls" ManipulationCompleted="AgendaViewLLS_ManipulationCompleted"  ManipulationDelta="AgendaViewLLS_ManipulationDelta" Loaded="LongList_Loaded"                                             
 					ItemsSource="{Binding Days}"  HorizontalContentAlignment="Stretch" Background="Transparent" Margin="-10,0,10,0" >
                         <phone:LongListSelector.ItemTemplate >
                             <DataTemplate >
@@ -297,7 +295,7 @@
                 <RowDefinition Height="60*"/>
                 <RowDefinition Height="20*"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="gridExitTop" 
+            <Grid x:Name="GridExitTop" 
 				Grid.Row="0" 
 				Opacity="0.0"
 				MouseMove="gridExit_MouseMove" 
@@ -316,7 +314,7 @@
         <!--******** MonthView ******** -->
         <!--******** ********* ******** -->
 
-        <Grid x:Name="MonthView" Background="{StaticResource Month_BG}" Canvas.ZIndex="-10">
+        <Grid x:Name="MonthView" Background="{StaticResource MonthBg}" Canvas.ZIndex="-10">
             <Grid>
                 <TextBlock x:Name="YearDisplay"  Style="{StaticResource PhoneTextTitle3Style}" VerticalAlignment="Top" Margin="24,24" FontWeight="SemiBold">2014</TextBlock>
                 <phone:Pivot x:Name="MonthsPivot" Margin="0,36,0,0" SelectionChanged="Pivot_SelectionChanged">

@@ -21,7 +21,7 @@
 		RenderTransformOrigin="0.5,0"
 		VerticalAlignment="Top" HorizontalAlignment="Left" >
         <Grid.Background>
-            <SolidColorBrush x:Name="MyAnimatedBrush"  Color="{StaticResource SDV_BG}"></SolidColorBrush>
+            <SolidColorBrush x:Name="MyAnimatedBrush"  Color="{StaticResource SdvBg}"></SolidColorBrush>
         </Grid.Background>
         <Grid.Resources>
             <Storyboard x:Key="tapFeedback">
@@ -32,7 +32,7 @@
                     <ColorAnimationUsingKeyFrames.KeyFrames>
                         <LinearColorKeyFrame Value="DarkGray" KeyTime="0:0:0.1" />
                         <LinearColorKeyFrame Value="DarkGray" KeyTime="0:0:0.25" />
-                        <LinearColorKeyFrame Value="{StaticResource SDV_BG}" KeyTime="0:0:0.4" />
+                        <LinearColorKeyFrame Value="{StaticResource SdvBg}" KeyTime="0:0:0.4" />
                     </ColorAnimationUsingKeyFrames.KeyFrames>
                 </ColorAnimationUsingKeyFrames>
 
@@ -51,13 +51,13 @@
             </EventTrigger>
         </Grid.Resources>
         <Grid.Height>
-            <Binding Converter="{StaticResource singelDayApptHeight}" Path="Appt"/>
+            <Binding Converter="{StaticResource SingelDayApptHeight}" Path="Appt"/>
         </Grid.Height>
         <Grid.Width>
-            <Binding Converter="{StaticResource singelDayApptWidth}" Path="MaxConflicts"/>
+            <Binding Converter="{StaticResource SingelDayApptWidth}" Path="MaxConflicts"/>
         </Grid.Width>
         <i:Interaction.Behaviors>
-            <cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource singelDayApptTranslate}"
+            <cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource SingelDayApptTranslate}"
 														PropertyName="RenderTransform">
                 <cimbalinoBehaviors:MultiBindingItem Value="{Binding MaxConflicts}" />
                 <cimbalinoBehaviors:MultiBindingItem Value="{Binding Column}" />
@@ -78,7 +78,7 @@
         <Rectangle Width="12" Fill="{Binding CalColor}" HorizontalAlignment="Left" >
 
             <i:Interaction.Behaviors>
-                <cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource singelDayApptRectangleMargin}"
+                <cimbalinoBehaviors:MultiBindingBehavior Converter="{StaticResource SingelDayApptRectangleMargin}"
 															PropertyName="Margin">
                     <cimbalinoBehaviors:MultiBindingItem Value="{Binding StartTime}" />
                     <cimbalinoBehaviors:MultiBindingItem Value="{Binding Duration}" />

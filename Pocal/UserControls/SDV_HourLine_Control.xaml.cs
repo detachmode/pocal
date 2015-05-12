@@ -41,7 +41,7 @@ namespace Pocal
             if (starttime != null)
             {
                 DateTime dt = (DateTime)starttime;
-                PocalAppointmentHelper.addAppointment(dt);
+                PocalAppointmentHelper.AddAppointment(dt);
             }
  
 

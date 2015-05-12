@@ -35,7 +35,7 @@ namespace Pocal
             Dispatcher.BeginInvoke(() =>
             {
 
-                PocalAppointmentHelper.editAppointment(pocalAppointment);
+                PocalAppointmentHelper.EditAppointment(pocalAppointment);
 
             });
 

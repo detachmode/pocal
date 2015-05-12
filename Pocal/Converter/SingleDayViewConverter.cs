@@ -1,36 +1,26 @@
-﻿using Pocal.Helper;
-using Pocal.ViewModel;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 using Windows.ApplicationModel.Appointments;
 using Cimbalino.Toolkit.Converters;
-using System.Windows.Media;
-using System.Windows.Controls;
 using Pocal.Resources;
-using System.Diagnostics;
+using Pocal.ViewModel;
 
 namespace Pocal.Converter
 {
-
     public static class CultureSettings
     {
-        public static CultureInfo ci = CultureInfo.CurrentUICulture;
+        public static CultureInfo Ci = CultureInfo.CurrentUICulture;
     }
-
-
 
 
     public class SDV_Background : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
-
-            return new SolidColorBrush((Color)App.Current.Resources["SDV_BG"]);
-
-              
+            return new SolidColorBrush((Color) Application.Current.Resources["SDV_BG"]);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -40,33 +30,27 @@ namespace Pocal.Converter
     }
 
 
-    public class windowHeaderDateConverter : IValueConverter
+    public class WindowHeaderDateConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var dt = (DateTime)value;
-            if (dt != null)
+            DateTime dt;
+            dt = (DateTime) value;
+
+            if (dt.Year == 1)
             {
-
-                if (dt.Year == 1)
-                {
-                    return "";
-                }
-                //DateTime dt = day.DT;
-                if (dt.Date == DateTime.Now.Date)
-                {
-                    return AppResources.today;
-
-                }
-                return dt.ToString("dddd", CultureSettings.ci) + ", " + dt.ToString("M", CultureSettings.ci);
-
+                return "";
             }
-            else return "";
+
+            if (dt.Date == DateTime.Now.Date)
+            {
+                return AppResources.today;
+            }
+            return dt.ToString("dddd", CultureSettings.Ci) + ", " + dt.ToString("M", CultureSettings.Ci);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
             return null;
         }
     }
@@ -75,13 +59,8 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            PocalAppointment pa = value as PocalAppointment;
-            if (String.IsNullOrWhiteSpace(pa.Location))
-            {
-                return System.Windows.Visibility.Collapsed;
-            }
-            return System.Windows.Visibility.Visible;
-
+            var pa = value as PocalAppointment;
+            return pa != null && string.IsNullOrWhiteSpace(pa.Location) ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -89,20 +68,20 @@ namespace Pocal.Converter
             return null;
         }
     }
-
 
 
     public class DetailNotesCollapser : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            PocalAppointment pa = value as PocalAppointment;
-            if (String.IsNullOrWhiteSpace(pa.Location) || pa.Duration > TimeSpan.FromHours(1.2))
-            {
-                return System.Windows.Visibility.Visible;
-            }
-            return System.Windows.Visibility.Collapsed;
+            var pa = value as PocalAppointment;
+            if (pa == null) return Visibility.Collapsed;
 
+            if (string.IsNullOrWhiteSpace(pa.Location) || pa.Duration > TimeSpan.FromHours(1.2))
+            {
+                return Visibility.Visible;
+            }
+            return Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -111,163 +90,150 @@ namespace Pocal.Converter
         }
     }
 
-    public class revertBoolean : IValueConverter
+    public class RevertBoolean : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool)
-                if ((bool)value)
-                    return Visibility.Visible;
+            if (!(value is bool)) return Visibility.Collapsed;
+            if ((bool) value)
+                return Visibility.Visible;
 
             return Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
             return null;
         }
-
     }
 
 
-    public class singelDayApptHeight : IValueConverter
+    public class SingelDayApptHeight : IValueConverter
     {
-        private Appointment appt;
-        private DateTimeOffset endTime;
+        private Appointment _appt;
+        private DateTimeOffset _endTime;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var apptTest = (value as Appointment);
-            if (apptTest != null)
+            if (apptTest == null) return 0;
+            if (apptTest.AllDay) return 0;
+
+            _appt = apptTest;
+            double result;
+
+            _endTime = _appt.StartTime + _appt.Duration;
+
+            if (ApptBeginsAndEndsThisDay())
             {
-                if (apptTest.AllDay) return 0;
+                var startTimeSnapped30 = _appt.StartTime.AddMinutes(-_appt.StartTime.Minute%30);
+                DateTimeOffset endTimeSnapped30;
+                if (_endTime.Minute != 0 && _endTime.Minute != 30)
+                    endTimeSnapped30 = _endTime.AddMinutes(+(30 - _endTime.Minute%30));
+                else
+                    endTimeSnapped30 = _endTime;
 
-                appt = apptTest;
-                double result;
+                var durationSnapped30 = endTimeSnapped30 - startTimeSnapped30;
+                var duration = (durationSnapped30.TotalMinutes/30);
 
-                endTime = (DateTimeOffset)appt.StartTime + appt.Duration;
-
-                if (apptBeginsAndEndsThisDay())
-                {
-                    DateTimeOffset startTimeSnapped30 = appt.StartTime.AddMinutes(-appt.StartTime.Minute % 30);                   
-                    DateTimeOffset endTimeSnapped30;                 
-                    if (endTime.Minute != 0 && endTime.Minute != 30)
-                        endTimeSnapped30 = endTime.AddMinutes(+(30 - endTime.Minute % 30));
-                    else
-                        endTimeSnapped30 = endTime;
-
-                    TimeSpan DurationSnapped30 = endTimeSnapped30 - startTimeSnapped30;
-                    double duration = (DurationSnapped30.TotalMinutes / 30);
-
-                    result = duration * HourLine.Height / 2;
-                    return result + 2;
-                }
-
-                
-                if (apptJustBeginsThisDay())              
-                {
-                    result = (HourLine.Height * 24 +1) ;
-                    result -= (appt.StartTime.Hour)*HourLine.Height;
-                    if (appt.StartTime.Minute>=30)
-                        result -= HourLine.Height / 2;
-                    return result +2;
-                }
-
-                if (apptJustEndsThisDay())
-                {
-                    result = (endTime.Hour * HourLine.Height);
-                    if (endTime.Minute > 0)
-                        result += HourLine.Height / 2;
-                    if (endTime.Minute > 29)
-                        result += HourLine.Height / 2;
-                    return result + 2;
-
-                }
-
-                var completeDayHeight = (HourLine.Height * 24);
-                return completeDayHeight + 2;
-
+                result = duration*HourLine.Height/2.0;
+                return result + 2;
             }
-            return 0;
-        }
-
-        private bool apptBeginsAndEndsThisDay()
-        {
-            var testDate = App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date;
-            return (appt.StartTime.Date == testDate && endTime.Date == testDate);
-        }
-        
-        private bool apptJustEndsThisDay()
-        {
-            return (appt.StartTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date 
-                && endTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date);
-        }
-
-        private bool apptJustBeginsThisDay()
-        {
-            return (endTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date
-                 && appt.StartTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date);
-        }
 
 
+            if (ApptJustBeginsThisDay())
+            {
+                result = (HourLine.Height*24 + 1);
+                result -= (_appt.StartTime.Hour)*HourLine.Height;
+                if (_appt.StartTime.Minute >= 30)
+                    result -= HourLine.Height/2.0;
+                return result + 2;
+            }
+
+            if (ApptJustEndsThisDay())
+            {
+                result = (_endTime.Hour*HourLine.Height);
+                if (_endTime.Minute > 0)
+                    result += HourLine.Height/2.0;
+                if (_endTime.Minute > 29)
+                    result += HourLine.Height/2.0;
+                return result + 2;
+            }
+
+            var completeDayHeight = (HourLine.Height*24);
+            return completeDayHeight + 2;
+        }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
             return null;
         }
 
+        private bool ApptBeginsAndEndsThisDay()
+        {
+            var testDate = App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date;
+            return (_appt.StartTime.Date == testDate && _endTime.Date == testDate);
+        }
+
+        private bool ApptJustEndsThisDay()
+        {
+            return (_appt.StartTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date
+                    && _endTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date);
+        }
+
+        private bool ApptJustBeginsThisDay()
+        {
+            return (_endTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date
+                    && _appt.StartTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date);
+        }
     }
 
-    public class singelDayApptWidth : IValueConverter
+    public class SingelDayApptWidth : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
-            double fullWidth = (480 * screenSizeMultiplicator - 73);
-            int columnsCount = (int)value;
-            if (columnsCount > 1)
-            {
-                if (columnsCount > 4)
-                    columnsCount = 4;
+            var screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
+            var fullWidth = (480*screenSizeMultiplicator - 73);
+            var columnsCount = (int) value;
 
-                return fullWidth / columnsCount + screenSizeMultiplicator * 1;
-            }
-            return (fullWidth + screenSizeMultiplicator*2 ); // 2 = BorderSize
+            if (columnsCount <= 1) return (fullWidth + screenSizeMultiplicator*2); // 2 = BorderSize
+
+            if (columnsCount > 4)
+                columnsCount = 4;
+
+            return fullWidth/columnsCount + screenSizeMultiplicator*1;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
             return null;
         }
-
     }
 
 
-    public class singelDayApptRectangleMargin : MultiValueConverterBase
+    public class SingelDayApptRectangleMargin : MultiValueConverterBase
     {
-        private Thickness margin = new Thickness(0, 0, 0, 0);
+        private Thickness _margin = new Thickness(0, 0, 0, 0);
+
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             if (values[0] == null || values[1] == null)
-                return margin;
-            DateTimeOffset starttime = (DateTimeOffset)values[0];
-            TimeSpan duration = (TimeSpan)values[1];
-            DateTimeOffset endtime = starttime + duration;
+                return _margin;
+            var starttime = (DateTimeOffset) values[0];
+            var duration = (TimeSpan) values[1];
+            var endtime = starttime + duration;
 
-            int x = starttime.Minute % 30;
+            var x = starttime.Minute%30;
             if (x == 0)
                 x = 0;
-            margin.Top = 1.16 * x;
+            _margin.Top = 1.16*x;
 
-            x = endtime.Minute % 30;
+            x = endtime.Minute%30;
             if (x == 0)
                 x = 30;
-            margin.Bottom = 1.16 * (30 - x);
+            _margin.Bottom = 1.16*(30 - x);
 
-            return margin;
+            return _margin;
         }
 
         public override object[] ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -277,14 +243,12 @@ namespace Pocal.Converter
     }
 
 
-
-
-    public class singelDayApptTranslate : MultiValueConverterBase
+    public class SingelDayApptTranslate : MultiValueConverterBase
     {
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            TranslateTransform myTranslate = new TranslateTransform();
-            TransformGroup myTransformGroup = new TransformGroup();
+            var myTranslate = new TranslateTransform();
+            var myTransformGroup = new TransformGroup();
             myTransformGroup.Children.Add(myTranslate);
 
             if (values[0] == null || values[1] == null || values[2] == null)
@@ -292,9 +256,9 @@ namespace Pocal.Converter
                 return myTransformGroup;
             }
 
-            int conflicts = (int)values[0];
-            int column = (int)values[1];
-            DateTimeOffset starttime = (DateTimeOffset)values[2];
+            var conflicts = (int) values[0];
+            var column = (int) values[1];
+            var starttime = (DateTimeOffset) values[2];
 
             if (conflicts > 4)
                 conflicts = 4;
@@ -302,18 +266,17 @@ namespace Pocal.Converter
             if (conflicts == 0)
                 conflicts = 1;
 
-            
-            calcY(starttime, myTranslate);
-            calcX(conflicts, column, myTranslate);
+
+            CalcY(starttime, myTranslate);
+            CalcX(conflicts, column, myTranslate);
 
 
             return myTransformGroup;
-
         }
 
-        private static void calcY(DateTimeOffset starttime, TranslateTransform myTranslate)
+        private static void CalcY(DateTimeOffset starttime, TranslateTransform myTranslate)
         {
-            double value = 0;
+            double value;
 
             if (starttime.Date < App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date)
             {
@@ -321,23 +284,21 @@ namespace Pocal.Converter
                 return;
             }
 
-            value = (starttime.Hour * HourLine.Height);
+            value = (starttime.Hour*HourLine.Height);
 
 
             if (starttime.Minute >= 30)
             {
-                value = value + HourLine.Height / 2;
-
+                value = value + (HourLine.Height/2.0);
             }
 
             myTranslate.Y = value;
-
         }
 
-        private static void calcX(int conflicts, int column, TranslateTransform myTranslate)
+        private static void CalcX(int conflicts, int column, TranslateTransform myTranslate)
         {
-            double screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
-            myTranslate.X = (480*screenSizeMultiplicator -73)/ conflicts * (column - 1);
+            var screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
+            myTranslate.X = (480*screenSizeMultiplicator - 73)/conflicts*(column - 1);
         }
 
         public override object[] ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -345,11 +306,4 @@ namespace Pocal.Converter
             return null;
         }
     }
-
-
-
-
-
 }
-
-

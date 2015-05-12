@@ -1,43 +1,15 @@
-﻿using Pocal.ViewModel;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace Pocal.Converter
 {
-
-
-    public class overview_FirstLineX : IValueConverter
+    public class OverviewFirstLineX : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (App.ViewModel.IsInOverviewModus())
-            {
-                return App.Current.Resources["Overview_StartTime_X"];
-            }
-            else
-                return 0;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return null;
-        }
-    }
-    public class overview_StartTimeOpacity : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (App.ViewModel.IsInOverviewModus())
-            {
-                return 0.7;
-            }
-            else
-                return 1;
+            return App.ViewModel.IsInOverviewModus() ? Application.Current.Resources["Overview_StartTime_X"] : 0;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -46,16 +18,11 @@ namespace Pocal.Converter
         }
     }
 
-    public class overview_StartTimeScale : IValueConverter
+    public class OverviewStartTimeOpacity : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (App.ViewModel.IsInOverviewModus())
-            {
-                return 1.6;
-            }
-            else
-                return 1;
+            return App.ViewModel.IsInOverviewModus() ? 0.7 : 1;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -64,16 +31,24 @@ namespace Pocal.Converter
         }
     }
 
-    public class overview_SecondLineOpacity : IValueConverter
+    public class OverviewStartTimeScale : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (App.ViewModel.IsInOverviewModus())
-            {
-                return 0;
-            }
-            else
-                return 1;
+            return App.ViewModel.IsInOverviewModus() ? 1.6 : 1;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    public class OverviewSecondLineOpacity : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return App.ViewModel.IsInOverviewModus() ? 0 : 1;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -83,16 +58,11 @@ namespace Pocal.Converter
     }
 
 
-    public class overview_SecondLineSale : IValueConverter
+    public class OverviewSecondLineSale : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (App.ViewModel.IsInOverviewModus())
-            {
-                return 1.6;
-            }
-            else
-                return 1;
+            return App.ViewModel.IsInOverviewModus() ? 1.6 : 1;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

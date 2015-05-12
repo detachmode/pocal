@@ -270,12 +270,12 @@ namespace Pocal
             if (testDayOfWeek == DayOfWeek.Saturday || testDayOfWeek == DayOfWeek.Sunday)
             {
                 //brd.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 40, 40, 40));
-                brd.Background = new SolidColorBrush((Color)App.Current.Resources["Month_WeekendBG"]);
+                brd.Background = new SolidColorBrush((Color)App.Current.Resources["MonthWeekendBg"]);
             }
             else
             {
 
-                brd.Background = new SolidColorBrush((Color)App.Current.Resources["Month_NoWeekendBG"]);
+                brd.Background = new SolidColorBrush((Color)App.Current.Resources["MonthNoWeekendBg"]);
                 //brd.Background = new SolidColorBrush();
             }
 
@@ -283,8 +283,8 @@ namespace Pocal
             brd.DataContext = gridDateTimes[gridCounter];
             brd.Tap += dayTap;
 
-            double height = (483 / 7);
-            double width = (483 / 7);
+            double height = (483 / 7.0);
+            double width = (483 / 7.0);
             brd.Height = height;
             brd.Width = width;
 

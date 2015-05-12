@@ -89,11 +89,11 @@ namespace Pocal
 
         public static void LoadMyRessources()
         {
-            App.Current.Resources.Remove("Agenda_BG");
-            App.Current.Resources.Remove("SDV_BG");
-            App.Current.Resources.Remove("Month_BG");
-            App.Current.Resources.Remove("Month_WeekendBG");
-            App.Current.Resources.Remove("Month_NoWeekendBG");
+            App.Current.Resources.Remove("AgendaBg");
+            App.Current.Resources.Remove("SdvBg");
+            App.Current.Resources.Remove("MonthBg");
+            App.Current.Resources.Remove("MonthWeekendBg");
+            App.Current.Resources.Remove("MonthNoWeekendBg");
             App.Current.Resources.Remove("AgendaPointerImage");
 
             Visibility v = (Visibility)App.Current.Resources["PhoneLightThemeVisibility"];
@@ -101,7 +101,7 @@ namespace Pocal
             if (v == System.Windows.Visibility.Visible)
             {
                 //LIGHT
-                App.Current.Resources.Add("Agenda_BG", Colors.White);
+                App.Current.Resources.Add("AgendaBg", Colors.White);
 
                 ImageBrush ib = new ImageBrush();
                 ib.ImageSource = new BitmapImage(new Uri(@"\Images\AgendaPointerBright.png", UriKind.Relative));
@@ -109,34 +109,34 @@ namespace Pocal
                 App.Current.Resources.Add("AgendaPointerImage", ib);
 
 
-                App.Current.Resources.Add("SDV_BG", Color.FromArgb(255, 240, 240, 240));
-                App.Current.Resources.Add("Month_BG", Color.FromArgb(255, 240, 240, 240));
-                App.Current.Resources.Add("Month_WeekendBG", Color.FromArgb(255, 230, 230, 230));
-                App.Current.Resources.Add("Month_NoWeekendBG", Colors.White);
+                App.Current.Resources.Add("SdvBg", Color.FromArgb(255, 240, 240, 240));
+                App.Current.Resources.Add("MonthBg", Color.FromArgb(255, 240, 240, 240));
+                App.Current.Resources.Add("MonthWeekendBg", Color.FromArgb(255, 230, 230, 230));
+                App.Current.Resources.Add("MonthNoWeekendBg", Colors.White);
                 //App.Current.Resources["SDV_BG"] = Colors.Magenta;
             }
             else
             {
                 //DARK
-                App.Current.Resources.Add("Agenda_BG", Colors.Black);
+                App.Current.Resources.Add("AgendaBg", Colors.Black);
 
                 ImageBrush ib = new ImageBrush();
                 ib.ImageSource = new BitmapImage(new Uri(@"\Images\AgendaPointerDark.png", UriKind.Relative));
                 ib.Stretch = Stretch.None;
                 App.Current.Resources.Add("AgendaPointerImage", ib);
 
-                App.Current.Resources.Add("SDV_BG", Color.FromArgb(255, 15, 15, 15));
-                App.Current.Resources.Add("Month_BG", Colors.Black);
-                App.Current.Resources.Add("Month_WeekendBG", Color.FromArgb(255, 30, 30, 30));
-                App.Current.Resources.Add("Month_NoWeekendBG", Colors.Black);
+                App.Current.Resources.Add("SdvBg", Color.FromArgb(255, 15, 15, 15));
+                App.Current.Resources.Add("MonthBg", Colors.Black);
+                App.Current.Resources.Add("MonthWeekendBg", Color.FromArgb(255, 30, 30, 30));
+                App.Current.Resources.Add("MonthNoWeekendBg", Colors.Black);
             }
 
             if (!AppResources.ResourceLanguage.Contains("en"))
             {
-                App.Current.Resources.Remove("Overview_StartTime_X");
-                App.Current.Resources.Add("Overview_StartTime_X", 20);
-                App.Current.Resources.Remove("Overview_StartTime_Width");
-                App.Current.Resources.Add("Overview_StartTime_Width", 60);
+                App.Current.Resources.Remove("OverviewStartTimeX");
+                App.Current.Resources.Add("OverviewStartTimeX", 20);
+                App.Current.Resources.Remove("OverviewStartTimeWidth");
+                App.Current.Resources.Add("OverviewStartTimeWidth", 60);
 
             }
 

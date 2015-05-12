@@ -63,12 +63,13 @@ namespace ScheduledTaskAgent1
 
             // Option: mehrere Tage auf Livetile anzeigen 
 
-            var subjectTextblock = new TextBlock();          
-            var timeTextBlock = new TextBlock();
+
             const byte alpha = 200;
 
             for (var i = 1; i < Math.Min(appts.Count, 3); i++)
             {
+                var subjectTextblock = new TextBlock();
+                var timeTextBlock = new TextBlock();
                 var fontcolor = new SolidColorBrush(Color.FromArgb(alpha, 255, 255, 255));
 
                 subjectTextblock.Text = appts[i].Subject;
