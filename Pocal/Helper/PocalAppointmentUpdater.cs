@@ -62,18 +62,27 @@ namespace Pocal.Helper
 
             if (newPa != null && newPa.Appt.Recurrence == null)
                 Add(newPa);
+
         }
 
         private static async Task UpdateIfRecurrent(PocalAppointment oldPa, PocalAppointment newPa)
         {
             if (oldPa != null && oldPa.Appt.Recurrence != null)
             {
+                // Todo fixme
                 RemoveRecurrent(oldPa.Appt);
-                await AddRecurrent(oldPa.Appt);
+
+                // für den fall, dass Nur ein Termin entfernt wurde, müssen alle anderen alten Recurrenztermine wieder neu geaddet werden
+                if (newPa == null)
+                {
+                    await AddRecurrent(oldPa.Appt); 
+                }
             }
 
             if (newPa != null && newPa.Appt.Recurrence != null)
+            {
                 await AddRecurrent(newPa.Appt);
+            }
         }
 
         private static void RemoveRecurrent(Appointment appt)
@@ -136,12 +145,9 @@ namespace Pocal.Helper
         private static void SetResponsibleDays(PocalAppointment pA)
         {
             _responsibleDaysOfPa = new List<Day>();
-            foreach (var day in App.ViewModel.Days)
+            foreach (var day in App.ViewModel.Days.Where(day => pA.IsInTimeFrameOfDate(day.Dt)))
             {
-                if (pA.IsInTimeFrameOfDate(day.Dt))
-                {
-                    _responsibleDaysOfPa.Add(day);
-                }
+                _responsibleDaysOfPa.Add(day);
             }
         }
     }
