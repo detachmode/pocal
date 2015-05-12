@@ -42,15 +42,16 @@ namespace Pocal
                 chk.Checked += SetHiddenCalendarsSettings;
                 chk.Unchecked += SetHiddenCalendarsSettings;
                 
-                ListCalendarVisibility.Items.Add(chk);
+                ListCalendarVisibility.Children.Add(chk);
             }
+            
 
         }
 
         void SetHiddenCalendarsSettings(object sender, RoutedEventArgs e)
         {
             var hiddenCalendars = new List<string>();
-            foreach (CheckBox item in ListCalendarVisibility.Items)
+            foreach (CheckBox item in ListCalendarVisibility.Children)
             {
                 if (item.IsChecked != false) continue;
                 var cal = (AppointmentCalendar)item.DataContext;
