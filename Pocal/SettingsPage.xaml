@@ -13,9 +13,8 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     
-     xmlns:local="clr-namespace:Pocal"
     
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="False" d:DataContext="{d:DesignData SettingsViewModel}">
 
     <!--<phone:PhoneApplicationPage.Resources>
         <local:SettingsViewModel x:Key="appSettings"></local:SettingsViewModel>
@@ -23,43 +22,54 @@
 
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-
         <screenSizeSupport:ZoomBox ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
             <StackPanel>
-                <StackPanel Margin="12,17,0,28">
-                    <TextBlock Text="Pocal" Style="{StaticResource PhoneTextNormalStyle}"/>
-                    <TextBlock Text="{Binding Path=LocalizedResources.SettingsPageTitle, Source={StaticResource LocalizedStrings} }" 
-                               Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.SettingsPageTitle, Source={StaticResource LocalizedStrings} }"  Style="{StaticResource PhoneTextTitle3Style}" VerticalAlignment="Top" Margin="24,24,0,0" FontWeight="SemiBold"></TextBlock>
+                <phone:Pivot>
+                    <phone:Pivot.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{StaticResource PhoneTextTitle1Style}" Text="{Binding}"/>
+                        </DataTemplate>
+                    </phone:Pivot.HeaderTemplate>
 
+                    <phone:PivotItem Header="Agenda" >
+                        <StackPanel>
+                            <StackPanel Margin="12,0">
+                                <CheckBox
+                                        Content="{Binding Path=LocalizedResources.SettingsSundayRed, Source={StaticResource LocalizedStrings} }"
+                                        IsChecked="{Binding  Path=SundayRed, Mode=TwoWay}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </phone:PivotItem>
 
-                    <ScrollViewer Height="637" >
-                        <StackPanel x:Name="ContentGrid"  Margin="12,24">
+                    <phone:PivotItem Header="Live Tile">
+                        <ScrollViewer Height="614">
+                            <StackPanel Margin="12,0">
+                                <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Margin="0">Live Tile Style:</TextBlock>
+                                <RadioButton Content="One appointment" Height="Auto" HorizontalAlignment="Left"
+                                             Margin="0,0,0,0" Name="RadioButton1" VerticalAlignment="Bottom"
+                                             GroupName="GroupLivetile"
+                                             IsChecked="{Binding  Path=LiveTileSingleSettings, Mode=TwoWay}" />
+                                <RadioButton Content="More appointments" Height="Auto" HorizontalAlignment="Left"
+                                             Margin="0,0,0,0" Name="RadioButton2" VerticalAlignment="Top"
+                                             GroupName="GroupLivetile"
+                                             IsChecked="{Binding  Path=LiveTileMulitSettings, Mode=TwoWay}" />
 
-                            <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Margin="0">Livetile Options:</TextBlock>
-                            <RadioButton Content="One appointment" Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="radioButton1" VerticalAlignment="Bottom" GroupName="GroupLivetile" 
-                                    IsChecked="{Binding  Path=LiveTileSingleSettings, Mode=TwoWay}" />
-                            <RadioButton Content="More appointments" Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="radioButton2" VerticalAlignment="Top" GroupName="GroupLivetile" 
-                                    IsChecked="{Binding  Path=LiveTileMulitSettings, Mode=TwoWay}"/>
-
-                            <!--<TextBlock Style="{StaticResource PhoneTextTitle2Style}" Margin="0,24,0,0">Default view:</TextBlock>
+                                <!--<TextBlock Style="{StaticResource PhoneTextTitle2Style}" Margin="0,24,0,0">Default view:</TextBlock>
                             <RadioButton Content="Agenda view" Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="radioButton3" VerticalAlignment="Bottom" GroupName="GroupDefaultView" 
                                     IsChecked="{Binding  Path=DefaultViewSettingsAgenda, Mode=TwoWay}" />
                             <RadioButton Content="Overview" Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="radioButton4" VerticalAlignment="Top" GroupName="GroupDefaultView" 
                                     IsChecked="{Binding  Path=DefaultViewSettingsOverview, Mode=TwoWay}"/>-->
 
-                            <TextBlock Text="{Binding Path=LocalizedResources.SettingsCalendarVisibility, Source={StaticResource LocalizedStrings} }"/>
-                            
-                            <StackPanel Name="ListCalendarVisibility"/>
+                                <TextBlock
+                                    Margin="0,24,0,0"
+                                    Text="{Binding Path=LocalizedResources.SettingsCalendarVisibility, Source={StaticResource LocalizedStrings} }" />
 
-
-                            <TextBlock Margin="0,24,0,0" Style="{StaticResource PhoneTextTitle2Style}" >Agenda Options:</TextBlock>
-                            <CheckBox Content="{Binding Path=LocalizedResources.SettingsSundayRed, Source={StaticResource LocalizedStrings} }"
-                                      IsChecked="{Binding  Path=SundayRed, Mode=TwoWay}"/>
-
-
-                        </StackPanel>
-                    </ScrollViewer>
-                </StackPanel>
+                                <StackPanel Name="ListCalendarVisibility" />
+                            </StackPanel>
+                        </ScrollViewer>
+                    </phone:PivotItem>
+                </phone:Pivot>
             </StackPanel>
         </screenSizeSupport:ZoomBox>
     </Grid>

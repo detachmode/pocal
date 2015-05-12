@@ -9,7 +9,7 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return App.ViewModel.IsInOverviewModus() ? Application.Current.Resources["Overview_StartTime_X"] : 0;
+            return App.ViewModel.IsInOverviewModus() ? Application.Current.Resources["OverviewStartTimeX"] : 0;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

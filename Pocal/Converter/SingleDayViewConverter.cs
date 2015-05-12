@@ -21,7 +21,7 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return new SolidColorBrush((Color) Application.Current.Resources["SDV_BG"]);
+            return new SolidColorBrush((Color) Application.Current.Resources["SdvBg"]);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

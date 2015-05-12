@@ -44,12 +44,12 @@ namespace ScheduledTaskAgent1
                     msg = "NOT UPDATED";
                 }
 
-                var toast = new ShellToast
-                {
-                    Title = "Pocal",
-                    Content = msg
-                };
-                toast.Show();
+                //var toast = new ShellToast
+                //{
+                //    Title = "Pocal",
+                //    Content = msg
+                //};
+                //toast.Show();
 
 #if DEBUG_AGENT
                 ScheduledActionService.LaunchForTest(task.Name, TimeSpan.FromSeconds(60));
