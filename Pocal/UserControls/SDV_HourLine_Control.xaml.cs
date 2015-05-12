@@ -37,7 +37,7 @@ namespace Pocal
             });
 
             // Finde die Uhrzeit der angetippten Stelle heraus und übergebe diese Uhrzeit der API
-            var starttime = App.ViewModel.SingleDayViewModel.getStarTimeFromHourline(hourLine);
+            var starttime = App.ViewModel.SingleDayViewModel.GetStarTimeFromHourline(hourLine);
             if (starttime != null)
             {
                 DateTime dt = (DateTime)starttime;

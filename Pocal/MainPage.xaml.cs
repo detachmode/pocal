@@ -204,7 +204,7 @@ namespace Pocal
             ApplicationBar.Buttons.Add(button2);
             button2.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
-                PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.DayAtPointer.DT);
+                PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.DayAtPointer.Dt);
 
             });
 
@@ -266,7 +266,7 @@ namespace Pocal
             if (topDay != null)
             {
                 int offset = 10;
-                IEnumerable<Day> daysLoadedBeforeTopDay = App.ViewModel.Days.Where(x => x.DT < topDay.DT);
+                IEnumerable<Day> daysLoadedBeforeTopDay = App.ViewModel.Days.Where(x => x.Dt < topDay.Dt);
 
                 int count = daysLoadedBeforeTopDay.Count();
                 if (!App.ViewModel.IsCurrentlyLoading && count < offset)
@@ -501,7 +501,7 @@ namespace Pocal
             ApplicationBar.Buttons.Add(button2);
             button2.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
-                PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.SingleDayViewModel.TappedDay.DT);
+                PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.SingleDayViewModel.TappedDay.Dt);
 
             });
 
@@ -532,7 +532,7 @@ namespace Pocal
         {
             VisualStateManager.GoToState(this, "Close", true);
 
-            if (App.ViewModel.InModus == MainViewModel.Modi.OverViewSDV || App.ViewModel.InModus == MainViewModel.Modi.OverView)
+            if (App.ViewModel.InModus == MainViewModel.Modi.OverViewSdv || App.ViewModel.InModus == MainViewModel.Modi.OverView)
             {
                 OverviewAppbar();
                 App.ViewModel.InModus = MainViewModel.Modi.OverView;
@@ -587,7 +587,7 @@ namespace Pocal
             ApplicationBar.Buttons.Add(button2);
             button2.Click += new EventHandler(delegate(object sender, EventArgs e)
             {
-                PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.DayAtPointer.DT);
+                PocalAppointmentHelper.addAllDayAppointment(App.ViewModel.DayAtPointer.Dt);
 
             });
 
@@ -793,7 +793,7 @@ namespace Pocal
             App.ViewModel.InModus = MainViewModel.Modi.MonthView;
             Canvas.SetZIndex(MonthView, 10);
 
-            DateTime dt = App.ViewModel.DayAtPointer.DT;
+            DateTime dt = App.ViewModel.DayAtPointer.Dt;
             //addFPivotItemAndLoadAppointmentLines(dt);
             addPivotItem(dt);
 
@@ -820,10 +820,10 @@ namespace Pocal
                 case MainViewModel.Modi.OverView:
                     OverviewAppbar();
                     break;
-                case MainViewModel.Modi.OverViewSDV:
+                case MainViewModel.Modi.OverViewSdv:
                     SDVAppbar();
                     break;
-                case MainViewModel.Modi.AgendaViewSDV:
+                case MainViewModel.Modi.AgendaViewSdv:
                     SDVAppbar();
                     break;
                 default:

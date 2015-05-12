@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 
 namespace Pocal.ViewModel
 {
@@ -15,20 +14,18 @@ namespace Pocal.ViewModel
             }
             set
             {
-                if (value != _tappedDay)
-                {
-                    _tappedDay = value;
-                    NotifyPropertyChanged("TappedDay");
-                }
+                if (value == _tappedDay) return;
+                _tappedDay = value;
+                NotifyPropertyChanged("TappedDay");
             }
         }
 
 
 
-        public DateTime? getStarTimeFromHourline(HourLine hourLine)
+        public DateTime? GetStarTimeFromHourline(HourLine hourLine)
         {
 
-            return TappedDay.DT.Date.AddHours(hourLine.DT.Hour);
+            return TappedDay.Dt.Date.AddHours(hourLine.DT.Hour);
 
         }
 

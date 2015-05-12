@@ -103,7 +103,7 @@ namespace Pocal
                     GridAppointments.Children.Remove(item); 
             }
 
-            if (newPA != null && newPA.AllDay == false && newPA.StartTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.DT.Date)
+            if (newPA != null && newPA.AllDay == false && newPA.StartTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date)
             {
                 //fixme
                 newPA = App.ViewModel.SingleDayViewModel.TappedDay.PocalApptsOfDay.FirstOrDefault(x => x.Appt.LocalId == newPA.Appt.LocalId);

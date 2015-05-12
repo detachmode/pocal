@@ -56,7 +56,7 @@ namespace Pocal.Converter
         {
             if (value is Day)
             {
-                DateTime dt = ((Day)value).DT;
+                DateTime dt = ((Day)value).Dt;
                 return DeltaTimeStringCreator.getDeltaTime(dt);
 
             }
@@ -399,7 +399,7 @@ namespace Pocal.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var day = value as Day;
-            if (day.DT.DayOfWeek == DayOfWeek.Monday)
+            if (day.Dt.DayOfWeek == DayOfWeek.Monday)
             {
 
                 return System.Windows.Visibility.Visible;
@@ -421,7 +421,7 @@ namespace Pocal.Converter
             var day = value as Day;
             if (day != null)
             {
-                int weeknumber = day.DT.DayOfYear / 7 + 2;
+                int weeknumber = day.Dt.DayOfYear / 7 + 2;
 
                 return "  "+AppResources.KW+" " + weeknumber + "  ";
             }

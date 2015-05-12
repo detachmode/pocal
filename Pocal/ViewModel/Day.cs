@@ -16,11 +16,9 @@ namespace Pocal.ViewModel
             }
             set
             {
-                if (value != _isHighlighted)
-                {
-                    _isHighlighted = value;
-                    NotifyPropertyChanged("IsHighlighted");
-                }
+                if (value == _isHighlighted) return;
+                _isHighlighted = value;
+                NotifyPropertyChanged("IsHighlighted");
             }
         }
 
@@ -28,7 +26,7 @@ namespace Pocal.ViewModel
 
 
         private DateTime _dt;
-        public DateTime DT
+        public DateTime Dt
         {
             get
             {

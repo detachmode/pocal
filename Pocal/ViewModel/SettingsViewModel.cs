@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Pocal
+namespace Pocal.ViewModel
 {
    public class SettingsViewModel
     {
 
         // Our settings
-        IsolatedStorageSettings settings;
+       readonly IsolatedStorageSettings _settings;
 
         const string LiveTileSettingsSingleKeyname = "LiveTileSettingsSingle";
         const string LiveTileSettingsMultiKeyname = "LiveTileSettingsMulti";
@@ -33,48 +30,45 @@ namespace Pocal
 
         const bool SundayRedDefault = false;
 
-        List<string> HiddenCalendarsDefault = new List<string>();
+       readonly List<string> _hiddenCalendarsDefault = new List<string>();
 
 
         public SettingsViewModel()
         {
             // Get the settings for this application.
-            settings = IsolatedStorageSettings.ApplicationSettings;
+            _settings = IsolatedStorageSettings.ApplicationSettings;
         }
 
-        public bool AddOrUpdateValue(string Key, Object value)
-        {
-            bool valueChanged = false;
+       public bool AddOrUpdateValue(string key, object value)
+       {
+           if (value == null) throw new ArgumentNullException("value");
 
-            // If the key exists
-            if (settings.Contains(Key))
-            {
-                // If the value has changed
-                if (settings[Key] != value)
-                {
-                    // Store the new value
-                    settings[Key] = value;
-                    valueChanged = true;
-                }
-            }
-            // Otherwise create the key.
-            else
-            {
-                settings.Add(Key, value);
-                valueChanged = true;
-            }
-            return valueChanged;
-        }
+           // If the key exists
+           if (_settings.Contains(key))
+           {
+               if (_settings[key] == value) return false;
+
+               // If the value has changed
+               // Store the new value
+               _settings[key] = value;
+           }
+           // Otherwise create the key.
+           else
+           {
+               _settings.Add(key, value);
+           }
+           return true;
+       }
 
 
-        public T GetValueOrDefault<T>(string Key, T defaultValue)
+        public T GetValueOrDefault<T>(string key, T defaultValue)
         {
             T value;
 
             // If the key exists, retrieve the value.
-            if (settings.Contains(Key))
+            if (_settings.Contains(key))
             {
-                value = (T)settings[Key];
+                value = (T)_settings[key];
             }
             // Otherwise, use the default value.
             else
@@ -87,7 +81,7 @@ namespace Pocal
 
         public void Save()
         {
-            settings.Save();
+            _settings.Save();
         }
 
 
@@ -96,7 +90,7 @@ namespace Pocal
         {
             get
             {
-                return GetValueOrDefault<bool>(LiveTileSettingsSingleKeyname, LiveTileSettingsSingleDefault);
+                return GetValueOrDefault(LiveTileSettingsSingleKeyname, LiveTileSettingsSingleDefault);
             }
             set
             {
@@ -112,7 +106,7 @@ namespace Pocal
         {
             get
             {
-                return GetValueOrDefault<bool>(LiveTileSettingsMultiKeyname, LiveTileSettingsMultiDefault);
+                return GetValueOrDefault(LiveTileSettingsMultiKeyname, LiveTileSettingsMultiDefault);
             }
             set
             {
@@ -128,7 +122,7 @@ namespace Pocal
         {
             get
             {
-                return GetValueOrDefault<bool>(DefaultViewSettingsAgendaKeyName, DefaultViewSettingsAgendaDefault);
+                return GetValueOrDefault(DefaultViewSettingsAgendaKeyName, DefaultViewSettingsAgendaDefault);
             }
             set
             {
@@ -143,7 +137,7 @@ namespace Pocal
         {
             get
             {
-                return GetValueOrDefault<bool>(DefaultViewSettingsOverviewKeyName, DefaultViewSettingsOverviewDefault);
+                return GetValueOrDefault(DefaultViewSettingsOverviewKeyName, DefaultViewSettingsOverviewDefault);
             }
             set
             {
@@ -158,7 +152,7 @@ namespace Pocal
         {
             get
             {
-                return GetValueOrDefault<bool>(SundayRedKeyName, SundayRedDefault);
+                return GetValueOrDefault(SundayRedKeyName, SundayRedDefault);
             }
             set
             {
@@ -173,7 +167,7 @@ namespace Pocal
         {
             get
             {
-                return GetValueOrDefault<List<string>>(HiddenCalendarsKeyName, HiddenCalendarsDefault);
+                return GetValueOrDefault(HiddenCalendarsKeyName, _hiddenCalendarsDefault);
             }
             set
             {

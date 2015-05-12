@@ -127,7 +127,7 @@ namespace Pocal
 
                 dayGrid.Children.Add(grid);
             }
-            if (gridDateTimes[gridCounter].Date == App.ViewModel.DayAtPointer.DT.Date)
+            if (gridDateTimes[gridCounter].Date == App.ViewModel.DayAtPointer.Dt.Date)
             {
                 Grid grid = new Grid();
                 grid.Height = 20;
@@ -147,7 +147,7 @@ namespace Pocal
 
         private void addDeltaDayMark(Grid dayGrid)
         {
-            if (gridDateTimes[gridCounter].Date == App.ViewModel.DayAtPointer.DT.Date)
+            if (gridDateTimes[gridCounter].Date == App.ViewModel.DayAtPointer.Dt.Date)
             {
                 Grid grid = new Grid();
                 grid.Height = 25;

@@ -23,7 +23,7 @@
                     <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                 </Border.Background>
                 <TextBlock  x:Name="SingleDayWindowHeader" Foreground="White" Style="{StaticResource PhoneTextTitle3Style}"
-						Text="{Binding SingleDayViewModel.TappedDay.DT, Converter={StaticResource windowHeaderDateConverter}}" 
+						Text="{Binding SingleDayViewModel.TappedDay.Dt, Converter={StaticResource windowHeaderDateConverter}}" 
 						Margin="148,-4,24,0"  FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Right">
                 </TextBlock>
             </Border>

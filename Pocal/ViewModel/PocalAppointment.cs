@@ -7,23 +7,23 @@ namespace Pocal.ViewModel
 {
     public class PocalAppointment : ViewModelBase
     {
-        private Appointment appt;
+        private Appointment _appt;
         public Appointment Appt
         {
             get
             {
-                return appt;
+                return _appt;
             }
             set
             {
 
-                appt = value;
-                this.Subject = appt.Subject;
-                this.Location = appt.Location;
-                this.Details = appt.Details;
-                this.StartTime = appt.StartTime;
-                this.Duration = appt.Duration;
-                this.AllDay = appt.AllDay;
+                _appt = value;
+                Subject = _appt.Subject;
+                Location = _appt.Location;
+                Details = _appt.Details;
+                StartTime = _appt.StartTime;
+                Duration = _appt.Duration;
+                AllDay = _appt.AllDay;
                 NotifyPropertyChanged("Appt");
 
             }
@@ -32,123 +32,119 @@ namespace Pocal.ViewModel
 
 
 
-        private SolidColorBrush calColor;
+        private SolidColorBrush _calColor;
         public SolidColorBrush CalColor
         {
             get
             {
-                return calColor;
+                return _calColor;
             }
             set
             {
-                calColor = value;
+                _calColor = value;
                 NotifyPropertyChanged("CalColor");
             }
 
         }
 
-        private string subject;
+        private string _subject;
         public string Subject
         {
             get
             {
-                return subject;
+                return _subject;
             }
             private set
             {
-                if (value != subject)
+                if (value != _subject)
                 {
-                    subject = value;
+                    _subject = value;
                     NotifyPropertyChanged("Subject");
                 }
             }
         }
 
 
-        private string location;
+        private string _location;
         public string Location
         {
             get
             {
-                return location;
+                return _location;
             }
             private set
             {
-                if (value != location)
+                if (value != _location)
                 {
-                    location = value;
+                    _location = value;
                     NotifyPropertyChanged("Location");
                 }
             }
         }
 
-        private string details;
+        private string _details;
         public string Details
         {
             get
             {
-                return details;
+                return _details;
             }
             private set
             {
-                if (value != details)
+                if (value != _details)
                 {
-                    details = value;
+                    _details = value;
                     NotifyPropertyChanged("Details");
                 }
             }
         }
 
-        private DateTimeOffset startTime;
+        private DateTimeOffset _startTime;
         public DateTimeOffset StartTime
         {
             get
             {
-                return startTime;
+                return _startTime;
             }
             private set
             {
-                if (value != startTime)
+                if (value != _startTime)
                 {
-                    startTime = value;
+                    _startTime = value;
                     NotifyPropertyChanged("StartTime");
                 }
             }
         }
 
 
-        private TimeSpan duration;
+        private TimeSpan _duration;
         public TimeSpan Duration
         {
             get
             {
-                return duration;
+                return _duration;
             }
             private set
             {
-                if (value != duration)
-                {
-                    duration = value;
-                    NotifyPropertyChanged("Duration");
-                }
+                if (value == _duration) return;
+                _duration = value;
+                NotifyPropertyChanged("Duration");
             }
         }
 
-        private bool allDay;
+        private bool _allDay;
         public bool AllDay
         {
             get
             {
-                return allDay;
+                return _allDay;
             }
             //todo make private again
             set
             {
-                if (value != allDay)
-                {
-                    allDay = value;
-                    NotifyPropertyChanged("AllDay");
-                }
+                if (value == _allDay) return;
+                _allDay = value;
+                NotifyPropertyChanged("AllDay");
             }
         }
 
@@ -161,14 +157,11 @@ namespace Pocal.ViewModel
             {
                 return _column;
             }
-            //todo make private again
             set
             {
-                if (value != _column)
-                {
-                    _column = value;
-                    NotifyPropertyChanged("Column");
-                }
+                if (value == _column) return;
+                _column = value;
+                NotifyPropertyChanged("Column");
             }
         }
 
@@ -180,39 +173,36 @@ namespace Pocal.ViewModel
             {
                 return _maxConflicts;
             }
-            //todo make private again
             set
             {
-                if (value != _maxConflicts)
-                {
-                    _maxConflicts = value;
-                    NotifyPropertyChanged("MaxConflicts");
-                }
+                if (value == _maxConflicts) return;
+                _maxConflicts = value;
+                NotifyPropertyChanged("MaxConflicts");
             }
         }
 
-        public bool isInTimeFrameOfDate(DateTime date)
+        public bool IsInTimeFrameOfDate(DateTime date)
         {
-            return TimeFrameChecker.isInTimeFrameOfDay(this.Appt, date);
+            return TimeFrameChecker.isInTimeFrameOfDay(Appt, date);
         }
 
-        public bool isInTimeFrame(DateTime start, DateTime end)
+        public bool IsInTimeFrame(DateTime start, DateTime end)
         {
-            return TimeFrameChecker.isInTimeFrame(this.Appt, start, end);
+            return TimeFrameChecker.isInTimeFrame(Appt, start, end);
 
         }
 
-        private bool isInTimeFrameOFStartEnd(DateTimeOffset start, DateTimeOffset end)
+        private bool IsInTimeFrameOfStartEnd(DateTimeOffset start, DateTimeOffset end)
         {
-            return TimeFrameChecker.isInTimeFrameOFStartEnd(this.Appt, start, end);
+            return TimeFrameChecker.isInTimeFrameOFStartEnd(Appt, start, end);
         }
 
         public bool isInTimeFrame_IgnoreAllDays(DateTime start, DateTime end)
         {
-            if (this.AllDay)
+            if (AllDay)
                 return false;
 
-            return isInTimeFrameOFStartEnd(start, end);
+            return IsInTimeFrameOfStartEnd(start, end);
 
         }
 

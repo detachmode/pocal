@@ -194,20 +194,20 @@ namespace Pocal.Converter
 
         private bool apptBeginsAndEndsThisDay()
         {
-            var testDate = App.ViewModel.SingleDayViewModel.TappedDay.DT.Date;
+            var testDate = App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date;
             return (appt.StartTime.Date == testDate && endTime.Date == testDate);
         }
         
         private bool apptJustEndsThisDay()
         {
-            return (appt.StartTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.DT.Date 
-                && endTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.DT.Date);
+            return (appt.StartTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date 
+                && endTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date);
         }
 
         private bool apptJustBeginsThisDay()
         {
-            return (endTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.DT.Date
-                 && appt.StartTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.DT.Date);
+            return (endTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date
+                 && appt.StartTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date);
         }
 
 
@@ -315,7 +315,7 @@ namespace Pocal.Converter
         {
             double value = 0;
 
-            if (starttime.Date < App.ViewModel.SingleDayViewModel.TappedDay.DT.Date)
+            if (starttime.Date < App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date)
             {
                 myTranslate.Y = 0;
                 return;

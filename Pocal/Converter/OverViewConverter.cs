@@ -15,7 +15,7 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (App.ViewModel.isInOverviewModus())
+            if (App.ViewModel.IsInOverviewModus())
             {
                 return App.Current.Resources["Overview_StartTime_X"];
             }
@@ -32,7 +32,7 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (App.ViewModel.isInOverviewModus())
+            if (App.ViewModel.IsInOverviewModus())
             {
                 return 0.7;
             }
@@ -50,7 +50,7 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (App.ViewModel.isInOverviewModus())
+            if (App.ViewModel.IsInOverviewModus())
             {
                 return 1.6;
             }
@@ -68,7 +68,7 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (App.ViewModel.isInOverviewModus())
+            if (App.ViewModel.IsInOverviewModus())
             {
                 return 0;
             }
@@ -87,7 +87,7 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (App.ViewModel.isInOverviewModus())
+            if (App.ViewModel.IsInOverviewModus())
             {
                 return 1.6;
             }

@@ -1,53 +1,198 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using Windows.ApplicationModel.Appointments;
-using System.Windows.Media;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Diagnostics;
-using Pocal.Helper;
 using System.Windows;
-using System.Threading;
+using System.Windows.Media;
 using System.Windows.Threading;
+using Windows.ApplicationModel.Appointments;
+using Pocal.Helper;
 using ScreenSizeSupport;
 using Shared.Helper;
 
-
 namespace Pocal.ViewModel
 {
-
     public class MainViewModel : ViewModelBase
     {
-
-        public enum Modi { AgendaView, OverView, OverViewSDV, AgendaViewSDV, MonthView };
-        public Modi ModusBeforeMonthView;
-        public Modi InModus = Modi.AgendaView;
-        internal bool isInOverviewModus()
+        public enum Modi
         {
-            switch (InModus)
+            AgendaView,
+            OverView,
+            OverViewSdv,
+            AgendaViewSdv,
+            MonthView
+        };
+
+        private Day _dayAtPointer;
+        private ObservableCollection<Day> _days;
+        private int _loadEnoughCounter;
+        private double _newestGoToDateStamp = DateTime.Now.Ticks;
+        private string _time;
+        public Modi InModus = Modi.AgendaView;
+        public bool IsCurrentlyLoading;
+        public Modi ModusBeforeMonthView;
+
+        public MainViewModel()
+        {
+            Days = new ObservableCollection<Day>();
+            SingleDayViewModel = new SingleDayViewVM();
+            ConflictManager = new ConflictManager();
+            SettingsViewModel = new SettingsViewModel();
+
+            var dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += dispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000); // TODO performance
+            dispatcherTimer.Start();
+
+            #region DESIGN TIME DATA
+
+            if (!DesignerProperties.IsInDesignTool) return;
+            App.DisplayInformationEmulator =
+                Application.Current.Resources["DisplayInformationEmulator"] as DisplayInformationEmulator;
+
+            //	//CREATE DESIGN TIME DATA HERE
+            var start = new DateTime(2014, 11, 07);
+            var dt = start - start.TimeOfDay;
+
+            var dt0 = dt;
+
+            var dt2 = dt0.AddDays(2);
+            var dt3 = dt0.AddDays(3);
+            var dt4 = dt0.AddDays(4);
+            var ts = new TimeSpan(1, 30, 0);
+            var ts2 = new TimeSpan(2, 0, 0);
+            var ts3 = new TimeSpan(3, 0, 0);
+
+            var designDataDayappts = new ObservableCollection<Appointment>();
+
+            var calColorOrange = new SolidColorBrush(Colors.Orange);
+            var calColorRed = new SolidColorBrush(Colors.Red);
+
+
+            designDataDayappts.Add(new Appointment
             {
-                case Modi.OverView:
-                    return true;
-                case Modi.OverViewSDV:
-                    return true;
-                default:
-                    return false;
-            }
+                Subject = "Gameplay Programming",
+                StartTime = dt2.AddHours(8.5),
+                Duration = ts3
+            });
+            designDataDayappts.Add(new Appointment
+            {
+                Subject = "IT Security",
+                StartTime = dt2.AddHours(11.75),
+                Duration = ts
+            });
 
+
+            designDataDayappts.Add(new Appointment
+            {
+                Subject = "Structered Data and Application",
+                StartTime = dt3.AddHours(0),
+                AllDay = false,
+                Location = "HdM Raum 011",
+                Details =
+                    "EEine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte Eine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte ine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte.Eine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte",
+                Duration = ts2
+            });
+            //DesignDataDayappts.Add(new Appointment { Subject = "Artificial Intelligence for Games", StartTime = dt3.AddHours(14), Duration = ts3 });
+            designDataDayappts.Add(new Appointment
+            {
+                Subject = "Exercises Structered Data and Application",
+                StartTime = dt4.AddHours(1.5),
+                AllDay = false,
+                Duration = ts3
+            });
+            designDataDayappts.Add(new Appointment
+            {
+                Subject = "IT Security",
+                StartTime = dt4.AddHours(2.75),
+                Duration = ts
+            });
+            designDataDayappts.Add(new Appointment
+            {
+                Subject = "BWL für Informatiker",
+                StartTime = dt4.AddHours(16.00),
+                Duration = ts
+            });
+
+
+            designDataDayappts.Add(new Appointment
+            {
+                Subject = "Geburtstag von Peter Pan",
+                StartTime = dt.AddHours(0),
+                AllDay = true
+            });
+            designDataDayappts.Add(new Appointment
+            {
+                Subject = "Geburtstag von Bob Marley",
+                StartTime = dt.AddHours(0),
+                AllDay = true
+            });
+            designDataDayappts.Add(new Appointment
+            {
+                Subject = "Essen",
+                StartTime = dt.AddHours(9),
+                Duration = ts,
+                Location = "Stuttgart"
+            });
+            designDataDayappts.Add(new Appointment
+            {
+                Subject = "Einkaufen",
+                StartTime = dt.AddHours(11.3),
+                Duration = ts
+            });
+            designDataDayappts.Add(new Appointment
+            {
+                Subject = "Mom Anrufen",
+                StartTime = dt.AddHours(14.5),
+                Duration = ts
+            });
+
+            var designDataDay2Pocalappts = new ObservableCollection<PocalAppointment>
+            {
+                new PocalAppointment {Appt = designDataDayappts[6], CalColor = calColorOrange},
+                new PocalAppointment {Appt = designDataDayappts[7], CalColor = calColorOrange},
+                new PocalAppointment {Appt = designDataDayappts[8], CalColor = calColorOrange},
+                new PocalAppointment {Appt = designDataDayappts[0], CalColor = calColorRed},
+                new PocalAppointment {Appt = designDataDayappts[9], CalColor = calColorOrange},
+                new PocalAppointment {Appt = designDataDayappts[10], CalColor = calColorOrange},
+                new PocalAppointment {Appt = designDataDayappts[1], CalColor = calColorRed}
+            };
+
+
+            var designDataDay3Pocalappts = new ObservableCollection<PocalAppointment>
+            {
+                new PocalAppointment {Appt = designDataDayappts[6], CalColor = calColorRed, AllDay = true},
+                new PocalAppointment {Appt = designDataDayappts[2], CalColor = calColorRed, AllDay = false},
+                new PocalAppointment {Appt = designDataDayappts[3], CalColor = calColorRed, AllDay = false}
+            };
+
+
+            var designDataDay4Pocalappts = new ObservableCollection<PocalAppointment>
+            {
+                new PocalAppointment {Appt = designDataDayappts[4], CalColor = calColorRed},
+                new PocalAppointment {Appt = designDataDayappts[5], CalColor = calColorRed},
+                new PocalAppointment {Appt = designDataDayappts[6], CalColor = calColorRed}
+            };
+
+
+            Days.Add(new Day {Dt = dt2, PocalApptsOfDay = designDataDay2Pocalappts, Sunday = false});
+            Days.Add(new Day {Dt = dt3, PocalApptsOfDay = designDataDay3Pocalappts, Sunday = false});
+            Days.Add(new Day {Dt = dt4, PocalApptsOfDay = designDataDay4Pocalappts, Sunday = false});
+
+
+
+            SingleDayViewModel.TappedDay = Days[0];
+            DayAtPointer = new Day {Dt = dt.AddHours(24)};
+
+            #endregion
         }
-        public bool IsCurrentlyLoading = false;
 
-
-        public ObservableCollection<Day> _days;
         public ObservableCollection<Day> Days
         {
-            get
-            {
-                return _days;
-            }
+            get { return _days; }
             set
             {
                 if (value != _days)
@@ -58,21 +203,13 @@ namespace Pocal.ViewModel
             }
         }
 
-
-
         public SingleDayViewVM SingleDayViewModel { get; private set; }
         public ConflictManager ConflictManager { get; private set; }
         public SettingsViewModel SettingsViewModel { get; private set; }
-       
 
-
-        private Day _dayAtPointer;
         public Day DayAtPointer
         {
-            get
-            {
-                return _dayAtPointer;
-            }
+            get { return _dayAtPointer; }
             set
             {
                 if (value != _dayAtPointer)
@@ -83,199 +220,79 @@ namespace Pocal.ViewModel
             }
         }
 
-
-        private string _time;
         public string Time
         {
-            get
-            {
-                return _time;
-            }
+            get { return _time; }
             private set
             {
-                if (value != _time)
-                {
-                    _time = value;
-                    NotifyPropertyChanged("Time");
-                }
+                if (value == _time) return;
+                _time = value;
+                NotifyPropertyChanged("Time");
+            }
+        }
+
+        internal bool IsInOverviewModus()
+        {
+            switch (InModus)
+            {
+                case Modi.OverView:
+                    return true;
+                case Modi.OverViewSdv:
+                    return true;
+                default:
+                    return false;
             }
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            DateTime currentTime = DateTime.Now;
+            var currentTime = DateTime.Now;
 
             if (CultureInfo.CurrentUICulture.Name.Contains("en-"))
                 Time = string.Format("{0:h:mm}", currentTime);
             else
                 Time = string.Format("{0:HH:mm}", currentTime);
-
-
-
         }
-
-        public MainViewModel()
-        {
-
-            this.Days = new ObservableCollection<Day>();
-            SingleDayViewModel = new SingleDayViewVM();
-            ConflictManager = new ConflictManager();
-            SettingsViewModel = new SettingsViewModel();
-
-            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000); // TODO performance
-            dispatcherTimer.Start();
-
-            #region DESIGN TIME DATA
-            if (DesignerProperties.IsInDesignTool)
-            {
-                App.DisplayInformationEmulator = App.Current.Resources["DisplayInformationEmulator"] as DisplayInformationEmulator;
-
-                //	//CREATE DESIGN TIME DATA HERE
-                DateTime start = new DateTime(2014, 11, 07);
-                DateTime dt = start - start.TimeOfDay;
-
-                DateTime dt0 = dt;
-                DateTime dt1 = dt0.AddDays(1);
-                DateTime dt2 = dt0.AddDays(2);
-                DateTime dt3 = dt0.AddDays(3);
-                DateTime dt4 = dt0.AddDays(4);
-                TimeSpan ts = new TimeSpan(1, 30, 0);
-                TimeSpan ts2 = new TimeSpan(2, 0, 0);
-                TimeSpan ts3 = new TimeSpan(3, 0, 0);
-                CultureInfo ci = new CultureInfo("de-DE");
-
-                //var appointment = new Windows.ApplicationModel.Appointments.Appointment();
-                ObservableCollection<Appointment> DesignDataDayappts = new ObservableCollection<Appointment>();
-
-                SolidColorBrush CalColorGreen = new SolidColorBrush(Color.FromArgb(255, 100, 255, 0));
-                SolidColorBrush CalColorYellow = new SolidColorBrush(Colors.Yellow);
-                SolidColorBrush CalColorOrange = new SolidColorBrush(Colors.Orange);
-                SolidColorBrush CalColorRed = new SolidColorBrush(Colors.Red);
-
-
-
-
-                DesignDataDayappts.Add(new Appointment { Subject = "Gameplay Programming", StartTime = dt2.AddHours(8.5), Duration = ts3 });
-                DesignDataDayappts.Add(new Appointment { Subject = "IT Security", StartTime = dt2.AddHours(11.75), Duration = ts });
-
-
-                DesignDataDayappts.Add(new Appointment { Subject = "Structered Data and Application", StartTime = dt3.AddHours(0), AllDay = false, Location = "HdM Raum 011", Details = "EEine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte Eine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte ine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte.Eine Notiz wie keine Zweite.Und auch keine Dritte ! Oder eine Vierte. Oder eine Fünfte", Duration = ts2 });
-                //DesignDataDayappts.Add(new Appointment { Subject = "Artificial Intelligence for Games", StartTime = dt3.AddHours(14), Duration = ts3 });
-                DesignDataDayappts.Add(new Appointment { Subject = "Exercises Structered Data and Application", StartTime = dt4.AddHours(1.5), AllDay = false, Duration = ts3 });
-                DesignDataDayappts.Add(new Appointment { Subject = "IT Security", StartTime = dt4.AddHours(2.75), Duration = ts });
-                DesignDataDayappts.Add(new Appointment { Subject = "BWL für Informatiker", StartTime = dt4.AddHours(16.00), Duration = ts });
-
-
-
-                DesignDataDayappts.Add(new Appointment { Subject = "Geburtstag von Peter Pan", StartTime = dt.AddHours(0), AllDay = true });
-                DesignDataDayappts.Add(new Appointment { Subject = "Geburtstag von Bob Marley", StartTime = dt.AddHours(0), AllDay = true });
-                DesignDataDayappts.Add(new Appointment { Subject = "Essen", StartTime = dt.AddHours(9), Duration = ts, Location = "Stuttgart" });
-                DesignDataDayappts.Add(new Appointment { Subject = "Einkaufen", StartTime = dt.AddHours(11.3), Duration = ts });
-                DesignDataDayappts.Add(new Appointment { Subject = "Mom Anrufen", StartTime = dt.AddHours(14.5), Duration = ts });
-
-                ObservableCollection<PocalAppointment> DesignDataDayPocalappts = new ObservableCollection<PocalAppointment>();
-
-                ObservableCollection<PocalAppointment> DesignDataDay2_Pocalappts = new ObservableCollection<PocalAppointment>();
-                DesignDataDay2_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[6], CalColor = CalColorOrange });
-                DesignDataDay2_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[7], CalColor = CalColorOrange });
-                DesignDataDay2_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[8], CalColor = CalColorOrange });
-
-                DesignDataDay2_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[0], CalColor = CalColorRed });
-
-                DesignDataDay2_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[9], CalColor = CalColorOrange });
-                DesignDataDay2_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[10], CalColor = CalColorOrange });
-
-                DesignDataDay2_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[1], CalColor = CalColorRed });
-
-
-                ObservableCollection<PocalAppointment> DesignDataDay3_Pocalappts = new ObservableCollection<PocalAppointment>();
-                DesignDataDay3_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[6], CalColor = CalColorRed, AllDay = true });
-                DesignDataDay3_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[2], CalColor = CalColorRed, AllDay = false });
-                DesignDataDay3_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[3], CalColor = CalColorRed, AllDay = false });
-
-
-                ObservableCollection<PocalAppointment> DesignDataDay4_Pocalappts = new ObservableCollection<PocalAppointment>();
-                DesignDataDay4_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[4], CalColor = CalColorRed });
-                DesignDataDay4_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[5], CalColor = CalColorRed });
-                DesignDataDay4_Pocalappts.Add(new PocalAppointment { Appt = DesignDataDayappts[6], CalColor = CalColorRed });
-                //DesignDataDayPocalappts.Add(new PocalAppointment(DesignDataDayappts[2], Color.FromArgb(155, 55, 55, 55)));
-
-                Days.Add(new Day { DT = dt2, PocalApptsOfDay = DesignDataDay2_Pocalappts, Sunday = false });
-                Days.Add(new Day { DT = dt3, PocalApptsOfDay = DesignDataDay3_Pocalappts, Sunday = false });
-                Days.Add(new Day { DT = dt4, PocalApptsOfDay = DesignDataDay4_Pocalappts, Sunday = false });
-
-
-
-                //DesignDataDayPocalappts1.Add(new PocalAppointment { Appt = DesignDataDayappts[4], CalColor = CalColorYellow });
-                //dt = DateTime.Now.AddDays(1);
-                //Days.Add(new Day { DT = dt, PocalApptsOfDay = DesignDataDayPocalappts1 });
-
-                //ObservableCollection<PocalAppointment> DesignDataDayPocalappts2 = new ObservableCollection<PocalAppointment>();
-                //dt = dt.AddDays(1);
-                //Days.Add(new Day { DT = dt, PocalApptsOfDay = DesignDataDayPocalappts2 });
-                //dt = dt.AddDays(1);
-                //Days.Add(new Day { DT = dt, PocalApptsOfDay = DesignDataDayPocalappts });
-
-
-
-
-                SingleDayViewModel.TappedDay = Days[0];
-                DayAtPointer = new Day { DT = dt.AddHours(24) };
-
-            }
-            #endregion
-
-        }
-
-        private double newestGoToDateStamp = DateTime.Now.Ticks;
-        private Object mylock = new Object();
 
         public async void GoToDate(DateTime dt)
         {
             try
             {
                 double stamp;
-                loadEnoughCounter = 0;
-                newestGoToDateStamp = DateTime.Now.Ticks;
+                _loadEnoughCounter = 0;
+                _newestGoToDateStamp = DateTime.Now.Ticks;
                 stamp = DateTime.Now.Ticks;
                 IsCurrentlyLoading = true;
-                this.Days.Clear();
+                Days.Clear();
 
 
-
-
-                if (!isStampNewest(stamp))
+                if (!IsStampNewest(stamp))
                     return;
-                else
-                    await loadFirstDay(dt, stamp);
+                await LoadFirstDay(dt, stamp);
 
-                if (!isStampNewest(stamp))
+                if (!IsStampNewest(stamp))
                     return;
-                else
-                    await loadEnoughMoreDay(stamp);
+                await LoadEnoughMoreDay(stamp);
 
-                if (!isStampNewest(stamp))
+                if (!IsStampNewest(stamp))
                     return;
-                else
-                    await loadPastDays(3, stamp);
+                await LoadPastDays(3, stamp);
 
 
                 IsCurrentlyLoading = false;
             }
-            catch (Exception)
+            catch
             {
+                // ignored
             }
-
         }
 
-        private async Task loadFirstDay(DateTime dt, double stamp)
+        private async Task LoadFirstDay(DateTime dt, double stamp)
         {
-            await loadDays(dt, 1, stamp);
+            await LoadDays(dt, 1, stamp);
 
-            SingleDayViewModel.TappedDay = Days.First(x => x.DT == dt);
-            if (App.ViewModel.InModus == Modi.AgendaViewSDV || InModus == Modi.OverViewSDV)
+            SingleDayViewModel.TappedDay = Days.First(x => x.Dt == dt);
+            if (App.ViewModel.InModus == Modi.AgendaViewSdv || InModus == Modi.OverViewSdv)
             {
                 ViewSwitcher.mainpage.SingleDayViewer.PrepareForNewLoadingOfAppoinments();
                 ViewSwitcher.mainpage.SingleDayViewer.AddTappedDayAppointments();
@@ -284,30 +301,27 @@ namespace Pocal.ViewModel
             ConflictManager.solveConflicts();
         }
 
-        private int loadEnoughCounter;
-
-        private async Task loadEnoughMoreDay(double stamp)
+        private async Task LoadEnoughMoreDay(double stamp)
         {
-
-            if (loadEnoughCounter > 5)
+            if (_loadEnoughCounter > 5)
             {
                 IsCurrentlyLoading = false;
                 return;
             }
-            loadEnoughCounter++;
+            _loadEnoughCounter++;
             await LoadMoreDays(3, stamp);
-            if (countLoadedAppointments() < 18)
+            if (CountLoadedAppointments() < 18)
             {
-                await loadEnoughMoreDay(stamp);
+                await LoadEnoughMoreDay(stamp);
             }
             else
                 IsCurrentlyLoading = false;
         }
 
-        private int countLoadedAppointments()
+        private int CountLoadedAppointments()
         {
-            int counter = 0;
-            foreach (Day day in Days)
+            var counter = 0;
+            foreach (var day in Days)
             {
                 counter += day.PocalApptsOfDay.Count;
             }
@@ -317,10 +331,9 @@ namespace Pocal.ViewModel
         public async Task LoadIncrementalBackwards(int howMany, double stamp)
         {
             IsCurrentlyLoading = true;
-            await loadPastDays(howMany, stamp);
+            await LoadPastDays(howMany, stamp);
             IsCurrentlyLoading = false;
         }
-
 
         public async Task LoadIncrementalForward(int howMany, double stamp)
         {
@@ -329,84 +342,73 @@ namespace Pocal.ViewModel
             IsCurrentlyLoading = false;
         }
 
-
         private async Task LoadMoreDays(int howMany, double stamp)
         {
-            DateTime fromDate = Days[Days.Count - 1].DT.AddDays(1);
+            var fromDate = Days[Days.Count - 1].Dt.AddDays(1);
             if (Days.Count > 0)
-                await loadDays(fromDate, howMany, stamp);
+                await LoadDays(fromDate, howMany, stamp);
         }
-
 
         #region LOAD
-        private IReadOnlyList<Appointment> appoinmentBuffer;
-        private List<PocalAppointment> pocalAppointmentsBuffer = new List<PocalAppointment>();
 
-        private async Task getPocalAppointments(int howManyDays, DateTime startDay)
+        private IReadOnlyList<Appointment> _appoinmentBuffer;
+        private readonly List<PocalAppointment> _pocalAppointmentsBuffer = new List<PocalAppointment>();
+
+        private async Task GetPocalAppointments(int howManyDays, DateTime startDay)
         {
-           
-            appoinmentBuffer = await CalendarAPI.GetAppointments(startDay, howManyDays);
-            await convertAppointmentBuffer();
+            _appoinmentBuffer = await CalendarAPI.GetAppointments(startDay, howManyDays);
+            await ConvertAppointmentBuffer();
         }
 
-        private async Task convertAppointmentBuffer()
+        private async Task ConvertAppointmentBuffer()
         {
-            pocalAppointmentsBuffer.Clear();
+            _pocalAppointmentsBuffer.Clear();
             await CalendarAPI.SetCalendars(false);
 
-            foreach (var appt in appoinmentBuffer)
+            foreach (var appt in _appoinmentBuffer)
             {
-                PocalAppointment pocalAppt = await CreatePocalAppoinment(appt);
-                pocalAppointmentsBuffer.Add(pocalAppt);
+                var pocalAppt = await CreatePocalAppoinment(appt);
+                _pocalAppointmentsBuffer.Add(pocalAppt);
             }
         }
 
 
-
-
-        private async Task loadDays(DateTime startDay, int howManyDays, double stamp)
+        private async Task LoadDays(DateTime startDay, int howManyDays, double stamp)
         {
-            await getPocalAppointments(howManyDays, startDay);
-            createAndAddDays(startDay, howManyDays, stamp);
-
-
-
+            await GetPocalAppointments(howManyDays, startDay);
+            CreateAndAddDays(startDay, howManyDays, stamp);
         }
 
-        private async Task loadPastDays(int howManyDays, double stamp)
+        private async Task LoadPastDays(int howManyDays, double stamp)
         {
+            var startDay = App.ViewModel.Days[0].Dt.AddDays(-howManyDays);
 
-            DateTime startDay = App.ViewModel.Days[0].DT.AddDays(-howManyDays);
-
-            await getPocalAppointments(howManyDays, startDay);
-            createAndInsertPastDays(startDay, howManyDays, stamp);
-
-
+            await GetPocalAppointments(howManyDays, startDay);
+            CreateAndInsertPastDays(startDay, howManyDays, stamp);
         }
-
 
         #endregion
 
         #region Days
 
-
-        private void createAndAddDays(DateTime startDay, int howManyDays, double stamp)
+        private void CreateAndAddDays(DateTime startDay, int howManyDays, double stamp)
         {
-            DateTime dt = startDay;
+            var dt = startDay;
 
             //Days.Clear();
-            for (int i = 0; i < howManyDays; i++)
+            for (var i = 0; i < howManyDays; i++)
             {
-                if (!isStampNewest(stamp))
+                if (!IsStampNewest(stamp))
                     return;
 
                 // Create New Day with its Appointments
-                if (Days.Count != 0 && Days.LastOrDefault().DT != dt.AddDays(-1))
+                var lastOrDefault = Days.LastOrDefault();
+                if (lastOrDefault != null && (Days.Count != 0 && lastOrDefault.Dt != dt.AddDays(-1)))
                     return;
-                Days.Add(new Day()
+                Days.Add(new Day
                 {
-                    DT = dt,
-                    PocalApptsOfDay = getPocalApptsOfDay(dt)
+                    Dt = dt,
+                    PocalApptsOfDay = GetPocalApptsOfDay(dt)
                 });
 
                 // Sunday Attribute
@@ -417,29 +419,28 @@ namespace Pocal.ViewModel
 
                 // Iteration ++ ein Tag
                 dt = dt.AddDays(1);
-
             }
         }
 
-        private bool isStampNewest(double stamp)
+        private bool IsStampNewest(double stamp)
         {
-            return newestGoToDateStamp <= stamp;
+            return _newestGoToDateStamp <= stamp;
         }
 
-        private void createAndInsertPastDays(DateTime startDay, int howManyDays, double stamp)
+        private void CreateAndInsertPastDays(DateTime startDay, int howManyDays, double stamp)
         {
-            DateTime dt = startDay;
+            var dt = startDay;
 
             //Days.Clear();
-            for (int i = 0; i < howManyDays; i++)
+            for (var i = 0; i < howManyDays; i++)
             {
-                if (!isStampNewest(stamp))
+                if (!IsStampNewest(stamp))
                     return;
                 // Create New Day with its Appointments
-                Days.Insert(i, new Day()
+                Days.Insert(i, new Day
                 {
-                    DT = dt,
-                    PocalApptsOfDay = getPocalApptsOfDay(dt)
+                    Dt = dt,
+                    PocalApptsOfDay = GetPocalApptsOfDay(dt)
                 });
 
                 // Sunday Attribute
@@ -450,17 +451,15 @@ namespace Pocal.ViewModel
 
                 // Iteration ++ ein Tag
                 dt = dt.AddDays(1);
-
             }
         }
+
         #endregion
 
         #region PocalAppointments
-        private Dictionary<AppointmentCalendar, SolidColorBrush> calColors = new Dictionary<AppointmentCalendar, SolidColorBrush>();
 
         public async Task<PocalAppointment> CreatePocalAppoinment(Appointment appt)
         {
-            
             var cal = CalendarAPI.Calendars.FirstOrDefault(c => c.LocalId == appt.CalendarId);
             if (cal == null)
             {
@@ -468,57 +467,55 @@ namespace Pocal.ViewModel
                 cal = CalendarAPI.Calendars.First(c => c.LocalId == appt.CalendarId);
             }
 
-            PocalAppointment pocalAppt = new PocalAppointment { Appt = appt, CalColor = getAppointmentColorBrush(appt, cal) };
+            var pocalAppt = new PocalAppointment {Appt = appt, CalColor = GetAppointmentColorBrush(appt, cal)};
             return pocalAppt;
         }
 
-        private SolidColorBrush getAppointmentColorBrush(Appointment appt, AppointmentCalendar cal)
+        private SolidColorBrush GetAppointmentColorBrush(Appointment appt, AppointmentCalendar cal)
         {
-            SolidColorBrush brush = null;
-            //calColors.TryGetValue(cal, out brush);
-
-            //if (brush == null)
-            //{
             Color calColor;
             if (appt.StartTime.Date < DateTime.Now.Date)
             {
-                calColor = new System.Windows.Media.Color() { A = 180, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
+                calColor = new Color {A = 180, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G};
             }
             else
-                calColor = new System.Windows.Media.Color() { A = cal.DisplayColor.A, B = cal.DisplayColor.B, R = cal.DisplayColor.R, G = cal.DisplayColor.G };
-            brush = new SolidColorBrush(calColor);
-            //calColors.Add(cal, brush);
-            //return brush;
-            //}
+                calColor = new Color
+                {
+                    A = cal.DisplayColor.A,
+                    B = cal.DisplayColor.B,
+                    R = cal.DisplayColor.R,
+                    G = cal.DisplayColor.G
+                };
+            var brush = new SolidColorBrush(calColor);
+
 
             return brush;
         }
 
 
-
-        private ObservableCollection<PocalAppointment> getPocalApptsOfDay(DateTime dt)
+        private ObservableCollection<PocalAppointment> GetPocalApptsOfDay(DateTime dt)
         {
-
-            ObservableCollection<PocalAppointment> thisDayAppts = new ObservableCollection<PocalAppointment>();
-            foreach (PocalAppointment pocalAppt in pocalAppointmentsBuffer)
+            var thisDayAppts = new ObservableCollection<PocalAppointment>();
+            foreach (var pocalAppt in _pocalAppointmentsBuffer)
             {
-                if (pocalAppt.isInTimeFrameOfDate(dt.Date))
+                if (pocalAppt.IsInTimeFrameOfDate(dt.Date))
                 {
                     thisDayAppts.Add(pocalAppt);
                 }
             }
-            thisDayAppts = sortAppointments(thisDayAppts);
+            thisDayAppts = SortAppointments(thisDayAppts);
 
             return thisDayAppts;
         }
 
 
-        private ObservableCollection<PocalAppointment> sortAppointments(ObservableCollection<PocalAppointment> thisDayAppts)
+        private ObservableCollection<PocalAppointment> SortAppointments(
+            ObservableCollection<PocalAppointment> thisDayAppts)
         {
-            ObservableCollection<PocalAppointment> sorted = new ObservableCollection<PocalAppointment>();
+            var sorted = new ObservableCollection<PocalAppointment>();
             IEnumerable<PocalAppointment> query = thisDayAppts.OrderBy(appt => appt.StartTime);
 
-            foreach (PocalAppointment appt in query)
+            foreach (var appt in query)
             {
                 sorted.Add(appt);
             }
@@ -527,12 +524,5 @@ namespace Pocal.ViewModel
         }
 
         #endregion
-
-
-
-
-
     }
-
-
 }

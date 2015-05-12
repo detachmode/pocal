@@ -30,11 +30,11 @@ namespace Pocal
 
             if (App.ViewModel.InModus == MainViewModel.Modi.OverView)
             {
-                App.ViewModel.InModus = MainViewModel.Modi.OverViewSDV;
+                App.ViewModel.InModus = MainViewModel.Modi.OverViewSdv;
             }
             else
             {
-                App.ViewModel.InModus = MainViewModel.Modi.AgendaViewSDV;
+                App.ViewModel.InModus = MainViewModel.Modi.AgendaViewSdv;
             }
 
             calculateOffset();
@@ -129,7 +129,7 @@ namespace Pocal
             if (App.ViewModel.SingleDayViewModel.TappedDay == null || ScrollToPA == null)
                 return;
 
-            if (App.ViewModel.SingleDayViewModel.TappedDay.DT.Date == ScrollToPA.StartTime.Date)
+            if (App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date == ScrollToPA.StartTime.Date)
                 ScrollToApptStartTime();
         }
 

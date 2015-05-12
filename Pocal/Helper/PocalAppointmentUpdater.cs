@@ -155,7 +155,7 @@ namespace Pocal.Helper
             responsibleDaysOfPA = new List<Day>();
             foreach (Day day in App.ViewModel.Days)
             {
-                if (pA.isInTimeFrameOfDate(day.DT))
+                if (pA.IsInTimeFrameOfDate(day.Dt))
                 {
                     responsibleDaysOfPA.Add(day);
                 }

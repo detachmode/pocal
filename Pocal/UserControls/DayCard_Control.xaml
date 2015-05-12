@@ -66,8 +66,8 @@
             <!--******** ************** ********-->
 
             <TextBlock x:Name="DayCardHeader"  Tap="DayCard_HeaderTap" 
-                        Foreground ="{Binding DT, Converter={StaticResource dayHeadersForeground}}" 
-                        Text="{Binding DT, Converter={StaticResource DateConverter}}" FontSize="35" 
+                        Foreground ="{Binding Dt, Converter={StaticResource dayHeadersForeground}}" 
+                        Text="{Binding Dt, Converter={StaticResource DateConverter}}" FontSize="35" 
                         FontFamily="{StaticResource PhoneFontFamilyLight}"  Margin="37,6,0,0">
                 <TextBlock.Resources>
                     <Storyboard x:Name="tapFeedback">
