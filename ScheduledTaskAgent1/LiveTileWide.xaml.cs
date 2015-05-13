@@ -46,6 +46,12 @@ namespace ScheduledTaskAgent1
             // setzte Location
             if (appts[0].Location == "")
                 tbOrt.Visibility = Visibility.Collapsed;
+            else
+            {
+                otherAppointments.Margin = new Thickness(0, 10, 0, 10);
+            }
+              
+
 
             tbOrt.Text = LiveTileManager.GetLocationStringWide(appts[0]);
 
@@ -79,7 +85,7 @@ namespace ScheduledTaskAgent1
                 timeTextBlock.Text = LiveTileManager.GetTimeStringWide(appts[i]); 
                 timeTextBlock.FontSize = 30;
                 timeTextBlock.Foreground = fontcolor;
-                timeTextBlock.Margin = new Thickness(0, -6, 0, 24);
+                timeTextBlock.Margin = new Thickness(0, -6, 0, 10);
 
                 otherAppointments.Items.Add(subjectTextblock);
                 otherAppointments.Items.Add(timeTextBlock);
