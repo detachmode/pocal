@@ -47,9 +47,13 @@
                             <StackPanel Margin="12,0">
                                 
                                 <!--TileDaysInFuture-->
-                                <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Margin="0" >How many days in Future:</TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Margin="0" >How many days in Future:</TextBlock>
+
+                                    <TextBlock Style="{StaticResource PhoneTextTitle3Style}"  Text="{Binding ElementName=mySlider,Path=Value}"/>
+
+                                </StackPanel>
                                 <Slider x:Name="mySlider" Minimum="1" Maximum="10"  Value="{Binding Path=TileDaysInFuture, Mode=TwoWay}" ValueChanged="mySlider_ValueChanged" ></Slider>
-                                <TextBlock Text="{Binding ElementName=mySlider,Path=Value}"/>
 
                                 
                                 <TextBlock Style="{StaticResource PhoneTextTitle3Style}" Margin="0">Live Tile Wide Style:</TextBlock>
