@@ -66,5 +66,11 @@ namespace Pocal
             if (calendar == null) throw new ArgumentNullException("calendar");
             return App.ViewModel.SettingsViewModel.HiddenCalendars.Any(id => id == calendar.LocalId);
         }
+
+        private void mySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (mySlider == null) return;
+            mySlider.Value = Math.Round(e.NewValue);
+        }
     }
 }

@@ -20,8 +20,14 @@ namespace ScheduledTaskAgent1
 
         public static async Task<List<Appointment>> GetNextAppointments()
         {
+            var howManyDays = 2;
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("TileDaysInFuture"))
+            {
+                howManyDays = (int)IsolatedStorageSettings.ApplicationSettings["TileDaysInFuture"];
+            }
+
             var nextAppointments = new List<Appointment>();
-            var appts = (await CalendarAPI.GetAppointments(DateTime.Now.Date, 2)).ToList<Appointment>();
+            var appts = (await CalendarAPI.GetAppointments(DateTime.Now.Date, howManyDays)).ToList<Appointment>();
 
             // Options: Sortiere Termine aus, die von hidden Kalender sind.
             if (IsolatedStorageSettings.ApplicationSettings.Contains("HiddenCalendars"))
@@ -87,6 +93,16 @@ namespace ScheduledTaskAgent1
         {
             var endTime = appt.StartTime + appt.Duration;
             var str = "";
+
+            if (appt.StartTime.Date >= DateTime.Now.Date.AddDays(2))
+            {
+                //  Weekname kürzel Date  Beispiel: Dienstag 04.05 
+                str += appt.StartTime.Date.ToString("dddd", CultureInfo.CurrentUICulture);
+                str += ": ";
+                str += appt.StartTime.Date.ToShortDateString();
+
+                return str;
+            }
 
             str = StrTomorrow(appt, str);
 

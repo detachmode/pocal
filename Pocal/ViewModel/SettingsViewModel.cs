@@ -15,10 +15,12 @@ namespace Pocal.ViewModel
         const string DefaultViewSettingsAgendaKeyName = "DefaultViewSettingsAgenda";
         const string DefaultViewSettingsOverviewKeyName = "DefaultViewSettingsOverview";
 
+
+
         const string SundayRedKeyName = "SundayRed";
 
         const string HiddenCalendarsKeyName = "HiddenCalendars";
-
+        const string TileDaysInFutureKeyName = "TileDaysInFuture";
        
 
 
@@ -29,6 +31,8 @@ namespace Pocal.ViewModel
         const bool DefaultViewSettingsOverviewDefault = false;
 
         const bool SundayRedDefault = false;
+
+       private const int TileDaysInFutureDefault = 2;
 
        readonly List<string> _hiddenCalendarsDefault = new List<string>();
 
@@ -157,6 +161,21 @@ namespace Pocal.ViewModel
             set
             {
                 if (AddOrUpdateValue(SundayRedKeyName, value))
+                {
+                    Save();
+                }
+            }
+        }
+
+        public int TileDaysInFuture
+        {
+            get
+            {
+                return GetValueOrDefault(TileDaysInFutureKeyName, TileDaysInFutureDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(TileDaysInFutureKeyName, value))
                 {
                     Save();
                 }
