@@ -30,10 +30,11 @@ namespace Pocal
 
         public void GridSetup()
         {
+            
             for (int i = FirstHour; i < LastHour; i++)
             {
                 string str = "";
-                if (AppResources.ResourceLanguage.Contains("en"))
+                if (App.ViewModel.SettingsViewModel.IsTimeStyleAMPM())
                     str = convert12(i);
                 else
                     str = i.ToString("00") + ":00"; 
@@ -68,13 +69,6 @@ namespace Pocal
         {
             GridAppointments.Children.Clear();
             //cleanScrollviewer();
-        }
-
-        private void cleanScrollviewer()
-        {
-            SDV_ViewportControl.ClearValue(ScrollViewer.DataContextProperty);
-            SDV_ViewportControl.Measure(new Size(0, 0));
-            SDV_ViewportControl.Arrange(new Rect(0, 0, 0, 0));
         }
 
 

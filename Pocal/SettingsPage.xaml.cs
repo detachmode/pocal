@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using Windows.ApplicationModel.Appointments;
+using Cimbalino.Phone.Toolkit.Extensions;
 using ScheduledTaskAgent1;
 using Shared.Helper;
 
@@ -22,9 +23,17 @@ namespace Pocal
 
         }
 
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             LiveTileManager.UpdateTileFromForeground();
+
+            if (App.ViewModel.SettingsViewModel.RestartNeeded)
+            {
+                App.ViewModel.SettingsViewModel.RestartNeeded = false;
+                MessageBox.Show("Please Restart");
+                App.Current.Terminate();
+            }
         }
 
         private void CalendarVisibilitys()
@@ -32,30 +41,57 @@ namespace Pocal
             foreach (var calendar in CalendarAPI.Calendars)
             {
                 var isHidden = IsCalendarHidden(calendar);
+
+                StackPanel stack = new StackPanel
+                {
+                    Orientation = System.Windows.Controls.Orientation.Horizontal,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+
                 var chk = new CheckBox
                     {
                         DataContext = calendar,
-                        Content =  calendar.DisplayName,           
-                        Foreground = new SolidColorBrush(new Color(){ A= 255, R = calendar.DisplayColor.R , G = calendar.DisplayColor.G, B = calendar.DisplayColor.B }),
-                        IsChecked = !isHidden                       
+                        IsChecked = !isHidden
                     };
+
+                var tb = new TextBlock
+                {
+                    Text = calendar.DisplayName,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    FontSize = 25,
+                    Foreground =
+                        new SolidColorBrush(new Color()
+                        {
+                            A = 255,
+                            R = calendar.DisplayColor.R,
+                            G = calendar.DisplayColor.G,
+                            B = calendar.DisplayColor.B
+                        }),
+                };
+
                 chk.Checked += SetHiddenCalendarsSettings;
                 chk.Unchecked += SetHiddenCalendarsSettings;
-                
-                ListCalendarVisibility.Children.Add(chk);
+
+                stack.Children.Add(chk);
+                stack.Children.Add(tb);
+
+                ListCalendarVisibility.Children.Add(stack);
             }
-            
+
 
         }
 
         void SetHiddenCalendarsSettings(object sender, RoutedEventArgs e)
         {
             var hiddenCalendars = new List<string>();
-            foreach (CheckBox item in ListCalendarVisibility.Children)
+            foreach (StackPanel stack in ListCalendarVisibility.Children.Where(x => x is StackPanel))
             {
-                if (item.IsChecked != false) continue;
-                var cal = (AppointmentCalendar)item.DataContext;
-                hiddenCalendars.Add(cal.LocalId);
+                foreach (CheckBox item in stack.Children.Where(x => x is CheckBox))
+                {
+                    if (item.IsChecked != false) continue;
+                    var cal = (AppointmentCalendar)item.DataContext;
+                    hiddenCalendars.Add(cal.LocalId);
+                }
             }
             App.ViewModel.SettingsViewModel.HiddenCalendars = hiddenCalendars;
         }
@@ -72,5 +108,6 @@ namespace Pocal
             if (mySlider == null) return;
             mySlider.Value = Math.Round(e.NewValue);
         }
+
     }
 }

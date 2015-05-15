@@ -486,7 +486,12 @@ namespace Pocal
         {
             ApplicationBar = new ApplicationBar();
             /*********** MENU ITEMS ***********/
+            var item1 = new ApplicationBarMenuItem();
+            item1.Text = AppResources.SettingsPageTitle;
+            item1.Click += delegate { NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative)); };
 
+
+            ApplicationBar.MenuItems.Add(item1);
 
             var item3 = new ApplicationBarMenuItem();
             item3.Text = "Info";

@@ -131,15 +131,30 @@ namespace Pocal
                 App.Current.Resources.Add("MonthNoWeekendBg", Colors.Black);
             }
 
-            if (!AppResources.ResourceLanguage.Contains("en"))
+            if (AppResources.ResourceLanguage.Contains("en"))
+            {
+                ViewModel.SettingsViewModel.ChoosenTimeStyleDefault = 1;
+            }
+
+            SetResourcesForTimestyle();
+        }
+
+        public static void SetResourcesForTimestyle()
+        {
+            if (ViewModel.SettingsViewModel.IsTimeStyleAMPM())
+            {
+                App.Current.Resources.Remove("OverviewStartTimeX");
+                App.Current.Resources.Add("OverviewStartTimeX", 40);
+                App.Current.Resources.Remove("OverviewStartTimeWidth");
+                App.Current.Resources.Add("OverviewStartTimeWidth", 90);
+            }
+            else
             {
                 App.Current.Resources.Remove("OverviewStartTimeX");
                 App.Current.Resources.Add("OverviewStartTimeX", 20);
                 App.Current.Resources.Remove("OverviewStartTimeWidth");
                 App.Current.Resources.Add("OverviewStartTimeWidth", 60);
-
             }
-
         }
 
         // Code to execute when a contract activation such as a file open or save picker returns 

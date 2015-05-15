@@ -142,7 +142,9 @@ namespace Pocal.Converter
                 return AppResources.ResourceLanguage.Contains("en") ? AppResources.allDay : "";
             }
 
-            return AppResources.ResourceLanguage.Contains("en") ? Convert12(appt) : Convert24(appt);
+            return App.ViewModel.SettingsViewModel.IsTimeStyleAMPM() ? Convert12(appt) : Convert24(appt);
+
+            //return AppResources.ResourceLanguage.Contains("en") ? Convert12(appt) : Convert24(appt);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -152,7 +154,9 @@ namespace Pocal.Converter
 
         private static string Convert12(PocalAppointment appt)
         {
-            return string.Format("{0:h:mm tt}", appt.StartTime);
+            var ampM = appt.StartTime.ToString("tt", CultureSettings.CiEn);
+            var result = string.Format("{0:h:mm}", appt.StartTime);
+            return result + " " + ampM;
         }
 
         private static string Convert24(PocalAppointment appt)
