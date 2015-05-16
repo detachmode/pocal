@@ -33,23 +33,54 @@
                         </DataTemplate>
                     </phone:Pivot.HeaderTemplate>
 
-                    <phone:PivotItem Header="Agenda" >
+                    <phone:PivotItem Header="{Binding Path=LocalizedResources.SettingsHeaderGeneral, Source={StaticResource LocalizedStrings} }"  >
                         <StackPanel>
                             <StackPanel Margin="12,0">
                                 <toolkit:ToggleSwitch
                                         Content="{Binding Path=LocalizedResources.SettingsSundayRed, Source={StaticResource LocalizedStrings} }"
                                         IsChecked="{Binding  Path=SundayRed, Mode=TwoWay}" 
                                     />
-                                
-                                <TextBlock Style="{StaticResource PhoneTextTitle3Style}">Time System:</TextBlock>
 
-                                <toolkit:ListPicker ItemsSource="{Binding Path=TimeStyles}"
-                                                    SelectedIndex="{Binding Path=ChoosenTimeStyle ,Mode=TwoWay}" />
+                                <toolkit:ToggleSwitch
+                                        Content="{Binding Path=LocalizedResources.SettingsMonthBeginning, Source={StaticResource LocalizedStrings} }"
+                                        IsChecked="{Binding  Path=MonthBeginning, Mode=TwoWay}" 
+                                    />
+
+                                <TextBlock 
+                                    Text="{Binding Path=LocalizedResources.SettingsTimeSystem, Source={StaticResource LocalizedStrings} }"                                    
+                                    Style="{StaticResource PhoneTextTitle3Style}"/>
+
+                                <toolkit:ListPicker 
+                                    Margin="12,0"
+                                    ItemsSource="{Binding Path=TimeStyles}"
+                                    SelectedIndex="{Binding Path=ChoosenTimeStyle ,Mode=TwoWay}" />
+
+                                <TextBlock 
+                                    Margin="12,12,0,0"
+                                    Text="{Binding Path=LocalizedResources.SettingsFirstDayOfWeek, Source={StaticResource LocalizedStrings} }"
+                                    Style="{StaticResource PhoneTextTitle3Style}"/>
+                                
+                                
+                                <toolkit:ListPicker 
+                                    Margin="12,0"
+                                    ItemsSource="{Binding Path=FirstDayOfWeekDays}"
+                                    SelectedIndex="{Binding Path=FirstDayOfWeek ,Mode=TwoWay}" />
+
+
+
+
+                                <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" 
+                                           Margin="12,24"
+                                           Text="{Binding Path=LocalizedResources.SettingsCalendarInfo, Source={StaticResource LocalizedStrings} }" 
+                                           TextWrapping="Wrap"
+                                           />
                             </StackPanel>
+                            
+                            
                         </StackPanel>
                     </phone:PivotItem>
 
-                    <phone:PivotItem Header="Live Tile">
+                    <phone:PivotItem Header="live tile">
                         <ScrollViewer Height="614">
                             <StackPanel Margin="12,0">
                                 

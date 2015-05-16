@@ -239,4 +239,22 @@
   <data name="SettingsCalendarVisibility" xml:space="preserve">
     <value>Calendar Visibility on Live tile</value>
   </data>
+  <data name="SettingsCalendarInfo" xml:space="preserve">
+    <value>To change the calendar visibilities or calendar colors please go to the settings of the stock calendar and change it there.</value>
+  </data>
+  <data name="SettingsMonthBeginning" xml:space="preserve">
+    <value>month beginning</value>
+  </data>
+  <data name="SettingsHeaderGeneral" xml:space="preserve">
+    <value>general</value>
+  </data>
+  <data name="PleaseRestart" xml:space="preserve">
+    <value>Please restart Pocal!</value>
+  </data>
+  <data name="SettingsFirstDayOfWeek" xml:space="preserve">
+    <value>First day of week:</value>
+  </data>
+  <data name="SettingsTimeSystem" xml:space="preserve">
+    <value>Time system</value>
+  </data>
 </root>

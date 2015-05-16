@@ -27,7 +27,7 @@ namespace Pocal.Converter
         {
             if (!(value is DateTime)) return "";
 
-            var dt = (DateTime) value;
+            var dt = (DateTime)value;
             if (dt.Date != DateTime.Now.Date)
                 return dt.ToString("dddd", CultureSettings.Ci) + ", " + dt.ToString("M", CultureSettings.Ci);
 
@@ -47,7 +47,7 @@ namespace Pocal.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(value is Day)) return "";
-            var dt = ((Day) value).Dt;
+            var dt = ((Day)value).Dt;
             return DeltaTimeStringCreator.GetDeltaTime(dt);
         }
 
@@ -63,9 +63,9 @@ namespace Pocal.Converter
         {
             if (!(value is DateTime)) return Visibility.Collapsed;
 
-            var ts = ((DateTime) value).Date - DateTime.Now.Date;
+            var ts = ((DateTime)value).Date - DateTime.Now.Date;
 
-            if (ts.Days%7 == 0 || Math.Abs(ts.Days) < 7)
+            if (ts.Days % 7 == 0 || Math.Abs(ts.Days) < 7)
             {
                 return Visibility.Collapsed;
             }
@@ -234,9 +234,9 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var dt = (DateTime) value;
-            var weeknumber = (dt.DayOfYear + 1)/7;
-            return weeknumber%2 == 1 ? ConverterBrushes.DarkGray : ConverterBrushes.Black;
+            var dt = (DateTime)value;
+            var weeknumber = (dt.DayOfYear + 1) / 7;
+            return weeknumber % 2 == 1 ? ConverterBrushes.DarkGray : ConverterBrushes.Black;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -250,9 +250,9 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var dt = (DateTime) value;
-            var weeknumber = (dt.DayOfYear + 1)/7;
-            return weeknumber%2 == 0 ? ConverterBrushes.DarkGray : ConverterBrushes.Black;
+            var dt = (DateTime)value;
+            var weeknumber = (dt.DayOfYear + 1) / 7;
+            return weeknumber % 2 == 0 ? ConverterBrushes.DarkGray : ConverterBrushes.Black;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -265,7 +265,7 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var dt = (DateTime) value;
+            var dt = (DateTime)value;
 
             if (dt.Date < DateTime.Now.Date)
                 return ConverterBrushes.PastDays;
@@ -283,7 +283,7 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var dt = (DateTime) value;
+            var dt = (DateTime)value;
 
             if (dt.Date < DateTime.Now.Date)
                 return ConverterBrushes.PastDays;
@@ -306,7 +306,7 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var dt = (DateTime) value;
+            var dt = (DateTime)value;
 
             return (dt.DayOfWeek == DayOfWeek.Saturday) || (dt.DayOfWeek == DayOfWeek.Sunday)
                 ? ConverterBrushes.PastDays
@@ -324,7 +324,20 @@ namespace Pocal.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var day = value as Day;
-            if (day != null && day.Dt.DayOfWeek == DayOfWeek.Monday) return Visibility.Visible;
+
+            if (App.ViewModel.SettingsViewModel.FirstDayOfWeekIsSunday())
+            {
+                if (day != null && day.Dt.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    return Visibility.Visible;
+                }
+                return Visibility.Collapsed;
+            }
+
+            if (day != null && day.Dt.DayOfWeek == DayOfWeek.Monday)
+            {
+                return Visibility.Visible;
+            }
             return Visibility.Collapsed;
         }
 
@@ -340,7 +353,7 @@ namespace Pocal.Converter
         {
             var day = value as Day;
             if (day == null) return "";
-            var weeknumber = day.Dt.DayOfYear/7 + 2;
+            var weeknumber = day.Dt.DayOfYear / 7 + 2;
 
             return "  " + AppResources.KW + " " + weeknumber + "  ";
         }
@@ -350,4 +363,38 @@ namespace Pocal.Converter
             return null;
         }
     }
+
+
+    public class MonthVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (App.ViewModel.SettingsViewModel.MonthBeginning == false) return Visibility.Collapsed;
+
+            var day = value as Day;
+            if (day != null && day.Dt.Day == 1) return Visibility.Visible;
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    public class MonthNameConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var day = value as Day;
+            if (day == null) return "";
+            return day.Dt.ToString("MMMM");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
 }

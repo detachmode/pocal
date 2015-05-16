@@ -313,6 +313,15 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please restart Pocal! ähnelt.
+        /// </summary>
+        public static string PleaseRestart {
+            get {
+                return ResourceManager.GetString("PleaseRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die LeftToRight ähnelt.
         /// </summary>
         public static string ResourceFlowDirection {
@@ -340,11 +349,47 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die To change the calendar visibilities or calendar colors please go to the settings of the stock calendar and change it there. ähnelt.
+        /// </summary>
+        public static string SettingsCalendarInfo {
+            get {
+                return ResourceManager.GetString("SettingsCalendarInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Calendar Visibility on Live tile ähnelt.
         /// </summary>
         public static string SettingsCalendarVisibility {
             get {
                 return ResourceManager.GetString("SettingsCalendarVisibility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First day of week: ähnelt.
+        /// </summary>
+        public static string SettingsFirstDayOfWeek {
+            get {
+                return ResourceManager.GetString("SettingsFirstDayOfWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die general ähnelt.
+        /// </summary>
+        public static string SettingsHeaderGeneral {
+            get {
+                return ResourceManager.GetString("SettingsHeaderGeneral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die month beginning ähnelt.
+        /// </summary>
+        public static string SettingsMonthBeginning {
+            get {
+                return ResourceManager.GetString("SettingsMonthBeginning", resourceCulture);
             }
         }
         
@@ -363,6 +408,15 @@ namespace Pocal.Resources {
         public static string SettingsSundayRed {
             get {
                 return ResourceManager.GetString("SettingsSundayRed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Time system ähnelt.
+        /// </summary>
+        public static string SettingsTimeSystem {
+            get {
+                return ResourceManager.GetString("SettingsTimeSystem", resourceCulture);
             }
         }
         

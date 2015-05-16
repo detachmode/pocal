@@ -11,23 +11,7 @@
     
     <Grid x:Name="LayoutRoot">
         <Grid x:Name="MonthViewGrid" Margin="0,60,0,0">     
-          <StackPanel Orientation="Horizontal" Height="30"  VerticalAlignment="Top" Margin="0,-30" >
-                <TextBlock Width="68.5" Padding="6,0" Foreground="Gray"
-                           Text="{Binding Path=LocalizedResources.MonthViewMon, Source={StaticResource LocalizedStrings}}" ></TextBlock>
-                <TextBlock Width="68.5" Padding="6,0" Foreground="Gray"
-                           Text="{Binding Path=LocalizedResources.MonthViewTue, Source={StaticResource LocalizedStrings}}" ></TextBlock>
-                <TextBlock Width="68.5" Padding="6,0" Foreground="Gray"
-                           Text="{Binding Path=LocalizedResources.MonthViewWed, Source={StaticResource LocalizedStrings}}" ></TextBlock>
-                <TextBlock Width="68.5" Padding="6,0" Foreground="Gray"
-                           Text="{Binding Path=LocalizedResources.MonthViewThu, Source={StaticResource LocalizedStrings}}" ></TextBlock>
-                <TextBlock Width="68.5" Padding="6,0" Foreground="Gray"
-                           Text="{Binding Path=LocalizedResources.MonthViewFri, Source={StaticResource LocalizedStrings}}" ></TextBlock>
-                <TextBlock Width="68.5" Padding="6,0" Foreground="Gray"
-                           Text="{Binding Path=LocalizedResources.MonthViewSat, Source={StaticResource LocalizedStrings}}" ></TextBlock>
-                <TextBlock Width="68.5" Padding="6,0" Foreground="Gray"
-                           Text="{Binding Path=LocalizedResources.MonthViewSun, Source={StaticResource LocalizedStrings}}" ></TextBlock>
-            </StackPanel>
+          <StackPanel x:Name="DayOfWeekNamesRowStackPanel" Orientation="Horizontal" Height="30"  VerticalAlignment="Top" Margin="0,-30"/>
         </Grid>
-
     </Grid>
 </UserControl>

@@ -62,7 +62,9 @@
         <system:Double x:Key="OverviewStartTimeX">40</system:Double>
         <system:Double x:Key="OverviewStartTimeWidth">90</system:Double>
         <Color x:Key="LightGray">#FF131313</Color>
-        
+        <converter:MonthVisibilityConverter x:Key="MonthVisibilityConverter" />
+        <converter:MonthNameConverter x:Key="MonthNameConverter" />
+
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pocal="clr-namespace:Pocal"
     xmlns:viewmodel="clr-namespace:Pocal.ViewModel"        
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -21,45 +22,21 @@
             <!--******** ****************** ********-->
             <!--******** DAYCARD WEEKNUMBER ********-->
             <!--******** ****************** ********-->
-            <Grid  Height="20" 
-				Visibility="{Binding Converter={StaticResource WeekNumberVisibilityConverter}, Mode=OneWay}"  
-				VerticalAlignment="Center">
-                <Grid.Background>
-                    <SolidColorBrush Color="{StaticResource AgendaBg}" ></SolidColorBrush>
-                </Grid.Background>
-            </Grid>
-
-            <Grid Visibility="{Binding Converter={StaticResource WeekNumberVisibilityConverter}, Mode=OneWay}" 
-											VerticalAlignment="Center" Height="60"  >
-                
-
-                <Border Visibility="{Binding Converter={StaticResource WeekNumberVisibilityConverter}}" 
-												BorderThickness="12" Height="3" Margin="0" >
-                    <Border.BorderBrush>
-                        <SolidColorBrush Color="Gray"/>
-                    </Border.BorderBrush>
-                </Border>
-                <Grid  Width="480" HorizontalAlignment="Left">
-                    <Grid  MinWidth="130" HorizontalAlignment="Center" >
-                        <Grid.Background>
-                            <SolidColorBrush Color="{StaticResource AgendaBg}" ></SolidColorBrush>
-                        </Grid.Background>
-                        <TextBlock  Text="{Binding Converter={StaticResource WeekNumberConverter}, Mode=OneWay}"                          
-								FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" 
-								FontWeight="SemiBold" RenderTransformOrigin="0.5,0.5" Foreground="Gray" />
-                    </Grid>
-                </Grid>
 
 
-            </Grid>
+            <pocal:AdditionalAgendaBox 
+                Opacity="0.5"
+                Height="40"
+                Text="{Binding Converter={StaticResource MonthNameConverter}, Mode=OneWay}"
+                Visibility="{Binding Converter={StaticResource MonthVisibilityConverter}, Mode=OneWay}"/>
+            
 
-            <Grid Height="20" Visibility="{Binding Converter={StaticResource WeekNumberVisibilityConverter}, Mode=OneWay}"  
-                  VerticalAlignment="Center">
-                <Grid.Background>
-                    <SolidColorBrush Color="{StaticResource AgendaBg}" ></SolidColorBrush>
-                </Grid.Background>
-            </Grid>
-
+            <pocal:AdditionalAgendaBox 
+                Height="100"
+                Text="{Binding Converter={StaticResource WeekNumberConverter}, Mode=OneWay}"
+                Visibility="{Binding Converter={StaticResource WeekNumberVisibilityConverter}, Mode=OneWay}"/>
+            
+            
 
             <!--******** ************ ********-->
             <!--******** DAYCARD BODY ********-->

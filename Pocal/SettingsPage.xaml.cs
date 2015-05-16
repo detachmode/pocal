@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using Windows.ApplicationModel.Appointments;
-using Cimbalino.Phone.Toolkit.Extensions;
+using Pocal.Resources;
 using ScheduledTaskAgent1;
 using Shared.Helper;
 
@@ -20,9 +20,7 @@ namespace Pocal
             DataContext = App.ViewModel.SettingsViewModel;
 
             CalendarVisibilitys();
-
         }
-
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -31,8 +29,10 @@ namespace Pocal
             if (App.ViewModel.SettingsViewModel.RestartNeeded)
             {
                 App.ViewModel.SettingsViewModel.RestartNeeded = false;
-                MessageBox.Show("Please Restart");
-                App.Current.Terminate();
+                var msg = AppResources.ResourceManager.GetString("PleaseRestart",
+                    AppResources.Culture);
+                MessageBox.Show(msg);
+                Application.Current.Terminate();
             }
         }
 
@@ -49,10 +49,10 @@ namespace Pocal
                 };
 
                 var chk = new CheckBox
-                    {
-                        DataContext = calendar,
-                        IsChecked = !isHidden
-                    };
+                {
+                    DataContext = calendar,
+                    IsChecked = !isHidden
+                };
 
                 var tb = new TextBlock
                 {
@@ -60,13 +60,13 @@ namespace Pocal
                     VerticalAlignment = VerticalAlignment.Center,
                     FontSize = 25,
                     Foreground =
-                        new SolidColorBrush(new Color()
+                        new SolidColorBrush(new Color
                         {
                             A = 255,
                             R = calendar.DisplayColor.R,
                             G = calendar.DisplayColor.G,
                             B = calendar.DisplayColor.B
-                        }),
+                        })
                 };
 
                 chk.Checked += SetHiddenCalendarsSettings;
@@ -77,11 +77,9 @@ namespace Pocal
 
                 ListCalendarVisibility.Children.Add(stack);
             }
-
-
         }
 
-        void SetHiddenCalendarsSettings(object sender, RoutedEventArgs e)
+        private void SetHiddenCalendarsSettings(object sender, RoutedEventArgs e)
         {
             var hiddenCalendars = new List<string>();
             foreach (StackPanel stack in ListCalendarVisibility.Children.Where(x => x is StackPanel))
@@ -89,13 +87,12 @@ namespace Pocal
                 foreach (CheckBox item in stack.Children.Where(x => x is CheckBox))
                 {
                     if (item.IsChecked != false) continue;
-                    var cal = (AppointmentCalendar)item.DataContext;
+                    var cal = (AppointmentCalendar) item.DataContext;
                     hiddenCalendars.Add(cal.LocalId);
                 }
             }
             App.ViewModel.SettingsViewModel.HiddenCalendars = hiddenCalendars;
         }
-
 
         private static bool IsCalendarHidden(AppointmentCalendar calendar)
         {
@@ -108,6 +105,5 @@ namespace Pocal
             if (mySlider == null) return;
             mySlider.Value = Math.Round(e.NewValue);
         }
-
     }
 }

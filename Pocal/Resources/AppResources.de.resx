@@ -242,9 +242,27 @@
     <value>Du hast noch {0} kostenlose Probetage. Wenn dir Pocal gefällt, dann kannst du die app im Store kaufen.</value>
   </data>
   <data name="SettingsSundayRed" xml:space="preserve">
-    <value>Sonntag rot</value>
+    <value>Sonntage rot</value>
   </data>
   <data name="SettingsCalendarVisibility" xml:space="preserve">
     <value>Kalender-Sichtbarkeit auf Livetile</value>
+  </data>
+  <data name="PleaseRestart" xml:space="preserve">
+    <value>Bitte starte Pocal neu!</value>
+  </data>
+  <data name="SettingsCalendarInfo" xml:space="preserve">
+    <value>Wenn du die Kalender-Sichtbarkeiten oder Kalenderfarben einstellen möchtest, dann gehe bitte in die Einstellungen des Systemkalenders und ändere sie dort. Die Änderungen werden dann in Pocal übernommen.</value>
+  </data>
+  <data name="SettingsFirstDayOfWeek" xml:space="preserve">
+    <value>Erster Tag der Woche</value>
+  </data>
+  <data name="SettingsHeaderGeneral" xml:space="preserve">
+    <value>allgemein</value>
+  </data>
+  <data name="SettingsMonthBeginning" xml:space="preserve">
+    <value>Zeige Monatsanfang</value>
+  </data>
+  <data name="SettingsTimeSystem" xml:space="preserve">
+    <value>Zeitsystem</value>
   </data>
 </root>

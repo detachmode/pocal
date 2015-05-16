@@ -120,6 +120,9 @@
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\AdditionalAgendaBox.xaml.cs">
+      <DependentUpon>AdditionalAgendaBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\SDV_HourLine_Control.xaml.cs">
       <DependentUpon>SDV_HourLine_Control.xaml</DependentUpon>
     </Compile>
@@ -165,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\AdditionalAgendaBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

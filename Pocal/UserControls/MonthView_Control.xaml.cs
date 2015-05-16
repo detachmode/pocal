@@ -3,172 +3,193 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
-using Pocal.ViewModel;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using Windows.ApplicationModel.Appointments;
 using Pocal.Helper;
+using Pocal.Resources;
 using Shared.Helper;
-using System.Windows.Shapes;
 
 namespace Pocal
 {
     public partial class MonthView_Control : UserControl
     {
+        private int _gridCounter;
+        private List<DateTime> _gridDateTimes;
+
         public MonthView_Control()
         {
             InitializeComponent();
         }
 
-        public void loadGridSetup(DateTime dt)
+        public void LoadGridSetup(DateTime dt)
         {
-            gridSetup(dt);
+            DayOfWeekNamesRow();
+            GridSetup(dt);
             LoadAppointmentLinesAsync();
+        }
+
+        private void DayOfWeekNamesRow()
+        {
+
+            if (App.ViewModel.SettingsViewModel.FirstDayOfWeekIsSunday())
+            {
+                addWeekDayNameTextBlock("MonthViewSun");
+            }
+
+            addWeekDayNameTextBlock("MonthViewMon");
+            addWeekDayNameTextBlock("MonthViewTue");
+            addWeekDayNameTextBlock("MonthViewWed");
+            addWeekDayNameTextBlock("MonthViewThu");
+            addWeekDayNameTextBlock("MonthViewFri");
+            addWeekDayNameTextBlock("MonthViewSat");
+
+
+            if (!App.ViewModel.SettingsViewModel.FirstDayOfWeekIsSunday())
+            {
+                addWeekDayNameTextBlock("MonthViewSun");
+            }
 
         }
 
+        private void addWeekDayNameTextBlock(string resourceName)
+        {
+            var textBlock = new TextBlock()
+            {
+                Text = AppResources.ResourceManager.GetString(resourceName,AppResources.Culture),
+                Width = 68.5,
+                Padding = new Thickness(6.0),
+                Foreground = new SolidColorBrush(Colors.Gray)
+            };
+            DayOfWeekNamesRowStackPanel.Children.Add(textBlock);
+        }
 
         public async void LoadAppointmentLinesAsync()
         {
-
-            IReadOnlyList<Appointment> listOfAppointments = await CalendarAPI.GetAppointments(gridDateTimes.FirstOrDefault(), gridDateTimes.Count);
-            foreach (DependencyObject item in (MonthViewGrid as Grid).Children)
+            var listOfAppointments =
+                await CalendarAPI.GetAppointments(_gridDateTimes.FirstOrDefault(), _gridDateTimes.Count);
+            foreach (var item in MonthViewGrid.Children)
             {
-                Border brd = item as Border;
+                var brd = item as Border;
                 if (brd == null)
                     continue;
 
-                DateTime dtOfBrd = (DateTime)brd.DataContext;
-                IEnumerable<Appointment> appointmentsOfThisDay = listOfAppointments.Where(x => TimeFrameChecker.IsInTimeFrameOfDay(x, dtOfBrd));
-                addAppointmentLines(appointmentsOfThisDay, brd);
+                var dtOfBrd = (DateTime) brd.DataContext;
+                var appointmentsOfThisDay =
+                    listOfAppointments.Where(x => TimeFrameChecker.IsInTimeFrameOfDay(x, dtOfBrd));
+                AddAppointmentLines(appointmentsOfThisDay, brd);
             }
         }
 
-        private async void addAppointmentLines(IEnumerable<Appointment> appointmentsOfThisDay, Border item)
+        private static async void AddAppointmentLines(IEnumerable<Appointment> appointmentsOfThisDay, Border item)
         {
-            int count = 1;
-            double screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
+            var count = 1;
+            var screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
 
-            foreach (Appointment appt in appointmentsOfThisDay)
+            foreach (var appt in appointmentsOfThisDay)
             {
-                PocalAppointment pa = await App.ViewModel.CreatePocalAppoinment(appt);
-                Rectangle rect = new Rectangle();
-                rect.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
-                rect.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-                rect.Margin =  new Thickness(6 * screenSizeMultiplicator, 6* screenSizeMultiplicator * count, 6 * screenSizeMultiplicator, 6 * screenSizeMultiplicator);
-                rect.Height = 3 * screenSizeMultiplicator;
-                rect.Width = 20 * screenSizeMultiplicator;
+                var pa = await App.ViewModel.CreatePocalAppoinment(appt);
+                var rect = new Rectangle
+                {
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    Margin =
+                        new Thickness(6*screenSizeMultiplicator, 6*screenSizeMultiplicator*count,
+                            6*screenSizeMultiplicator, 6*screenSizeMultiplicator),
+                    Height = 3*screenSizeMultiplicator,
+                    Width = 20*screenSizeMultiplicator,
+                    Fill = pa.CalColor
+                };
 
-                rect.Fill = pa.CalColor;
-                (item.Child as Grid).Children.Add(rect);
+                var grid = item.Child as Grid;
+                if (grid != null) grid.Children.Add(rect);
                 count++;
             }
         }
 
-        void dayTap(object sender, System.Windows.Input.GestureEventArgs e)
+        private static void DayTap(object sender, GestureEventArgs e)
         {
-            DateTime dt = (DateTime)((FrameworkElement)sender).DataContext;
+            var dt = (DateTime) ((FrameworkElement) sender).DataContext;
             ViewSwitcher.Mainpage.CloseMonthView();
             App.ViewModel.GoToDate(dt);
-
         }
 
-
-        private List<DateTime> gridDateTimes;
-        int gridCounter;
-        private void gridSetup(DateTime dt)
+        private void GridSetup(DateTime dt)
         {
-            gridCounter = 0;
-            createDaysArray(dt.Date);
+            _gridCounter = 0;
+            CreateDaysArray(dt.Date);
 
-            int howManyRows = getHowManyRows();
-            for (int y = 0; y < howManyRows; y++)
+            var howManyRows = GetHowManyRows();
+            for (var y = 0; y < howManyRows; y++)
             {
-                for (int x = 0; x < 7; x++)
+                for (var x = 0; x < 7; x++)
                 {
-                    Border brd = createBorder(x, y, (howManyRows - 1));
-                    //brd.Tap += dayGrid_Tap;
-                    Grid dayGrid = new Grid();
+                    var brd = CreateBorder(x, y, (howManyRows - 1));
 
-                    //addDeltaDayMark(dayGrid);
+                    var dayGrid = new Grid();
 
-                    TextBlock txt = createTextBlock();
-                    txt.Text = gridDateTimes[gridCounter].Day.ToString();
-                    if (dt.Month != gridDateTimes[gridCounter].Month)
+
+                    var txt = CreateTextBlock();
+                    txt.Text = _gridDateTimes[_gridCounter].Day.ToString();
+                    if (dt.Month != _gridDateTimes[_gridCounter].Month)
                     {
                         txt.Foreground = new SolidColorBrush(Colors.Gray);
                     }
-                    addMarkings(dayGrid);
+                    AddMarkings(dayGrid);
 
-                    gridCounter++;
+                    _gridCounter++;
                     dayGrid.Children.Add(txt);
                     brd.Child = dayGrid;
 
-                    (MonthViewGrid as Grid).Children.Add(brd);
+                    MonthViewGrid.Children.Add(brd);
                 }
             }
         }
 
-        private void addMarkings(Grid dayGrid)
+        private void AddMarkings(Grid dayGrid)
         {
-            if (gridDateTimes[gridCounter].Date == DateTime.Now.Date)
+            if (_gridDateTimes[_gridCounter].Date == DateTime.Now.Date)
             {
-                Grid grid = new Grid();
-                grid.Height = 20;
-                grid.Width = 20;
-                grid.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-                grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-                Canvas.SetZIndex(grid, 10);
-
-                ImageBrush ib = new ImageBrush();
-                ib.ImageSource = new BitmapImage(new Uri(@"\Images\MonthViewDayNowMark.png", UriKind.Relative));
-                grid.Background = ib;
-
-
+                var grid =
+                    CreateTriangleMark(new BitmapImage(new Uri(@"\Images\MonthViewDayNowMark.png", UriKind.Relative)), HorizontalAlignment.Left);
                 dayGrid.Children.Add(grid);
             }
-            if (gridDateTimes[gridCounter].Date == App.ViewModel.DayAtPointer.Dt.Date)
+
+            if (_gridDateTimes[_gridCounter].Date == App.ViewModel.DayAtPointer.Dt.Date)
             {
-                Grid grid = new Grid();
-                grid.Height = 20;
-                grid.Width = 20;
-                grid.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-                grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
-                Canvas.SetZIndex(grid, 10);
-
-                ImageBrush ib = new ImageBrush();
-                ib.ImageSource = new BitmapImage(new Uri(@"\Images\MonthViewDeltaTimeMark.png", UriKind.Relative));
-                grid.Background = ib;
-
-
+                var grid =
+                    CreateTriangleMark(new BitmapImage(new Uri(@"\Images\MonthViewDeltaTimeMark.png", UriKind.Relative)), HorizontalAlignment.Right);
                 dayGrid.Children.Add(grid);
             }
         }
 
-        private void addDeltaDayMark(Grid dayGrid)
+        private static Grid CreateTriangleMark(BitmapImage imageSource, HorizontalAlignment horizontalAlignment)
         {
-            if (gridDateTimes[gridCounter].Date == App.ViewModel.DayAtPointer.Dt.Date)
+            var grid = new Grid
             {
-                Grid grid = new Grid();
-                grid.Height = 25;
-                grid.Width = 25;
-                grid.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-                grid.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+                Height = 20,
+                Width = 20,
+                VerticalAlignment = VerticalAlignment.Top,
+                HorizontalAlignment = horizontalAlignment
+            };
+            Canvas.SetZIndex(grid, 10);
 
-                ImageBrush ib = new ImageBrush();
-                ib.ImageSource = new BitmapImage(new Uri(@"\Images\MonthViewDeltaTimeMark.png", UriKind.Relative));
-                grid.Background = ib;
+            var ib = new ImageBrush
+            {
+                ImageSource = imageSource
+            };
 
-
-                dayGrid.Children.Add(grid);
-            }
+            grid.Background = ib;
+            return grid;
         }
 
-        private int getHowManyRows()
+        private int GetHowManyRows()
         {
-            int counter = 0;
-            bool firstOneEncountered = false;
-            foreach (var d in gridDateTimes)
+            var counter = 0;
+            var firstOneEncountered = false;
+            foreach (var d in _gridDateTimes)
             {
                 if (firstOneEncountered && d.Day == 1)
                 {
@@ -180,80 +201,116 @@ namespace Pocal
                 }
                 counter++;
             }
-            return ((int)(counter / 7.0 + 1));
+            return ((int) (counter/7.0 + 1));
         }
 
-        private static TextBlock createTextBlock()
+        private static TextBlock CreateTextBlock()
         {
-            TextBlock txt = new TextBlock();
-            txt.VerticalAlignment = System.Windows.VerticalAlignment.Bottom;
-            txt.Margin = new Thickness(6);
+            var txt = new TextBlock
+            {
+                VerticalAlignment = VerticalAlignment.Bottom,
+                Margin = new Thickness(6)
+            };
             return txt;
         }
 
-        private void createDaysArray(DateTime forMonth)
+        private void CreateDaysArray(DateTime forMonth)
         {
-            gridDateTimes = new List<DateTime>();
+            _gridDateTimes = new List<DateTime>();
             DateTime firstDay = forMonth.AddDays(-forMonth.Day).AddDays(1);
-            int offsetBegin = 0;
+           
             DateTime lastDayOfPreviousMonth = firstDay.AddDays(-1);
             int lastDayInThisMonth = DateTime.DaysInMonth(firstDay.Year, firstDay.Month);
             DateTime firstDayInNextMonth = new DateTime(firstDay.Year, firstDay.Month, lastDayInThisMonth).AddDays(1);
 
-            switch (firstDay.DayOfWeek)
-            {
-                case DayOfWeek.Monday:
-                    offsetBegin = 0;
-                    break;
-                case DayOfWeek.Tuesday:
-                    offsetBegin = 1;
-                    break;
-                case DayOfWeek.Wednesday:
-                    offsetBegin = 2;
-                    break;
-                case DayOfWeek.Thursday:
-                    offsetBegin = 3;
-                    break;
-                case DayOfWeek.Friday:
-                    offsetBegin = 4;
-                    break;
-                case DayOfWeek.Saturday:
-                    offsetBegin = 5;
-                    break;
-                case DayOfWeek.Sunday:
-                    offsetBegin = 6;
-                    break;
+            int offsetBegin = OffsetBeginOfWeek(firstDay);
 
-                default:
-                    break;
+            for (var i = (offsetBegin - 1); i >= 0; i--)
+            {
+                _gridDateTimes.Add(lastDayOfPreviousMonth.AddDays(-i));
+            }
+            for (var i = 1; i <= lastDayInThisMonth; i++)
+            {
+                _gridDateTimes.Add(new DateTime(firstDay.Year, firstDay.Month, i));
             }
 
-            for (int i = (offsetBegin - 1); i >= 0; i--)
+            for (var i = 0; i < 7; i++)
             {
-                gridDateTimes.Add(lastDayOfPreviousMonth.AddDays(-i));
-
+                _gridDateTimes.Add(firstDayInNextMonth.AddDays(i));
             }
-            for (int i = 1; i <= lastDayInThisMonth; i++)
-            {
-                gridDateTimes.Add(new DateTime(firstDay.Year, firstDay.Month, i));
-            }
-
-            for (int i = 0; i < 7; i++)
-            {
-                gridDateTimes.Add(firstDayInNextMonth.AddDays(i));
-            }
-
         }
 
-        private Border createBorder(int x, int y, int maxY)
+        private static int OffsetBeginOfWeek(DateTime firstDay)
         {
-            Border brd = new Border();
+            int offsetBegin = 0;
+            if (App.ViewModel.SettingsViewModel.FirstDayOfWeekIsSunday())
+            {
+                switch (firstDay.DayOfWeek)
+                {
+                    case DayOfWeek.Sunday:
+                        offsetBegin = 0;
+                        break;
+                    case DayOfWeek.Monday:
+                        offsetBegin = 1;
+                        break;
+                    case DayOfWeek.Tuesday:
+                        offsetBegin = 2;
+                        break;
+                    case DayOfWeek.Wednesday:
+                        offsetBegin = 3;
+                        break;
+                    case DayOfWeek.Thursday:
+                        offsetBegin = 4;
+                        break;
+                    case DayOfWeek.Friday:
+                        offsetBegin = 5;
+                        break;
+                    case DayOfWeek.Saturday:
+                        offsetBegin = 6;
+                        break;
+                }
+            }
+            else
+            {
+
+                switch (firstDay.DayOfWeek)
+                {
+                    case DayOfWeek.Monday:
+                        offsetBegin = 0;
+                        break;
+                    case DayOfWeek.Tuesday:
+                        offsetBegin = 1;
+                        break;
+                    case DayOfWeek.Wednesday:
+                        offsetBegin = 2;
+                        break;
+                    case DayOfWeek.Thursday:
+                        offsetBegin = 3;
+                        break;
+                    case DayOfWeek.Friday:
+                        offsetBegin = 4;
+                        break;
+                    case DayOfWeek.Saturday:
+                        offsetBegin = 5;
+                        break;
+                    case DayOfWeek.Sunday:
+                        offsetBegin = 6;
+                        break;
+                }
+
+            }
+            return offsetBegin;
+        }
+
+        private Border CreateBorder(int x, int y, int maxY)
+        {
+            var brd = new Border();
 
 
-            int leftThinkness = 1;
-            int topThinkness = 1;
-            int rightThinkness = 0;
-            int bottomThinkness = 1;
+            var leftThinkness = 1;
+            const int topThinkness = 1;
+            const int rightThinkness = 0;
+            var bottomThinkness = 1;
 
             if (y != maxY)
                 bottomThinkness = 0;
@@ -262,38 +319,35 @@ namespace Pocal
                 leftThinkness = 0;
 
             brd.BorderThickness = new Thickness(leftThinkness, topThinkness, rightThinkness, bottomThinkness);
-            brd.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            brd.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-            brd.BorderBrush = new SolidColorBrush((Color)App.Current.Resources["PhoneBorderColor"]);
+            brd.VerticalAlignment = VerticalAlignment.Top;
+            brd.HorizontalAlignment = HorizontalAlignment.Left;
+            brd.BorderBrush = new SolidColorBrush((Color) Application.Current.Resources["PhoneBorderColor"]);
 
-            var testDayOfWeek = gridDateTimes[gridCounter].DayOfWeek;
+            var testDayOfWeek = _gridDateTimes[_gridCounter].DayOfWeek;
             if (testDayOfWeek == DayOfWeek.Saturday || testDayOfWeek == DayOfWeek.Sunday)
             {
                 //brd.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 40, 40, 40));
-                brd.Background = new SolidColorBrush((Color)App.Current.Resources["MonthWeekendBg"]);
+                brd.Background = new SolidColorBrush((Color) Application.Current.Resources["MonthWeekendBg"]);
             }
             else
             {
-
-                brd.Background = new SolidColorBrush((Color)App.Current.Resources["MonthNoWeekendBg"]);
+                brd.Background = new SolidColorBrush((Color) Application.Current.Resources["MonthNoWeekendBg"]);
                 //brd.Background = new SolidColorBrush();
             }
 
 
-            brd.DataContext = gridDateTimes[gridCounter];
-            brd.Tap += dayTap;
+            brd.DataContext = _gridDateTimes[_gridCounter];
+            brd.Tap += DayTap;
 
-            double height = (483 / 7.0);
-            double width = (483 / 7.0);
+            const double height = (483/7.0);
+            const double width = (483/7.0);
             brd.Height = height;
             brd.Width = width;
 
-            double leftmargin = height * x;
-            double topmargin = width * y;
+            var leftmargin = height*x;
+            var topmargin = width*y;
             brd.Margin = new Thickness(leftmargin, topmargin, 0, 0);
             return brd;
         }
-
-
     }
 }
