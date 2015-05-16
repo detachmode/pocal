@@ -198,14 +198,15 @@ namespace Pocal
 
             var button4 = new ApplicationBarIconButton();
             button4.IconUri = new Uri("/Images/bird.png", UriKind.Relative);
-            button4.Text = "Overview";
+            button4.Text = "Search";
             ApplicationBar.Buttons.Add(button4);
             button4.Click += delegate
             {
-                if (App.ViewModel.InModus == MainViewModel.Modi.AgendaView)
-                {
-                    ToggleOverView();
-                }
+                //if (App.ViewModel.InModus == MainViewModel.Modi.AgendaView)
+                //{
+                //    ToggleOverView();
+                //}
+                OpenSearchView();
             };
         }
 
@@ -686,7 +687,7 @@ namespace Pocal
 
         private void OpenMonthView()
         {
-            App.ViewModel.ModusBeforeMonthView = App.ViewModel.InModus;
+            App.ViewModel.ModusBefore = App.ViewModel.InModus;
             App.ViewModel.InModus = MainViewModel.Modi.MonthView;
             Canvas.SetZIndex(MonthView, 10);
 
@@ -701,7 +702,7 @@ namespace Pocal
 
         public void CloseMonthView()
         {
-            App.ViewModel.InModus = App.ViewModel.ModusBeforeMonthView;
+            App.ViewModel.InModus = App.ViewModel.ModusBefore;
             Canvas.SetZIndex(MonthView, -10);
             MonthsPivot.Items.Clear();
 
@@ -837,5 +838,60 @@ namespace Pocal
         }
 
         #endregion
+
+
+        #region Search Code Behind
+
+        private void SearchViewAppbar()
+        {
+            ApplicationBar = new ApplicationBar();
+
+            /*********** BUTTONs ***********/
+            var button1 = new ApplicationBarIconButton
+            {
+                IconUri = new Uri("/Images/back.png", UriKind.Relative),               
+                Text = AppResources.AppBarBack
+
+            };
+
+            ApplicationBar.Buttons.Add(button1);
+            button1.Click += delegate { CloseSearchView(); };
+        }
+
+        private void OpenSearchView()
+        {
+            App.ViewModel.ModusBefore = App.ViewModel.InModus;
+            App.ViewModel.InModus = MainViewModel.Modi.SearchView;
+           
+            Canvas.SetZIndex(SearchGrid, 10);
+            TheSearchControl.OpenSearchControl();
+            SearchViewAppbar();
+
+        }
+
+        public void CloseSearchView()
+        {
+            App.ViewModel.InModus = App.ViewModel.ModusBefore;
+            Canvas.SetZIndex(SearchGrid, -11);
+            //SearchGrid.Items.Clear();
+
+            switch (App.ViewModel.InModus)
+            {
+                case MainViewModel.Modi.AgendaView:
+                    AgendaViewAppbar();
+                    break;
+                case MainViewModel.Modi.OverView:
+                    OverviewAppbar();
+                    break;
+                case MainViewModel.Modi.OverViewSdv:
+                    SdvAppbar();
+                    break;
+                case MainViewModel.Modi.AgendaViewSdv:
+                    SdvAppbar();
+                    break;
+            }
+        }
+        #endregion
+
     }
 }

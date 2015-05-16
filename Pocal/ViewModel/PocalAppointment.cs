@@ -139,7 +139,7 @@ namespace Pocal.ViewModel
             {
                 return _allDay;
             }
-            //todo make private again
+
             set
             {
                 if (value == _allDay) return;

@@ -95,6 +95,69 @@ namespace Pocal.Helper
             return resultList;
         }
 
+
+
+        // ******** ****************** *********//
+        // ******** Search Appointment *********//
+        // ******** ****************** *********//
+
+        public static async void SearchAppointments(string searchString)
+        {
+            var searchnumber = App.ViewModel.SearchNumber;
+            foreach (var appointment in await CalendarAPI.GetAppointments(DateTime.Now.Date, 10))
+            {
+                if (appointment.Subject.ToLower().Contains(searchString.ToLower()))
+                {
+                    var pocalAppointment = await App.ViewModel.CreatePocalAppoinment(appointment);
+                    if (searchnumber == App.ViewModel.SearchNumber)
+                    {
+                        App.ViewModel.SearchResults.Add(pocalAppointment);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
+            }
+
+            foreach (var appointment in await CalendarAPI.GetAppointments(DateTime.Now.Date.AddDays(10), 30))
+            {
+                if (appointment.Subject.ToLower().Contains(searchString.ToLower()))
+                {
+                    var pocalAppointment = await App.ViewModel.CreatePocalAppoinment(appointment);
+                    if (searchnumber == App.ViewModel.SearchNumber)
+                    {
+                        App.ViewModel.SearchResults.Add(pocalAppointment);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
+            }
+
+            foreach (var appointment in await CalendarAPI.GetAppointments(DateTime.Now.Date.AddDays(40), 300))
+            {
+                if (appointment.Subject.ToLower().Contains(searchString.ToLower()))
+                {
+                    var pocalAppointment = await App.ViewModel.CreatePocalAppoinment(appointment);
+                    if (searchnumber == App.ViewModel.SearchNumber)
+                    {
+                        App.ViewModel.SearchResults.Add(pocalAppointment);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
+            }
+
+
+        }
+
         #endregion
 
         #region TestAppointments

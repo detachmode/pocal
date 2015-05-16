@@ -36,6 +36,7 @@
         <converter:NullOrWhiteSpaceCollapser x:Key="NullOrWhiteSpaceCollapser"/>
         <converter:WeekNumberConverter x:Key="WeekNumberConverter"/>
         <converter:DateConverter x:Key="DateConverter"/>
+        <converter:DateTimeOffsetConverter x:Key="DateTimeOffsetConverter"/>       
         <converter:SecondLineConverter x:Key="SecondLineConverter"/>
         <converter:HourConverter x:Key="HourConverter"/>
         <converter:MinuteConverter x:Key="MinuteConverter"/>

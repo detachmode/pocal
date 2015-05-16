@@ -23,7 +23,8 @@ namespace Pocal.ViewModel
             OverView,
             OverViewSdv,
             AgendaViewSdv,
-            MonthView
+            MonthView,
+            SearchView
         };
 
         private Day _dayAtPointer;
@@ -33,10 +34,11 @@ namespace Pocal.ViewModel
         private string _time;
         public Modi InModus = Modi.AgendaView;
         public bool IsCurrentlyLoading;
-        public Modi ModusBeforeMonthView;
+        public Modi ModusBefore;
 
         public MainViewModel()
         {
+           
             Days = new ObservableCollection<Day>();
             SingleDayViewModel = new SingleDayViewVM();
             ConflictManager = new ConflictManager();
@@ -203,6 +205,21 @@ namespace Pocal.ViewModel
             }
         }
 
+        public ObservableCollection<PocalAppointment> SearchResults
+        {
+            get { return _searchResults; }
+            set
+            {
+                if (value != _searchResults)
+                {
+                    _searchResults = value;
+                    NotifyPropertyChanged("SearchResults");
+                }
+            }
+        }
+
+        
+
         public SingleDayViewVM SingleDayViewModel { get; private set; }
         public ConflictManager ConflictManager { get; private set; }
         public SettingsViewModel SettingsViewModel { get; private set; }
@@ -230,6 +247,8 @@ namespace Pocal.ViewModel
                 NotifyPropertyChanged("Time");
             }
         }
+
+        public int SearchNumber { get; set; }
 
         internal bool IsInOverviewModus()
         {
@@ -353,6 +372,7 @@ namespace Pocal.ViewModel
 
         private IReadOnlyList<Appointment> _appoinmentBuffer;
         private readonly List<PocalAppointment> _pocalAppointmentsBuffer = new List<PocalAppointment>();
+        private ObservableCollection<PocalAppointment> _searchResults;
 
         private async Task GetPocalAppointments(int howManyDays, DateTime startDay)
         {
@@ -524,5 +544,7 @@ namespace Pocal.ViewModel
         }
 
         #endregion
+
+        
     }
 }

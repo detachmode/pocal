@@ -315,24 +315,26 @@
         <!--******** ********* ******** -->
 
         <Grid x:Name="MonthView" Background="{StaticResource MonthBg}" Canvas.ZIndex="-10">
-            <Grid>
-                <TextBlock x:Name="YearDisplay"  Style="{StaticResource PhoneTextTitle3Style}" VerticalAlignment="Top" Margin="24,24" FontWeight="SemiBold">2014</TextBlock>
-                <phone:Pivot x:Name="MonthsPivot" Margin="0,36,0,0" SelectionChanged="Pivot_SelectionChanged">
-                    <phone:Pivot.HeaderTemplate>
-                        <DataTemplate>
-                            <screenSizeSupport:ZoomBox 
-                                ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}"
-                                >
-                            <TextBlock Text="{Binding}"/>
-                            </screenSizeSupport:ZoomBox>
+            <TextBlock x:Name="YearDisplay" Style="{StaticResource PhoneTextTitle3Style}" VerticalAlignment="Top"
+                       Margin="24,24" FontWeight="SemiBold" />
+            <phone:Pivot x:Name="MonthsPivot" Margin="0,36,0,0" SelectionChanged="Pivot_SelectionChanged">
+                <phone:Pivot.HeaderTemplate>
+                    <DataTemplate>
+                        <screenSizeSupport:ZoomBox
+                            ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}">
+                            <TextBlock Text="{Binding}" />
+                        </screenSizeSupport:ZoomBox>
 
+                    </DataTemplate>
+                </phone:Pivot.HeaderTemplate>
+            </phone:Pivot>
+        </Grid>
 
-
-
-                        </DataTemplate>
-                    </phone:Pivot.HeaderTemplate>
-                </phone:Pivot>
-            </Grid>
+        <!--******** ****** ******** -->
+        <!--******** Search ******** -->
+        <!--******** ****** ******** -->
+        <Grid x:Name="SearchGrid" Background="{StaticResource PhoneBackgroundBrush}" Canvas.ZIndex="-11">
+            <pocal:SearchControl x:Name="TheSearchControl"/>
         </Grid>
 
 
