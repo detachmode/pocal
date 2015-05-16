@@ -11,7 +11,8 @@
     
     <Grid x:Name="LayoutRoot">
         <Grid x:Name="MonthViewGrid" Margin="0,60,0,0">     
-          <StackPanel x:Name="DayOfWeekNamesRowStackPanel" Orientation="Horizontal" Height="30"  VerticalAlignment="Top" Margin="0,-30"/>
+          <StackPanel x:Name="DayOfWeekNamesRowStackPanel" Orientation="Horizontal" 
+                      Height="30"  VerticalAlignment="Top" Margin="0,-40,0,30"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -6,16 +6,16 @@ using Windows.ApplicationModel.Appointments;
 namespace ScheduledTaskAgent1
 {
 
-    
-    public partial class LiveTile
+
+    public partial class LiveTileSmall
     {
-        public LiveTile()
+        public LiveTileSmall()
         {
             InitializeComponent();
 
         }
 
-        public void UpdateTextBox(List<Appointment> appts)
+        public void UpdateDate()
         {
             // Wochentag Kürzel
             if (DateTimeFormatInfo.CurrentInfo != null)
@@ -23,19 +23,7 @@ namespace ScheduledTaskAgent1
 
             // Tageszahl
             dayTb.Text = DateTime.Now.Day.ToString();
-
-            // anstehender Termin
-            if (appts.Count == 0)
-            {
-                tbSubject.Text = "";
-                tbTime.Text = "";
-            }
-            else 
-            {
-                tbSubject.Text = appts[0].Subject;   
-                tbTime.Text = LiveTileManager.GetTimeStringNormal(appts[0]);
-                
-            }
+           
             LayoutRoot.UpdateLayout();
            
         }

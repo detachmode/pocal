@@ -155,27 +155,6 @@
   <data name="futureTime" xml:space="preserve">
     <value>in</value>
   </data>
-  <data name="MonthViewFri" xml:space="preserve">
-    <value>ven</value>
-  </data>
-  <data name="MonthViewMon" xml:space="preserve">
-    <value>lun</value>
-  </data>
-  <data name="MonthViewSat" xml:space="preserve">
-    <value>sab</value>
-  </data>
-  <data name="MonthViewSun" xml:space="preserve">
-    <value>dom</value>
-  </data>
-  <data name="MonthViewThu" xml:space="preserve">
-    <value>gio</value>
-  </data>
-  <data name="MonthViewTue" xml:space="preserve">
-    <value>mar</value>
-  </data>
-  <data name="MonthViewWed" xml:space="preserve">
-    <value>mer</value>
-  </data>
   <data name="pastTime" xml:space="preserve">
     <value>fa</value>
   </data>

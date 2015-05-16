@@ -17,11 +17,9 @@ namespace ScheduledTaskAgent1
 
         public void UpdateTextBox(List<Appointment> appts)
         {
-            // setzte Wochentag Kürzel: deutsch = 2 Buchstaben, andere 3 Buchstaben
-            if (CultureInfo.CurrentUICulture.Name.Contains("de-"))
-                dayOfWeekTb.Text = DateTime.Now.ToString("dddd", CultureInfo.CurrentUICulture).Substring(0, 2);
-            else
-                dayOfWeekTb.Text = DateTime.Now.ToString("dddd", CultureInfo.CurrentUICulture).Substring(0, 3);
+            // Wochentag Kürzel
+            if (DateTimeFormatInfo.CurrentInfo != null)
+                dayOfWeekTb.Text = DateTimeFormatInfo.CurrentInfo.GetAbbreviatedDayName(DateTime.Now.DayOfWeek);
 
             // setzte Tageszahl
             dayTb.Text = DateTime.Now.Day.ToString();
@@ -74,18 +72,23 @@ namespace ScheduledTaskAgent1
 
             for (var i = 1; i < Math.Min(appts.Count, 3); i++)
             {
-                var subjectTextblock = new TextBlock();
-                var timeTextBlock = new TextBlock();
                 var fontcolor = new SolidColorBrush(Color.FromArgb(alpha, 255, 255, 255));
 
-                subjectTextblock.Text = appts[i].Subject;
-                subjectTextblock.Foreground = fontcolor;
-                subjectTextblock.FontSize = 30;
+                var subjectTextblock = new TextBlock
+                {
+                    Text = appts[i].Subject,
+                    Foreground = fontcolor,
+                    FontSize = 30
+                };
 
-                timeTextBlock.Text = LiveTileManager.GetTimeStringWide(appts[i]); 
-                timeTextBlock.FontSize = 30;
-                timeTextBlock.Foreground = fontcolor;
-                timeTextBlock.Margin = new Thickness(0, -6, 0, 10);
+                var timeTextBlock = new TextBlock
+                {
+                    Text = LiveTileManager.GetTimeStringWide(appts[i]),
+                    FontSize = 30,
+                    Foreground = fontcolor,
+                    Margin = new Thickness(0, -6, 0, 10)
+                };
+
 
                 otherAppointments.Items.Add(subjectTextblock);
                 otherAppointments.Items.Add(timeTextBlock);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,34 +37,39 @@ namespace Pocal
 
             if (App.ViewModel.SettingsViewModel.FirstDayOfWeekIsSunday())
             {
-                addWeekDayNameTextBlock("MonthViewSun");
+                addWeekDayNameTextBlock(DayOfWeek.Sunday);
             }
 
-            addWeekDayNameTextBlock("MonthViewMon");
-            addWeekDayNameTextBlock("MonthViewTue");
-            addWeekDayNameTextBlock("MonthViewWed");
-            addWeekDayNameTextBlock("MonthViewThu");
-            addWeekDayNameTextBlock("MonthViewFri");
-            addWeekDayNameTextBlock("MonthViewSat");
+            addWeekDayNameTextBlock(DayOfWeek.Monday);
+            addWeekDayNameTextBlock(DayOfWeek.Tuesday);
+            addWeekDayNameTextBlock(DayOfWeek.Wednesday);
+            addWeekDayNameTextBlock(DayOfWeek.Thursday);
+            addWeekDayNameTextBlock(DayOfWeek.Friday);
+            addWeekDayNameTextBlock(DayOfWeek.Saturday);
+
 
 
             if (!App.ViewModel.SettingsViewModel.FirstDayOfWeekIsSunday())
             {
-                addWeekDayNameTextBlock("MonthViewSun");
+                addWeekDayNameTextBlock(DayOfWeek.Sunday);
+
             }
 
         }
 
-        private void addWeekDayNameTextBlock(string resourceName)
+        private void addWeekDayNameTextBlock(DayOfWeek dayOfWeek)
         {
-            var textBlock = new TextBlock()
+            if (DateTimeFormatInfo.CurrentInfo != null)
             {
-                Text = AppResources.ResourceManager.GetString(resourceName,AppResources.Culture),
-                Width = 68.5,
-                Padding = new Thickness(6.0),
-                Foreground = new SolidColorBrush(Colors.Gray)
-            };
-            DayOfWeekNamesRowStackPanel.Children.Add(textBlock);
+                var textBlock = new TextBlock
+                {
+                    Text = DateTimeFormatInfo.CurrentInfo.GetAbbreviatedDayName(dayOfWeek),
+                    Width = 68.5,
+                    Padding = new Thickness(6.0),
+                    Foreground = new SolidColorBrush(Colors.Gray)
+                };
+                DayOfWeekNamesRowStackPanel.Children.Add(textBlock);
+            }
         }
 
         public async void LoadAppointmentLinesAsync()

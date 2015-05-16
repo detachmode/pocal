@@ -128,9 +128,6 @@
   <data name="AppBarAdd" xml:space="preserve">
     <value>Termin hinzufügen</value>
   </data>
-  <data name="AppBarMenuItemText" xml:space="preserve">
-    <value>Menu Item</value>
-  </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
@@ -157,27 +154,6 @@
   </data>
   <data name="futureTime" xml:space="preserve">
     <value>in</value>
-  </data>
-  <data name="MonthViewFri" xml:space="preserve">
-    <value>Fr</value>
-  </data>
-  <data name="MonthViewMon" xml:space="preserve">
-    <value>Mo</value>
-  </data>
-  <data name="MonthViewSat" xml:space="preserve">
-    <value>Sa</value>
-  </data>
-  <data name="MonthViewSun" xml:space="preserve">
-    <value>So</value>
-  </data>
-  <data name="MonthViewThu" xml:space="preserve">
-    <value>Do</value>
-  </data>
-  <data name="MonthViewTue" xml:space="preserve">
-    <value>Di</value>
-  </data>
-  <data name="MonthViewWed" xml:space="preserve">
-    <value>Mi</value>
   </data>
   <data name="pastTime" xml:space="preserve">
     <value>vor</value>
@@ -239,7 +215,7 @@
     <value>Minute</value>
   </data>
   <data name="trialPopup" xml:space="preserve">
-    <value>Du hast noch {0} kostenlose Probetage. Wenn dir Pocal gefällt, dann kannst du die app im Store kaufen.</value>
+    <value>Du hast noch {0} kostenlose Probetage. Wenn dir Pocal gefällt, dann kannst du die App im Store kaufen.</value>
   </data>
   <data name="SettingsSundayRed" xml:space="preserve">
     <value>Sonntage rot</value>

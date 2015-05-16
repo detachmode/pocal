@@ -241,69 +241,6 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Fri ähnelt.
-        /// </summary>
-        public static string MonthViewFri {
-            get {
-                return ResourceManager.GetString("MonthViewFri", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Mon ähnelt.
-        /// </summary>
-        public static string MonthViewMon {
-            get {
-                return ResourceManager.GetString("MonthViewMon", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sat ähnelt.
-        /// </summary>
-        public static string MonthViewSat {
-            get {
-                return ResourceManager.GetString("MonthViewSat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sun ähnelt.
-        /// </summary>
-        public static string MonthViewSun {
-            get {
-                return ResourceManager.GetString("MonthViewSun", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Thu ähnelt.
-        /// </summary>
-        public static string MonthViewThu {
-            get {
-                return ResourceManager.GetString("MonthViewThu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tue ähnelt.
-        /// </summary>
-        public static string MonthViewTue {
-            get {
-                return ResourceManager.GetString("MonthViewTue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Wed ähnelt.
-        /// </summary>
-        public static string MonthViewWed {
-            get {
-                return ResourceManager.GetString("MonthViewWed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die ago ähnelt.
         /// </summary>
         public static string pastTime {

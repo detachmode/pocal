@@ -32,7 +32,7 @@ namespace ScheduledTaskAgent1
             // Options: Sortiere Termine aus, die von hidden Kalender sind.
             if (IsolatedStorageSettings.ApplicationSettings.Contains("HiddenCalendars"))
             {
-                var hiddenCalendars = (List<string>) IsolatedStorageSettings.ApplicationSettings["HiddenCalendars"];
+                var hiddenCalendars = (List<string>)IsolatedStorageSettings.ApplicationSettings["HiddenCalendars"];
                 foreach (var id in hiddenCalendars)
                 {
                     appts.RemoveAll(x => x.CalendarId == id);
@@ -75,7 +75,7 @@ namespace ScheduledTaskAgent1
             var isSingleLiveTileEnabled = false;
             if (IsolatedStorageSettings.ApplicationSettings.Contains("LiveTileSettingsSingle"))
             {
-                isSingleLiveTileEnabled = (bool) IsolatedStorageSettings.ApplicationSettings["LiveTileSettingsSingle"];
+                isSingleLiveTileEnabled = (bool)IsolatedStorageSettings.ApplicationSettings["LiveTileSettingsSingle"];
             }
             return isSingleLiveTileEnabled;
         }
@@ -218,6 +218,11 @@ namespace ScheduledTaskAgent1
             customTileWide.Measure(new Size(691, 336));
             customTileWide.Arrange(new Rect(0, 0, 691, 336));
 
+            var customTileSmall = new LiveTileSmall();
+            customTileSmall.UpdateDate();
+            customTileSmall.Measure(new Size(159, 159));
+            customTileSmall.Arrange(new Rect(0, 0, 159, 159));
+
 
             var bmp = new WriteableBitmap(336, 336);
             bmp.Render(customTile, null);
@@ -227,10 +232,16 @@ namespace ScheduledTaskAgent1
             bmp2.Render(customTileWide, null);
             bmp2.Invalidate();
 
+            var bmp3 = new WriteableBitmap(159, 159);
+            bmp3.Render(customTileSmall, null);
+            bmp3.Invalidate();
+
             const string filename = "CustomTile";
             const string filenamefull = "/Shared/ShellContent/CustomTile.png";
             const string filenameWide = "CustomTileWide";
             const string filenameWidefull = "/Shared/ShellContent/CustomTileWide.png";
+            const string filenameSmall = "CustomTileSmall";
+            const string filenameSmallfull = "/Shared/ShellContent/CustomTileSmall.png";
 
             using (var isf = IsolatedStorageFile.GetUserStoreForApplication())
             {
@@ -247,13 +258,25 @@ namespace ScheduledTaskAgent1
                 {
                     WriteableBitmapExtensions.SavePng(bmp2, imageStream);
                 }
+
+                using (
+                     var imageStream = new IsolatedStorageFileStream("/Shared/ShellContent/" + filenameSmall + ".png",
+                        FileMode.OpenOrCreate, isf))
+                {
+                    WriteableBitmapExtensions.SavePng(bmp3, imageStream);
+                }
+
+
+
             }
+
 
 
             var tileData = new FlipTileData
             {
                 WideBackgroundImage = new Uri("isostore:" + filenameWidefull, UriKind.Absolute),
-                BackgroundImage = new Uri("isostore:" + filenamefull, UriKind.Absolute)
+                BackgroundImage = new Uri("isostore:" + filenamefull, UriKind.Absolute),
+                SmallBackgroundImage = new Uri("isostore:" + filenameSmallfull, UriKind.Absolute)
             };
 
 
