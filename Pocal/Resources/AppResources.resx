@@ -237,13 +237,13 @@
     <value>Sunday red</value>
   </data>
   <data name="SettingsCalendarVisibility" xml:space="preserve">
-    <value>Calendar Visibility on Live tile</value>
+    <value>Calendar visibility on Live tile</value>
   </data>
   <data name="SettingsCalendarInfo" xml:space="preserve">
     <value>To change the calendar visibilities or calendar colors please go to the settings of the stock calendar and change it there.</value>
   </data>
   <data name="SettingsMonthBeginning" xml:space="preserve">
-    <value>month beginning</value>
+    <value>Show month beginning</value>
   </data>
   <data name="SettingsHeaderGeneral" xml:space="preserve">
     <value>general</value>
@@ -252,9 +252,21 @@
     <value>Please restart Pocal!</value>
   </data>
   <data name="SettingsFirstDayOfWeek" xml:space="preserve">
-    <value>First day of week:</value>
+    <value>First day of week</value>
   </data>
   <data name="SettingsTimeSystem" xml:space="preserve">
     <value>Time system</value>
+  </data>
+  <data name="SettingsHowManyDaysInFuture" xml:space="preserve">
+    <value>How many days in future:</value>
+  </data>
+  <data name="SettingsLiveTileStyleWide" xml:space="preserve">
+    <value>Live tile style ( wide )</value>
+  </data>
+  <data name="SettingsLiveTileStyleWideMore" xml:space="preserve">
+    <value>More appointments</value>
+  </data>
+  <data name="SettingsLiveTileStyleWideOne" xml:space="preserve">
+    <value>One appointment</value>
   </data>
 </root>

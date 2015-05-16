@@ -64,6 +64,7 @@
         <Color x:Key="LightGray">#FF131313</Color>
         <converter:MonthVisibilityConverter x:Key="MonthVisibilityConverter" />
         <converter:MonthNameConverter x:Key="MonthNameConverter" />
+        <converter:OnOffConverter x:Key="OnOffConverter" />
 
     </Application.Resources>
 

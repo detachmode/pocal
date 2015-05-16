@@ -358,7 +358,7 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Calendar Visibility on Live tile ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Calendar visibility on Live tile ähnelt.
         /// </summary>
         public static string SettingsCalendarVisibility {
             get {
@@ -367,7 +367,7 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die First day of week: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die First day of week ähnelt.
         /// </summary>
         public static string SettingsFirstDayOfWeek {
             get {
@@ -385,7 +385,43 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die month beginning ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die How many days in future: ähnelt.
+        /// </summary>
+        public static string SettingsHowManyDaysInFuture {
+            get {
+                return ResourceManager.GetString("SettingsHowManyDaysInFuture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Live tile style ( wide ) ähnelt.
+        /// </summary>
+        public static string SettingsLiveTileStyleWide {
+            get {
+                return ResourceManager.GetString("SettingsLiveTileStyleWide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die More appointments ähnelt.
+        /// </summary>
+        public static string SettingsLiveTileStyleWideMore {
+            get {
+                return ResourceManager.GetString("SettingsLiveTileStyleWideMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die One appointment ähnelt.
+        /// </summary>
+        public static string SettingsLiveTileStyleWideOne {
+            get {
+                return ResourceManager.GetString("SettingsLiveTileStyleWideOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show month beginning ähnelt.
         /// </summary>
         public static string SettingsMonthBeginning {
             get {
