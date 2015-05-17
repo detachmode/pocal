@@ -95,6 +95,7 @@
     </Compile>
     <Compile Include="Converter\AgendaViewConverter.cs" />
     <Compile Include="Converter\OverViewConverter.cs" />
+    <Compile Include="Converter\SearchViewConverter.cs" />
     <Compile Include="Converter\SettingsPageConverter.cs" />
     <Compile Include="Converter\SingleDayViewConverter.cs" />
     <Compile Include="Helper\PocalAppointmentHelper.cs" />

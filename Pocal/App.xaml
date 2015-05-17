@@ -57,6 +57,7 @@
         <SolidColorBrush x:Key="MonthNoWeekendBg">#FFDCDCDC</SolidColorBrush>
 
         <ImageBrush x:Key="AgendaPointerImage" Stretch="None" ImageSource="/Images/AgendaPointerDark.png" />
+        <ImageBrush x:Key="CyrcleImageEdit" Stretch="Fill" ImageSource="/Images/edit.png" />
 
         <Color x:Key="ColorBorderGrey">#FF767676</Color>
         <system:Double x:Key="DefaultSize">22</system:Double>

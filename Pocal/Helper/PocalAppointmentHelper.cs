@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Appointments;
+using Pocal.Converter;
 using Pocal.ViewModel;
 using Shared.Helper;
 
@@ -106,7 +107,7 @@ namespace Pocal.Helper
             var searchnumber = App.ViewModel.SearchNumber;
             foreach (var appointment in await CalendarAPI.GetAppointments(DateTime.Now.Date, 10))
             {
-                if (appointment.Subject.ToLower().Contains(searchString.ToLower()))
+                if (appointmentMatch(searchString, appointment))
                 {
                     var pocalAppointment = await App.ViewModel.CreatePocalAppoinment(appointment);
                     if (searchnumber == App.ViewModel.SearchNumber)
@@ -123,7 +124,7 @@ namespace Pocal.Helper
 
             foreach (var appointment in await CalendarAPI.GetAppointments(DateTime.Now.Date.AddDays(10), 30))
             {
-                if (appointment.Subject.ToLower().Contains(searchString.ToLower()))
+                if (appointmentMatch(searchString, appointment))
                 {
                     var pocalAppointment = await App.ViewModel.CreatePocalAppoinment(appointment);
                     if (searchnumber == App.ViewModel.SearchNumber)
@@ -140,7 +141,7 @@ namespace Pocal.Helper
 
             foreach (var appointment in await CalendarAPI.GetAppointments(DateTime.Now.Date.AddDays(40), 300))
             {
-                if (appointment.Subject.ToLower().Contains(searchString.ToLower()))
+                if (appointmentMatch(searchString, appointment))
                 {
                     var pocalAppointment = await App.ViewModel.CreatePocalAppoinment(appointment);
                     if (searchnumber == App.ViewModel.SearchNumber)
@@ -156,6 +157,21 @@ namespace Pocal.Helper
             }
 
 
+        }
+
+        private static bool appointmentMatch(string searchString, Appointment appointment)
+        {
+            string searchstring = searchString.ToLower();
+
+            if (appointment.Subject.ToLower().Contains(searchstring))
+                return true;
+
+
+            string timestring = appointment.StartTime.ToString("dddd", CultureSettings.Ci) + ", " + appointment.StartTime.ToString("M", CultureSettings.Ci);
+            if (timestring.ToLower().Contains(searchstring))
+                return true;
+
+            return false;
         }
 
         #endregion

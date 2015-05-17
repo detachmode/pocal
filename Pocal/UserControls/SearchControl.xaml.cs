@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
-using Windows.ApplicationModel.Appointments;
 using Pocal.Helper;
 using Pocal.ViewModel;
 
@@ -20,8 +18,20 @@ namespace Pocal
         public void OpenSearchControl()
         {
             searchBox.Focus();
-            App.ViewModel.SearchResults = new ObservableCollection<PocalAppointment>();
+            if (App.ViewModel.SearchResults == null)
+            {
+                App.ViewModel.SearchResults = new ObservableCollection<PocalAppointment>();
+            }
+            DoSearch();
         }
+
+        public void CloseSearchControl()
+        {
+            this.Focus();
+            
+        }
+
+
 
         //private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         //{
@@ -36,17 +46,15 @@ namespace Pocal
         //}
         private void SearchBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            //Appointment appointment = new Appointment {Subject = "Test"};
-            //var pocalAppointment = new PocalAppointment
-            //{
-            //    Appt = appointment
-            //};
-            
+            DoSearch();
+        }
+
+        private void DoSearch()
+        {
             App.ViewModel.SearchNumber += 1;
             App.ViewModel.SearchResults.Clear();
             if (searchBox.Text == "") return;
             PocalAppointmentHelper.SearchAppointments(searchBox.Text);
-
         }
     }
 }

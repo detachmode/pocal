@@ -83,6 +83,11 @@ namespace Pocal
                 CloseMonthView();
                 e.Cancel = true;
             }
+            if (App.ViewModel.InModus == MainViewModel.Modi.SearchView)
+            {
+                CloseSearchView();
+                e.Cancel = true;
+            }
 
 
             base.OnBackKeyPress(e);
@@ -197,7 +202,7 @@ namespace Pocal
 
 
             var button4 = new ApplicationBarIconButton();
-            button4.IconUri = new Uri("/Images/bird.png", UriKind.Relative);
+            button4.IconUri = new Uri("/Images/feature.search.png", UriKind.Relative);
             button4.Text = "Search";
             ApplicationBar.Buttons.Add(button4);
             button4.Click += delegate
@@ -872,6 +877,7 @@ namespace Pocal
         public void CloseSearchView()
         {
             App.ViewModel.InModus = App.ViewModel.ModusBefore;
+            TheSearchControl.CloseSearchControl();
             Canvas.SetZIndex(SearchGrid, -11);
             //SearchGrid.Items.Clear();
 

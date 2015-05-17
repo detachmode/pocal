@@ -24,8 +24,9 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <phone:LongListSelector x:Name="SearchResultsLLS"      
-                    Grid.Row="1"           
+        <phone:LongListSelector x:Name="SearchResultsLLS"  
+                    Margin="-10,0,10,0"           
+                    Grid.Row="1"                                  
 					ItemsSource="{Binding SearchResults}"  
                     HorizontalContentAlignment="Stretch" 
                     Background="Transparent">

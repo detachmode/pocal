@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Pocal.Helper;
 using Pocal.ViewModel;
+using Shared.Helper;
 using GestureEventArgs = System.Windows.Input.GestureEventArgs;
 
 namespace Pocal
@@ -20,11 +21,17 @@ namespace Pocal
             InitializeComponent();
         }
 
-        private void LayoutRoot_OnTap(object sender, GestureEventArgs e)
+        private void GotoAgenda_OnTap(object sender, GestureEventArgs e)
         {
             var pocalAppointment = (PocalAppointment) LayoutRoot.DataContext;
             ViewSwitcher.Mainpage.CloseSearchView();
             App.ViewModel.GoToDate(pocalAppointment.StartTime.DateTime);
+        }
+
+        private void Edit_OnTap(object sender, GestureEventArgs e)
+        {
+            var pocalAppointment = (PocalAppointment)LayoutRoot.DataContext;
+            PocalAppointmentHelper.EditAppointment(pocalAppointment);
         }
     }
 }
