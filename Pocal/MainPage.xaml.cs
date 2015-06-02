@@ -854,13 +854,42 @@ namespace Pocal
             /*********** BUTTONs ***********/
             var button1 = new ApplicationBarIconButton
             {
-                IconUri = new Uri("/Images/back.png", UriKind.Relative),               
+                IconUri = new Uri("/Images/back.png", UriKind.Relative),
+                Text = AppResources.AppBarSearchMinus
+
+            };
+            var button2 = new ApplicationBarIconButton
+            {
+                IconUri = new Uri("/Images/cancel.png", UriKind.Relative),
                 Text = AppResources.AppBarBack
+
+            };
+            var button3 = new ApplicationBarIconButton
+            {
+                IconUri = new Uri("/Images/next.png", UriKind.Relative),
+                Text = AppResources.AppBarSearchPlus
 
             };
 
             ApplicationBar.Buttons.Add(button1);
-            button1.Click += delegate { CloseSearchView(); };
+            ApplicationBar.Buttons.Add(button2);
+            ApplicationBar.Buttons.Add(button3);
+
+            button1.Click += delegate { SearchPastOneYear(); };
+            button2.Click += delegate { CloseSearchView(); };
+            button3.Click += delegate { SearchPlusOneYear(); };
+        }
+
+        private void SearchPlusOneYear()
+        {
+            App.ViewModel.lastCachedDate = App.ViewModel.lastCachedDate.AddDays(365);
+            ViewSwitcher.Mainpage.TheSearchControl.SearchAndLoadCache();
+        }
+
+        private void SearchPastOneYear()
+        {            
+            ViewSwitcher.Mainpage.TheSearchControl.SearchAndLoadCachePast();
+            App.ViewModel.lastCachedDate = App.ViewModel.lastCachedDate.AddDays(-365);
         }
 
         private void OpenSearchView()
@@ -879,7 +908,12 @@ namespace Pocal
             App.ViewModel.InModus = App.ViewModel.ModusBefore;
             TheSearchControl.CloseSearchControl();
             Canvas.SetZIndex(SearchGrid, -11);
-            //SearchGrid.Items.Clear();
+
+            // prevents Keyboard Popup
+            TheSearchControl.searchBox.IsEnabled = false;
+            TheSearchControl.searchBox.IsEnabled = true;
+
+            App.ViewModel.SearchResults.Clear();
 
             switch (App.ViewModel.InModus)
             {

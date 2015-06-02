@@ -18,32 +18,39 @@
         </Grid.RowDefinitions>
 
 
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="Pocal" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0" />
-            <TextBlock Text="search" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" />
-        </StackPanel>
+        <Grid x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,0">          
+            <StackPanel Margin="0,50,0,6">
+                <TextBlock Text="search" Margin="9,0,0,0"  
+                       Style="{StaticResource PhoneTextTitle1Style}" LineHeight="22"
+                       />              
+                <TextBlock Text="" Margin="9,-7,0,0"
+                       x:Name="SearchLoadingIndicator"/>
+            </StackPanel>
+            <TextBox x:Name="searchBox"
+                 Height="75"
+                 VerticalAlignment="Top"
+                 TextChanged="SearchBox_OnTextChanged" InputScope="Text"/>
+            
+        </Grid>
 
-        <!--ContentPanel - place additional content here-->
         <phone:LongListSelector x:Name="SearchResultsLLS"  
-                    Margin="-10,0,10,0"           
-                    Grid.Row="1"                                  
+                    Grid.Row="1"              
+                    Margin="-10,0,10,0"                                                          
 					ItemsSource="{Binding SearchResults}"  
                     HorizontalContentAlignment="Stretch" 
                     Background="Transparent">
             <phone:LongListSelector.ItemTemplate >
                 <DataTemplate >
-                  <pocal:SearchResults/>
+                    <pocal:SearchResults/>
                 </DataTemplate>
             </phone:LongListSelector.ItemTemplate>
         </phone:LongListSelector>
-        
-        <Grid Height="70"
-              VerticalAlignment="Top"
-              Background="{StaticResource PhoneBackgroundBrush}">
-            <TextBox x:Name="searchBox"
-                     TextChanged="SearchBox_OnTextChanged"
-                    />
-        </Grid>
+
+
+
+
+
+
 
 
     </Grid>

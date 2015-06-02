@@ -20,6 +20,33 @@ namespace Pocal.Converter
         public static SolidColorBrush Red = new SolidColorBrush(Colors.Red);
     }
 
+    public static class converterHelper
+    {
+        public static string Convert12(PocalAppointment appt)
+        {
+            var ampM = appt.StartTime.ToString("tt", CultureSettings.CiEn);
+            var result = string.Format("{0:h:mm}", appt.StartTime);
+            return result + " " + ampM;
+        }
+
+        public static string Convert12(DateTimeOffset dt)
+        {
+            var ampM = dt.ToString("tt", CultureSettings.CiEn);
+            var result = string.Format("{0:h:mm}", dt);
+            return result + " " + ampM;
+        }
+
+        public static string Convert24(PocalAppointment appt)
+        {
+            return string.Format("{0:HH:mm}", appt.StartTime);
+        }
+
+        public static string Convert24(DateTimeOffset dt)
+        {
+            return string.Format("{0:HH:mm}", dt);
+        }
+    }
+
 
     public class DateConverter : IValueConverter
     {
@@ -144,7 +171,7 @@ namespace Pocal.Converter
                 return AppResources.ResourceLanguage.Contains("en") ? AppResources.allDay : "";
             }
 
-            return App.ViewModel.SettingsViewModel.IsTimeStyleAMPM() ? Convert12(appt) : Convert24(appt);
+            return App.ViewModel.SettingsViewModel.IsTimeStyleAMPM() ? converterHelper.Convert12(appt) : converterHelper.Convert24(appt);
 
             //return AppResources.ResourceLanguage.Contains("en") ? Convert12(appt) : Convert24(appt);
         }
@@ -154,17 +181,7 @@ namespace Pocal.Converter
             return null;
         }
 
-        private static string Convert12(PocalAppointment appt)
-        {
-            var ampM = appt.StartTime.ToString("tt", CultureSettings.CiEn);
-            var result = string.Format("{0:h:mm}", appt.StartTime);
-            return result + " " + ampM;
-        }
 
-        private static string Convert24(PocalAppointment appt)
-        {
-            return string.Format("{0:HH:mm}", appt.StartTime);
-        }
     }
 
 

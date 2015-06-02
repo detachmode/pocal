@@ -43,6 +43,8 @@
         <converter:DeltaTimeSecondLineVisibility x:Key="DeltaTimeSecondLineVisibility"/>
         <converter:DeltaTimeFirstLine x:Key="DeltaTimeFirstLine"/>
 
+        <converter:SearchSecondLineConverter x:Key="SearchSecondLineConverter"/>
+
         <converter:SingelDayApptHeight x:Key="SingelDayApptHeight"/>
         <converter:SingelDayApptWidth x:Key="SingelDayApptWidth"/>
         <converter:WindowHeaderDateConverter x:Key="WindowHeaderDateConverter"/>
@@ -67,6 +69,7 @@
         <converter:MonthVisibilityConverter x:Key="MonthVisibilityConverter" />
         <converter:MonthNameConverter x:Key="MonthNameConverter" />
         <converter:OnOffConverter x:Key="OnOffConverter" />
+        
 
     </Application.Resources>
 

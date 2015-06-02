@@ -124,6 +124,24 @@ namespace Pocal.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die previous ähnelt.
+        /// </summary>
+        public static string AppBarSearchMinus {
+            get {
+                return ResourceManager.GetString("AppBarSearchMinus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die next ähnelt.
+        /// </summary>
+        public static string AppBarSearchPlus {
+            get {
+                return ResourceManager.GetString("AppBarSearchPlus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die days ähnelt.
         /// </summary>
         public static string DayPlural {

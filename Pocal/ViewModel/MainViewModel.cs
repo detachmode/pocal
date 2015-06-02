@@ -205,6 +205,9 @@ namespace Pocal.ViewModel
             }
         }
 
+        public DateTime lastCachedDate = DateTime.Today;
+        public IReadOnlyList<Appointment> cachedAppointmentsForSearch;
+
         public ObservableCollection<PocalAppointment> SearchResults
         {
             get { return _searchResults; }
@@ -248,7 +251,6 @@ namespace Pocal.ViewModel
             }
         }
 
-        public int SearchNumber { get; set; }
 
         internal bool IsInOverviewModus()
         {

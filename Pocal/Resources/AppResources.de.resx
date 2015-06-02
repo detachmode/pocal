@@ -253,4 +253,10 @@
   <data name="SettingsLiveTileStyleWideOne" xml:space="preserve">
     <value>Ein Termin</value>
   </data>
+  <data name="AppBarSearchMinus" xml:space="preserve">
+    <value>früher</value>
+  </data>
+  <data name="AppBarSearchPlus" xml:space="preserve">
+    <value>später</value>
+  </data>
 </root>

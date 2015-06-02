@@ -102,60 +102,15 @@ namespace Pocal.Helper
         // ******** Search Appointment *********//
         // ******** ****************** *********//
 
-        public static async void SearchAppointments(string searchString)
+        public static async void SearchCachedAppointments(string searchString)
         {
-            var searchnumber = App.ViewModel.SearchNumber;
-            foreach (var appointment in await CalendarAPI.GetAppointments(DateTime.Now.Date, 10))
+
+            foreach (var appointment in App.ViewModel.cachedAppointmentsForSearch)
             {
-                if (appointmentMatch(searchString, appointment))
-                {
-                    var pocalAppointment = await App.ViewModel.CreatePocalAppoinment(appointment);
-                    if (searchnumber == App.ViewModel.SearchNumber)
-                    {
-                        App.ViewModel.SearchResults.Add(pocalAppointment);
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
-
+                if (!appointmentMatch(searchString, appointment)) continue;
+                var pocalAppointment = await App.ViewModel.CreatePocalAppoinment(appointment);
+                App.ViewModel.SearchResults.Add(pocalAppointment);
             }
-
-            foreach (var appointment in await CalendarAPI.GetAppointments(DateTime.Now.Date.AddDays(10), 30))
-            {
-                if (appointmentMatch(searchString, appointment))
-                {
-                    var pocalAppointment = await App.ViewModel.CreatePocalAppoinment(appointment);
-                    if (searchnumber == App.ViewModel.SearchNumber)
-                    {
-                        App.ViewModel.SearchResults.Add(pocalAppointment);
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
-
-            }
-
-            foreach (var appointment in await CalendarAPI.GetAppointments(DateTime.Now.Date.AddDays(40), 300))
-            {
-                if (appointmentMatch(searchString, appointment))
-                {
-                    var pocalAppointment = await App.ViewModel.CreatePocalAppoinment(appointment);
-                    if (searchnumber == App.ViewModel.SearchNumber)
-                    {
-                        App.ViewModel.SearchResults.Add(pocalAppointment);
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
-
-            }
-
 
         }
 
