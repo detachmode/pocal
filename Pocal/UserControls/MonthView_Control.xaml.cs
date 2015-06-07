@@ -10,7 +10,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Windows.ApplicationModel.Appointments;
 using Pocal.Helper;
-using Pocal.Resources;
 using Shared.Helper;
 
 namespace Pocal
@@ -27,12 +26,12 @@ namespace Pocal
 
         public void LoadGridSetup(DateTime dt)
         {
-            DayOfWeekNamesRow();
-            GridSetup(dt);
+            dayOfWeekNamesRow();
+            gridSetup(dt);
             LoadAppointmentLinesAsync();
         }
 
-        private void DayOfWeekNamesRow()
+        private void dayOfWeekNamesRow()
         {
 
             if (App.ViewModel.SettingsViewModel.FirstDayOfWeekIsSunday())
@@ -85,11 +84,11 @@ namespace Pocal
                 var dtOfBrd = (DateTime) brd.DataContext;
                 var appointmentsOfThisDay =
                     listOfAppointments.Where(x => TimeFrameChecker.IsInTimeFrameOfDay(x, dtOfBrd));
-                AddAppointmentLines(appointmentsOfThisDay, brd);
+                addAppointmentLines(appointmentsOfThisDay, brd);
             }
         }
 
-        private static async void AddAppointmentLines(IEnumerable<Appointment> appointmentsOfThisDay, Border item)
+        private static async void addAppointmentLines(IEnumerable<Appointment> appointmentsOfThisDay, Border item)
         {
             var count = 1;
             var screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
@@ -115,35 +114,35 @@ namespace Pocal
             }
         }
 
-        private static void DayTap(object sender, GestureEventArgs e)
+        private static void dayTap(object sender, GestureEventArgs e)
         {
             var dt = (DateTime) ((FrameworkElement) sender).DataContext;
             ViewSwitcher.Mainpage.CloseMonthView();
             App.ViewModel.GoToDate(dt);
         }
 
-        private void GridSetup(DateTime dt)
+        private void gridSetup(DateTime dt)
         {
             _gridCounter = 0;
-            CreateDaysArray(dt.Date);
+            createDaysArray(dt.Date);
 
-            var howManyRows = GetHowManyRows();
+            var howManyRows = getHowManyRows();
             for (var y = 0; y < howManyRows; y++)
             {
                 for (var x = 0; x < 7; x++)
                 {
-                    var brd = CreateBorder(x, y, (howManyRows - 1));
+                    var brd = createBorder(x, y, (howManyRows - 1));
 
                     var dayGrid = new Grid();
 
 
-                    var txt = CreateTextBlock();
+                    var txt = createTextBlock();
                     txt.Text = _gridDateTimes[_gridCounter].Day.ToString();
                     if (dt.Month != _gridDateTimes[_gridCounter].Month)
                     {
                         txt.Foreground = new SolidColorBrush(Colors.Gray);
                     }
-                    AddMarkings(dayGrid);
+                    addMarkings(dayGrid);
 
                     _gridCounter++;
                     dayGrid.Children.Add(txt);
@@ -154,24 +153,24 @@ namespace Pocal
             }
         }
 
-        private void AddMarkings(Grid dayGrid)
+        private void addMarkings(Grid dayGrid)
         {
             if (_gridDateTimes[_gridCounter].Date == DateTime.Now.Date)
             {
                 var grid =
-                    CreateTriangleMark(new BitmapImage(new Uri(@"\Images\MonthViewDayNowMark.png", UriKind.Relative)), HorizontalAlignment.Left);
+                    createTriangleMark(new BitmapImage(new Uri(@"\Images\MonthViewDayNowMark.png", UriKind.Relative)), HorizontalAlignment.Left);
                 dayGrid.Children.Add(grid);
             }
 
             if (_gridDateTimes[_gridCounter].Date == App.ViewModel.DayAtPointer.Dt.Date)
             {
                 var grid =
-                    CreateTriangleMark(new BitmapImage(new Uri(@"\Images\MonthViewDeltaTimeMark.png", UriKind.Relative)), HorizontalAlignment.Right);
+                    createTriangleMark(new BitmapImage(new Uri(@"\Images\MonthViewDeltaTimeMark.png", UriKind.Relative)), HorizontalAlignment.Right);
                 dayGrid.Children.Add(grid);
             }
         }
 
-        private static Grid CreateTriangleMark(BitmapImage imageSource, HorizontalAlignment horizontalAlignment)
+        private static Grid createTriangleMark(BitmapImage imageSource, HorizontalAlignment horizontalAlignment)
         {
             var grid = new Grid
             {
@@ -191,7 +190,7 @@ namespace Pocal
             return grid;
         }
 
-        private int GetHowManyRows()
+        private int getHowManyRows()
         {
             var counter = 0;
             var firstOneEncountered = false;
@@ -210,7 +209,7 @@ namespace Pocal
             return ((int) (counter/7.0 + 1));
         }
 
-        private static TextBlock CreateTextBlock()
+        private static TextBlock createTextBlock()
         {
             var txt = new TextBlock
             {
@@ -220,7 +219,7 @@ namespace Pocal
             return txt;
         }
 
-        private void CreateDaysArray(DateTime forMonth)
+        private void createDaysArray(DateTime forMonth)
         {
             _gridDateTimes = new List<DateTime>();
             DateTime firstDay = forMonth.AddDays(-forMonth.Day).AddDays(1);
@@ -229,7 +228,7 @@ namespace Pocal
             int lastDayInThisMonth = DateTime.DaysInMonth(firstDay.Year, firstDay.Month);
             DateTime firstDayInNextMonth = new DateTime(firstDay.Year, firstDay.Month, lastDayInThisMonth).AddDays(1);
 
-            int offsetBegin = OffsetBeginOfWeek(firstDay);
+            int offsetBegin = offsetBeginOfWeek(firstDay);
 
             for (var i = (offsetBegin - 1); i >= 0; i--)
             {
@@ -246,7 +245,7 @@ namespace Pocal
             }
         }
 
-        private static int OffsetBeginOfWeek(DateTime firstDay)
+        private static int offsetBeginOfWeek(DateTime firstDay)
         {
             int offsetBegin = 0;
             if (App.ViewModel.SettingsViewModel.FirstDayOfWeekIsSunday())
@@ -308,7 +307,7 @@ namespace Pocal
             return offsetBegin;
         }
 
-        private Border CreateBorder(int x, int y, int maxY)
+        private Border createBorder(int x, int y, int maxY)
         {
             var brd = new Border();
 
@@ -343,7 +342,7 @@ namespace Pocal
 
 
             brd.DataContext = _gridDateTimes[_gridCounter];
-            brd.Tap += DayTap;
+            brd.Tap += dayTap;
 
             const double height = (483/7.0);
             const double width = (483/7.0);
