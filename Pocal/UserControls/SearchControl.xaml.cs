@@ -33,13 +33,13 @@ namespace Pocal
 
         public async void SearchAndLoadCache()
         {
-            DateTime startDate = App.ViewModel.lastCachedDate;
+            DateTime startDate = App.ViewModel.LastCachedDate;
             ViewSwitcher.Mainpage.TheSearchControl.SearchLoadingIndicator.Text = "Loading . . .";
 
-            App.ViewModel.cachedAppointmentsForSearch = await CalendarAPI.GetAppointments(startDate, 30);
+            App.ViewModel.CachedAppointmentsForSearch = await CalendarAPI.GetAppointments(startDate, 30);
             DoSearch();
 
-            App.ViewModel.cachedAppointmentsForSearch = await CalendarAPI.GetAppointments(startDate, 365);
+            App.ViewModel.CachedAppointmentsForSearch = await CalendarAPI.GetAppointments(startDate, 365);
             DoSearch();
 
 
@@ -49,17 +49,17 @@ namespace Pocal
 
         public async void SearchAndLoadCachePast()
         {
-            DateTime startDate = App.ViewModel.lastCachedDate;
+            DateTime startDate = App.ViewModel.LastCachedDate;
             ViewSwitcher.Mainpage.TheSearchControl.SearchLoadingIndicator.Text = "Loading . . .";
 
             var list = (await CalendarAPI.GetAppointments(startDate.AddDays(-30), 30)).ToList();
             list.Reverse();
-            App.ViewModel.cachedAppointmentsForSearch = list;
+            App.ViewModel.CachedAppointmentsForSearch = list;
             DoSearch();
 
             list = (await CalendarAPI.GetAppointments(startDate.AddDays(-365), 365)).ToList();
             list.Reverse();
-            App.ViewModel.cachedAppointmentsForSearch = list;
+            App.ViewModel.CachedAppointmentsForSearch = list;
             DoSearch();
 
 

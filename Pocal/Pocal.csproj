@@ -330,20 +330,6 @@
     <Reference Include="System.Windows.Interactivity" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ScheduledTaskAgent1\ScheduledTaskAgent1.csproj">
-      <Project>{9c2e89f7-2b19-4042-9d1d-b33bf517e8cb}</Project>
-      <Name>ScheduledTaskAgent1</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ScreenSizeSupport\ScreenSizeSupport.csproj">
-      <Project>{949a23fd-3917-495b-80fb-2465fe68b8a8}</Project>
-      <Name>ScreenSizeSupport</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared\Shared.csproj">
-      <Project>{e2efae07-1247-47e1-8b67-7486bcfe7c23}</Project>
-      <Name>Shared</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\AppResources.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.de.Designer.cs</LastGenOutput>
@@ -357,6 +343,20 @@
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ScheduledTaskAgent1\ScheduledTaskAgent1.csproj">
+      <Project>{9c2e89f7-2b19-4042-9d1d-b33bf517e8cb}</Project>
+      <Name>ScheduledTaskAgent1</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScreenSizeSupport\ScreenSizeSupport.csproj">
+      <Project>{949a23fd-3917-495b-80fb-2465fe68b8a8}</Project>
+      <Name>ScreenSizeSupport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{e2efae07-1247-47e1-8b67-7486bcfe7c23}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

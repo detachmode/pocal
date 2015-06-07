@@ -11,7 +11,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="500" d:DesignWidth="480"
-    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=viewmodel:MainViewModel}"
+    d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
     >
     <screenSizeSupport:ZoomBox  ZoomFactor="{Binding DisplayInformationEx.ViewPixelsPerHostPixel, Source={StaticResource DisplayInformationEmulator}}" >
 

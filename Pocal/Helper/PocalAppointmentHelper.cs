@@ -105,7 +105,7 @@ namespace Pocal.Helper
         public static async void SearchCachedAppointments(string searchString)
         {
 
-            foreach (var appointment in App.ViewModel.cachedAppointmentsForSearch)
+            foreach (var appointment in App.ViewModel.CachedAppointmentsForSearch)
             {
                 if (!appointmentMatch(searchString, appointment)) continue;
                 var pocalAppointment = await App.ViewModel.CreatePocalAppoinment(appointment);

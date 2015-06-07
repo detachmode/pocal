@@ -31,25 +31,15 @@ namespace ScheduledTaskAgent1
         {
             Deployment.Current.Dispatcher.BeginInvoke(async delegate
             {
-                string msg;
                 try
                 {
                     LiveTileManager.AppointmentsOnLiveTile = await LiveTileManager.GetNextAppointments();
                     LiveTileManager.UpdateTile();
-
-                    msg = "LiveTile geupdatet";
                 }
                 catch
                 {
-                    msg = "NOT UPDATED";
+                    // ignored
                 }
-
-                //var toast = new ShellToast
-                //{
-                //    Title = "Pocal",
-                //    Content = msg
-                //};
-                //toast.Show();
 
 #if DEBUG_AGENT
                 ScheduledActionService.LaunchForTest(task.Name, TimeSpan.FromSeconds(60));

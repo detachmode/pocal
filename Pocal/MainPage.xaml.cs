@@ -882,14 +882,14 @@ namespace Pocal
 
         private void SearchPlusOneYear()
         {
-            App.ViewModel.lastCachedDate = App.ViewModel.lastCachedDate.AddDays(365);
+            App.ViewModel.LastCachedDate = App.ViewModel.LastCachedDate.AddDays(365);
             ViewSwitcher.Mainpage.TheSearchControl.SearchAndLoadCache();
         }
 
         private void SearchPastOneYear()
         {            
             ViewSwitcher.Mainpage.TheSearchControl.SearchAndLoadCachePast();
-            App.ViewModel.lastCachedDate = App.ViewModel.lastCachedDate.AddDays(-365);
+            App.ViewModel.LastCachedDate = App.ViewModel.LastCachedDate.AddDays(-365);
         }
 
         private void OpenSearchView()

@@ -12,6 +12,7 @@ using Cimbalino.Phone.Toolkit.Extensions;
 using Microsoft.Phone.Shell;
 using Shared.Helper;
 
+
 namespace ScheduledTaskAgent1
 {
     public static class LiveTileManager

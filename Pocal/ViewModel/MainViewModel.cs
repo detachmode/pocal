@@ -55,7 +55,15 @@ namespace Pocal.ViewModel
             App.DisplayInformationEmulator =
                 Application.Current.Resources["DisplayInformationEmulator"] as DisplayInformationEmulator;
 
-            //	//CREATE DESIGN TIME DATA HERE
+
+            createDesignData();
+
+            #endregion
+        }
+
+        private void createDesignData()
+        {
+        	//CREATE DESIGN TIME DATA HERE
             var start = new DateTime(2014, 11, 07);
             var dt = start - start.TimeOfDay;
 
@@ -69,9 +77,28 @@ namespace Pocal.ViewModel
             var ts3 = new TimeSpan(3, 0, 0);
 
             var designDataDayappts = new ObservableCollection<Appointment>();
+            SearchResults = new ObservableCollection<PocalAppointment>();
 
             var calColorOrange = new SolidColorBrush(Colors.Orange);
             var calColorRed = new SolidColorBrush(Colors.Red);
+
+
+            //var appt = new Appointment
+            //{
+            //    Subject = "Gameplay Programming",
+            //    StartTime = dt2.AddHours(8.5),
+            //    Duration = ts3
+            //};
+            //var pa = await CreatePocalAppoinment(appt);
+
+            //SearchResults.Add(pa);
+
+            designDataDayappts.Add(new Appointment
+            {
+                Subject = "IT Security",
+                StartTime = dt2.AddHours(11.75),
+                Duration = ts
+            });
 
 
             designDataDayappts.Add(new Appointment
@@ -185,11 +212,8 @@ namespace Pocal.ViewModel
             Days.Add(new Day {Dt = dt4, PocalApptsOfDay = designDataDay4Pocalappts, Sunday = false});
 
 
-
             SingleDayViewModel.TappedDay = Days[0];
             DayAtPointer = new Day {Dt = dt.AddHours(24)};
-
-            #endregion
         }
 
         public ObservableCollection<Day> Days
@@ -205,8 +229,8 @@ namespace Pocal.ViewModel
             }
         }
 
-        public DateTime lastCachedDate = DateTime.Today;
-        public IReadOnlyList<Appointment> cachedAppointmentsForSearch;
+        public DateTime LastCachedDate = DateTime.Today;
+        public IReadOnlyList<Appointment> CachedAppointmentsForSearch;
 
         public ObservableCollection<PocalAppointment> SearchResults
         {
@@ -287,17 +311,17 @@ namespace Pocal.ViewModel
                 Days.Clear();
 
 
-                if (!IsStampNewest(stamp))
+                if (!isStampNewest(stamp))
                     return;
-                await LoadFirstDay(dt, stamp);
+                await loadFirstDay(dt, stamp);
 
-                if (!IsStampNewest(stamp))
+                if (!isStampNewest(stamp))
                     return;
-                await LoadEnoughMoreDay(stamp);
+                await loadEnoughMoreDay(stamp);
 
-                if (!IsStampNewest(stamp))
+                if (!isStampNewest(stamp))
                     return;
-                await LoadPastDays(3, stamp);
+                await loadPastDays(3, stamp);
 
 
                 IsCurrentlyLoading = false;
@@ -308,9 +332,9 @@ namespace Pocal.ViewModel
             }
         }
 
-        private async Task LoadFirstDay(DateTime dt, double stamp)
+        private async Task loadFirstDay(DateTime dt, double stamp)
         {
-            await LoadDays(dt, 1, stamp);
+            await loadDays(dt, 1, stamp);
 
             SingleDayViewModel.TappedDay = Days.First(x => x.Dt == dt);
             if (App.ViewModel.InModus == Modi.AgendaViewSdv || InModus == Modi.OverViewSdv)
@@ -322,7 +346,7 @@ namespace Pocal.ViewModel
             ConflictManager.SolveConflicts();
         }
 
-        private async Task LoadEnoughMoreDay(double stamp)
+        private async Task loadEnoughMoreDay(double stamp)
         {
             if (_loadEnoughCounter > 5)
             {
@@ -330,16 +354,16 @@ namespace Pocal.ViewModel
                 return;
             }
             _loadEnoughCounter++;
-            await LoadMoreDays(3, stamp);
-            if (CountLoadedAppointments() < 18)
+            await loadMoreDays(3, stamp);
+            if (countLoadedAppointments() < 18)
             {
-                await LoadEnoughMoreDay(stamp);
+                await loadEnoughMoreDay(stamp);
             }
             else
                 IsCurrentlyLoading = false;
         }
 
-        private int CountLoadedAppointments()
+        private int countLoadedAppointments()
         {
             var counter = 0;
             foreach (var day in Days)
@@ -352,22 +376,22 @@ namespace Pocal.ViewModel
         public async Task LoadIncrementalBackwards(int howMany, double stamp)
         {
             IsCurrentlyLoading = true;
-            await LoadPastDays(howMany, stamp);
+            await loadPastDays(howMany, stamp);
             IsCurrentlyLoading = false;
         }
 
         public async Task LoadIncrementalForward(int howMany, double stamp)
         {
             IsCurrentlyLoading = true;
-            await LoadMoreDays(howMany, stamp);
+            await loadMoreDays(howMany, stamp);
             IsCurrentlyLoading = false;
         }
 
-        private async Task LoadMoreDays(int howMany, double stamp)
+        private async Task loadMoreDays(int howMany, double stamp)
         {
             var fromDate = Days[Days.Count - 1].Dt.AddDays(1);
             if (Days.Count > 0)
-                await LoadDays(fromDate, howMany, stamp);
+                await loadDays(fromDate, howMany, stamp);
         }
 
         #region LOAD
@@ -376,13 +400,13 @@ namespace Pocal.ViewModel
         private readonly List<PocalAppointment> _pocalAppointmentsBuffer = new List<PocalAppointment>();
         private ObservableCollection<PocalAppointment> _searchResults;
 
-        private async Task GetPocalAppointments(int howManyDays, DateTime startDay)
+        private async Task getPocalAppointments(int howManyDays, DateTime startDay)
         {
             _appoinmentBuffer = await CalendarAPI.GetAppointments(startDay, howManyDays);
-            await ConvertAppointmentBuffer();
+            await convertAppointmentBuffer();
         }
 
-        private async Task ConvertAppointmentBuffer()
+        private async Task convertAppointmentBuffer()
         {
             _pocalAppointmentsBuffer.Clear();
             await CalendarAPI.SetCalendars(false);
@@ -395,32 +419,32 @@ namespace Pocal.ViewModel
         }
 
 
-        private async Task LoadDays(DateTime startDay, int howManyDays, double stamp)
+        private async Task loadDays(DateTime startDay, int howManyDays, double stamp)
         {
-            await GetPocalAppointments(howManyDays, startDay);
-            CreateAndAddDays(startDay, howManyDays, stamp);
+            await getPocalAppointments(howManyDays, startDay);
+            createAndAddDays(startDay, howManyDays, stamp);
         }
 
-        private async Task LoadPastDays(int howManyDays, double stamp)
+        private async Task loadPastDays(int howManyDays, double stamp)
         {
             var startDay = App.ViewModel.Days[0].Dt.AddDays(-howManyDays);
 
-            await GetPocalAppointments(howManyDays, startDay);
-            CreateAndInsertPastDays(startDay, howManyDays, stamp);
+            await getPocalAppointments(howManyDays, startDay);
+            createAndInsertPastDays(startDay, howManyDays, stamp);
         }
 
         #endregion
 
         #region Days
 
-        private void CreateAndAddDays(DateTime startDay, int howManyDays, double stamp)
+        private void createAndAddDays(DateTime startDay, int howManyDays, double stamp)
         {
             var dt = startDay;
 
             //Days.Clear();
             for (var i = 0; i < howManyDays; i++)
             {
-                if (!IsStampNewest(stamp))
+                if (!isStampNewest(stamp))
                     return;
 
                 // Create New Day with its Appointments
@@ -430,7 +454,7 @@ namespace Pocal.ViewModel
                 Days.Add(new Day
                 {
                     Dt = dt,
-                    PocalApptsOfDay = GetPocalApptsOfDay(dt)
+                    PocalApptsOfDay = getPocalApptsOfDay(dt)
                 });
 
                 // Sunday Attribute
@@ -444,25 +468,25 @@ namespace Pocal.ViewModel
             }
         }
 
-        private bool IsStampNewest(double stamp)
+        private bool isStampNewest(double stamp)
         {
             return _newestGoToDateStamp <= stamp;
         }
 
-        private void CreateAndInsertPastDays(DateTime startDay, int howManyDays, double stamp)
+        private void createAndInsertPastDays(DateTime startDay, int howManyDays, double stamp)
         {
             var dt = startDay;
 
             //Days.Clear();
             for (var i = 0; i < howManyDays; i++)
             {
-                if (!IsStampNewest(stamp))
+                if (!isStampNewest(stamp))
                     return;
                 // Create New Day with its Appointments
                 Days.Insert(i, new Day
                 {
                     Dt = dt,
-                    PocalApptsOfDay = GetPocalApptsOfDay(dt)
+                    PocalApptsOfDay = getPocalApptsOfDay(dt)
                 });
 
                 // Sunday Attribute
@@ -489,11 +513,11 @@ namespace Pocal.ViewModel
                 cal = CalendarAPI.Calendars.First(c => c.LocalId == appt.CalendarId);
             }
 
-            var pocalAppt = new PocalAppointment {Appt = appt, CalColor = GetAppointmentColorBrush(appt, cal)};
+            var pocalAppt = new PocalAppointment {Appt = appt, CalColor = getAppointmentColorBrush(appt, cal)};
             return pocalAppt;
         }
 
-        private SolidColorBrush GetAppointmentColorBrush(Appointment appt, AppointmentCalendar cal)
+        private SolidColorBrush getAppointmentColorBrush(Appointment appt, AppointmentCalendar cal)
         {
             Color calColor;
             if (appt.StartTime.Date < DateTime.Now.Date)
@@ -515,7 +539,7 @@ namespace Pocal.ViewModel
         }
 
 
-        private ObservableCollection<PocalAppointment> GetPocalApptsOfDay(DateTime dt)
+        private ObservableCollection<PocalAppointment> getPocalApptsOfDay(DateTime dt)
         {
             var thisDayAppts = new ObservableCollection<PocalAppointment>();
             foreach (var pocalAppt in _pocalAppointmentsBuffer)
@@ -525,13 +549,13 @@ namespace Pocal.ViewModel
                     thisDayAppts.Add(pocalAppt);
                 }
             }
-            thisDayAppts = SortAppointments(thisDayAppts);
+            thisDayAppts = sortAppointments(thisDayAppts);
 
             return thisDayAppts;
         }
 
 
-        private ObservableCollection<PocalAppointment> SortAppointments(
+        private ObservableCollection<PocalAppointment> sortAppointments(
             ObservableCollection<PocalAppointment> thisDayAppts)
         {
             var sorted = new ObservableCollection<PocalAppointment>();
