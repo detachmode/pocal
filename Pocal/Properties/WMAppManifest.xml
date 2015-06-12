@@ -5,8 +5,6 @@
     <Language code="de" />
     <Language code="en" />
     <Language code="it" />
-    <Language code="af" />
-    <Language code="sq-AL" />
   </Languages>
   <App xmlns="" ProductID="{89f0defb-5da9-490c-a2f2-da273d2b5dd1}" Title="Pocal" RuntimeType="Silverlight" Version="1.5.0.0" Genre="apps.normal" Author="Detachmode" Description="Agenda View and Day View combined." SDOptOut="false" BackUpOptOut="true" Publisher="Detachmode" PublisherID="{37123FD0-04CF-41ED-8BE2-1D79D1B1CFF4}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
