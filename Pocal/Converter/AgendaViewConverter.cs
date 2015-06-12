@@ -390,6 +390,8 @@ namespace Pocal.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (DesignerProperties.IsInDesignTool) return Visibility.Visible;
+
             if (App.ViewModel.SettingsViewModel.MonthBeginning == false) return Visibility.Collapsed;
 
             var day = value as Day;
