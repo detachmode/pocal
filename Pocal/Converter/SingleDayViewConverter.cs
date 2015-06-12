@@ -126,7 +126,7 @@ namespace Pocal.Converter
 
             _endTime = _appt.StartTime + _appt.Duration;
 
-            if (ApptBeginsAndEndsThisDay())
+            if (apptBeginsAndEndsThisDay())
             {
                 var startTimeSnapped30 = _appt.StartTime.AddMinutes(-_appt.StartTime.Minute%30);
                 DateTimeOffset endTimeSnapped30;
@@ -143,7 +143,7 @@ namespace Pocal.Converter
             }
 
 
-            if (ApptJustBeginsThisDay())
+            if (apptJustBeginsThisDay())
             {
                 result = (HourLine.Height*24 + 1);
                 result -= (_appt.StartTime.Hour)*HourLine.Height;
@@ -152,7 +152,7 @@ namespace Pocal.Converter
                 return result + 2;
             }
 
-            if (ApptJustEndsThisDay())
+            if (apptJustEndsThisDay())
             {
                 result = (_endTime.Hour*HourLine.Height);
                 if (_endTime.Minute > 0)
@@ -171,19 +171,19 @@ namespace Pocal.Converter
             return null;
         }
 
-        private bool ApptBeginsAndEndsThisDay()
+        private bool apptBeginsAndEndsThisDay()
         {
             var testDate = App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date;
             return (_appt.StartTime.Date == testDate && _endTime.Date == testDate);
         }
 
-        private bool ApptJustEndsThisDay()
+        private bool apptJustEndsThisDay()
         {
             return (_appt.StartTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date
                     && _endTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date);
         }
 
-        private bool ApptJustBeginsThisDay()
+        private bool apptJustBeginsThisDay()
         {
             return (_endTime.Date != App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date
                     && _appt.StartTime.Date == App.ViewModel.SingleDayViewModel.TappedDay.Dt.Date);
@@ -269,14 +269,14 @@ namespace Pocal.Converter
                 conflicts = 1;
 
 
-            CalcY(starttime, myTranslate);
-            CalcX(conflicts, column, myTranslate);
+            calcY(starttime, myTranslate);
+            calcX(conflicts, column, myTranslate);
 
 
             return myTransformGroup;
         }
 
-        private static void CalcY(DateTimeOffset starttime, TranslateTransform myTranslate)
+        private static void calcY(DateTimeOffset starttime, TranslateTransform myTranslate)
         {
             double value;
 
@@ -297,7 +297,7 @@ namespace Pocal.Converter
             myTranslate.Y = value;
         }
 
-        private static void CalcX(int conflicts, int column, TranslateTransform myTranslate)
+        private static void calcX(int conflicts, int column, TranslateTransform myTranslate)
         {
             var screenSizeMultiplicator = App.DisplayInformationEmulator.DisplayInformationEx.ViewPixelsPerHostPixel;
             myTranslate.X = (480*screenSizeMultiplicator - 73)/conflicts*(column - 1);

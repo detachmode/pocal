@@ -183,12 +183,6 @@
                                         <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1"/>
                                     </DoubleAnimationUsingKeyFrames>
 
-                                    <!--<DoubleAnimationUsingKeyFrames 
-                                                                    Storyboard.TargetProperty="(UIElement.Opacity)" 
-                                                                    Storyboard.TargetName="StartTime">
-                                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.0" Value="0"/>
-                                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1"/>
-                                                                </DoubleAnimationUsingKeyFrames>-->
                                 </Storyboard>
 
                                 <EventTrigger x:Name="event" RoutedEvent="Canvas.Loaded">

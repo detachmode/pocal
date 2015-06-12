@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO.IsolatedStorage;
 
@@ -30,7 +31,8 @@ namespace Pocal.ViewModel
         public SettingsViewModel()
         {
             // Get the settings for this application.
-            _settings = IsolatedStorageSettings.ApplicationSettings;
+            if (!DesignerProperties.IsInDesignTool)
+                _settings = IsolatedStorageSettings.ApplicationSettings;
         }
 
         public List<string> TimeStyles

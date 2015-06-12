@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -170,10 +171,9 @@ namespace Pocal.Converter
             {
                 return AppResources.ResourceLanguage.Contains("en") ? AppResources.allDay : "";
             }
-
+            if(DesignerProperties.IsInDesignTool) return converterHelper.Convert24(appt);
             return App.ViewModel.SettingsViewModel.IsTimeStyleAMPM() ? converterHelper.Convert12(appt) : converterHelper.Convert24(appt);
 
-            //return AppResources.ResourceLanguage.Contains("en") ? Convert12(appt) : Convert24(appt);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -343,6 +343,8 @@ namespace Pocal.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var day = value as Day;
+
+            if (DesignerProperties.IsInDesignTool) return Visibility.Visible;
 
             if (App.ViewModel.SettingsViewModel.FirstDayOfWeekIsSunday())
             {

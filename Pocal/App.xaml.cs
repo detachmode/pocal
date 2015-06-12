@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Markup;
@@ -64,6 +65,9 @@ namespace Pocal
             InitializeLanguage();
 
             DisplayInformationEmulator = Resources["DisplayInformationEmulator"] as DisplayInformationEmulator;
+
+            if (!DesignerProperties.IsInDesignTool)
+                UserSettings = IsolatedStorageSettings.ApplicationSettings;
 
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)
@@ -337,7 +341,7 @@ namespace Pocal
 
 
         public static MarketplaceDetailTask _marketPlaceDetailTask = new MarketplaceDetailTask();
-        public static IsolatedStorageSettings UserSettings = IsolatedStorageSettings.ApplicationSettings;
+        public static IsolatedStorageSettings UserSettings;
         private static LicenseInformation _licenseInformation = new LicenseInformation();
 
 
