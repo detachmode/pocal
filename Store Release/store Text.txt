@@ -1,0 +1,22 @@
+Pocal is a new Calendar App for Windows Phone 8.1 with a innovative user experience.
+It combines an agenda view with a day view. That way you can easiliy get a overview over your next appointments. But if you want to get a more detailed view over one day , or want to add an appointment at a specific time, you can just tap on a day or an appointment and a little day view window will pop up. This day view is similiar to the day view in the native Windows Phone calendar.
+It also has a month view to navigate to a specific date and an overview view to see more appointments at one glance. To enter the Overview you can simple swipe left or right in the agenda view.
+
+ Feature list:
+ • Agenda view combined with a day view.
+ • An Overview view to see more appointments at one glance. 
+ • Minimalistic design 
+ • Fast app launch
+ • Design follows the Windows Phone guidelines.
+ • Smart usage of gestures.
+ 
+ --------------------------------------
+Ein Kalender für Windows Phone mit einem innovativen Bedienkonzept.
+Diese App kombiniert eine Agenda-Ansicht mit einer Tagesansicht auf eine Art und Weise, 
+die den Nutzer sowohl Überblick als auch Kontrolle über seine nächsten anstehenden Termine verschafft.
+
+Featureliste:
+ • Agenda-Anischt kombiniert mit einer Tagesansicht
+ • Eine Overview Ansicht um mehr Termine auf einmal sehen zu können
+ • Minimalistisches Design, das den Windows Phone Richtlinien entspricht 
+ • Gestensteuerung (swipe nach link oder rechts, um zwischen Agenda- und Overview-Ansicht zu wechseln.

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2014/deployment" AppPlatformVersion="8.1">
+  <DefaultLanguage xmlns="" code="en" />
+  <Languages xmlns="">
+    <Language code="de" />
+    <Language code="en" />
+    <Language code="it" />
+    <Language code="af" />
+    <Language code="sq-AL" />
+  </Languages>
+  <App xmlns="" ProductID="{89f0defb-5da9-490c-a2f2-da273d2b5dd1}" Title="Pocal" RuntimeType="Silverlight" Version="1.0.3.5" Genre="apps.normal" Author="Detachmode" Description="Agenda View and Day View combined." SDOptOut="false" BackUpOptOut="true" Publisher="Detachmode" PublisherID="{37123FD0-04CF-41ED-8BE2-1D79D1B1CFF4}">
+    <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
+    <Capabilities>
+      <Capability Name="ID_CAP_APPOINTMENTS" />
+    </Capabilities>
+    <Tasks>
+      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" ActivationPolicy="Resume" />
+      <ExtendedTask Name="BackgroundTask">
+        <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="ScheduledTaskAgent1" Source="ScheduledTaskAgent1" Type="ScheduledTaskAgent1.ScheduledAgent" />
+      </ExtendedTask>
+    </Tasks>
+    <Tokens>
+      <PrimaryToken TokenID="ListCalendarToken" TaskName="_default">
+        <TemplateFlip>
+          <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
+          <Count>0</Count>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
+          <Title></Title>
+          <BackContent></BackContent>
+          <BackBackgroundImageURI IsRelative="true" IsResource="false"></BackBackgroundImageURI>
+          <BackTitle></BackTitle>
+          <LargeBackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileLarge.png</LargeBackgroundImageURI>
+          <LargeBackContent />
+          <LargeBackBackgroundImageURI IsRelative="true" IsResource="false"></LargeBackBackgroundImageURI>
+          <DeviceLockImageURI IsRelative="true" IsResource="false"></DeviceLockImageURI>
+          <HasLarge>True</HasLarge>
+        </TemplateFlip>
+      </PrimaryToken>
+    </Tokens>
+    <ScreenResolutions>
+      <ScreenResolution Name="ID_RESOLUTION_WVGA" />
+      <ScreenResolution Name="ID_RESOLUTION_WXGA" />
+      <ScreenResolution Name="ID_RESOLUTION_HD720P" />
+    </ScreenResolutions>
+  </App>
+</Deployment>

@@ -1,0 +1,1991 @@
+[33mcommit 32d08e9256b42c9531339d1b5ce8f4b820f33a57[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 17:23:40 2014 +0100
+
+    Translate and Width Converter Bugfixes
+
+[33mcommit 4f0f212cabf09e5531c0bc87712b534d76004c60[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 16:57:36 2014 +0100
+
+    ConflictManager funzt bis auf span
+
+[33mcommit 4e0fb6b26a6b7f65fb3cccc4f0b91242479810a0[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 16:25:49 2014 +0100
+
+    ökonomischerer Platzverbrauch bei Conflicts in SDV
+
+[33mcommit e426675a34d79f522b7656df6ed8e9d244ea8623[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 15:59:55 2014 +0100
+
+    Refactoring
+
+[33mcommit fe2e81ba8a037b70b9cd011e03ce206b08f2a98e[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 10:28:27 2014 +0100
+
+    ConflictManager berechnet MaxConflictsPerCluster
+
+[33mcommit e2b423069372d3af0bd5a11c2608943000281d05[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 09:12:45 2014 +0100
+
+    iterateOverPreviouseEntries verbessert
+
+[33mcommit ce9e08cba9b17e611ffbd24a6c4ae24f114b1053[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 8 23:09:27 2014 +0100
+
+    ConflictManager funzt halbwegs
+
+[33mcommit 2a2230ad803eb3b32d342971bbf8efa7ec9f280b[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 8 20:57:58 2014 +0100
+
+    before Multibinding
+
+[33mcommit 16e429ee9265e7234cc9b4ae80cfffa7b5c37eaf[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Nov 7 17:10:39 2014 +0100
+
+    Revertet, because of Bug
+    Reload from Background triggered twice after adding Appointment
+
+[33mcommit ec5809a06810dc5dae69e8103945c0e6150e7c5e[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Nov 7 12:33:58 2014 +0100
+
+    Revert "RefreshData after activating from background"
+    
+    This reverts commit 837f713aa08ac58e0ca5c3fc69b804cdfccb804a.
+
+[33mcommit e4c795f443a37cc712ceceeb0c1c97780c57b219[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Nov 7 12:18:05 2014 +0100
+
+    Versuche den Bug zu fixen
+
+[33mcommit c592a081d6e7c47778998c5957693c80812a96d3[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Nov 7 09:53:22 2014 +0100
+
+    Changed Default Icons and TIles
+
+[33mcommit 9820f3cdc8b0987883c49097e08b78e15bfa9b53[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Nov 7 09:09:00 2014 +0100
+
+    SplashScreen, Performance Tweaks
+
+[33mcommit 3f0d5970f17d5ba21902216ef55d3279ab1ae33a[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 6 23:58:59 2014 +0100
+
+    refactoring
+
+[33mcommit 837f713aa08ac58e0ca5c3fc69b804cdfccb804a[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 6 23:55:30 2014 +0100
+
+    RefreshData after activating from background
+
+[33mcommit 948dfcadc2352df5f9b4686f13e60d2ba8030edd[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 6 23:27:00 2014 +0100
+
+    usings Aufgeräumt, Swipe SDV to cycle Days
+
+[33mcommit 0caf7864b5b7333152b65a31e52cb16cca96fd68[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 6 20:34:38 2014 +0100
+
+    OpenSDV ruckelt beim ersten mal nicht mehr.
+    Offen bleibt, Performance beim start, und beim scrollen in Agendaview
+
+[33mcommit 77292d300aaec3816343eb22a45ccf56edc432bb[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 6 12:42:27 2014 +0100
+
+    Keine Visibillity Animation beim Öffnen von SDV, jedoch ruckelt es nun
+
+[33mcommit 3e61ab37ed33830d6cc5aa432d2122bc2147214c[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Tue Nov 4 08:50:44 2014 +0100
+
+    Scroll To Änderung des NewPa
+
+[33mcommit 409fefe5f6d6bbd896dcf7364fdc2200cf142cca[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Tue Nov 4 07:47:28 2014 +0100
+
+    SDV Abschluss Border
+
+[33mcommit 091c02c2792ae616e4dbba66d55fd91449d1c816[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Tue Nov 4 07:33:19 2014 +0100
+
+    Formatting
+
+[33mcommit 70b86e2307f9e775e42f2deb832aa993d7360f44[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 3 20:18:17 2014 +0100
+
+    Commit
+
+[33mcommit 43460f2f936068b497e68e92ae915351293f90e4[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 3 17:19:45 2014 +0100
+
+    Bugfix: Tap to Scroll, funzte nach start beim ersten Tag nicht
+
+[33mcommit 9c5cd1de25d71a83a388d574d7f18edd9d94c4c5[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 3 17:01:14 2014 +0100
+
+    Longlistselector Scrollbar Hidding-Hack
+
+[33mcommit 778e3e91aff30dddaa20da30568a53c15afeed95[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 3 16:53:06 2014 +0100
+
+    Design Änderungen KW
+
+[33mcommit 2c48431c635d1fb83e00ec01380acad8d9bb4fb4[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 3 12:23:17 2014 +0100
+
+    Neues WeekNumber Design
+
+[33mcommit 22d5ce2ed9bf60f20e03b4c290eb50e72754db20[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 3 11:11:30 2014 +0100
+
+    einige änderungen rückgängig gemacht
+
+[33mcommit 251b8e56329efe9f2a53659e55814b2100f76437[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 2 21:53:40 2014 +0100
+
+    Fehlerbehebungen von SDV Appt Height
+
+[33mcommit 4b84ad8b17408345623c97a074e0d5ea84a1e167[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 2 21:30:49 2014 +0100
+
+    Update von Recur Terminen hat nun auch Detals und Location
+
+[33mcommit 7f5ce67a7ce8acda565326838d5f7a8de8ac728f[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 15:03:06 2014 +0100
+
+    Allday fixed
+
+[33mcommit f20d7401b949b96022332ead98602f0636eb7c8a[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 14:54:52 2014 +0100
+
+    AllDays First Commit
+
+[33mcommit fe280780648f287a4e20c3ba13b37253d78aaec8[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 10:56:02 2014 +0100
+
+    Bugfix: YPos was wrong
+
+[33mcommit c5972a5c403036a2db6d3b9cdbe7c04d866ee821[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 10:30:58 2014 +0100
+
+    Formatting
+
+[33mcommit fa608cb621ed33512cca9bcff29a63b8d355b614[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 09:16:11 2014 +0100
+
+    Aufflackern des Termins verhindert, wenn keine Änderungen gemacht wurden.
+
+[33mcommit 1ebc7efc5a7f8819b49ae80f8837a9a1686eea72[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 07:39:57 2014 +0100
+
+    Formatting
+
+[33mcommit 7a65f18d4b1582051b1b2674833d39183aee246e[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 07:04:40 2014 +0100
+
+    Collapse Location, No Gradient for DetailsNotes
+
+[33mcommit 985d3a45b07bf4eb2e6611f8395ee6e38d0c5277[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 06:49:28 2014 +0100
+
+    Details werden in SDV angezeigt, mit Gradient FadeOut
+
+[33mcommit 565ccf18b1d7bfc9a2616356550e5372134e44e8[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 03:52:10 2014 +0100
+
+    DesignStudie: SDV thin
+
+[33mcommit 65eccc395c0bf733bca3ff53b2015214d2a90e58[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 02:58:50 2014 +0100
+
+    commit, Ypos Im SDV kaputt
+
+[33mcommit 2270fd2a731959d5a01ac7d4109f77dd4f29b09b[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Oct 31 18:02:22 2014 +0100
+
+    Bugfix: Agenda Scrolls While SingleDayView is open
+
+[33mcommit 49c7640f821dbe4a4f8848442b194adc6f7348f9[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Oct 31 17:31:21 2014 +0100
+
+    Alles funzt wieder!
+
+[33mcommit 2a78fc89d5d44bd067d217b045b54d8a1cd8b008[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Oct 31 00:40:15 2014 +0100
+
+    Improving Performance; ClearValue DataContextProperty
+
+[33mcommit 4a62c61fc54b1196263272b849b07d9cb41dd2fa[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Oct 30 23:50:09 2014 +0100
+
+    AgendaApptItem animation aufschub on loaded. Jedoch zu ruckelig
+
+[33mcommit 95ea7867fb41704bf325e6d0c4be9a9d01a4ac36[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Oct 30 19:24:47 2014 +0100
+
+    Animation für Load Appt in SingleDayView
+
+[33mcommit 4ec6d725c8917f6bf3943a3704baaa13ecdff642[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Oct 29 22:12:26 2014 +0100
+
+    foreach replaced withh packwards for loop
+
+[33mcommit 2b89d9fa7b583bf7645a2edd3872db39367a9a4a[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Oct 29 21:50:38 2014 +0100
+
+    PocalAppointmentUpdater funzt
+
+[33mcommit 1fbefabc4c3037f3a0457fac23fbebff9f8c7ce1[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Oct 29 21:35:02 2014 +0100
+
+    Update Pocal Appointment bugfixes 001
+
+[33mcommit 42bcefa3b2fb209b5d059e99224191376096362d[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Oct 26 16:25:54 2014 +0100
+
+    commit
+
+[33mcommit d265a667b5be065b4dbe948eb3f0f88bd96b2825[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Oct 26 14:04:08 2014 +0100
+
+    Problem immernoch vorhanden
+
+[33mcommit 342e12c36a75e03e6899439d495d240e3ff87e24[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Oct 26 13:57:28 2014 +0100
+
+    Problem mit getAppoinment after AddAppoinment
+
+[33mcommit ae623dc9dd677baa4d6ad9bb559a558e5f545056[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Oct 26 01:18:21 2014 +0200
+
+    Commit
+
+[33mcommit c25d7850f61fec0f3df0371f87376bbf15ad7646[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Oct 20 17:31:16 2014 +0200
+
+    Refactoring 2 - PocalAppointmentManager entfernt
+
+[33mcommit d2dd458735185c333a33611ed818e932576ce851[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Oct 20 16:21:26 2014 +0200
+
+    HourLine Class erstellt
+
+[33mcommit 085201a710b8c0cfbe987ae47fdb1b16c3905518[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Oct 20 15:48:58 2014 +0200
+
+    Refactoring 1
+
+[33mcommit a4db83b486a9bc176f603bf5ce84c15a1aaa9afd[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Oct 5 19:18:28 2014 +0200
+
+    Neuer PC eingerichtet plus Emulator test
+
+[33mcommit 79ae712fe0ca1f97e990440b9e6b70f5bb75b9f0[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Sep 2 18:12:47 2014 +0200
+
+    Reload after opening from background
+
+[33mcommit 7ce0eb98811a11642235fbbfd1c2d9e12b444790[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Sep 2 18:07:35 2014 +0200
+
+    Refactoring 1
+
+[33mcommit 1382b831b69e826b77a35ce5faec4e307de511e8[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Sep 2 17:15:23 2014 +0200
+
+    Add and Edit Appointments in SingleDayView
+
+[33mcommit 205bb7c3f7391132da04b6eb27d9f6190284aaeb[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 24 16:35:20 2014 +0200
+
+    editierung der Pocal Appointments überarbeitet + Design changes
+
+[33mcommit 65a182cc5aafd4698f1b49dddf81c602501c3e66[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Mon Aug 11 23:48:05 2014 +0200
+
+    3D DayCards Design
+
+[33mcommit 374da622f6bd0acf360535579553af0aea03c495[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 10 20:32:10 2014 +0200
+
+    Added Wrapper Class PocalAppointment
+
+[33mcommit c38030f429b5042a528918a086582dae8210a112[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Mon Aug 4 23:32:05 2014 +0200
+
+    Revert "Can't see Designer Anymore"
+    
+    This reverts commit 20ac952132d84475bb76682b38cd5bd8086a7646.
+
+[33mcommit 20ac952132d84475bb76682b38cd5bd8086a7646[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Mon Aug 4 23:30:40 2014 +0200
+
+    Can't see Designer Anymore
+
+[33mcommit 883d340ce25cd5c127c7149baead59ba2d1c2d25[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Mon Aug 4 23:11:40 2014 +0200
+
+    PocalAppointment Wrapper
+
+[33mcommit e87e192d40038c1c0a291033271f51c793406a06[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Mon Aug 4 02:39:11 2014 +0200
+
+    PocalAppointment verloren
+
+[33mcommit 4c9a8cbaada27c950d81714aa6751eeab88effd2[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 3 22:33:32 2014 +0200
+
+    Further Refactoring
+
+[33mcommit 992da8ab34fc6cb15c35f149238885cc4a76e5fb[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 3 21:00:35 2014 +0200
+
+    SingleDayViewModel added
+
+[33mcommit aec2d7d36738977534fab0dbc7d7ec2a5bf8976f[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 3 21:00:18 2014 +0200
+
+    Child ViewModel added: SingleDayViewModel
+
+[33mcommit 2695a7ea2920625578bce6442ec064109d501e81[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 3 18:49:08 2014 +0200
+
+    Getting rid of Days.ID
+
+[33mcommit 34cd68f404484930caa59a860c2c129a147a4548[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 3 18:37:03 2014 +0200
+
+    deleted Unused Class
+
+[33mcommit 69f07c9c19f0ac046ba382a8c184c1c716ac85f2[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 3 18:35:42 2014 +0200
+
+    HourListItem class entfernt und durch einfachen string ersetzt
+
+[33mcommit 17e43244124c629a84be700e967eb0aec30e47ba[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 3 18:11:41 2014 +0200
+
+    Refactoring
+
+[33mcommit bd250b26daebfda89a1f3006d606280e1472fbd6[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sat Aug 2 16:00:03 2014 +0200
+
+    List<Appointments> is private
+
+[33mcommit 081480530713e9b209b8de7b79d4249aa17e7364[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sat Aug 2 14:41:36 2014 +0200
+
+    Part 1: Aktuallisierung des bearbeiteten Appt
+
+[33mcommit 20cf11d1a96ee1accd2a00e7b28b42dcb090c5f8[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Fri Aug 1 02:42:59 2014 +0200
+
+     - Beim tippen auf appt im SingleDayView öffne native Kalender App
+     - Nach dem Hinzufügen/Bearbeiten eines Appts update Pocal Kalender
+
+[33mcommit 44157f6d64df9190b95d5e6ce0b3b47ddc09143c[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Jul 29 01:04:20 2014 +0200
+
+    Appts des Tages im SingleDayView anzeigen
+
+[33mcommit fd3ba8c1c3cb71eeaa26fdf95eeca538c6b12fdc[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Mon Jul 28 08:53:35 2014 +0200
+
+     SingleDayView Animation OpenDelay
+
+[33mcommit 1908411a0e47723add769c47780e0d97200ca871[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 27 22:43:27 2014 +0200
+
+    Fixes: SecondLine Geburtage nun als TagesCounter
+
+[33mcommit 5ea0e391f4adef036319bd0df894f208fdd53675[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 27 22:18:18 2014 +0200
+
+    Fixes: Second Line | Margin of DayCards
+
+[33mcommit 8e710f03e569e90b5956db7c9f001203d58889f2[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 27 20:56:10 2014 +0200
+
+    Wochen Nummer weg, - Wochenende hat grauen Hintergrund Highlightet Day weg
+
+[33mcommit a049074f8f8d83e15c7d803a8e434ccc0cf59802[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 27 20:34:46 2014 +0200
+
+    using ApplicationModel.Appointments + DTD appts
+
+[33mcommit 53f823e456bc1d4b3f827b589d9bb3d6848ab521[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Jul 22 02:43:41 2014 +0200
+
+    Last Changes of Renaming
+
+[33mcommit 3c9c112638312ca57633687930c5d24810e66302[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Jul 22 02:26:22 2014 +0200
+
+    Editinng Path of .sln
+
+[33mcommit 34baa5ab4d8c78159796b531dea126d30b4a4b3d[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Jul 22 02:21:06 2014 +0200
+
+    Added new Renamed Pocal Dir via cmd
+
+[33mcommit b8e81aae566fdb6a4ed1384a2474625cc2493ea2[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Jul 22 02:19:56 2014 +0200
+
+    Renamed to Pocal via cmd
+
+[33mcommit c6051f1c45444fef83f35792d25a5b1088b033d0[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Jul 22 02:10:52 2014 +0200
+
+    Renamed to Pocal
+
+[33mcommit eb9142358f07f4a8f2e05942517fffdd0c139b21[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 20 21:49:26 2014 +0200
+
+    Header Red und Black Overlay auf 68%
+
+[33mcommit 4b0ae39c918c3e407ccc2cfad63f4de1273bf9d0[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 20 21:15:59 2014 +0200
+
+     SingleDayView Header Schrift anpassen
+    Uhrzeiten in SingleDayView kleiner
+
+[33mcommit 0ee39638800cbe8c7965d07bedb5f6d55825c520[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 20 15:36:59 2014 +0200
+
+    Close / Open SingleDayView wenn man auf Tag in AgendaView klickt
+
+[33mcommit 919e34c432f370b2fdcf9d4dc4df17533947c020[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 20 12:55:59 2014 +0200
+
+     SingleDayGridSetup auch auf WP sichtbar
+
+[33mcommit 5f21f862259e7ba345e6034be94247199567bf50[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 20 12:35:09 2014 +0200
+
+    Init Commit
+
+[33mcommit 5ae6b797c08ef4ad221ae5fb7bd5d4bf4a03a320[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 20 12:07:19 2014 +0200
+
+    Initial commit to add default .gitIgnore and .gitAttribute files.
+[33mcommit b802803fc0c61d7bd0e9b4ec4dc73bc29b0538e8[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Dec 20 05:49:24 2014 +0100
+
+    Overview als Text im Header, Appbar für SDV
+
+[33mcommit 1faea05878b0f4cb1a387ec0c8e56280375384e7[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Dec 19 17:47:28 2014 +0100
+
+    formatting
+
+[33mcommit b158839bb78d3b43c586a04fd91eaed59723842d[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Dec 19 17:20:53 2014 +0100
+
+    SLight Design changes + GotoDate funzt auch bei SDV ( tappedDay wird auch geupdated
+
+[33mcommit 7d2e242b94ef3a1ddaef5d16334ebd2dffae0d6d[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Dec 19 17:08:39 2014 +0100
+
+    Bugfixes and AgendaPointerImage Dark/Bright
+
+[33mcommit b501e30d2f593c5a60e083975a4591f4070b6c68[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Dec 19 16:34:15 2014 +0100
+
+    einige Bugfixes
+
+[33mcommit 1834748fe0603580f99d8c18d5f2964ba77dc402[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Dec 19 15:42:37 2014 +0100
+
+    Savepoint
+
+[33mcommit 02a23a045e90f53074f874cc182d1b87eb94125a[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Dec 19 15:20:10 2014 +0100
+
+    White Layout v001
+
+[33mcommit 7354cf491946a42a71c17b659e7118616d2b61ec[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Dec 19 13:24:23 2014 +0100
+
+    Overview hat nur mehr abstand zum rand links
+
+[33mcommit aa1179f389677cb20994faeb61b0c38d8fffcd00[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Dec 18 17:01:52 2014 +0100
+
+    Pointer SHort in Agenda View
+
+[33mcommit 10aa8dbf65f06111c65eab7677d944c5487e17c5[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Dec 18 11:41:42 2014 +0100
+
+    Formatting
+
+[33mcommit 87077739dec3412e2c5e3a8d7f6fb7e415763d0f[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Dec 18 11:24:05 2014 +0100
+
+    Änderungen am AgendaPointer und Overview Bird Symbol
+
+[33mcommit 0066f5fa11f90f503fa135304279f3796edbcdbb[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Dec 18 00:37:28 2014 +0100
+
+    Pointer always Visibilr
+
+[33mcommit d889cba81a3d73e20b4ff34c24d067441de32824[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 17 21:12:22 2014 +0100
+
+    BugFix
+
+[33mcommit 9850d72669f768ca755a95102bfeab534d330f84[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 17 21:01:03 2014 +0100
+
+    Storyboard etwas aufgeräumt
+
+[33mcommit 38dae949417988fb70dfd2b2e594ea7c33fe08c2[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 17 18:22:42 2014 +0100
+
+    SDV_Control in weitere Untercontrols refactort
+
+[33mcommit 10b99c5517be212692e035471577c1d6a9b6cce4[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 17 17:47:50 2014 +0100
+
+    Renaming
+
+[33mcommit 2ba2e309488d04346e69aeafd2ef94134801c183[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 17 17:44:41 2014 +0100
+
+    SDV_Control
+
+[33mcommit ed9b6b4de70ce3b5fa2f826018da16bc52348999[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 17 17:28:54 2014 +0100
+
+    Refactoring
+
+[33mcommit faca27901cc03373511994ec57b1981c9b6a9547[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 17 17:09:22 2014 +0100
+
+    DayCard_UserControl refactored
+
+[33mcommit bbe96da593eb1e17f3019de4acaa1b4a6b49f40e[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 17 15:56:57 2014 +0100
+
+    Savepoint
+
+[33mcommit df7fc8fc025f3faebbcb454ca723c33652b88978[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 17 04:20:49 2014 +0100
+
+    DayOFWeek Header
+
+[33mcommit 1d1ee4fb608f64929f96c7e4e79996c1010f5a48[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Tue Dec 16 17:04:56 2014 +0100
+
+    MonthView is now inside of Mainpage and is much faster
+
+[33mcommit efc08e0bf8ad6be4755212a0b7181b4f74458bd9[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Tue Dec 16 16:24:02 2014 +0100
+
+    Monthview is seperate Page: Navigate Back is not working properly
+
+[33mcommit 77ed8854d7372921fb46a8fe366a361b0054b275[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Tue Dec 16 02:58:55 2014 +0100
+
+    Savepoint: 5 MonthView PivotItems
+
+[33mcommit 37948d6922ba887173ef5c3f601004cfb3bba5f9[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Tue Dec 16 02:45:05 2014 +0100
+
+    Refactoring
+
+[33mcommit becfc3cc393274d30181b527edbbbaa8e1c034bf[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 15 20:06:30 2014 +0100
+
+    MonthView Savepoint
+
+[33mcommit 6488b898920691c7a329e85aa5d7e3aebe76a681[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 15 19:38:41 2014 +0100
+
+    MonthView GridSetup von vorherigem Versuch wieder hergestellt
+
+[33mcommit bd456309391bfc5dfa055057c36128506c3ea9c3[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 15 19:17:51 2014 +0100
+
+    MonthView ForwardPan und BackwardPan
+
+[33mcommit 7c24fddf064de63ba70befb5e122867e2a927952[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 15 19:07:24 2014 +0100
+
+    Incremental Monthview First Steps
+
+[33mcommit 719f55f32a24b8436a59417320573e885031d926[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 15 15:35:40 2014 +0100
+
+    ... am Ende des SUbjects auf LiveTile
+
+[33mcommit aafa60e3d68a9f505e0a20221572e4b5b21a02d1[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 15 15:09:08 2014 +0100
+
+    Refactoring: LiveTiles+Manager nur noch im ScheduledAgent vorhanden
+
+[33mcommit 671792089f1e99b65e955e58a4f130a293804887[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 15 14:49:58 2014 +0100
+
+    LiveTile Design und Spacing fixes
+
+[33mcommit e5eba2aa1d63eb90f2d4fc92ddb8bf1c7f66d509[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 14 23:01:08 2014 +0100
+
+    Savepoint
+
+[33mcommit 237ba351f06d4476aaed391f458388e660e14ade[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 14 20:33:24 2014 +0100
+
+    tapFeedback auf DaycardHeader und AllDays in SDV
+
+[33mcommit 9c82b9b799020435df2de932b7bd7c9e1c93402c[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 14 20:06:15 2014 +0100
+
+    Mehr Verwendung der AccentFarbe
+
+[33mcommit 1b678da246861de9c9dafbd302bdaaad1846cc92[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 14 19:34:19 2014 +0100
+
+    Heuteiger Tag ist nicht mehr Rot, vergangene Termine sind dunkler
+
+[33mcommit b90fb8b9469bdddd34015641cc41fe41bd3332f7[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 14 19:09:39 2014 +0100
+
+    Savepoint
+
+[33mcommit b19e4910b276b23ad1faec51026a23c56c01bdbd[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 14 19:08:14 2014 +0100
+
+    SchelduledTask changed to PeriodicTask
+
+[33mcommit d19bd42510dbbf799e71cb6bf3d4d6cb6d18db34[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 14 18:54:36 2014 +0100
+
+    LiveTile BackgroundUpdate funzt
+
+[33mcommit 7b8941ea220b076ae4b1a93921f0813de8977c78[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 14 16:52:19 2014 +0100
+
+    Savepoint : LiveTile bekommt andere Hintergrundfarbe
+
+[33mcommit 965cd7eb80bcd1b3cf6a473041263c28a853b388[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 14 16:24:43 2014 +0100
+
+    ResourceIntensiveTask ScheduledTask added
+
+[33mcommit a1761e91c6ec3990cf33872e80634789198b966f[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 14 07:34:33 2014 +0100
+
+    Savepoint
+
+[33mcommit e55c95ee35bfe71329fc25f609228a28ef285f8b[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 14 07:27:31 2014 +0100
+
+    bugfix
+
+[33mcommit 2eb3e3c6aa7b03ec0124482136ea5c156f50f90c[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 14 07:19:14 2014 +0100
+
+    bugfix
+
+[33mcommit 718d89a32476bfe1c4657a47e3ecccfc003e2b6b[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 14 07:12:09 2014 +0100
+
+    Transparent Live Tile
+
+[33mcommit 36846ebffd341aa49c9430b8ab099194fcda1b28[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Dec 13 16:10:50 2014 +0100
+
+    Savepoint
+
+[33mcommit c19a8a4e9be079c738c9f5911ffc6614baa1619d[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Dec 13 14:29:51 2014 +0100
+
+    LiveTile Zwischenstand
+
+[33mcommit 406490284c377b605a2b1e336f16f1e2913028d3[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Dec 13 13:29:32 2014 +0100
+
+    LiveTile Base
+
+[33mcommit 069a1b70e0918736abfb1de07f4a30453cb3b350[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Dec 11 20:45:39 2014 +0100
+
+    MonthView Pivot DataBinding
+
+[33mcommit dd0da3297e8dd8af876a806f139aaf61c90e058f[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Dec 11 18:05:56 2014 +0100
+
+    Pivot DataBinding Works
+
+[33mcommit e25c396c64e37992109fe248a718762a8cc0185b[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Dec 11 17:48:40 2014 +0100
+
+    pivot doesn't appear at frist time
+
+[33mcommit 8a791a6df595b8b4004750ef8dd210b381670690[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Dec 11 17:33:58 2014 +0100
+
+    Savepoint
+
+[33mcommit cb193cda132d533b7ddd535f4e73e461a2b6a4df[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 10 20:44:22 2014 +0100
+
+    MonthView Tap Event and GoToDate Navigation
+
+[33mcommit 248043ed43c96bb5d5294b5042dd6845d2aa6732[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 10 20:01:05 2014 +0100
+
+    Testing Storyboard != null before .begin()
+
+[33mcommit 92bfb05c262cbfab4cef7278fd47a75a7dbe925d[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 10 19:02:28 2014 +0100
+
+    Month View WIP
+
+[33mcommit db6dc9352b046474af3aaa1e33561081e38b7904[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 10 18:10:52 2014 +0100
+
+    MainPage Codebehind etwas aufgräumt
+
+[33mcommit 6fdc1d0627ae2d4eac083a9acd6cc887bf7feac3[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 10 17:54:02 2014 +0100
+
+    Savepoint
+
+[33mcommit 4a2a72d4ecfeb885b0304ed996d367bb547c0e98[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 10 17:51:41 2014 +0100
+
+    Refactoring Weihnachtsferien
+
+[33mcommit c61bcc1e605d2496531f8aecb84c543b6afd1b90[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 10 16:52:49 2014 +0100
+
+    Weihnachtsferien Fix 01 ( Termine die sich über mehrere Tage erstrecken)
+
+[33mcommit ac4f201a3fa2fd22d9cb25926e1e28d99d9d05f2[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 10 16:27:56 2014 +0100
+
+    BugFixes SDV Height von Terminen über ein Tag
+
+[33mcommit 9b9d4bad3050d8990c19afe825cc84085fcdba88[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 10 10:35:08 2014 +0100
+
+    GoToDate hat TryCatch und fängt OutOfRangeException
+
+[33mcommit 7b259060f40e76dbf476e07a62f5669f1b19ac95[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Tue Dec 9 09:13:44 2014 +0100
+
+    add Current Day Mark in MonthView
+
+[33mcommit 514ba5c7f8fb3eb7f961453ae201d18305a741bc[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Tue Dec 9 08:34:54 2014 +0100
+
+    GridSetup of Monthview has Day Number
+
+[33mcommit 9df5cabf07cfb3517077847962a08571f85022e0[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 8 18:27:59 2014 +0100
+
+    tapFeedback SDV Disptacher plays Storyboard
+
+[33mcommit 2e67d3c33092838f575465abdc9d6d04f14c99ed[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 8 18:21:31 2014 +0100
+
+    tapFeedback in SDV
+
+[33mcommit 56746b10894b45f62d9e05830c8bb16821efc7bb[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 8 17:46:51 2014 +0100
+
+    Feedback_v02 AV
+
+[33mcommit 80c9d16ac3b5809df8d6ae82b2d69a195c43c55e[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 8 17:39:01 2014 +0100
+
+    Feedeback Animation on Appointment tap in AV
+
+[33mcommit e6feb99019341886d086ceb59a65489647ad9c6d[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 8 13:38:19 2014 +0100
+
+    StartTime In Overview sichtbar auch nach AddAppointment und GoToDate
+
+[33mcommit 860ca77780e3099b5eedf2d0e865bbefb5c4ddb2[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 8 13:19:37 2014 +0100
+
+    StartTime auch in OverView zu sehen
+
+[33mcommit a892823d8ce6da6c9140d807a246085e1acafb5c[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 8 12:19:59 2014 +0100
+
+    gotoDate funzt fast immer, nur bei extrem wiederholendem Drücken stürzt es ab
+
+[33mcommit 168acec59ebdeb024892116db5c8be715a00663c[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 7 20:54:10 2014 +0100
+
+    refactoring
+
+[33mcommit d3bd1c04ef3c15b8fbf22dbd2855fb1fc46db974[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 7 20:39:57 2014 +0100
+
+    Merged
+
+[33mcommit b6db4c1fafb36e2fdd426537eee164890bddae98[m
+Merge: 90a73ec 915254b
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 7 20:38:10 2014 +0100
+
+    merged temp
+
+[33mcommit 915254b94a1cbf6ca632059c6c7a0fe90f62711a[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Dec 7 20:35:25 2014 +0100
+
+    Savepoint
+
+[33mcommit 1e5044553b14f323f9ced4444ca8a7ae213ef63a[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Dec 6 12:16:47 2014 +0100
+
+    Kein Aufpoppen mehr von 1.Januar im SDV Header
+
+[33mcommit b6e17070d119370098f31a4587d638185b2faec9[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Dec 6 10:35:01 2014 +0100
+
+    toggleOverview startet schon beim Wischen
+
+[33mcommit 90bfec1ce70f3392199b4ffc28d4f59ae22e4f56[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Dec 6 10:04:04 2014 +0100
+
+    MonthView GridSetu
+
+[33mcommit 5d808e96bf8ebdceca81cfb5878a6e37550cd064[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Dec 5 12:31:36 2014 +0100
+
+    DeltaDays jetzt auch in die Vergangenheit richtig
+
+[33mcommit 448282dfedfcfec57735b0f0931cae2dfbfce30a[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Dec 5 12:08:49 2014 +0100
+
+    fix DayAtPointer
+
+[33mcommit 9aa17423e21a2a6d85c27cf51a91b025ffe6a6c7[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Dec 5 12:06:40 2014 +0100
+
+    load Enough More Days when GoToDate
+
+[33mcommit 22f5e44811ae1ccea7419c42bb8040134ec9be0d[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Dec 5 11:42:32 2014 +0100
+
+    Weniger möglichkeiten aus Overview rauszukommen
+
+[33mcommit 0cc4d3f6ff757b316a43bf11cce989aa25370e6d[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Dec 4 20:26:02 2014 +0100
+
+    Overview tap führt zu gotoDate und AgendaView
+
+[33mcommit aaca4e2674e6e06d026eeff88fcca4cb2c542799[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Dec 4 20:08:50 2014 +0100
+
+    Uhrzeit oben links
+
+[33mcommit 0dd167d5fcf44947a847e7aef26b3651a6b9fc1b[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Dec 4 13:13:50 2014 +0100
+
+    Performance - Wenn Day mehr als 3 Appointemnts hat, dann Dispatcher setDay
+
+[33mcommit feefe45ae2c617359a9e602fd3c05cd17e468844[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Dec 4 11:48:12 2014 +0100
+
+    Performance Improvment
+
+[33mcommit fc2d715005181a01daf8095d5982f776084c99d5[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 3 17:50:32 2014 +0100
+
+    Formatting
+
+[33mcommit c95dd8b5fe0b2e11923298cd7c5f3302ac311c62[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Dec 3 17:22:38 2014 +0100
+
+    Better Loading after GoToDate Function
+
+[33mcommit bfbd847ba35aecb501bb2c986dd8411bd66fbba1[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Tue Dec 2 09:22:43 2014 +0100
+
+    unfinished load past Days incremental
+
+[33mcommit 8e9dcca36b5338ad9027a331279288fa22198110[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Tue Dec 2 08:52:02 2014 +0100
+
+    GoToDate Function in MainViewModel
+
+[33mcommit 26d34f7e14218ea2992f67fcadd51cb71808898f[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 21:18:13 2014 +0100
+
+    Load just 1 Day at Startup
+
+[33mcommit 55d9328bd9026101d82eae68f952734dae9c892f[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 20:52:54 2014 +0100
+
+    Fast ScrollTo Method
+
+[33mcommit f2d86965829332744f38529a7895b0558bfc9118[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 20:28:00 2014 +0100
+
+    ScrollToToday loads just 1 Day first
+
+[33mcommit 01bc3d91064804b37f4cec72d0855c31600720bf[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 20:22:59 2014 +0100
+
+    DeltaTime stays the same position 02
+
+[33mcommit 418df3f31c34647b95b391c0f7601e5de2b36290[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 20:21:08 2014 +0100
+
+    DeltaTime stays at same Appoinment when switching to Overview
+
+[33mcommit 59bc769782e07f40a450ac9e2c3cc1c2233bbb9f[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 15:42:29 2014 +0100
+
+    OpenSDV_FirstTime 90% zufrieden. Jetzt aber
+
+[33mcommit d753e2549418e5e20e78441f46c106eefa83feb2[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 15:40:16 2014 +0100
+
+    OpenSDV_FirstTime little fix
+
+[33mcommit 782152b4b2474b5229d588e92ec29176deb6c087[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 15:39:23 2014 +0100
+
+    OpenSDV_FirstTime 90% zufrieden.
+    Nur beim ersten mal erscheinen die Appointments etwas verzögert. Animation ist aber smooth
+
+[33mcommit 68c1fd17fc824f69a3c05c49f964a86abcf6581d[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 15:20:46 2014 +0100
+
+    UpdateLayout before ScrollToRightPosition in SDV
+
+[33mcommit a275f9766d0e2c40ccca4d2f21a3582de9a5fcc0[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 14:38:07 2014 +0100
+
+    BitmapCache für SDV wieder aktiviert
+
+[33mcommit b3ee7495a5b1503751a3b79ea7dd54c65602f23b[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 14:23:04 2014 +0100
+
+    Savepoint
+
+[33mcommit f7829dc9d3bda1ba2ced27591c5a3ff3ca3db376[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 14:15:31 2014 +0100
+
+    DeltaTime Collpaser when second is ""
+
+[33mcommit 422b4c90c7e6efa0f224bc31303e188b7b72c4af[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 12:34:14 2014 +0100
+
+    DeltaTimeArrow3
+
+[33mcommit 4e7a9a9a6c2149ba22febf65a938dd92d5210a23[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 12:19:46 2014 +0100
+
+    New Delta Arrow
+
+[33mcommit e4e141b8ad013d75c50b38f99864ca282331cf47[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 11:47:12 2014 +0100
+
+    Savepoint
+
+[33mcommit a71b931fbc94afca2374256fe3362dd693ccd919[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 08:17:33 2014 +0100
+
+    Savepoint
+
+[33mcommit 204f8b39c837bee815003b4fcbdc74c306382508[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 08:13:39 2014 +0100
+
+    Refactoring
+
+[33mcommit a856592d1d2320800e4369fcf905a8899d5edbba[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Dec 1 07:19:20 2014 +0100
+
+    Savepoint
+
+[33mcommit 5f5d5d38c1787eeaaf98d1fba39548f9c9fb2fa5[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 29 08:25:32 2014 +0100
+
+    Savepoint
+
+[33mcommit 34f351f02c3f6462f9e36f64c88886a7715bb28c[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Nov 28 18:30:03 2014 +0100
+
+    Photoshoped deltaDayArrow
+
+[33mcommit 46792d0454d984e25812cb10b5241f8d7f453d63[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Nov 28 11:13:09 2014 +0100
+
+    Delta Days wieder day. Diesmal in der Mitte des Screen
+
+[33mcommit 587e8a853b10d1c722c8bb4536680803a70a940f[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Nov 28 10:34:04 2014 +0100
+
+    Savepoint
+
+[33mcommit 861eb08fe4858ebd842d2e0c7b0abbc4dd586db4[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 27 20:51:42 2014 +0100
+
+    AgendaView Design v05
+
+[33mcommit f931392e366ae621fe7cb356efe1039380d5ccff[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 27 20:19:42 2014 +0100
+
+    Item Realize in Overview. Converter hat auch Verzögerung
+
+[33mcommit b63eff1e45df2431d4d14e9acff1ae41727da2f3[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 27 19:31:22 2014 +0100
+
+    iOS Style
+
+[33mcommit 76f9f14f9da440733a162ba9875aaa11060e2372[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 27 19:22:52 2014 +0100
+
+    StartTime XAML
+
+[33mcommit 87ba2ee18c23e6040197d74cf7a8ef8344161f2a[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 27 18:55:35 2014 +0100
+
+    Savepoint
+
+[33mcommit 36666702d0853d9576dd93b736303eeb79b638f3[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 27 13:07:41 2014 +0100
+
+    AgendaView Design v04
+
+[33mcommit a90005709bb1f3ea15aee67c3181661a9d036b35[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 27 13:00:31 2014 +0100
+
+    Agenda Design v03
+
+[33mcommit 2213fa38f3b48d273df09ea57919ed3539e6fe11[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 27 12:47:10 2014 +0100
+
+    New Agenda Design
+
+[33mcommit a18055567ca4beba7c24b36d639bcf75a6f4717f[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 27 11:19:13 2014 +0100
+
+    ColorConverter
+
+[33mcommit dbad4c8f8ae9637fc12667bbbc8ac6e763f3356b[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Nov 26 22:57:51 2014 +0100
+
+    insert Days of The Past
+
+[33mcommit 1e6248495e995824d1b34efd5d4876027ec1669e[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Nov 26 20:34:36 2014 +0100
+
+    Endlos scrollen funzt in die Zukunft
+
+[33mcommit 779dd1b56480cc372726633ed6f8273cbd8981c6[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Nov 26 19:47:50 2014 +0100
+
+    Assigning BitmapCaches before Animation and remove them after Animation
+
+[33mcommit 73cafe80d8c812ce9418671baa761c31853d4ab8[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Nov 26 09:14:43 2014 +0100
+
+    switch MainPage View
+
+[33mcommit 90a73ec3de898276db9904fe7eff875c7cc48ebd[m
+Merge: 35818d0 2592cbd
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 24 08:29:07 2014 +0100
+
+    Rebase Overview Animation to Master Branche
+
+[33mcommit 2592cbd5bb9034167b0597cb29b7465e6935ee73[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 24 08:13:19 2014 +0100
+
+    Overview Animation v03
+
+[33mcommit 1a46111f9585419b90096c31405d9a5df8ad6fc7[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 23 19:56:28 2014 +0100
+
+    commit
+
+[33mcommit d21fa4372d3954f5338d68023ce516e8e2435274[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 23 19:44:43 2014 +0100
+
+    OpenSDV ruckelt immer noch ein wenig
+
+[33mcommit c822633b2dda2afbfe0d7bef7c30efc3004f0049[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 23 19:25:45 2014 +0100
+
+    set Tapped Day Asyncron after OpenSDV
+
+[33mcommit 8d8d7f6824bbb94ec6709ff16fb1a07180ec01d7[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 23 18:30:43 2014 +0100
+
+    BitmapCache für Overview Animation
+
+[33mcommit 504daca7d27019f41cd3454758354c188980e058[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 23 12:26:03 2014 +0100
+
+    Overview Animation v02
+
+[33mcommit 9d5ac53dbf81c6808dc23a7b6d5242a945669a6b[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 23 11:14:44 2014 +0100
+
+    Overview Trigger durch Swipen
+
+[33mcommit 3a9c161e8d5b5fa4e79fa14ecc42f296ce038a1f[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 23 11:09:43 2014 +0100
+
+    Overview Animation V01
+
+[33mcommit 2a3b537be20c38d45dccced7f11c989421c46291[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 23 10:45:36 2014 +0100
+
+    Overview Header Animation
+
+[33mcommit 27b0194396a589fe2ffd1c877a1885df5cd5bccf[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 23 10:20:38 2014 +0100
+
+    Savepoint
+
+[33mcommit 6a6824362d73608cd17a713baf79477ccddbf154[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 22 17:40:51 2014 +0100
+
+    Funzt wieder Alles
+
+[33mcommit 35818d0ebea4f2f80df27c675aec84a8d389cddd[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 22 17:30:48 2014 +0100
+
+    ka
+
+[33mcommit 2d5bb7a2ce9de16b9f7d34db4bcaaf7d2ba255cf[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 22 17:24:14 2014 +0100
+
+    Overview Trigger funzt
+
+[33mcommit f9839acc55768e5ec9055bd9a9afe34354ce86a2[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 20 02:46:08 2014 +0100
+
+    ka
+
+[33mcommit 42742b3cf644d089272e63451857e92c2471c8dd[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 10 11:08:47 2014 +0100
+
+    recyclingscrollviewer panels
+
+[33mcommit ddde38c2d912ec704efc7f57e2bd75cd89701daa[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 20:44:43 2014 +0100
+
+    SDC Appt Rectangle Multibinding Margin
+
+[33mcommit 11f6613802436691d2f062367117d08b092b3b80[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 19:52:33 2014 +0100
+
+    Bugfix - UI Update after Recurrence back with no chnages
+
+[33mcommit b07b75cc23b37112829d0769aed2f74d8a787b6a[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 19:35:57 2014 +0100
+
+    Feinheiten
+
+[33mcommit 7099697ad1eecb202cf555e2821779c54c4657d6[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 19:29:16 2014 +0100
+
+    Bugfixes
+
+[33mcommit 80d7232c89e27500bf0c4f3b5c5962a64fb38da5[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 19:13:39 2014 +0100
+
+    SDV Pan BUGFIX
+
+[33mcommit 32d08e9256b42c9531339d1b5ce8f4b820f33a57[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 17:23:40 2014 +0100
+
+    Translate and Width Converter Bugfixes
+
+[33mcommit 4f0f212cabf09e5531c0bc87712b534d76004c60[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 16:57:36 2014 +0100
+
+    ConflictManager funzt bis auf span
+
+[33mcommit 4e0fb6b26a6b7f65fb3cccc4f0b91242479810a0[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 16:25:49 2014 +0100
+
+    ökonomischerer Platzverbrauch bei Conflicts in SDV
+
+[33mcommit e426675a34d79f522b7656df6ed8e9d244ea8623[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 15:59:55 2014 +0100
+
+    Refactoring
+
+[33mcommit fe2e81ba8a037b70b9cd011e03ce206b08f2a98e[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 10:28:27 2014 +0100
+
+    ConflictManager berechnet MaxConflictsPerCluster
+
+[33mcommit e2b423069372d3af0bd5a11c2608943000281d05[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 9 09:12:45 2014 +0100
+
+    iterateOverPreviouseEntries verbessert
+
+[33mcommit ce9e08cba9b17e611ffbd24a6c4ae24f114b1053[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 8 23:09:27 2014 +0100
+
+    ConflictManager funzt halbwegs
+
+[33mcommit 2a2230ad803eb3b32d342971bbf8efa7ec9f280b[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 8 20:57:58 2014 +0100
+
+    before Multibinding
+
+[33mcommit 16e429ee9265e7234cc9b4ae80cfffa7b5c37eaf[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Nov 7 17:10:39 2014 +0100
+
+    Revertet, because of Bug
+    Reload from Background triggered twice after adding Appointment
+
+[33mcommit ec5809a06810dc5dae69e8103945c0e6150e7c5e[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Nov 7 12:33:58 2014 +0100
+
+    Revert "RefreshData after activating from background"
+    
+    This reverts commit 837f713aa08ac58e0ca5c3fc69b804cdfccb804a.
+
+[33mcommit e4c795f443a37cc712ceceeb0c1c97780c57b219[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Nov 7 12:18:05 2014 +0100
+
+    Versuche den Bug zu fixen
+
+[33mcommit c592a081d6e7c47778998c5957693c80812a96d3[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Nov 7 09:53:22 2014 +0100
+
+    Changed Default Icons and TIles
+
+[33mcommit 9820f3cdc8b0987883c49097e08b78e15bfa9b53[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Nov 7 09:09:00 2014 +0100
+
+    SplashScreen, Performance Tweaks
+
+[33mcommit 3f0d5970f17d5ba21902216ef55d3279ab1ae33a[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 6 23:58:59 2014 +0100
+
+    refactoring
+
+[33mcommit 837f713aa08ac58e0ca5c3fc69b804cdfccb804a[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 6 23:55:30 2014 +0100
+
+    RefreshData after activating from background
+
+[33mcommit 948dfcadc2352df5f9b4686f13e60d2ba8030edd[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 6 23:27:00 2014 +0100
+
+    usings Aufgeräumt, Swipe SDV to cycle Days
+
+[33mcommit 0caf7864b5b7333152b65a31e52cb16cca96fd68[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 6 20:34:38 2014 +0100
+
+    OpenSDV ruckelt beim ersten mal nicht mehr.
+    Offen bleibt, Performance beim start, und beim scrollen in Agendaview
+
+[33mcommit 77292d300aaec3816343eb22a45ccf56edc432bb[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Nov 6 12:42:27 2014 +0100
+
+    Keine Visibillity Animation beim Öffnen von SDV, jedoch ruckelt es nun
+
+[33mcommit 3e61ab37ed33830d6cc5aa432d2122bc2147214c[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Tue Nov 4 08:50:44 2014 +0100
+
+    Scroll To Änderung des NewPa
+
+[33mcommit 409fefe5f6d6bbd896dcf7364fdc2200cf142cca[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Tue Nov 4 07:47:28 2014 +0100
+
+    SDV Abschluss Border
+
+[33mcommit 091c02c2792ae616e4dbba66d55fd91449d1c816[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Tue Nov 4 07:33:19 2014 +0100
+
+    Formatting
+
+[33mcommit 70b86e2307f9e775e42f2deb832aa993d7360f44[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 3 20:18:17 2014 +0100
+
+    Commit
+
+[33mcommit 43460f2f936068b497e68e92ae915351293f90e4[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 3 17:19:45 2014 +0100
+
+    Bugfix: Tap to Scroll, funzte nach start beim ersten Tag nicht
+
+[33mcommit 9c5cd1de25d71a83a388d574d7f18edd9d94c4c5[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 3 17:01:14 2014 +0100
+
+    Longlistselector Scrollbar Hidding-Hack
+
+[33mcommit 778e3e91aff30dddaa20da30568a53c15afeed95[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 3 16:53:06 2014 +0100
+
+    Design Änderungen KW
+
+[33mcommit 2c48431c635d1fb83e00ec01380acad8d9bb4fb4[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 3 12:23:17 2014 +0100
+
+    Neues WeekNumber Design
+
+[33mcommit 22d5ce2ed9bf60f20e03b4c290eb50e72754db20[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Nov 3 11:11:30 2014 +0100
+
+    einige änderungen rückgängig gemacht
+
+[33mcommit 251b8e56329efe9f2a53659e55814b2100f76437[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 2 21:53:40 2014 +0100
+
+    Fehlerbehebungen von SDV Appt Height
+
+[33mcommit 4b84ad8b17408345623c97a074e0d5ea84a1e167[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Nov 2 21:30:49 2014 +0100
+
+    Update von Recur Terminen hat nun auch Detals und Location
+
+[33mcommit 7f5ce67a7ce8acda565326838d5f7a8de8ac728f[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 15:03:06 2014 +0100
+
+    Allday fixed
+
+[33mcommit f20d7401b949b96022332ead98602f0636eb7c8a[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 14:54:52 2014 +0100
+
+    AllDays First Commit
+
+[33mcommit fe280780648f287a4e20c3ba13b37253d78aaec8[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 10:56:02 2014 +0100
+
+    Bugfix: YPos was wrong
+
+[33mcommit c5972a5c403036a2db6d3b9cdbe7c04d866ee821[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 10:30:58 2014 +0100
+
+    Formatting
+
+[33mcommit fa608cb621ed33512cca9bcff29a63b8d355b614[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 09:16:11 2014 +0100
+
+    Aufflackern des Termins verhindert, wenn keine Änderungen gemacht wurden.
+
+[33mcommit 1ebc7efc5a7f8819b49ae80f8837a9a1686eea72[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 07:39:57 2014 +0100
+
+    Formatting
+
+[33mcommit 7a65f18d4b1582051b1b2674833d39183aee246e[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 07:04:40 2014 +0100
+
+    Collapse Location, No Gradient for DetailsNotes
+
+[33mcommit 985d3a45b07bf4eb2e6611f8395ee6e38d0c5277[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 06:49:28 2014 +0100
+
+    Details werden in SDV angezeigt, mit Gradient FadeOut
+
+[33mcommit 565ccf18b1d7bfc9a2616356550e5372134e44e8[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 03:52:10 2014 +0100
+
+    DesignStudie: SDV thin
+
+[33mcommit 65eccc395c0bf733bca3ff53b2015214d2a90e58[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sat Nov 1 02:58:50 2014 +0100
+
+    commit, Ypos Im SDV kaputt
+
+[33mcommit 2270fd2a731959d5a01ac7d4109f77dd4f29b09b[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Oct 31 18:02:22 2014 +0100
+
+    Bugfix: Agenda Scrolls While SingleDayView is open
+
+[33mcommit 49c7640f821dbe4a4f8848442b194adc6f7348f9[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Oct 31 17:31:21 2014 +0100
+
+    Alles funzt wieder!
+
+[33mcommit 2a78fc89d5d44bd067d217b045b54d8a1cd8b008[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Fri Oct 31 00:40:15 2014 +0100
+
+    Improving Performance; ClearValue DataContextProperty
+
+[33mcommit 4a62c61fc54b1196263272b849b07d9cb41dd2fa[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Oct 30 23:50:09 2014 +0100
+
+    AgendaApptItem animation aufschub on loaded. Jedoch zu ruckelig
+
+[33mcommit 95ea7867fb41704bf325e6d0c4be9a9d01a4ac36[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Thu Oct 30 19:24:47 2014 +0100
+
+    Animation für Load Appt in SingleDayView
+
+[33mcommit 4ec6d725c8917f6bf3943a3704baaa13ecdff642[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Oct 29 22:12:26 2014 +0100
+
+    foreach replaced withh packwards for loop
+
+[33mcommit 2b89d9fa7b583bf7645a2edd3872db39367a9a4a[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Oct 29 21:50:38 2014 +0100
+
+    PocalAppointmentUpdater funzt
+
+[33mcommit 1fbefabc4c3037f3a0457fac23fbebff9f8c7ce1[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Wed Oct 29 21:35:02 2014 +0100
+
+    Update Pocal Appointment bugfixes 001
+
+[33mcommit 42bcefa3b2fb209b5d059e99224191376096362d[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Oct 26 16:25:54 2014 +0100
+
+    commit
+
+[33mcommit d265a667b5be065b4dbe948eb3f0f88bd96b2825[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Oct 26 14:04:08 2014 +0100
+
+    Problem immernoch vorhanden
+
+[33mcommit 342e12c36a75e03e6899439d495d240e3ff87e24[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Oct 26 13:57:28 2014 +0100
+
+    Problem mit getAppoinment after AddAppoinment
+
+[33mcommit ae623dc9dd677baa4d6ad9bb559a558e5f545056[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Oct 26 01:18:21 2014 +0200
+
+    Commit
+
+[33mcommit c25d7850f61fec0f3df0371f87376bbf15ad7646[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Oct 20 17:31:16 2014 +0200
+
+    Refactoring 2 - PocalAppointmentManager entfernt
+
+[33mcommit d2dd458735185c333a33611ed818e932576ce851[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Oct 20 16:21:26 2014 +0200
+
+    HourLine Class erstellt
+
+[33mcommit 085201a710b8c0cfbe987ae47fdb1b16c3905518[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Mon Oct 20 15:48:58 2014 +0200
+
+    Refactoring 1
+
+[33mcommit a4db83b486a9bc176f603bf5ce84c15a1aaa9afd[m
+Author: Dennis <dennis.briefkasten@gmail.com>
+Date:   Sun Oct 5 19:18:28 2014 +0200
+
+    Neuer PC eingerichtet plus Emulator test
+
+[33mcommit 79ae712fe0ca1f97e990440b9e6b70f5bb75b9f0[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Sep 2 18:12:47 2014 +0200
+
+    Reload after opening from background
+
+[33mcommit 7ce0eb98811a11642235fbbfd1c2d9e12b444790[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Sep 2 18:07:35 2014 +0200
+
+    Refactoring 1
+
+[33mcommit 1382b831b69e826b77a35ce5faec4e307de511e8[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Sep 2 17:15:23 2014 +0200
+
+    Add and Edit Appointments in SingleDayView
+
+[33mcommit 205bb7c3f7391132da04b6eb27d9f6190284aaeb[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 24 16:35:20 2014 +0200
+
+    editierung der Pocal Appointments überarbeitet + Design changes
+
+[33mcommit 65a182cc5aafd4698f1b49dddf81c602501c3e66[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Mon Aug 11 23:48:05 2014 +0200
+
+    3D DayCards Design
+
+[33mcommit 374da622f6bd0acf360535579553af0aea03c495[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 10 20:32:10 2014 +0200
+
+    Added Wrapper Class PocalAppointment
+
+[33mcommit c38030f429b5042a528918a086582dae8210a112[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Mon Aug 4 23:32:05 2014 +0200
+
+    Revert "Can't see Designer Anymore"
+    
+    This reverts commit 20ac952132d84475bb76682b38cd5bd8086a7646.
+
+[33mcommit 20ac952132d84475bb76682b38cd5bd8086a7646[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Mon Aug 4 23:30:40 2014 +0200
+
+    Can't see Designer Anymore
+
+[33mcommit 883d340ce25cd5c127c7149baead59ba2d1c2d25[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Mon Aug 4 23:11:40 2014 +0200
+
+    PocalAppointment Wrapper
+
+[33mcommit e87e192d40038c1c0a291033271f51c793406a06[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Mon Aug 4 02:39:11 2014 +0200
+
+    PocalAppointment verloren
+
+[33mcommit 4c9a8cbaada27c950d81714aa6751eeab88effd2[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 3 22:33:32 2014 +0200
+
+    Further Refactoring
+
+[33mcommit 992da8ab34fc6cb15c35f149238885cc4a76e5fb[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 3 21:00:35 2014 +0200
+
+    SingleDayViewModel added
+
+[33mcommit aec2d7d36738977534fab0dbc7d7ec2a5bf8976f[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 3 21:00:18 2014 +0200
+
+    Child ViewModel added: SingleDayViewModel
+
+[33mcommit 2695a7ea2920625578bce6442ec064109d501e81[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 3 18:49:08 2014 +0200
+
+    Getting rid of Days.ID
+
+[33mcommit 34cd68f404484930caa59a860c2c129a147a4548[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 3 18:37:03 2014 +0200
+
+    deleted Unused Class
+
+[33mcommit 69f07c9c19f0ac046ba382a8c184c1c716ac85f2[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 3 18:35:42 2014 +0200
+
+    HourListItem class entfernt und durch einfachen string ersetzt
+
+[33mcommit 17e43244124c629a84be700e967eb0aec30e47ba[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Aug 3 18:11:41 2014 +0200
+
+    Refactoring
+
+[33mcommit bd250b26daebfda89a1f3006d606280e1472fbd6[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sat Aug 2 16:00:03 2014 +0200
+
+    List<Appointments> is private
+
+[33mcommit 081480530713e9b209b8de7b79d4249aa17e7364[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sat Aug 2 14:41:36 2014 +0200
+
+    Part 1: Aktuallisierung des bearbeiteten Appt
+
+[33mcommit 20cf11d1a96ee1accd2a00e7b28b42dcb090c5f8[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Fri Aug 1 02:42:59 2014 +0200
+
+     - Beim tippen auf appt im SingleDayView öffne native Kalender App
+     - Nach dem Hinzufügen/Bearbeiten eines Appts update Pocal Kalender
+
+[33mcommit 44157f6d64df9190b95d5e6ce0b3b47ddc09143c[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Jul 29 01:04:20 2014 +0200
+
+    Appts des Tages im SingleDayView anzeigen
+
+[33mcommit fd3ba8c1c3cb71eeaa26fdf95eeca538c6b12fdc[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Mon Jul 28 08:53:35 2014 +0200
+
+     SingleDayView Animation OpenDelay
+
+[33mcommit 1908411a0e47723add769c47780e0d97200ca871[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 27 22:43:27 2014 +0200
+
+    Fixes: SecondLine Geburtage nun als TagesCounter
+
+[33mcommit 5ea0e391f4adef036319bd0df894f208fdd53675[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 27 22:18:18 2014 +0200
+
+    Fixes: Second Line | Margin of DayCards
+
+[33mcommit 8e710f03e569e90b5956db7c9f001203d58889f2[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 27 20:56:10 2014 +0200
+
+    Wochen Nummer weg, - Wochenende hat grauen Hintergrund Highlightet Day weg
+
+[33mcommit a049074f8f8d83e15c7d803a8e434ccc0cf59802[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 27 20:34:46 2014 +0200
+
+    using ApplicationModel.Appointments + DTD appts
+
+[33mcommit 53f823e456bc1d4b3f827b589d9bb3d6848ab521[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Jul 22 02:43:41 2014 +0200
+
+    Last Changes of Renaming
+
+[33mcommit 3c9c112638312ca57633687930c5d24810e66302[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Jul 22 02:26:22 2014 +0200
+
+    Editinng Path of .sln
+
+[33mcommit 34baa5ab4d8c78159796b531dea126d30b4a4b3d[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Jul 22 02:21:06 2014 +0200
+
+    Added new Renamed Pocal Dir via cmd
+
+[33mcommit b8e81aae566fdb6a4ed1384a2474625cc2493ea2[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Jul 22 02:19:56 2014 +0200
+
+    Renamed to Pocal via cmd
+
+[33mcommit c6051f1c45444fef83f35792d25a5b1088b033d0[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Tue Jul 22 02:10:52 2014 +0200
+
+    Renamed to Pocal
+
+[33mcommit eb9142358f07f4a8f2e05942517fffdd0c139b21[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 20 21:49:26 2014 +0200
+
+    Header Red und Black Overlay auf 68%
+
+[33mcommit 4b0ae39c918c3e407ccc2cfad63f4de1273bf9d0[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 20 21:15:59 2014 +0200
+
+     SingleDayView Header Schrift anpassen
+    Uhrzeiten in SingleDayView kleiner
+
+[33mcommit 0ee39638800cbe8c7965d07bedb5f6d55825c520[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 20 15:36:59 2014 +0200
+
+    Close / Open SingleDayView wenn man auf Tag in AgendaView klickt
+
+[33mcommit 919e34c432f370b2fdcf9d4dc4df17533947c020[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 20 12:55:59 2014 +0200
+
+     SingleDayGridSetup auch auf WP sichtbar
+
+[33mcommit 5f21f862259e7ba345e6034be94247199567bf50[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 20 12:35:09 2014 +0200
+
+    Init Commit
+
+[33mcommit 5ae6b797c08ef4ad221ae5fb7bd5d4bf4a03a320[m
+Author: Dennis Müller <dennis.briefkasten@gmail.com>
+Date:   Sun Jul 20 12:07:19 2014 +0200
+
+    Initial commit to add default .gitIgnore and .gitAttribute files.

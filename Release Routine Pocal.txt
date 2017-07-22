@@ -1,0 +1,35 @@
+Release Routine:
+
+1. Change Version at:
+	WMAppManifest.xml
+	Package.appxmanifest
+	
+2. Commit Git:
+	on master Branche mit Name: RELEASE 1.5.0.0
+	new Branche mit Name: RELEASE_1.5.0.0
+	
+3. Build mit ARM und RELEASE
+
+4. Pocal.xap Datei finden unter Pocal/bin/ARM/release..
+
+5. Im INTERNET EXPLORER auf windowsDeveloper seite gehen und 
+	App aktualisieren
+	Paket ersetzen + hochladen
+
+6. Beschreibung des Updates (Optional)
+
+Version 1.5.0.0
+- new settings page
+- settings for livetile and agenda appearance
+- search feature
+
+- bugfixes: live tile should now keep updating
+
+Version 1.5.0.0
+- Einstellungen
+- Einstellungen für Livetile und Agenda
+- Suchfunktion 
+
+- Bugfix: Livetile hat aufgehört zu aktuallisieren
+
+7. Überprüfen und Einreichen
